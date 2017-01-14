@@ -1,6 +1,6 @@
 # FSE #
 
-FSE is (work in progress) a 2D-Toolkit built on top of SFML and Box2D which could be used for Games and alike
+FSE is a (work in progress)  2D-Toolkit built on top of SFML and Box2D which could be used for Games and alike
 
 FSE is mainly created as a side project out of personal interest.
 
