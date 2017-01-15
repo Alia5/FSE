@@ -1,9 +1,9 @@
 #pragma once
-#include "GameObject.h"
+#include "FSEObject.h"
 
 namespace fse
 {
-	class LoadingScreen : public GameObject
+	class LoadingScreen : public FSEObject
 	{
 	public:
 		LoadingScreen(Scene* scene);

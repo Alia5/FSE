@@ -19,12 +19,12 @@
 
 namespace fse
 {
-	class Game;
-	class GameObject;
+	class Application;
+	class FSEObject;
 	class Scene 
 	{
 	public:
-		Scene(Game *game);
+		Scene(Application *application);
 		~Scene();
 
 		void setRenderTarget(sf::RenderTarget* renderTarget);
@@ -32,43 +32,43 @@ namespace fse
 		void update(float deltaTime);
 		void draw();
 
-		std::vector<std::unique_ptr<GameObject>>* getGameObjects();
+		std::vector<std::unique_ptr<FSEObject>>* getFSEObjects();
 
 		void notifyZOrderChanged();
 
-		void spawnGameObject(std::unique_ptr<GameObject> gameObject);
+		void spawnFSEObject(std::unique_ptr<FSEObject> object);
 
 		template<typename T>
-		void createGameObject()
+		void createFSEObject()
 		{
-			std::unique_ptr<T> gameObject = std::unique_ptr<T>(new T(this));
-			m_pendingObjectSpawns.push_back(std::move(gameObject));
+			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this));
+			m_pendingObjectSpawns.push_back(std::move(object));
 		}
 
 		template<typename T, typename SpawnedSlot>
-		void createGameObject(SpawnedSlot&& slot)
+		void createFSEObject(SpawnedSlot&& slot)
 		{
-			std::unique_ptr<T> gameObject = std::unique_ptr<T>(new T(this));
-			gameObject->spawnedSignal.connect(slot);
-			m_pendingObjectSpawns.push_back(std::move(gameObject));
+			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this));
+			object->spawnedSignal.connect(slot);
+			m_pendingObjectSpawns.push_back(std::move(object));
 		}
 
 		template<typename T>
-		void createGameObject(const sf::Vector2f spawnPos)
+		void createFSEObject(const sf::Vector2f spawnPos)
 		{
-			std::unique_ptr<T> gameObject = std::unique_ptr<T>(new T(this, spawnPos));
-			m_pendingObjectSpawns.push_back(std::move(gameObject));
+			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this, spawnPos));
+			m_pendingObjectSpawns.push_back(std::move(object));
 		}
 
 		template<typename T, typename SpawnedSlot>
-		void createGameObject(const sf::Vector2f spawnPos, SpawnedSlot&& slot)
+		void createFSEObject(const sf::Vector2f spawnPos, SpawnedSlot&& slot)
 		{
-			std::unique_ptr<T> gameObject = std::unique_ptr<T>(new T(this, spawnPos));
-			gameObject->spawnedSignal.connect(slot);
-			m_pendingObjectSpawns.push_back(std::move(gameObject));
+			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this, spawnPos));
+			object->spawnedSignal.connect(slot);
+			m_pendingObjectSpawns.push_back(std::move(object));
 		}
 
-		void destroyGameObject(GameObject* gameObject);
+		void destroyFSEObject(FSEObject* FSEObject);
 
 		bool isPaused();
 		void setPaused(bool paused);
@@ -79,7 +79,7 @@ namespace fse
 
 		void notifyResize();
 
-		Game* getGame() const;
+		Application* getApplication() const;
 
 		b2World *getPhysWorld();
 
@@ -87,18 +87,18 @@ namespace fse
 	protected:
 		sf::RenderTarget* m_renderTarget;
 
-		std::vector<std::unique_ptr<GameObject> > m_gameObjects; 
+		std::vector<std::unique_ptr<FSEObject> > m_FSEObjects; 
 
-		std::list<std::unique_ptr<GameObject> > m_pendingObjectSpawns;
-		std::list<GameObject*> m_pendingObjectRemovals;
+		std::list<std::unique_ptr<FSEObject> > m_pendingObjectSpawns;
+		std::list<FSEObject*> m_pendingObjectRemovals;
 
 
 		std::unique_ptr<Renderer> renderer;
 
-		void addGameObject(std::unique_ptr<GameObject> gameObject);
-		void removeGameObject(std::unique_ptr<GameObject> const & gameObject);
+		void addFSEObject(std::unique_ptr<FSEObject> object);
+		void removeFSEObject(std::unique_ptr<FSEObject> const & object);
 
-		void removeGameObject(GameObject* gameObject);
+		void removeFSEObject(FSEObject* FSEObject);
 
 		void processPendingRemovals();
 		void processPendingSpawns();
@@ -111,8 +111,8 @@ namespace fse
 
 		float elapsedTime = 0;
 
-		Game *m_game;
-		Signal<>::Connection gameSignalConnection;
+		Application *m_Application;
+		Signal<>::Connection WinResizeSignalConnection;
 
 		NetworkHandler* network_handler_ = nullptr;
 		

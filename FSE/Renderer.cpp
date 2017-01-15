@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include "GameObject/GameObject.h"
+#include "FSEObject/FSEObject.h"
 
 namespace fse
 {
@@ -15,7 +15,7 @@ namespace fse
 	}
 
 
-	void Renderer::render(const std::vector<std::unique_ptr<GameObject> > &objects)
+	void Renderer::render(const std::vector<std::unique_ptr<FSEObject> > &objects)
 	{
 		for (auto & object : objects)
 		{

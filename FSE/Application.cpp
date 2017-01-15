@@ -1,18 +1,18 @@
-#include "Game.h"
+#include "Application.h"
 
 namespace fse
 {
-	Game::Game() : m_RootScene(this)
+	Application::Application() : m_RootScene(this)
 	{
 		m_input.init();
 	}
 
-	Game::~Game()
+	Application::~Application()
 	{
-		std::wcout << "Destroying Game Base" <<  std::endl;
+		std::wcout << "Destroying Application Base" <<  std::endl;
 	}
 
-	void Game::update()
+	void Application::update()
 	{
 		if (m_RWindow != nullptr)
 		{
@@ -37,58 +37,58 @@ namespace fse
 
 			m_RWindow->clear();
 
-			m_RootScene.update(m_GameClock.restart().asSeconds());
+			m_RootScene.update(m_ApplicationClock.restart().asSeconds());
 
 			m_RootScene.draw();
 
 			m_RWindow->display();
 
 		} else {
-			m_RootScene.update(m_GameClock.restart().asSeconds());
+			m_RootScene.update(m_ApplicationClock.restart().asSeconds());
 		}
 
 
 	}
 
-	void Game::setWindow(sf::RenderWindow * window)
+	void Application::setWindow(sf::RenderWindow * window)
 	{
 		m_RWindow = window;
 		m_RootScene.setRenderTarget(m_RWindow);
 	}
 
-	void Game::setServerClientType(int type)
+	void Application::setServerClientType(int type)
 	{
 		if (type == 1)
 			m_isServer = true;
 
 	}
 
-	bool Game::isServer() const
+	bool Application::isServer() const
 	{
 		return m_isServer;
 	}
 
-	Scene * Game::getRootScene()
+	Scene * Application::getRootScene()
 	{
 		return &m_RootScene;
 	}
 
-	sf::RenderWindow* Game::getWindow()
+	sf::RenderWindow* Application::getWindow()
 	{
 		return m_RWindow;
 	}
 
-	Input* Game::getInput()
+	Input* Application::getInput()
 	{
 		return &m_input;
 	}
 
-	NetworkHandler* Game::getNetworkHandler()
+	NetworkHandler* Application::getNetworkHandler()
 	{
 		return &m_network_handler;
 	}
 
-	fse::AssetLoader& Game::getAssetLoader()
+	fse::AssetLoader& Application::getAssetLoader()
 	{
 		return m_assetLoader;
 	}

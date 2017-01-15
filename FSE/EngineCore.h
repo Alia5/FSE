@@ -9,20 +9,20 @@
 
 namespace fse
 {
-	class Game;
+	class Application;
 	class EngineCore
 	{
 	public:
 		EngineCore();
 		~EngineCore();
 
-		int exec(Game* game);
+		int exec(Application* application);
 
 
 	
 
 	private:
-		Game * m_game = nullptr;
+		Application * m_Application = nullptr;
 
 		bool showWindow = true;
 		bool run = true;

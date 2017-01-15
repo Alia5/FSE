@@ -4,17 +4,17 @@
 #include <SFML/Graphics.hpp>
 
 #include "Scene.h"
-#include "GameObject/DummyObject.h"
+#include "FSEObject/DummyObject.h"
 #include "Input.h"
 #include "AssetLoader.h"
 
 namespace fse
 {
-	class Game
+	class Application
 	{
 	public:
-		Game();
-		~Game();
+		Application();
+		~Application();
 
 		virtual void update();
 
@@ -46,7 +46,7 @@ namespace fse
 
 		Input m_input;
 
-		sf::Clock m_GameClock;
+		sf::Clock m_ApplicationClock;
 
 		sf::RenderWindow *m_RWindow = nullptr;
 

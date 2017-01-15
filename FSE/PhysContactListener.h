@@ -4,7 +4,7 @@
 
 namespace fse
 {
-	class GameObject;
+	class FSEObject;
 	class PhysContactListener : public b2ContactListener {
 
 	public:

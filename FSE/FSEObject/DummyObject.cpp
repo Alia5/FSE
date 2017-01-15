@@ -1,6 +1,6 @@
 ﻿#include "DummyObject.h"
 
-DummyObject::DummyObject(fse::Scene *scene) : fse::GameObject(scene)
+DummyObject::DummyObject(fse::Scene *scene) : fse::FSEObject(scene)
 {
 	shape = sf::CircleShape(100.f);
 	shape.setFillColor(sf::Color::Green);
@@ -31,13 +31,13 @@ void DummyObject::update(float deltaTime)
 	{
 
 		done = true;
-		getSceneGameObjects()->at(3)->destroy();
+		getSceneFSEObjects()->at(3)->destroy();
 
 
 		std::unique_ptr<DummyObject> test(new DummyObject(getScene()));
 		test->makeBlue();
 		test->setID(5);
-		getScene()->spawnGameObject(std::move(test));
+		getScene()->spawnFSEObject(std::move(test));
 
 
 		auto tConnection = sig.connect([](std::wstring s, int i) {
@@ -99,7 +99,7 @@ bool DummyObject::destroy()
 {
 
 
-	return GameObject::destroy();
+	return FSEObject::destroy();
 }
 
 void DummyObject::setID(int id)
@@ -125,6 +125,6 @@ void DummyObject::testEventCallback()
 
 	std::wcout << "TestEventCallback from Dummy id: " << getID() << std::endl;
 
-	//std::wcout << "Callback fired from GameObject id: " << object->getID() << std::endl;
+	//std::wcout << "Callback fired from FSEObject id: " << object->getID() << std::endl;
 
 }

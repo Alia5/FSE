@@ -1,10 +1,10 @@
 #pragma once
 
-#include "GameObject.h"
+#include "FSEObject.h"
 
 namespace fse
 {
-	class FPSCounter : public GameObject
+	class FPSCounter : public FSEObject
 	{
 	public:
 		FPSCounter(Scene* scene);

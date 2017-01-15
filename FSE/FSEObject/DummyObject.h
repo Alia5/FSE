@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h"
+#include "FSEObject.h"
 
 #include <iostream>
 
@@ -10,7 +10,7 @@
 
 #include <Box2D/Box2D.h>
 
-class DummyObject : public fse::GameObject
+class DummyObject : public fse::FSEObject
 {
 public:
 	DummyObject(fse::Scene *scene);

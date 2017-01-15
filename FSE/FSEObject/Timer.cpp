@@ -2,7 +2,7 @@
 
 namespace fse
 {
-	Timer::Timer(Scene* scene) : GameObject(scene)
+	Timer::Timer(Scene* scene) : FSEObject(scene)
 	{
 
 	}
@@ -24,7 +24,7 @@ namespace fse
 				if (mSingleShot)
 				{
 					mActive = false;
-					getScene()->destroyGameObject(this);
+					getScene()->destroyFSEObject(this);
 					break;
 				}
 			}

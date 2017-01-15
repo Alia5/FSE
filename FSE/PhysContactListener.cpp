@@ -1,5 +1,5 @@
 #include "PhysContactListener.h"
-#include "GameObject/GameObject.h"
+#include "FSEObject/FSEObject.h"
 namespace fse
 {
 	PhysContactListener::PhysContactListener() {
@@ -12,8 +12,8 @@ namespace fse
 
 	void PhysContactListener::BeginContact(b2Contact* contact)
 	{
-		GameObject * objectA = static_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		GameObject * objectB = static_cast<GameObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		FSEObject * objectA = static_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		FSEObject * objectB = static_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
 
 		if (objectA != nullptr && objectB != nullptr)
 		{
@@ -25,8 +25,8 @@ namespace fse
 
 	void PhysContactListener::EndContact(b2Contact* contact)
 	{
-		GameObject * objectA = static_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		GameObject * objectB = static_cast<GameObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		FSEObject * objectA = static_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		FSEObject * objectB = static_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
 
 		if (objectA != nullptr && objectB != nullptr)
 		{
@@ -38,8 +38,8 @@ namespace fse
 
 	void PhysContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 	{
-		GameObject * objectA = static_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		GameObject * objectB = static_cast<GameObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		FSEObject * objectA = static_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		FSEObject * objectB = static_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
 		
 		if (objectA != nullptr && objectB != nullptr)
 		{
@@ -51,8 +51,8 @@ namespace fse
 
 	void PhysContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
 	{
-		GameObject * objectA = static_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		GameObject * objectB = static_cast<GameObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		FSEObject * objectA = static_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		FSEObject * objectB = static_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
 		
 		if (objectA != nullptr && objectB != nullptr)
 		{

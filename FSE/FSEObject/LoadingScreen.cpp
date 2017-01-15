@@ -7,7 +7,7 @@ namespace fse
 	}
 
 
-	LoadingScreen::LoadingScreen(Scene* scene, const sf::Vector2f& spawnPos) : GameObject(scene, spawnPos)
+	LoadingScreen::LoadingScreen(Scene* scene, const sf::Vector2f& spawnPos) : FSEObject(scene, spawnPos)
 	{
 		shape_.setSize(sf::Vector2f(1,1));
 		shape_.setFillColor(sf::Color(32, 32, 32));

@@ -3,11 +3,11 @@
 #include <SFML/System.hpp>
 
 #include "../Signals.h"
-#include "GameObject.h"
+#include "FSEObject.h"
 
 namespace fse
 {
-	class Timer : public GameObject
+	class Timer : public FSEObject
 	{
 	public:
 		Timer(Scene* scene);
@@ -36,13 +36,13 @@ namespace fse
 		template <typename Slot>
 		static void singleShot(Scene* scene,int msecs, Slot&& slot)
 		{
-			auto timer = GameObject::createObject<Timer>(scene);
+			auto timer = FSEObject::createObject<Timer>(scene);
 			timer->setInterval(msecs);
 			timer->setSingleShot(true);
 
 			timer->start(slot);
 
-			scene->spawnGameObject(std::move(timer));
+			scene->spawnFSEObject(std::move(timer));
 		}
 
 	private:

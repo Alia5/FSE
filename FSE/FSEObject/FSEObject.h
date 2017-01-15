@@ -12,15 +12,15 @@
 namespace fse
 {
 	
-	class GameObject
+	class FSEObject
 	{
 	public:
 
-		typedef Signal<GameObject*> SpawnedSignal;
+		typedef Signal<FSEObject*> SpawnedSignal;
 
-		GameObject(Scene *scene);
-		GameObject(Scene *scene, const sf::Vector2f spawnPos);
-		virtual ~GameObject();
+		FSEObject(Scene *scene);
+		FSEObject(Scene *scene, const sf::Vector2f spawnPos);
+		virtual ~FSEObject();
 
 
 		virtual void update(float deltaTime) = 0;
@@ -32,10 +32,10 @@ namespace fse
 		virtual void setPosition(const sf::Vector2f position);
 		virtual sf::Vector2f getPosition();
 
-		virtual void BeginContact(GameObject* otherObject, b2Contact* contact);
-		virtual void EndContact(GameObject* otherObject, b2Contact* contact);
-		virtual void PreSolve(GameObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold);
-		virtual void PostSolve(GameObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
+		virtual void BeginContact(FSEObject* otherObject, b2Contact* contact);
+		virtual void EndContact(FSEObject* otherObject, b2Contact* contact);
+		virtual void PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold);
+		virtual void PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
 
 		template<typename T>
 		static std::unique_ptr<T> createObject(Scene* scene)
@@ -64,7 +64,7 @@ namespace fse
 
 		void setZOrder(int ZOrder);
 
-		std::vector<std::unique_ptr<GameObject> >* getSceneGameObjects() const;
+		std::vector<std::unique_ptr<FSEObject> >* getSceneFSEObjects() const;
 
 		/// position in METERS
 		sf::Vector2f m_position;

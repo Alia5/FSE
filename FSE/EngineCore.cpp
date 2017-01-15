@@ -1,6 +1,6 @@
 #include "EngineCore.h"
 
-#include "Game.h"
+#include "Application.h"
 
 namespace fse
 {
@@ -16,36 +16,36 @@ namespace fse
 		std::wcout << "Destructing Core" << std::endl;
 	}
 
-	int EngineCore::exec(Game * game)
+	int EngineCore::exec(Application * application)
 	{
 
-		m_game = game;
+		m_Application = application;
 
 		if (showWindow)
 		{
-			sf::RenderWindow window(sf::VideoMode(1280, 720), "ProjectGame");
+			sf::RenderWindow window(sf::VideoMode(1280, 720), "FSE");
 
-			window.setFramerateLimit(500);
+			window.setFramerateLimit(120);
 
-			m_game->setWindow(&window);
-			m_game->init();
+			m_Application->setWindow(&window);
+			m_Application->init();
 
 			while (window.isOpen() && run)
 			{
-				if (m_game != nullptr)
+				if (m_Application != nullptr)
 				{
-					m_game->update();
+					m_Application->update();
 				}
 
 			}
 
 		} else {						//No window => Dedicated server....
 			/////////// restrict update rate ///////////
-			sf::Clock gameTime;
+			sf::Clock ApplicationTime;
 			float ticktime = 1000 / 60.f;
 			while (run)
 			{
-				float time = gameTime.restart().asSeconds();
+				float time = ApplicationTime.restart().asSeconds();
 
 				float sleeptime = ticktime - time * 1000;
 				if (sleeptime > 0)
@@ -54,7 +54,7 @@ namespace fse
 				}
 				/////////// timehandling end ///////////
 
-				m_game->update();
+				m_Application->update();
 			}
 
 		}

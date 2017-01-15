@@ -13,13 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\GameObject">
+    <Filter Include="Header Files\FSEObject">
       <UniqueIdentifier>{c4e4c050-3cbb-49d7-acbc-559738691b89}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Component">
       <UniqueIdentifier>{106766a6-bf46-4c88-ac75-5315d9972bee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameObject">
+    <Filter Include="Source Files\FSEObject">
       <UniqueIdentifier>{887ba307-29a5-49f2-a33f-09660649bcb7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Component">
@@ -39,7 +39,7 @@
     <ClInclude Include="FMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
@@ -63,14 +63,14 @@
     <ClInclude Include="Signals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\DummyObject.h">
-      <Filter>Header Files\GameObject</Filter>
+    <ClInclude Include="FSEObject\DummyObject.h">
+      <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\GameObject.h">
-      <Filter>Header Files\GameObject</Filter>
+    <ClInclude Include="FSEObject\FSEObject.h">
+      <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\Timer.h">
-      <Filter>Header Files\GameObject</Filter>
+    <ClInclude Include="FSEObject\Timer.h">
+      <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
     <ClInclude Include="Component\SmoothViewController.h">
       <Filter>Header Files\Component</Filter>
@@ -78,11 +78,11 @@
     <ClInclude Include="Component\ViewController.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\FPSCounter.h">
-      <Filter>Header Files\GameObject</Filter>
+    <ClInclude Include="FSEObject\FPSCounter.h">
+      <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\LoadingScreen.h">
-      <Filter>Header Files\GameObject</Filter>
+    <ClInclude Include="FSEObject\LoadingScreen.h">
+      <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -98,7 +98,7 @@
     <ClCompile Include="FMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
@@ -125,20 +125,20 @@
     <ClCompile Include="Component\SmoothViewController.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\DummyObject.cpp">
-      <Filter>Source Files\GameObject</Filter>
+    <ClCompile Include="FSEObject\DummyObject.cpp">
+      <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\GameObject.cpp">
-      <Filter>Source Files\GameObject</Filter>
+    <ClCompile Include="FSEObject\FSEObject.cpp">
+      <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\Timer.cpp">
-      <Filter>Source Files\GameObject</Filter>
+    <ClCompile Include="FSEObject\Timer.cpp">
+      <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\FPSCounter.cpp">
-      <Filter>Source Files\GameObject</Filter>
+    <ClCompile Include="FSEObject\FPSCounter.cpp">
+      <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\LoadingScreen.cpp">
-      <Filter>Source Files\GameObject</Filter>
+    <ClCompile Include="FSEObject\LoadingScreen.cpp">
+      <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

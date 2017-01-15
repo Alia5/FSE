@@ -1,5 +1,5 @@
 #include "FPSCounter.h"
-#include "../Game.h"
+#include "../Application.h"
 
 namespace fse
 {
@@ -7,7 +7,7 @@ namespace fse
 	{
 	}
 
-	FPSCounter::FPSCounter(Scene* scene, const sf::Vector2f& spawnPos) : GameObject(scene, spawnPos)
+	FPSCounter::FPSCounter(Scene* scene, const sf::Vector2f& spawnPos) : FSEObject(scene, spawnPos)
 	{
 		m_font.loadFromFile("./data/bitstream-vera/VeraMoBd.ttf");
 
@@ -24,17 +24,17 @@ namespace fse
 
 		setZOrder(257);
 
-		counterView = sf::View(sf::FloatRect(0, 0, getScene()->getGame()->getWindow()->getSize().x, getScene()->getGame()->getWindow()->getSize().y));
-		onResizeConnection = getScene()->getGame()->onWindowResized.connect([this]()
+		counterView = sf::View(sf::FloatRect(0, 0, getScene()->getApplication()->getWindow()->getSize().x, getScene()->getApplication()->getWindow()->getSize().y));
+		onResizeConnection = getScene()->getApplication()->onWindowResized.connect([this]()
 		{
-			counterView = sf::View(sf::FloatRect(0, 0, getScene()->getGame()->getWindow()->getSize().x, getScene()->getGame()->getWindow()->getSize().y));
+			counterView = sf::View(sf::FloatRect(0, 0, getScene()->getApplication()->getWindow()->getSize().x, getScene()->getApplication()->getWindow()->getSize().y));
 		});
 
 	}
 
 	FPSCounter::~FPSCounter()
 	{
-		getScene()->getGame()->onWindowResized.disconnect(onResizeConnection);
+		getScene()->getApplication()->onWindowResized.disconnect(onResizeConnection);
 	}
 
 	void FPSCounter::update(float deltaTime)

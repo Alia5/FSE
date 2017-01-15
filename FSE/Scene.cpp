@@ -1,21 +1,21 @@
 #include "Scene.h"
-#include "Game.h"
-#include "GameObject/GameObject.h"
+#include "Application.h"
+#include "FSEObject/FSEObject.h"
 
 namespace fse
 {
 
-	Scene::Scene(Game* game) : m_renderTarget(nullptr), m_game(game), /*physGravity(0.f,10.f),*/ physWorld(physGravity)
+	Scene::Scene(Application* application) : m_renderTarget(nullptr), m_Application(application), /*physGravity(0.f,10.f),*/ physWorld(physGravity)
 	{
 		physWorld.SetContactListener(&phys_contact_listener);
-		gameSignalConnection = m_game->onWindowResized.connect(this, &Scene::notifyResize);
+		WinResizeSignalConnection = m_Application->onWindowResized.connect(this, &Scene::notifyResize);
 	}
 
 	Scene::~Scene()
 	{
-		m_game->onWindowResized.disconnect(gameSignalConnection);
+		m_Application->onWindowResized.disconnect(WinResizeSignalConnection);
 
-		m_gameObjects.clear();
+		m_FSEObjects.clear();
 		m_pendingObjectRemovals.clear();
 		m_pendingObjectSpawns.clear();
 
@@ -60,12 +60,12 @@ namespace fse
 		//}
 		//std::wcout << "physStepTimeLeft: " << physStepTimeLeft << "\n" << "took " << numSteps << " steps\n";
 
-		//for (auto &object : m_gameObjects)
+		//for (auto &object : m_FSEObjects)
 		//{
 		//	object->update(deltaTime);
 		//}
 
-		for (auto it = m_gameObjects.rbegin(); it != m_gameObjects.rend(); ++it)
+		for (auto it = m_FSEObjects.rbegin(); it != m_FSEObjects.rend(); ++it)
 		{
 			it->get()->update(deltaTime);
 		}
@@ -78,8 +78,8 @@ namespace fse
 	{
 		if (m_ZOrderChanged)
 		{
-			std::sort(m_gameObjects.begin(), m_gameObjects.end(),
-				[](const std::unique_ptr<GameObject>& a, const std::unique_ptr<GameObject>& b) {
+			std::sort(m_FSEObjects.begin(), m_FSEObjects.end(),
+				[](const std::unique_ptr<FSEObject>& a, const std::unique_ptr<FSEObject>& b) {
 
 				return a->getZOrder() < b->getZOrder();
 
@@ -88,7 +88,7 @@ namespace fse
 
 			m_ZOrderChanged = false;
 		}
-		renderer->render(m_gameObjects);
+		renderer->render(m_FSEObjects);
 
 		if (phys_draw_debug)
 		{
@@ -96,9 +96,9 @@ namespace fse
 		}
 	}
 
-	std::vector<std::unique_ptr<GameObject> >* Scene::getGameObjects()
+	std::vector<std::unique_ptr<FSEObject> >* Scene::getFSEObjects()
 	{
-		return &m_gameObjects;
+		return &m_FSEObjects;
 	}
 
 	void Scene::notifyZOrderChanged()
@@ -108,14 +108,14 @@ namespace fse
 
 
 
-	void Scene::spawnGameObject(std::unique_ptr<GameObject> gameObject)
+	void Scene::spawnFSEObject(std::unique_ptr<FSEObject> object)
 	{
-		m_pendingObjectSpawns.push_back(std::move(gameObject));
+		m_pendingObjectSpawns.push_back(std::move(object));
 	}
 
-	void Scene::destroyGameObject(GameObject* gameObject)
+	void Scene::destroyFSEObject(FSEObject* object)
 	{
-		m_pendingObjectRemovals.push_back(gameObject);
+		m_pendingObjectRemovals.push_back(object);
 	}
 
 	bool Scene::isPaused()
@@ -152,9 +152,9 @@ namespace fse
 		m_renderTarget->setView(view);
 	}
 
-	Game* Scene::getGame() const
+	Application* Scene::getApplication() const
 	{
-		return m_game;
+		return m_Application;
 	}
 
 	b2World *Scene::getPhysWorld()
@@ -163,32 +163,32 @@ namespace fse
 	}
 
 
-	void Scene::addGameObject(std::unique_ptr<GameObject> gameObject)
+	void Scene::addFSEObject(std::unique_ptr<FSEObject> object)
 	{
-		gameObject->spawn(spawnCount++);
-		m_gameObjects.push_back(std::move(gameObject));
+		object->spawn(spawnCount++);
+		m_FSEObjects.push_back(std::move(object));
 		m_ZOrderChanged = true;
 	}
 
-	void Scene::removeGameObject(std::unique_ptr<GameObject> const& gameObject)
+	void Scene::removeFSEObject(std::unique_ptr<FSEObject> const& object)
 	{
-		auto it = std::find(m_gameObjects.begin(), m_gameObjects.end(), gameObject);
-		if (it != m_gameObjects.end())
+		auto it = std::find(m_FSEObjects.begin(), m_FSEObjects.end(), object);
+		if (it != m_FSEObjects.end())
 		{
 			std::wcout << "Deleting object " << typeid(it->get()).name() << std::endl;
-			m_gameObjects.erase(it);
+			m_FSEObjects.erase(it);
 		}
 	}
 
-	void Scene::removeGameObject(GameObject * gameObject)
+	void Scene::removeFSEObject(FSEObject * object)
 	{
-		auto it = std::find_if(m_gameObjects.begin(), m_gameObjects.end(), [&](const std::unique_ptr<GameObject> & obj) {
-			return obj.get() == gameObject;
+		auto it = std::find_if(m_FSEObjects.begin(), m_FSEObjects.end(), [&](const std::unique_ptr<FSEObject> & obj) {
+			return obj.get() == object;
 		});
-		if (it != m_gameObjects.end())
+		if (it != m_FSEObjects.end())
 		{
 			std::wcout << "Deleting object " << typeid(it->get()).name() << std::endl;
-			m_gameObjects.erase(it);
+			m_FSEObjects.erase(it);
 		}
 	}
 
@@ -198,7 +198,7 @@ namespace fse
 		{
 			for (auto & object : m_pendingObjectRemovals)
 			{
-				removeGameObject(object);
+				removeFSEObject(object);
 			}
 			m_pendingObjectRemovals.clear();
 		}
@@ -211,7 +211,7 @@ namespace fse
 		{
 			for (auto & object : m_pendingObjectSpawns)
 			{
-				addGameObject(std::move(object));
+				addFSEObject(std::move(object));
 			}
 			m_pendingObjectSpawns.clear();
 		}

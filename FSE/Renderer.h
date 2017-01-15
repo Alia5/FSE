@@ -8,7 +8,7 @@
 
 namespace fse
 {
-	class GameObject;
+	class FSEObject;
 
 	class Renderer
 	{
@@ -16,7 +16,7 @@ namespace fse
 		Renderer( sf::RenderTarget *renderTarget);
 		~Renderer();
 
-		void render(const std::vector<std::unique_ptr<GameObject> > &objects);
+		void render(const std::vector<std::unique_ptr<FSEObject> > &objects);
 
 	private:
 		 sf::RenderTarget *m_renderTarget;
