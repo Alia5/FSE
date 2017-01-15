@@ -25,6 +25,8 @@ namespace fse
 
 	void AssetLoader::releaseTexture(std::string path)
 	{
+		if (textureCounter.size() == 0)
+			return;
 		if (!textureCounter.count(path)) //Texture is not in memory
 			return;
 		if (textureCounter[path] == 1)
@@ -39,11 +41,8 @@ namespace fse
 
 	void AssetLoader::loadTexture(std::string path)
 	{
-		sf::Texture texture;
 		std::string realPath = "data/" + path;
-		texture.loadFromFile(realPath.c_str());
-
-		textureMap[path] = texture;
-		textureCounter[path] = 0;
+		textureMap[path].loadFromFile(realPath.c_str());
+		textureCounter[path] = 1;
 	}
 }
