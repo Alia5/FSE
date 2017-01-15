@@ -110,7 +110,7 @@ void PhysDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 	//no converion in cordinates of center and upper left corner, Circle in sfml is managed by default with the center
 	sf::CircleShape circle(radius*RATIO);
 	circle.setPosition(center.x*RATIO - radius*RATIO, center.y*RATIO - radius*RATIO);
-	circle.setFillColor(this->B2SFColor(color, 72));
+	circle.setFillColor(this->B2SFColor(color, 32));
 	circle.setOutlineColor(this->B2SFColor(color));
 	circle.setOutlineThickness(1.f);
 
@@ -139,7 +139,7 @@ void PhysDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, 
 		b2Vec2 vertex = vertices[i];
 		polygon.setPoint(i, sf::Vector2f(vertex.x*RATIO, vertex.y*RATIO));
 	}
-	polygon.setFillColor(this->B2SFColor(color, 72));
+	polygon.setFillColor(this->B2SFColor(color, 32));
 	polygon.setOutlineColor(this->B2SFColor(color));
 	polygon.setOutlineThickness(1.0f);
 	this->window->draw(polygon);

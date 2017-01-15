@@ -1,12 +1,7 @@
 #pragma once
 
 #include <Box2D/Box2D.h>
-#include <iostream>
-#include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-//#include "Globals.h"
-
-
 
 // 1 meter (box2d) is more or less 64 pixels (sfml) //changed the ratio...
 #define RATIO 25.0f
