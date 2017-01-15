@@ -156,6 +156,7 @@
     <ClInclude Include="GameObject\DummyObject.h" />
     <ClInclude Include="GameObject\FPSCounter.h" />
     <ClInclude Include="GameObject\GameObject.h" />
+    <ClInclude Include="GameObject\LoadingScreen.h" />
     <ClInclude Include="GameObject\Timer.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="NetworkHandler.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="GameObject\DummyObject.cpp" />
     <ClCompile Include="GameObject\FPSCounter.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
+    <ClCompile Include="GameObject\LoadingScreen.cpp" />
     <ClCompile Include="GameObject\Timer.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="NetworkHandler.cpp" />
