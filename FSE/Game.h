@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "GameObject/DummyObject.h"
 #include "Input.h"
+#include "AssetLoader.h"
 
 namespace fse
 {
@@ -31,6 +32,8 @@ namespace fse
 
 		NetworkHandler* getNetworkHandler();
 
+		fse::AssetLoader& getAssetLoader();
+
 	protected:
 		//Scene m_RootScene;
 		Scene *getRootScene();
@@ -50,5 +53,7 @@ namespace fse
 		Scene m_RootScene;
 
 		NetworkHandler m_network_handler;
+
+		fse::AssetLoader m_assetLoader;
 	};
 }

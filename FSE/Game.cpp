@@ -87,4 +87,9 @@ namespace fse
 	{
 		return &m_network_handler;
 	}
+
+	fse::AssetLoader& Game::getAssetLoader()
+	{
+		return m_assetLoader;
+	}
 }
