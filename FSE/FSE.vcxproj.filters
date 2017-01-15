@@ -79,7 +79,7 @@
       <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\FPSCounter.h">
-      <Filter>Header Files\Component</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

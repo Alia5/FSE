@@ -27,7 +27,7 @@ namespace fse
 		
 		objectPos = sf::Vector2f(objectPos.x, objectPos.y - (view.getSize().y * FSE_METERS_PER_PIXEL * vertical_offset_));
 
-		sf::Vector2f toCenter = fse::FMath::Lerp(view.getCenter(), objectPos*FSE_PIXELS_PER_METER, deltaTime * 0.50f);
+		sf::Vector2f toCenter = fse::FMath::Lerp(view.getCenter(), objectPos*FSE_PIXELS_PER_METER, deltaTime /** 0.75f*/);
 		if (!viewRekt.contains(objectPos * FSE_PIXELS_PER_METER))
 		{
 			if (objectPos == oldPosition)
@@ -43,6 +43,17 @@ namespace fse
 
 		oldPosition = objectPos;
 
+		render_target_->setView(view);
+	}
+
+	void SmoothViewController::setView(sf::Vector2f objectPos)
+	{
+		if (render_target_ == nullptr)
+			return;
+
+		sf::View view = render_target_->getView();
+		view.setCenter(objectPos);
+		oldPosition = objectPos;
 		render_target_->setView(view);
 	}
 

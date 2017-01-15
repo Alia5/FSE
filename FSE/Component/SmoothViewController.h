@@ -11,6 +11,7 @@ namespace fse
 		SmoothViewController(sf::RenderTarget* render_target);
 
 		void moveView(sf::Vector2f objectPos, float deltaTime) override;
+		void setView(sf::Vector2f objectPos);
 
 
 		float getSizePercentage() const;
