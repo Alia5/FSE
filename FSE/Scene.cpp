@@ -175,7 +175,6 @@ namespace fse
 		auto it = std::find(m_FSEObjects.begin(), m_FSEObjects.end(), object);
 		if (it != m_FSEObjects.end())
 		{
-			std::wcout << "Deleting object " << typeid(it->get()).name() << std::endl;
 			m_FSEObjects.erase(it);
 		}
 	}
@@ -187,7 +186,6 @@ namespace fse
 		});
 		if (it != m_FSEObjects.end())
 		{
-			std::wcout << "Deleting object " << typeid(it->get()).name() << std::endl;
 			m_FSEObjects.erase(it);
 		}
 	}

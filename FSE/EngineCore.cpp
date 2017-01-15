@@ -7,13 +7,13 @@ namespace fse
 
 	EngineCore::EngineCore()
 	{
-		std::wcout << "Creating Core" << std::endl;
+		
 	}
 
 
 	EngineCore::~EngineCore()
 	{
-		std::wcout << "Destructing Core" << std::endl;
+		
 	}
 
 	int EngineCore::exec(Application * application)

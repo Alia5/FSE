@@ -9,7 +9,7 @@ namespace fse
 
 	Timer::~Timer()
 	{
-		std::wcout << "destroying timer with id: " << getID() << "\n";
+		
 	}
 
 	void Timer::update(float deltaTime)

@@ -18,7 +18,7 @@ namespace fse
 
 	FSEObject::~FSEObject()
 	{
-		std::wcout << "Destroying Application Object Base; id: " << m_ID << std::endl;
+		
 	}
 
 	void FSEObject::setPosition(const sf::Vector2f position)
