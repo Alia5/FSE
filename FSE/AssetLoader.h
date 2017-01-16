@@ -19,6 +19,10 @@ namespace fse
 
 			Texture& operator=(const Texture& texture);
 			sf::Texture* operator->() const;
+			sf::Texture& operator*() const
+			{
+				return *tex_;
+			}
 		private:
 			AssetLoader* loader_;
 			std::string path_;
