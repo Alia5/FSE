@@ -102,9 +102,6 @@
     <ClInclude Include="FSEObject\LoadingScreen.h">
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\LTBL2\LetThereBeLight.hpp">
-      <Filter>Header Files\LTBL2</Filter>
-    </ClInclude>
     <ClInclude Include="..\LTBL2\src\LightSystem.hpp">
       <Filter>Header Files\LTBL2\src</Filter>
     </ClInclude>
@@ -125,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="FSEObject\FSELightWorld.h">
       <Filter>Header Files\FSEObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LTBL2\src\Sprite.hpp">
+      <Filter>Header Files\LTBL2\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,9 +182,6 @@
     <ClCompile Include="FSEObject\LoadingScreen.cpp">
       <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\LTBL2\LetThereBeLight.cpp">
-      <Filter>Source Files\LTBL2</Filter>
-    </ClCompile>
     <ClCompile Include="..\LTBL2\src\LightDirectionEmission.cpp">
       <Filter>Source Files\LTBL2\src</Filter>
     </ClCompile>
@@ -199,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="FSEObject\FSELightWorld.cpp">
       <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LTBL2\src\Sprite.cpp">
+      <Filter>Source Files\LTBL2\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

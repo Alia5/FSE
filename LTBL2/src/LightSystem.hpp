@@ -3,6 +3,7 @@
 #include "LightDirectionEmission.hpp"
 #include "LightPointEmission.hpp"
 #include "LightResources.hpp"
+#include "Sprite.hpp"
 
 namespace ltbl
 {
@@ -14,9 +15,10 @@ class LightSystem : sf::NonCopyable
 {
     public:
 		//////////////////////////////////////////////////////////////////////////
-		/// \brief Default constructor
+		/// \brief Constructor
+		/// \param useNormals Will the light system use normals ? Default to false
 		//////////////////////////////////////////////////////////////////////////
-		LightSystem();
+		LightSystem(bool useNormals = false);
 
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Create quadtrees, resources and render textures
@@ -103,6 +105,18 @@ class LightSystem : sf::NonCopyable
 		void removeLight(LightDirectionEmission* light);
 
 		//////////////////////////////////////////////////////////////////////////
+		/// \brief Add a sprite
+		/// \param sprite The new sprite
+		//////////////////////////////////////////////////////////////////////////
+		void addSprite(Sprite& sprite);
+
+		//////////////////////////////////////////////////////////////////////////
+		/// \brief Remove a sprite
+		/// \param sprite The sprite to remove
+		//////////////////////////////////////////////////////////////////////////
+		void removeSprite(Sprite& sprite);
+
+		//////////////////////////////////////////////////////////////////////////
 		/// \brief Set the direction emission range
 		/// \param range The new range
 		//////////////////////////////////////////////////////////////////////////
@@ -139,6 +153,12 @@ class LightSystem : sf::NonCopyable
 		const sf::Color& getAmbientColor() const;
 
 		//////////////////////////////////////////////////////////////////////////
+		/// \brief Tell whether or not the light system use normals
+		/// \return True if the system uses it, false otherwise
+		//////////////////////////////////////////////////////////////////////////
+		bool useNormals() const;
+
+		//////////////////////////////////////////////////////////////////////////
 		/// \brief Update shader texture and the size of render texture
 		/// Call it only if you change the penumbra texture or shaders, render texture size are automatically updated
 		/// \param size The new size for render texture, don't call it with this parameter yourself !
@@ -170,26 +190,39 @@ class LightSystem : sf::NonCopyable
 		//////////////////////////////////////////////////////////////////////////
 		sf::Shader& getLightOverShapeShader();
 
+		//////////////////////////////////////////////////////////////////////////
+		/// \brief Get the normal shader
+		/// As normal shader if automatically loaded, use it only to change the shader
+		/// You have to call update(), right after you changed it
+		/// \return The normal shader
+		//////////////////////////////////////////////////////////////////////////
+		sf::Shader& getNormalsShader();
+
 	private:
 		sf::Texture mPenumbraTexture; ///< The penumbra texture, loaded from memory when the system is created
 		sf::Shader mUnshadowShader; ///< The unshadow shader, loaded from memory when the system is created
 		sf::Shader mLightOverShapeShader; ///< The light over shape shader, loaded from memory when the system is created
+		sf::Shader mNormalsShader; ///< The normal shader
 
-		priv::Quadtree mLightShapeQuadtree; ///< The quadtree that handles LightShape
-		priv::Quadtree mLightPointEmissionQuadtree; ///< The quadtree that handles LightPointEmission
+		priv::Quadtree mLightShapeQuadtree; ///< The quadtree which handles LightShape
+		priv::Quadtree mLightPointEmissionQuadtree; ///< The quadtree which handles LightPointEmission
 
 		std::unordered_set<LightPointEmission*> mPointEmissionLights; ///< The LightPointEmissions of the system
 		std::unordered_set<LightDirectionEmission*> mDirectionEmissionLights; ///< The LightDirectionEmissions of the system
 		std::unordered_set<LightShape*> mLightShapes; ///< The LightShapes of the system
+		std::unordered_set<Sprite*> mNormalSprites; ///< The NormalSprites of the system
 
 		sf::RenderTexture mLightTempTexture; ///< The light render texture
 		sf::RenderTexture mEmissionTempTexture; ///< The emission render texture
 		sf::RenderTexture mAntumbraTempTexture; ///< The antumbra render texture
 		sf::RenderTexture mCompositionTexture; ///< The composition render texture
+		sf::RenderTexture mNormalsTexture; ///< The normal render texture
 
 		float mDirectionEmissionRange; ///< The direction emission range
 		float mDirectionEmissionRadiusMultiplier; ///< The dreiction emission radius multiplier
 		sf::Color mAmbientColor; ///< The ambient color
+
+		const bool mUseNormals; ///< Do the system use normals ?
 };
 
 } // namespace ltbl

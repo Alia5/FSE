@@ -22,6 +22,6 @@ Third party libraries used
 
 [Box2D](https://github.com/erincatto/Box2D/tree/374664b2a4ce2e7c24fbad6e1ed34bebcc9ab6bc) (374664b)
 
-[LTBL2](https://github.com/Cmdu76/LTBL2/tree/b5cc38f639ab252b9e26fb57d6c8a7b03d9d7d87) (b5cc38f)
+[LTBL2](https://github.com/Cmdu76/LTBL2/tree/d2b51608efa2aa7e3e2d632746b018d6e2add3be) (d2b5160) which is further modified
 
-Licensed under the [zLib-License](https://en.wikipedia.org/wiki/Zlib_License)
+All of which are licensed under the [zLib-License](https://en.wikipedia.org/wiki/Zlib_License)

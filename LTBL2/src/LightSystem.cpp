@@ -1,24 +1,28 @@
 #include "LightSystem.hpp"
 
-#include <iostream>
-
 namespace ltbl
 {
 
-LightSystem::LightSystem()
-	: mLightShapeQuadtree(sf::FloatRect())
+LightSystem::LightSystem(bool useNormals)
+	: mPenumbraTexture()
+	, mUnshadowShader()
+	, mLightOverShapeShader()
+	, mNormalsShader()
+	, mLightShapeQuadtree(sf::FloatRect())
 	, mLightPointEmissionQuadtree(sf::FloatRect())
+	, mPointEmissionLights()
+	, mDirectionEmissionLights()
+	, mLightShapes()
+	, mLightTempTexture()
+	, mEmissionTempTexture()
+	, mAntumbraTempTexture()
+	, mCompositionTexture()
+	, mNormalsTexture()
 	, mDirectionEmissionRange(1000.0f)
 	, mDirectionEmissionRadiusMultiplier(1.1f)
 	, mAmbientColor(sf::Color(16, 16, 16))
+	, mUseNormals(useNormals)
 {
-}
-
-void LightSystem::create(const sf::FloatRect& rootRegion, const sf::Vector2u& imageSize)
-{
-    mLightShapeQuadtree.create(rootRegion, 6, 6);
-    mLightPointEmissionQuadtree.create(rootRegion, 6, 6);
-
 	// Load Texture
 	mPenumbraTexture.loadFromMemory(priv::penumbraTexture, (sizeof(priv::penumbraTexture) / sizeof(*priv::penumbraTexture)));
 	mPenumbraTexture.setSmooth(true);
@@ -26,6 +30,16 @@ void LightSystem::create(const sf::FloatRect& rootRegion, const sf::Vector2u& im
 	// Load Shaders
 	mUnshadowShader.loadFromMemory(priv::unshadowFragment, sf::Shader::Fragment);
 	mLightOverShapeShader.loadFromMemory(priv::lightOverShapeFragment, sf::Shader::Fragment);
+	mNormalsShader.loadFromMemory(priv::normalFragment, sf::Shader::Fragment);
+}
+
+void LightSystem::create(const sf::FloatRect& rootRegion, const sf::Vector2u& imageSize)
+{
+	// TODO : Delete created objects
+
+	// Quadtrees
+    mLightShapeQuadtree.create(rootRegion, 6, 6);
+    mLightPointEmissionQuadtree.create(rootRegion, 6, 6);
 
 	update(imageSize);
 }
@@ -42,12 +56,26 @@ void LightSystem::render(sf::RenderTarget& target)
 	mLightShapeQuadtree.update();
 	mLightPointEmissionQuadtree.update();
 
+	sf::FloatRect viewBounds = sf::FloatRect(view.getCenter() - view.getSize() * 0.5f, view.getSize());
+
+	if (mUseNormals && mNormalSprites.size() > 0)
+	{
+		mNormalsTexture.clear(sf::Color(127u, 127u, 255u));
+		mNormalsTexture.setView(view);
+		for (auto itr = mNormalSprites.begin(); itr != mNormalSprites.end(); itr++)
+		{
+			if ((*itr) != nullptr && (*itr)->isTurnedOn())
+			{
+				(*itr)->renderNormals(mNormalsTexture);
+			}
+		}
+		mNormalsTexture.display();
+	}
+
     mCompositionTexture.clear(mAmbientColor);
     mCompositionTexture.setView(mCompositionTexture.getDefaultView());
 
 	mLightTempTexture.setView(view);
-
-	sf::FloatRect viewBounds = sf::FloatRect(view.getCenter() - view.getSize() * 0.5f, view.getSize());
 
     // --- Point lights
 
@@ -75,7 +103,7 @@ void LightSystem::render(sf::RenderTarget& target)
 			mEmissionTempTexture.display();
 
 			// Render light
-			light->render(view, mLightTempTexture, mAntumbraTempTexture, mUnshadowShader, mLightOverShapeShader, lightShapes);
+			light->render(view, mLightTempTexture, mAntumbraTempTexture, mUnshadowShader, mLightOverShapeShader, lightShapes, mUseNormals, mNormalsShader);
 			mCompositionTexture.draw(lightTempSprite, sf::BlendAdd);
 		}
     }
@@ -106,12 +134,9 @@ void LightSystem::render(sf::RenderTarget& target)
 
     mCompositionTexture.display();
 
-	//target.setView(target.getDefaultView());
-	sf::Sprite sprite = sf::Sprite(mCompositionTexture.getTexture());
-	sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
-	target.draw(sprite, sf::BlendMultiply);
-	//target.draw(sf::Sprite(mCompositionTexture.getTexture()), sf::BlendMultiply);
-	//target.setView(view);
+	target.setView(target.getDefaultView());
+	target.draw(sf::Sprite(mCompositionTexture.getTexture()), sf::BlendMultiply);
+	target.setView(view);
 }
 
 LightShape* LightSystem::createLightShape()
@@ -243,6 +268,20 @@ void LightSystem::removeLight(LightDirectionEmission* light)
 	}
 }
 
+void LightSystem::addSprite(Sprite& sprite)
+{
+	mNormalSprites.insert(&sprite);
+}
+
+void LightSystem::removeSprite(Sprite& sprite)
+{
+	auto itr = mNormalSprites.find(&sprite);
+	if (itr != mNormalSprites.end())
+	{
+		mNormalSprites.erase(itr);
+	}
+}
+
 void LightSystem::setDirectionEmissionRange(float range)
 {
 	mDirectionEmissionRange = range;
@@ -273,9 +312,17 @@ const sf::Color& LightSystem::getAmbientColor() const
 	return mAmbientColor;
 }
 
+bool LightSystem::useNormals() const
+{
+	return mUseNormals;
+}
+
 void LightSystem::update(sf::Vector2u const& size)
 {
 	mUnshadowShader.setUniform("penumbraTexture", mPenumbraTexture);
+	mLightOverShapeShader.setUniform("emissionTexture", mEmissionTempTexture.getTexture());
+	mNormalsShader.setUniform("normalsTexture", mNormalsTexture.getTexture());
+	mNormalsShader.setUniform("lightTexture", sf::Shader::CurrentTexture);
 
 	if (size.x != 0 && size.y != 0)
 	{
@@ -283,9 +330,10 @@ void LightSystem::update(sf::Vector2u const& size)
 		mEmissionTempTexture.create(size.x, size.y);
 		mAntumbraTempTexture.create(size.x, size.y);
 		mCompositionTexture.create(size.x, size.y);
+		mNormalsTexture.create(size.x, size.y);
 
-		mLightOverShapeShader.setUniform("emissionTexture", mEmissionTempTexture.getTexture());
-		mLightOverShapeShader.setUniform("targetSizeInv", sf::Vector2f(1.0f / size.x, 1.0f / size.y));
+		mNormalsShader.setUniform("targetSize", sf::Glsl::Vec2(size.x * 1.f, size.y * 1.f));
+		mLightOverShapeShader.setUniform("targetSizeInv", sf::Glsl::Vec2(1.0f / size.x, 1.0f / size.y));
 	}
 }
 
@@ -302,6 +350,11 @@ sf::Shader& LightSystem::getUnshadowShader()
 sf::Shader& LightSystem::getLightOverShapeShader()
 {
 	return mLightOverShapeShader;
+}
+
+sf::Shader& LightSystem::getNormalsShader()
+{
+	return mNormalsShader;
 }
 
 } // namespace ltbl

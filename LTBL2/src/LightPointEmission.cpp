@@ -141,7 +141,7 @@ const sf::Vector2f& LightPointEmission::getOrigin() const
 	return mSprite.getOrigin();
 }
 
-void LightPointEmission::render(const sf::View& view, sf::RenderTexture& lightTempTexture, sf::RenderTexture& antumbraTempTexture, sf::Shader& unshadowShader, sf::Shader& lightOverShapeShader, const std::vector<priv::QuadtreeOccupant*>& shapes)
+void LightPointEmission::render(const sf::View& view, sf::RenderTexture& lightTempTexture, sf::RenderTexture& antumbraTempTexture, sf::Shader& unshadowShader, sf::Shader& lightOverShapeShader, const std::vector<priv::QuadtreeOccupant*>& shapes, bool normalsEnabled, sf::Shader& normalsShader)
 {
     float shadowExtension = mShadowOverExtendMultiplier * (getAABB().width + getAABB().height);
 
@@ -161,7 +161,28 @@ void LightPointEmission::render(const sf::View& view, sf::RenderTexture& lightTe
 
     lightTempTexture.clear();
     lightTempTexture.setView(view);
-    lightTempTexture.draw(*this);
+
+	if (normalsEnabled) 
+	{
+		auto oglLightPosition = lightTempTexture.mapCoordsToPixel(mSprite.getPosition(), view);
+		normalsShader.setUniform("lightPosition", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(lightTempTexture.getSize().y - oglLightPosition.y), 0.15f));
+
+		const auto& lightColor = mSprite.getColor();
+		normalsShader.setUniform("lightColor", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
+		
+		auto oglOrigin = lightTempTexture.mapCoordsToPixel({ 0.f, 0.f });
+		auto oglLightWidthPos = lightTempTexture.mapCoordsToPixel({ getAABB().width, 0.f }) - oglOrigin;
+		auto oglLightHeightPos = lightTempTexture.mapCoordsToPixel({ 0.f, getAABB().height }) - oglOrigin;
+		float oglLightWidth = static_cast<float>(std::sqrt(oglLightWidthPos.x * oglLightWidthPos.x + oglLightWidthPos.y * oglLightWidthPos.y));
+		float oglLightHeight = static_cast<float>(std::sqrt(oglLightHeightPos.x * oglLightHeightPos.x + oglLightHeightPos.y * oglLightHeightPos.y));
+		normalsShader.setUniform("lightSize", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
+
+		lightTempTexture.draw(mSprite, &normalsShader);
+	}
+	else 
+	{
+		lightTempTexture.draw(mSprite);
+	}
 
     //----- Shapes
 

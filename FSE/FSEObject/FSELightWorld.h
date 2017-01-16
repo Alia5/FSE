@@ -2,8 +2,7 @@
 
 #include "FSEObject.h"
 
-#include "../../LTBL2/LetThereBeLight.hpp"
-
+#include "../../LTBL2/src/LightSystem.hpp"
 
 namespace fse
 {
@@ -31,8 +30,6 @@ namespace fse
 
 
 	private:
-		Signal<>::Connection onResizeConnection;
-
 		std::unique_ptr<ltbl::LightSystem> m_light_system;
 		bool m_lighting;
 
