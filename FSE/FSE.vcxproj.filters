@@ -37,6 +37,12 @@
     <Filter Include="Source Files\LTBL2\src">
       <UniqueIdentifier>{6940237c-bb16-49db-9e72-4ef7d57d754e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Lights">
+      <UniqueIdentifier>{b8765142-0b18-476e-9b87-d4b81ae92247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lights">
+      <UniqueIdentifier>{4ccf3936-841b-4008-8df4-fab96bf1d00c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetLoader.h">
