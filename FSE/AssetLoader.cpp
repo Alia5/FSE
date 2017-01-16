@@ -90,8 +90,6 @@ namespace fse
 		std::swap(path_, tmp.path_);
 		std::swap(tex_, tmp.tex_);
 
-		loader_->textureCounter[path_]++;
-
 		return *this;
 	}
 
