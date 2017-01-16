@@ -106,9 +106,12 @@ void LightSystem::render(sf::RenderTarget& target)
 
     mCompositionTexture.display();
 
-	target.setView(target.getDefaultView());
-	target.draw(sf::Sprite(mCompositionTexture.getTexture()), sf::BlendMultiply);
-	target.setView(view);
+	//target.setView(target.getDefaultView());
+	sf::Sprite sprite = sf::Sprite(mCompositionTexture.getTexture());
+	sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
+	target.draw(sprite, sf::BlendMultiply);
+	//target.draw(sf::Sprite(mCompositionTexture.getTexture()), sf::BlendMultiply);
+	//target.setView(view);
 }
 
 LightShape* LightSystem::createLightShape()
