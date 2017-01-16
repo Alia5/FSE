@@ -45,7 +45,7 @@ namespace fse
 			scene->spawnFSEObject(std::move(timer));
 		}
 
-	private:
+	private:	
 
 		bool mActive = false;
 		bool mSingleShot = false;

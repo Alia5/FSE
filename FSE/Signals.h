@@ -110,7 +110,7 @@ public:
 
 	}
 
-	SConnection(Signal<Args...>& signal, Connection connection) : signal_(&signal), connection_(connection)
+	SConnection(Signal<Args...>& signal, Connection connection) : connection_(connection), signal_(&signal)
 	{
 		hasConnection = true;
 	}
