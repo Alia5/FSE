@@ -25,6 +25,18 @@
     <Filter Include="Source Files\Component">
       <UniqueIdentifier>{6bf4dd4a-9139-46bc-ac73-aef34e8bc51a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\LTBL2">
+      <UniqueIdentifier>{9809d68c-affa-4854-8501-92078083e6cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\LTBL2">
+      <UniqueIdentifier>{e8ce4d4f-195e-4db3-a066-2f9b94f484c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\LTBL2\src">
+      <UniqueIdentifier>{b4787be9-11f6-41a3-bc05-b98fd0d71ec2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LTBL2\src">
+      <UniqueIdentifier>{6940237c-bb16-49db-9e72-4ef7d57d754e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetLoader.h">
@@ -84,6 +96,27 @@
     <ClInclude Include="FSEObject\LoadingScreen.h">
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\LTBL2\LetThereBeLight.hpp">
+      <Filter>Header Files\LTBL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LTBL2\src\LightSystem.hpp">
+      <Filter>Header Files\LTBL2\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LTBL2\src\Utils.hpp">
+      <Filter>Header Files\LTBL2\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LTBL2\src\LightDirectionEmission.hpp">
+      <Filter>Header Files\LTBL2\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LTBL2\src\LightPointEmission.hpp">
+      <Filter>Header Files\LTBL2\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LTBL2\src\LightResources.hpp">
+      <Filter>Header Files\LTBL2\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LTBL2\src\LightShape.hpp">
+      <Filter>Header Files\LTBL2\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -139,6 +172,21 @@
     </ClCompile>
     <ClCompile Include="FSEObject\LoadingScreen.cpp">
       <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LTBL2\LetThereBeLight.cpp">
+      <Filter>Source Files\LTBL2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LTBL2\src\LightDirectionEmission.cpp">
+      <Filter>Source Files\LTBL2\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LTBL2\src\LightPointEmission.cpp">
+      <Filter>Source Files\LTBL2\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LTBL2\src\LightShape.cpp">
+      <Filter>Source Files\LTBL2\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LTBL2\src\LightSystem.cpp">
+      <Filter>Source Files\LTBL2\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

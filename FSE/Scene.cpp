@@ -89,7 +89,7 @@ namespace fse
 			m_ZOrderChanged = false;
 		}
 		renderer->render(m_FSEObjects);
-
+	
 		if (phys_draw_debug)
 		{
 			physWorld.DrawDebugData();

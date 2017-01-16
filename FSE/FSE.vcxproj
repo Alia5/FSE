@@ -146,6 +146,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\LTBL2\LetThereBeLight.hpp" />
+    <ClInclude Include="..\LTBL2\src\LightDirectionEmission.hpp" />
+    <ClInclude Include="..\LTBL2\src\LightPointEmission.hpp" />
+    <ClInclude Include="..\LTBL2\src\LightResources.hpp" />
+    <ClInclude Include="..\LTBL2\src\LightShape.hpp" />
+    <ClInclude Include="..\LTBL2\src\LightSystem.hpp" />
+    <ClInclude Include="..\LTBL2\src\Utils.hpp" />
     <ClInclude Include="AssetLoader.h" />
     <ClInclude Include="Component\SmoothViewController.h" />
     <ClInclude Include="Component\ViewController.h" />
@@ -167,6 +174,11 @@
     <ClInclude Include="Signals.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\LTBL2\LetThereBeLight.cpp" />
+    <ClCompile Include="..\LTBL2\src\LightDirectionEmission.cpp" />
+    <ClCompile Include="..\LTBL2\src\LightPointEmission.cpp" />
+    <ClCompile Include="..\LTBL2\src\LightShape.cpp" />
+    <ClCompile Include="..\LTBL2\src\LightSystem.cpp" />
     <ClCompile Include="AssetLoader.cpp" />
     <ClCompile Include="Component\SmoothViewController.cpp" />
     <ClCompile Include="Component\ViewController.cpp" />
