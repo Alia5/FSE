@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Application.h"
 #include "FSEObject/FSEObject.h"
+#include "FSEObject/FSELightWorld.h"
 
 namespace fse
 {
@@ -9,6 +10,12 @@ namespace fse
 	{
 		physWorld.SetContactListener(&phys_contact_listener);
 		WinResizeSignalConnection = m_Application->onWindowResized.connect(this, &Scene::notifyResize);
+
+		createFSEObject<FSELightWorld>([this](FSEObject* lightWorld)
+		{
+			m_light_world = dynamic_cast<FSELightWorld*>(lightWorld);
+		});
+		processPendingSpawns();
 	}
 
 	Scene::~Scene()
@@ -29,6 +36,10 @@ namespace fse
 
 		phys_debug_draw = PhysDebugDraw(*m_renderTarget);
 		physWorld.SetDebugDraw(&phys_debug_draw);
+
+
+		m_light_world->init(renderTarget);
+
 	}
 
 
@@ -39,31 +50,11 @@ namespace fse
 
 		physAccumulator += deltaTime;
 
-		//int numSteps = 0;
-
 		while (physAccumulator >= physTimestep)
 		{
 			physWorld.Step(physTimestep, physVelocyIters, physPosIters);
 			physAccumulator -= physTimestep;
-
-			//physWorld.ClearForces();
-
-			//numSteps++;
-			//testCounter++;
 		}
-
-		//if (testTimer.getElapsedTime().asSeconds() >= 1)
-		//{
-		//	std::wcout << "steps: " << testCounter << "\n";
-		//	testTimer.restart();
-		//	testCounter = 0;
-		//}
-		//std::wcout << "physStepTimeLeft: " << physStepTimeLeft << "\n" << "took " << numSteps << " steps\n";
-
-		//for (auto &object : m_FSEObjects)
-		//{
-		//	object->update(deltaTime);
-		//}
 
 		for (auto it = m_FSEObjects.rbegin(); it != m_FSEObjects.rend(); ++it)
 		{
@@ -89,7 +80,7 @@ namespace fse
 			m_ZOrderChanged = false;
 		}
 		renderer->render(m_FSEObjects);
-	
+
 		if (phys_draw_debug)
 		{
 			physWorld.DrawDebugData();
@@ -148,7 +139,6 @@ namespace fse
 		sf::View view = m_renderTarget->getView();
 		sf::IntRect viewPort = m_renderTarget->getViewport(view);
 		view.setSize(sf::Vector2f(static_cast<float>(viewPort.width), static_cast<float>(viewPort.height)));
-		//view.reset(sf::FloatRect(0, 0, viewPort.width, viewPort.height));
 		m_renderTarget->setView(view);
 	}
 
@@ -156,6 +146,12 @@ namespace fse
 	{
 		return m_Application;
 	}
+
+	FSELightWorld* Scene::getLightWorld() const
+	{
+		return m_light_world;
+	}
+
 
 	b2World *Scene::getPhysWorld()
 	{

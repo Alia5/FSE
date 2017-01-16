@@ -117,6 +117,9 @@
     <ClInclude Include="..\LTBL2\src\LightShape.hpp">
       <Filter>Header Files\LTBL2\src</Filter>
     </ClInclude>
+    <ClInclude Include="FSEObject\FSELightWorld.h">
+      <Filter>Header Files\FSEObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -187,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="..\LTBL2\src\LightSystem.cpp">
       <Filter>Source Files\LTBL2\src</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEObject\FSELightWorld.cpp">
+      <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

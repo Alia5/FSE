@@ -21,6 +21,7 @@ namespace fse
 {
 	class Application;
 	class FSEObject;
+	class FSELightWorld;
 	class Scene 
 	{
 	public:
@@ -81,6 +82,8 @@ namespace fse
 
 		Application* getApplication() const;
 
+		FSELightWorld* getLightWorld() const;
+
 		b2World *getPhysWorld();
 
 
@@ -116,6 +119,8 @@ namespace fse
 
 		NetworkHandler* network_handler_ = nullptr;
 		
+		FSELightWorld* m_light_world = nullptr;
+
 		const int32 physVelocyIters = 16;
 		const int32 physPosIters = 6;
 		b2Vec2 physGravity = b2Vec2(0, 10);
@@ -127,8 +132,5 @@ namespace fse
 
 		bool phys_draw_debug = false;
 
-
-		//sf::Clock testTimer;
-		//int testCounter = 0;
 	};
 }

@@ -27,7 +27,6 @@ namespace fse
 		float currentTime;
 		sf::Clock measureclock;
 		float fps = 0;
-		float fps2;
 		float smoothing = 0.98f;
 		sf::Clock updclock;
 
