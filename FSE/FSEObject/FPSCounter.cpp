@@ -9,7 +9,7 @@ namespace fse
 
 	FPSCounter::FPSCounter(Scene* scene, const sf::Vector2f& spawnPos) : FSEObject(scene, spawnPos)
 	{
-		m_font.loadFromFile("./data/bitstream-vera/VeraMoBd.ttf");
+		m_font.loadFromFile("./data/fonts/bitstream-vera/VeraMoBd.ttf");
 
 
 		m_fpsText.setFont(m_font);
