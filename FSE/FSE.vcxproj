@@ -162,7 +162,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="FSEObject\DummyObject.h" />
     <ClInclude Include="FSEObject\FPSCounter.h" />
-    <ClInclude Include="FSEObject\FSELightWorld.h" />
+    <ClInclude Include="Lights\FSELightWorld.h" />
     <ClInclude Include="FSEObject\FSEObject.h" />
     <ClInclude Include="FSEObject\LoadingScreen.h" />
     <ClInclude Include="FSEObject\Timer.h" />
@@ -189,7 +189,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FSEObject\DummyObject.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />
-    <ClCompile Include="FSEObject\FSELightWorld.cpp" />
+    <ClCompile Include="Lights\FSELightWorld.cpp" />
     <ClCompile Include="FSEObject\FSEObject.cpp" />
     <ClCompile Include="FSEObject\LoadingScreen.cpp" />
     <ClCompile Include="FSEObject\Timer.cpp" />

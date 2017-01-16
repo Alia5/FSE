@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FSEObject.h"
+#include "../FSEObject/FSEObject.h"
 
 #include "../../LTBL2/src/LightSystem.hpp"
 

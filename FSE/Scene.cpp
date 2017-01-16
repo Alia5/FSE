@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "Application.h"
 #include "FSEObject/FSEObject.h"
-#include "FSEObject/FSELightWorld.h"
+#include "Lights/FSELightWorld.h"
 
 namespace fse
 {

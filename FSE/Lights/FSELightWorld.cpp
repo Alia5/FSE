@@ -14,7 +14,6 @@ namespace fse
 	{
 		setZOrder(255);
 		m_light_system = std::make_unique<ltbl::LightSystem>(true);
-		std::wcout << m_light_system->useNormals() << std::endl;
 	}
 
 	FSELightWorld::~FSELightWorld()
