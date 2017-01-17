@@ -207,10 +207,10 @@ class LightSystem : sf::NonCopyable
 		priv::Quadtree mLightShapeQuadtree; ///< The quadtree which handles LightShape
 		priv::Quadtree mLightPointEmissionQuadtree; ///< The quadtree which handles LightPointEmission
 
-		std::unordered_set<LightPointEmission*> mPointEmissionLights; ///< The LightPointEmissions of the system
-		std::unordered_set<LightDirectionEmission*> mDirectionEmissionLights; ///< The LightDirectionEmissions of the system
-		std::unordered_set<LightShape*> mLightShapes; ///< The LightShapes of the system
-		std::unordered_set<Sprite*> mNormalSprites; ///< The NormalSprites of the system
+		std::vector<LightPointEmission*> mPointEmissionLights; ///< The LightPointEmissions of the system
+		std::vector<LightDirectionEmission*> mDirectionEmissionLights; ///< The LightDirectionEmissions of the system
+		std::vector<LightShape*> mLightShapes; ///< The LightShapes of the system
+		std::vector<Sprite*> mNormalSprites; ///< The NormalSprites of the system
 
 		sf::RenderTexture mLightTempTexture; ///< The light render texture
 		sf::RenderTexture mEmissionTempTexture; ///< The emission render texture

@@ -146,7 +146,7 @@ LightShape* LightSystem::createLightShape()
 {
 	LightShape* shape = new LightShape();
 	mLightShapeQuadtree.addOccupant(shape);
-	mLightShapes.insert(shape);
+	mLightShapes.push_back(shape);
 	return shape;
 }
 
@@ -226,7 +226,8 @@ LightShape* LightSystem::createLightShape(const sf::Sprite& sprite)
 
 void LightSystem::removeShape(LightShape* shape)
 {
-	auto itr = mLightShapes.find(shape);
+	auto itr = std::find(mLightShapes.begin(), mLightShapes.end(), shape);
+	//auto itr = mLightShapes.find(shape);
 	if (itr != mLightShapes.end()) 
 	{
 		mLightShapeQuadtree.removeOccupant(*itr);
@@ -239,13 +240,13 @@ LightPointEmission* LightSystem::createLightPointEmission()
 {
 	LightPointEmission* light = new LightPointEmission();
 	mLightPointEmissionQuadtree.addOccupant(light);
-	mPointEmissionLights.insert(light);
+	mPointEmissionLights.push_back(light);
 	return light;
 }
 
 void LightSystem::removeLight(LightPointEmission* light)
 {
-	auto itr = mPointEmissionLights.find(light);
+	auto itr = std::find(mPointEmissionLights.begin(), mPointEmissionLights.end(), light);
 	if (itr != mPointEmissionLights.end())
 	{
 		mLightPointEmissionQuadtree.removeOccupant(*itr);
@@ -257,13 +258,14 @@ void LightSystem::removeLight(LightPointEmission* light)
 LightDirectionEmission* LightSystem::createLightDirectionEmission()
 {
 	LightDirectionEmission* light = new LightDirectionEmission();
-	mDirectionEmissionLights.insert(light);
+	mDirectionEmissionLights.push_back(light);
 	return light;
 }
 
 void LightSystem::removeLight(LightDirectionEmission* light) 
 {
-    auto itr = mDirectionEmissionLights.find(light);
+    //auto itr = mDirectionEmissionLights.find(light);
+	auto itr = std::find(mDirectionEmissionLights.begin(), mDirectionEmissionLights.end(), light);
 	if (itr != mDirectionEmissionLights.end())
 	{
 		mDirectionEmissionLights.erase(itr);
@@ -273,12 +275,25 @@ void LightSystem::removeLight(LightDirectionEmission* light)
 
 void LightSystem::addSprite(Sprite& sprite)
 {
-	mNormalSprites.insert(&sprite);
+	mNormalSprites.push_back(&sprite);
+
+	std::sort(mNormalSprites.begin(), mNormalSprites.end(),
+		[](const Sprite* a, const Sprite* b) {
+
+		return a->getZOrder() < b->getZOrder();
+
+	});
+
 }
+//void LightSystem::addSprite(Sprite& sprite, int zOrder)
+//{
+//	mNormalSprites.push_back(&sprite);
+//}
 
 void LightSystem::removeSprite(Sprite& sprite)
 {
-	auto itr = mNormalSprites.find(&sprite);
+	//auto itr = mNormalSprites.find(&sprite);
+	auto itr = std::find(mNormalSprites.begin(), mNormalSprites.end(), &sprite);
 	if (itr != mNormalSprites.end())
 	{
 		mNormalSprites.erase(itr);

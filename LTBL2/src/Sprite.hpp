@@ -21,11 +21,15 @@ class Sprite : public priv::BaseLight, public sf::Sprite
 
 		void render(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
 		void renderNormals(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
+		
+		void setZOrder(int order);
+		int getZOrder() const;
 
 	private:
 		sf::Texture* mTexture;
 		sf::Texture* mNormalsTexture;
 		bool mNeedRenderNormals;
+		int mZOrder;
 };
 
 } // namespace ltbl

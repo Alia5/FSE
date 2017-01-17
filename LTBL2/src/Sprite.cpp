@@ -9,6 +9,7 @@ Sprite::Sprite()
 	, mTexture(nullptr)
 	, mNormalsTexture(nullptr)
 	, mNeedRenderNormals(false)
+	, mZOrder(0)
 {
 }
 
@@ -45,4 +46,13 @@ void Sprite::renderNormals(sf::RenderTarget& target, sf::RenderStates states)
 	mNeedRenderNormals = false;
 }
 
+	void Sprite::setZOrder(int order)
+	{
+		mZOrder = order;
+	}
+
+	int Sprite::getZOrder() const
+	{
+		return mZOrder;
+	}
 } // namespace ltbl
