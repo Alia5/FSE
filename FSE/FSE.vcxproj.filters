@@ -126,6 +126,12 @@
     <ClInclude Include="Lights\FSELightWorld.h">
       <Filter>Header Files\Lights</Filter>
     </ClInclude>
+    <ClInclude Include="Lights\PointLight.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Lights\BaseLight.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -198,6 +204,12 @@
       <Filter>Source Files\LTBL2\src</Filter>
     </ClCompile>
     <ClCompile Include="Lights\FSELightWorld.cpp">
+      <Filter>Source Files\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Lights\PointLight.cpp">
+      <Filter>Source Files\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Lights\BaseLight.cpp">
       <Filter>Source Files\Lights</Filter>
     </ClCompile>
   </ItemGroup>

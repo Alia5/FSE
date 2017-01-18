@@ -62,7 +62,8 @@ namespace fse
 
 	AssetLoader::Texture::Texture(const Texture& texture) : loader_(texture.loader_), path_(texture.path_), tex_(texture.tex_)
 	{
-		loader_->textureCounter[path_]++;
+		if (loader_ != nullptr)
+			loader_->textureCounter[path_]++;
 	}
 
 	AssetLoader::Texture::Texture(AssetLoader* loader, std::string path, sf::Texture* tex) : loader_(loader), path_(path), tex_(tex)
