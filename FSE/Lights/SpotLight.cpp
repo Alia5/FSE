@@ -8,7 +8,7 @@ namespace fse
 	{
 	}
 
-	SpotLight::SpotLight(Scene* scene, const sf::Vector2f& spawnPos) : BaseLight(scene, spawnPos, "lights/spotLightTexture.png", true)
+	SpotLight::SpotLight(Scene* scene, const sf::Vector2f& spawnPos) : Light(scene, spawnPos, "lights/spotLightTexture.png", true)
 	{
 		m_light->setOrigin(sf::Vector2f(m_LightTexture->getSize().x / 2, 0.f));
 		m_lenght = m_LightTexture->getSize().y * FSE_METERS_PER_PIXEL;

@@ -4,12 +4,12 @@
 
 namespace fse
 {
-	PointLight::PointLight() : BaseLight()
+	PointLight::PointLight() : Light()
 	{
 		
 	}
 
-	PointLight::PointLight(Scene* scene, const sf::Vector2f& spawnPos) : BaseLight(scene, spawnPos, "lights/pointLightTexture.png", true)
+	PointLight::PointLight(Scene* scene, const sf::Vector2f& spawnPos) : Light(scene, spawnPos, "lights/pointLightTexture.png", true)
 	{
 		m_light->setScale((FSE_PIXELS_PER_METER / m_LightTexture->getSize().x), (FSE_PIXELS_PER_METER / m_LightTexture->getSize().x));
 	}

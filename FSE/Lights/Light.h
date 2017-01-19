@@ -5,13 +5,13 @@
 
 namespace fse
 {
-	class BaseLight
+	class Light
 	{
 	public:
-		BaseLight();
-		BaseLight(const BaseLight& other);
-		BaseLight(Scene* scene, const sf::Vector2f& spawnPos, const std::string& path, bool smooth);
-		virtual ~BaseLight();
+		Light();
+		Light(const Light& other);
+		Light(Scene* scene, const sf::Vector2f& spawnPos, const std::string& path, bool smooth);
+		virtual ~Light();
 
 		void setPosition(const sf::Vector2f& pos);
 		void setColor(const sf::Color& color);
@@ -21,7 +21,7 @@ namespace fse
 		sf::Color getColor() const;
 		sf::Vector2f getScale() const;
 
-		BaseLight& operator=(const BaseLight& other);
+		Light& operator=(const Light& other);
 
 	protected:
 		Scene* m_scene = nullptr;

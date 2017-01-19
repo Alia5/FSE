@@ -1,21 +1,21 @@
-#include "BaseLight.h"
+#include "Light.h"
 #include "../Application.h"
 
 
 namespace fse
 {
 
-	BaseLight::BaseLight()
+	Light::Light()
 	{
 	}
 
-	BaseLight::BaseLight(const BaseLight& other) : m_scene(other.m_scene), m_LightTexture(other.m_LightTexture)
+	Light::Light(const Light& other) : m_scene(other.m_scene), m_LightTexture(other.m_LightTexture)
 	{
 		m_light = m_scene->getLightWorld()->getLightSystem()->createLightPointEmission();
 		*m_light = *other.m_light;
 	}
 
-	BaseLight::BaseLight(Scene* scene, const sf::Vector2f& spawnPos, const std::string& path, bool smooth) : m_scene(scene)
+	Light::Light(Scene* scene, const sf::Vector2f& spawnPos, const std::string& path, bool smooth) : m_scene(scene)
 	{
 		m_LightTexture = scene->getApplication()->getAssetLoader().getTexture(path); //"lights/pointLightTexture.png"
 		m_LightTexture->setSmooth(smooth);
@@ -28,48 +28,48 @@ namespace fse
 
 	}
 
-	BaseLight::~BaseLight()
+	Light::~Light()
 	{
 		if (m_scene != nullptr && m_light != nullptr)
 			m_scene->getLightWorld()->getLightSystem()->removeLight(m_light);
 	}
 
-	void BaseLight::setPosition(const sf::Vector2f& pos)
+	void Light::setPosition(const sf::Vector2f& pos)
 	{
 		m_light->setPosition(pos * FSE_PIXELS_PER_METER);
 	}
 
-	void BaseLight::setColor(const sf::Color& color)
+	void Light::setColor(const sf::Color& color)
 	{
 		m_light->setColor(color);
 	}
 
-	void BaseLight::setScale(const sf::Vector2f& scale)
+	void Light::setScale(const sf::Vector2f& scale)
 	{
 		m_light->setScale(scale);
 	}
 
-	sf::Vector2f BaseLight::getPosition() const
+	sf::Vector2f Light::getPosition() const
 	{
 		return m_light->getPosition() * FSE_METERS_PER_PIXEL;
 	}
 
-	sf::Color BaseLight::getColor() const
+	sf::Color Light::getColor() const
 	{
 		return m_light->getColor();
 	}
 
-	sf::Vector2f BaseLight::getScale() const
+	sf::Vector2f Light::getScale() const
 	{
 		return m_light->getScale();
 	}
 
-	BaseLight& BaseLight::operator=(const BaseLight& other)
+	Light& Light::operator=(const Light& other)
 	{
 		if (&other == this)
 			return *this;
 
-		BaseLight tmp(other);
+		Light tmp(other);
 		std::swap(m_light, tmp.m_light);
 		std::swap(m_scene, tmp.m_scene);
 		std::swap(m_LightTexture, tmp.m_LightTexture);

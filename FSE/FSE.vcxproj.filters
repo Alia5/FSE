@@ -129,10 +129,10 @@
     <ClInclude Include="Lights\PointLight.h">
       <Filter>Header Files\Lights</Filter>
     </ClInclude>
-    <ClInclude Include="Lights\BaseLight.h">
+    <ClInclude Include="Lights\SpotLight.h">
       <Filter>Header Files\Lights</Filter>
     </ClInclude>
-    <ClInclude Include="Lights\SpotLight.h">
+    <ClInclude Include="Lights\Light.h">
       <Filter>Header Files\Lights</Filter>
     </ClInclude>
   </ItemGroup>
@@ -212,10 +212,10 @@
     <ClCompile Include="Lights\PointLight.cpp">
       <Filter>Source Files\Lights</Filter>
     </ClCompile>
-    <ClCompile Include="Lights\BaseLight.cpp">
+    <ClCompile Include="Lights\SpotLight.cpp">
       <Filter>Source Files\Lights</Filter>
     </ClCompile>
-    <ClCompile Include="Lights\SpotLight.cpp">
+    <ClCompile Include="Lights\Light.cpp">
       <Filter>Source Files\Lights</Filter>
     </ClCompile>
   </ItemGroup>

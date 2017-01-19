@@ -1,10 +1,10 @@
 #pragma once
 
-#include "BaseLight.h"
+#include "Light.h"
 
 namespace fse
 {
-	class SpotLight : public BaseLight
+	class SpotLight : public Light
 	{
 	public:
 		SpotLight();
