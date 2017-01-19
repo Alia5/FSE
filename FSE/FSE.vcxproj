@@ -169,6 +169,7 @@
     <ClInclude Include="FSEObject\Timer.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Lights\PointLight.h" />
+    <ClInclude Include="Lights\SpotLight.h" />
     <ClInclude Include="NetworkHandler.h" />
     <ClInclude Include="PhysContactListener.h" />
     <ClInclude Include="PhysDebugDraw.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="FSEObject\Timer.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Lights\PointLight.cpp" />
+    <ClCompile Include="Lights\SpotLight.cpp" />
     <ClCompile Include="NetworkHandler.cpp" />
     <ClCompile Include="PhysContactListener.cpp" />
     <ClCompile Include="PhysDebugDraw.cpp" />
