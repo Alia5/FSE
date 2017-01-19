@@ -21,8 +21,16 @@ namespace fse
 		sf::Color getColor() const;
 		sf::Vector2f getScale() const;
 
-		Light& operator=(const Light& other);
+		void rotate(float angle);
+		void setRotation(float angle);
+		float getRotation() const;
 
+		void setTurnedOn(bool on);
+		bool isTurnedOn() const;
+		void toggleTurnedOn();
+
+		Light& operator=(const Light& other);
+		
 	protected:
 		Scene* m_scene = nullptr;
 		fse::Texture m_LightTexture;

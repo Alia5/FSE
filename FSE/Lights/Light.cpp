@@ -64,6 +64,36 @@ namespace fse
 		return m_light->getScale();
 	}
 
+	void Light::rotate(float angle)
+	{
+		m_light->rotate(angle);
+	}
+
+	void Light::setRotation(float angle)
+	{
+		m_light->setRotation(angle);
+	}
+
+	float Light::getRotation() const
+	{
+		return m_light->getRotation();
+	}
+
+	void Light::setTurnedOn(bool on)
+	{
+		m_light->setTurnedOn(on);
+	}
+
+	bool Light::isTurnedOn() const
+	{
+		return m_light->isTurnedOn();
+	}
+
+	void Light::toggleTurnedOn()
+	{
+		m_light->toggleTurnedOn();
+	}
+
 	Light& Light::operator=(const Light& other)
 	{
 		if (&other == this)
