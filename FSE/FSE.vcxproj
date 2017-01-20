@@ -158,8 +158,8 @@
     <ClInclude Include="Component\SmoothViewController.h" />
     <ClInclude Include="Component\ViewController.h" />
     <ClInclude Include="EngineCore.h" />
-    <ClInclude Include="FMath.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="FMath.h" />
     <ClInclude Include="FSEObject\DummyObject.h" />
     <ClInclude Include="FSEObject\FPSCounter.h" />
     <ClInclude Include="Lights\Light.h" />
@@ -188,7 +188,6 @@
     <ClCompile Include="Component\ViewController.cpp" />
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="EventBus.cpp" />
-    <ClCompile Include="FMath.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FSEObject\DummyObject.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />

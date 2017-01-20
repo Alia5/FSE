@@ -10,7 +10,7 @@ namespace fse
 
 	SpotLight::SpotLight(Scene* scene, const sf::Vector2f& spawnPos) : Light(scene, spawnPos, "lights/spotLightTexture.png", true)
 	{
-		light_->setOrigin(sf::Vector2f(light_texture_->getSize().x / 2, 0.f));
+		light_->setOrigin(sf::Vector2f(light_texture_->getSize().x / 2.f, 0.f));
 		lenght_ = light_texture_->getSize().y * FSE_METERS_PER_PIXEL;
 	}
 
@@ -33,7 +33,7 @@ namespace fse
 	void SpotLight::setAngle(float angle)
 	{
 		angle_ = std::min(angle, 179.9f);
-		light_->setScale(light_->getScale().x * light_->getScale().y * std::tan((angle_ * 3.14159265 / 180.0) / 2), light_->getScale().y);
+		light_->setScale(light_->getScale().x * light_->getScale().y * std::tan((angle_ * 3.14159265 / 180.0) / 2.f), light_->getScale().y);
 
 	}
 
