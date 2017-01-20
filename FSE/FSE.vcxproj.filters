@@ -51,9 +51,6 @@
     <ClInclude Include="EngineCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EventBus.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -5,7 +5,7 @@ DummyObject::DummyObject(fse::Scene *scene) : fse::FSEObject(scene)
 	shape = sf::CircleShape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
-	m_Drawable = &shape;
+	drawable_ = &shape;
 
 
 	//eventCookie = scene->getEventBus()->subscribeEvent("TEST", std::bind(&DummyObject::testEventCallback, this));
@@ -87,7 +87,7 @@ void DummyObject::update(float deltaTime)
 
 void DummyObject::draw(sf::RenderTarget& target)
 {	
-	target.draw(*m_Drawable);
+	target.draw(*drawable_);
 }
 
 void DummyObject::spawned()

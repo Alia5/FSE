@@ -158,7 +158,6 @@
     <ClInclude Include="Component\SmoothViewController.h" />
     <ClInclude Include="Component\ViewController.h" />
     <ClInclude Include="EngineCore.h" />
-    <ClInclude Include="EventBus.h" />
     <ClInclude Include="FMath.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="FSEObject\DummyObject.h" />

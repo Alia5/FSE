@@ -40,11 +40,11 @@ namespace fse
 
 		void loadTexture(std::string path);
 
-		std::map<std::string, sf::Texture> textureMap;
-		std::map<std::string, unsigned int> textureCounter;
+		std::map<std::string, sf::Texture> texture_map_;
+		std::map<std::string, unsigned int> texture_counter_;
 
 	};
 
-	typedef AssetLoader::Texture Texture;
+	using Texture = AssetLoader::Texture;
 
 }

@@ -22,8 +22,8 @@ namespace fse
 		template <typename Slot>
 		void start(Slot&& slot)
 		{
-			mActive = true;
-			timeout.connect(slot);
+			active_ = true;
+			timeout_.connect(slot);
 		}
 
 		void stop();
@@ -47,15 +47,15 @@ namespace fse
 
 	private:	
 
-		bool mActive = false;
-		bool mSingleShot = false;
-		int mInterval = 0;
-		float mElapsedTime = 0.f;
+		bool active_ = false;
+		bool single_shot_ = false;
+		int interval_ = 0;
+		float elapsed_time_ = 0.f;
 	
 
 
 	PUBLIC_SIGNALS:
-		Signal<> timeout;
+		Signal<> timeout_;
 
 	};
 }

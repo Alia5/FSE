@@ -4,7 +4,7 @@
 
 namespace fse
 {
-	Renderer::Renderer(sf::RenderTarget *renderTarget) : m_renderTarget(renderTarget)
+	Renderer::Renderer(sf::RenderTarget *renderTarget) : render_target_(renderTarget)
 	{
 
 
@@ -19,7 +19,7 @@ namespace fse
 	{
 		for (auto & object : objects)
 		{
-			object->draw(*m_renderTarget);
+			object->draw(*render_target_);
 		}
 	}
 }

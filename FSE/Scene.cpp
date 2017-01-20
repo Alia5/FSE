@@ -6,57 +6,57 @@
 namespace fse
 {
 
-	Scene::Scene(Application* application) : m_renderTarget(nullptr), m_Application(application), /*physGravity(0.f,10.f),*/ physWorld(physGravity)
+	Scene::Scene(Application* application) : render_target_(nullptr), application_(application), /*phys_gravity_(0.f,10.f),*/ phys_world_(phys_gravity_)
 	{
-		physWorld.SetContactListener(&phys_contact_listener);
-		WinResizeSignalConnection = m_Application->onWindowResized.connect(this, &Scene::notifyResize);
+		phys_world_.SetContactListener(&phys_contact_listener_);
+		win_resize_signal_connection_ = application_->on_window_resized_.connect(this, &Scene::notifyResize);
 
 		createFSEObject<FSELightWorld>([this](FSEObject* lightWorld)
 		{
-			m_light_world = dynamic_cast<FSELightWorld*>(lightWorld);
+			light_world_ = dynamic_cast<FSELightWorld*>(lightWorld);
 		});
 		processPendingSpawns();
 	}
 
 	Scene::~Scene()
 	{
-		m_Application->onWindowResized.disconnect(WinResizeSignalConnection);
+		application_->on_window_resized_.disconnect(win_resize_signal_connection_);
 
-		m_FSEObjects.clear();
-		m_pendingObjectRemovals.clear();
-		m_pendingObjectSpawns.clear();
+		fse_objects_.clear();
+		pending_object_removals_.clear();
+		pending_object_spawns_.clear();
 
 		std::wcout << "Deleting scene\n";
 	}
 
 	void Scene::setRenderTarget(sf::RenderTarget * renderTarget)
 	{
-		m_renderTarget = renderTarget;
-		renderer = std::make_unique<Renderer>(m_renderTarget);
+		render_target_ = renderTarget;
+		renderer_ = std::make_unique<Renderer>(render_target_);
 
-		phys_debug_draw = PhysDebugDraw(*m_renderTarget);
-		physWorld.SetDebugDraw(&phys_debug_draw);
+		phys_debug_draw_ = PhysDebugDraw(*render_target_);
+		phys_world_.SetDebugDraw(&phys_debug_draw_);
 
 
-		m_light_world->init(renderTarget);
+		light_world_->init(renderTarget);
 
 	}
 
 
 	void Scene::update(float deltaTime)
 	{
-		if (paused)
+		if (is_paused_)
 			deltaTime = 0.0f;
 
-		physAccumulator += deltaTime;
+		phys_accumulator_ += deltaTime;
 
-		while (physAccumulator >= physTimestep)
+		while (phys_accumulator_ >= phys_timestep_)
 		{
-			physWorld.Step(physTimestep, physVelocyIters, physPosIters);
-			physAccumulator -= physTimestep;
+			phys_world_.Step(phys_timestep_, phys_velocy_iters_, phys_pos_iters_);
+			phys_accumulator_ -= phys_timestep_;
 		}
 
-		for (auto it = m_FSEObjects.rbegin(); it != m_FSEObjects.rend(); ++it)
+		for (auto it = fse_objects_.rbegin(); it != fse_objects_.rend(); ++it)
 		{
 			it->get()->update(deltaTime);
 		}
@@ -67,9 +67,9 @@ namespace fse
 
 	void Scene::draw()
 	{
-		if (m_ZOrderChanged)
+		if (z_order_changed_)
 		{
-			std::sort(m_FSEObjects.begin(), m_FSEObjects.end(),
+			std::sort(fse_objects_.begin(), fse_objects_.end(),
 				[](const std::unique_ptr<FSEObject>& a, const std::unique_ptr<FSEObject>& b) {
 
 				return a->getZOrder() < b->getZOrder();
@@ -77,137 +77,137 @@ namespace fse
 			});
 
 
-			m_ZOrderChanged = false;
+			z_order_changed_ = false;
 		}
-		renderer->render(m_FSEObjects);
+		renderer_->render(fse_objects_);
 
-		if (phys_draw_debug)
+		if (phys_draw_debug_)
 		{
-			physWorld.DrawDebugData();
+			phys_world_.DrawDebugData();
 		}
 	}
 
 	std::vector<std::unique_ptr<FSEObject> >* Scene::getFSEObjects()
 	{
-		return &m_FSEObjects;
+		return &fse_objects_;
 	}
 
 	void Scene::notifyZOrderChanged()
 	{
-		m_ZOrderChanged = true;
+		z_order_changed_ = true;
 	}
 
 
 
 	void Scene::spawnFSEObject(std::unique_ptr<FSEObject> object)
 	{
-		m_pendingObjectSpawns.push_back(std::move(object));
+		pending_object_spawns_.push_back(std::move(object));
 	}
 
 	void Scene::destroyFSEObject(FSEObject* object)
 	{
-		m_pendingObjectRemovals.push_back(object);
+		pending_object_removals_.push_back(object);
 	}
 
 	bool Scene::isPaused()
 	{
-		return paused;
+		return is_paused_;
 	}
 
 	void Scene::setPaused(bool paused)
 	{
-		this->paused = paused;
+		this->is_paused_ = paused;
 	}
 
 	bool Scene::getPhysDrawDebug() const
 	{
-		return phys_draw_debug;
+		return phys_draw_debug_;
 	}
 
 	void Scene::setPhysDrawDebug(bool drawDebug)
 	{
-		phys_draw_debug = drawDebug;
+		phys_draw_debug_ = drawDebug;
 	}
 
 	PhysDebugDraw& Scene::getPhysDebugDraw()
 	{
-		return phys_debug_draw;
+		return phys_debug_draw_;
 	}
 
 	void Scene::notifyResize()
 	{
-		sf::View view = m_renderTarget->getView();
-		sf::IntRect viewPort = m_renderTarget->getViewport(view);
+		sf::View view = render_target_->getView();
+		sf::IntRect viewPort = render_target_->getViewport(view);
 		view.setSize(sf::Vector2f(static_cast<float>(viewPort.width), static_cast<float>(viewPort.height)));
-		m_renderTarget->setView(view);
+		render_target_->setView(view);
 	}
 
 	Application* Scene::getApplication() const
 	{
-		return m_Application;
+		return application_;
 	}
 
 	FSELightWorld* Scene::getLightWorld() const
 	{
-		return m_light_world;
+		return light_world_;
 	}
 
 
 	b2World *Scene::getPhysWorld()
 	{
-		return &physWorld;
+		return &phys_world_;
 	}
 
 
 	void Scene::addFSEObject(std::unique_ptr<FSEObject> object)
 	{
-		object->spawn(spawnCount++);
-		m_FSEObjects.push_back(std::move(object));
-		m_ZOrderChanged = true;
+		object->spawn(spawn_count_++);
+		fse_objects_.push_back(std::move(object));
+		z_order_changed_ = true;
 	}
 
 	void Scene::removeFSEObject(std::unique_ptr<FSEObject> const& object)
 	{
-		auto it = std::find(m_FSEObjects.begin(), m_FSEObjects.end(), object);
-		if (it != m_FSEObjects.end())
+		auto it = std::find(fse_objects_.begin(), fse_objects_.end(), object);
+		if (it != fse_objects_.end())
 		{
-			m_FSEObjects.erase(it);
+			fse_objects_.erase(it);
 		}
 	}
 
 	void Scene::removeFSEObject(FSEObject * object)
 	{
-		auto it = std::find_if(m_FSEObjects.begin(), m_FSEObjects.end(), [&](const std::unique_ptr<FSEObject> & obj) {
+		auto it = std::find_if(fse_objects_.begin(), fse_objects_.end(), [&](const std::unique_ptr<FSEObject> & obj) {
 			return obj.get() == object;
 		});
-		if (it != m_FSEObjects.end())
+		if (it != fse_objects_.end())
 		{
-			m_FSEObjects.erase(it);
+			fse_objects_.erase(it);
 		}
 	}
 
 	void Scene::processPendingRemovals()
 	{
-		if (m_pendingObjectRemovals.size() > 0)
+		if (pending_object_removals_.size() > 0)
 		{
-			for (auto & object : m_pendingObjectRemovals)
+			for (auto & object : pending_object_removals_)
 			{
 				removeFSEObject(object);
 			}
-			m_pendingObjectRemovals.clear();
+			pending_object_removals_.clear();
 		}
 
 	}
 
 	void Scene::processPendingSpawns()
 	{
-		if (m_pendingObjectSpawns.size() > 0)
+		if (pending_object_spawns_.size() > 0)
 		{
-			for (auto & object : m_pendingObjectSpawns)
+			for (auto & object : pending_object_spawns_)
 			{
 				addFSEObject(std::move(object));
 			}
-			m_pendingObjectSpawns.clear();
+			pending_object_spawns_.clear();
 		}
 	}
 

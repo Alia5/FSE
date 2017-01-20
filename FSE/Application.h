@@ -14,7 +14,7 @@ namespace fse
 	{
 	public:
 		Application();
-		~Application();
+		virtual ~Application();
 
 		virtual void update();
 
@@ -35,25 +35,25 @@ namespace fse
 		fse::AssetLoader& getAssetLoader();
 
 	protected:
-		//Scene m_RootScene;
+		//Scene root_scene_;
 		Scene *getRootScene();
 
 	PUBLIC_SIGNALS:
-		Signal<> onWindowResized;
+		Signal<> on_window_resized_;
 
 	private:
-		bool m_isServer = false;
+		bool is_server_ = false;
 
-		Input m_input;
+		Input input_;
 
-		sf::Clock m_ApplicationClock;
+		sf::Clock application_clock_;
 
-		sf::RenderWindow *m_RWindow = nullptr;
+		sf::RenderWindow *render_window_ = nullptr;
 
-		Scene m_RootScene;
+		Scene root_scene_;
 
-		NetworkHandler m_network_handler;
+		NetworkHandler network_handler_;
 
-		fse::AssetLoader m_assetLoader;
+		fse::AssetLoader asset_loader_;
 	};
 }

@@ -14,16 +14,16 @@ namespace fse
 
 	void Timer::update(float deltaTime)
 	{
-		if (mActive)
+		if (active_)
 		{
-			mElapsedTime += deltaTime;
-			while (mElapsedTime * 1000 >= mInterval)
+			elapsed_time_ += deltaTime;
+			while (elapsed_time_ * 1000 >= interval_)
 			{
-				mElapsedTime -= mInterval*0.001f;
-				timeout();
-				if (mSingleShot)
+				elapsed_time_ -= interval_*0.001f;
+				timeout_();
+				if (single_shot_)
 				{
-					mActive = false;
+					active_ = false;
 					getScene()->destroyFSEObject(this);
 					break;
 				}
@@ -43,18 +43,18 @@ namespace fse
 
 	//void Timer::start()
 	//{
-	//	mActive = true;
+	//	active_ = true;
 
 	//}
 
 	void Timer::stop()
 	{
-		mActive = false;
+		active_ = false;
 	}
 
 	void Timer::setInterval(int msecs)
 	{
-		mInterval = msecs;
+		interval_ = msecs;
 	}
 
 	bool Timer::isActive()
@@ -64,7 +64,7 @@ namespace fse
 
 	void Timer::setSingleShot(bool singleShot)
 	{
-		mSingleShot = singleShot;
+		single_shot_ = singleShot;
 	}
 
 }

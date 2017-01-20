@@ -11,7 +11,7 @@
 template <typename... Args>
 class ConnectionItem
 {
-	typedef std::function<void(Args...)> Slot;
+	using Slot = std::function<void(Args...)>;
 public:
 	ConnectionItem(Slot slot) : slot_(slot)
 	{
@@ -57,7 +57,7 @@ class SConnection;
 template<typename... Args>
 class Connection
 {
-	typedef std::shared_ptr<ConnectionItem<Args...>> Item;
+	using Item = std::shared_ptr<ConnectionItem<Args...>>;
 public:
 
 	Connection() : item_(nullptr)
@@ -101,7 +101,7 @@ private:
 template<typename... Args>
 class SConnection
 {
-	typedef Connection<Args...> Connection;
+	using Connection = Connection<Args...>;
 
 public:
 
@@ -112,19 +112,19 @@ public:
 
 	SConnection(Signal<Args...>& signal, Connection connection) : connection_(connection), signal_(&signal)
 	{
-		hasConnection = true;
+		has_connection_ = true;
 	}
 
 	~SConnection()
 	{
-		if (hasConnection && signal_)
+		if (has_connection_ && signal_)
 		{
 			signal_->disconnect(connection_);
 		}
 	}
 
 private:
-	bool hasConnection = false;
+	bool has_connection_ = false;
 	Connection connection_;
 	Signal<Args...> *signal_;
 };
@@ -132,13 +132,13 @@ private:
 template <typename... Args>
 class Signal
 {
-	typedef std::shared_ptr<ConnectionItem<Args...>> Item;
+	using Item = std::shared_ptr<ConnectionItem<Args...>>;
 
 public:
 
-	typedef std::function<void(Args...)> Slot;
-	typedef Connection<Args...> Connection;
-	typedef SConnection<Args...> ScopedConnection;
+	using Slot = std::function<void(Args...)>;
+	using Connection = Connection<Args...>;
+	using ScopedConnection = SConnection<Args...>;
 
 	Signal()
 	{

@@ -17,20 +17,20 @@ namespace fse
 
 	protected:
 
-		sf::Font m_font;
-		sf::Text m_fpsText;
-		sf::RectangleShape m_background;
+		sf::Font font_;
+		sf::Text fps_text_;
+		sf::RectangleShape background_;
 
 	private:
-		sf::View counterView;
+		sf::View counter_view_;
 
-		float currentTime;
-		sf::Clock measureclock;
-		float fps = 0;
-		float smoothing = 0.98f;
-		sf::Clock updclock;
+		float current_time_;
+		sf::Clock measureclock_;
+		float fps_ = 0;
+		float smoothing_ = 0.98f;
+		sf::Clock updclock_;
 
-		Signal<>::Connection onResizeConnection;
+		Signal<>::Connection on_resize_connection_;
 
 	};
 }

@@ -43,30 +43,30 @@ namespace fse
 		void createFSEObject()
 		{
 			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this));
-			m_pendingObjectSpawns.push_back(std::move(object));
+			pending_object_spawns_.push_back(std::move(object));
 		}
 
 		template<typename T, typename SpawnedSlot>
 		void createFSEObject(SpawnedSlot&& slot)
 		{
 			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this));
-			object->spawnedSignal.connect(slot);
-			m_pendingObjectSpawns.push_back(std::move(object));
+			object->spawned_signal_.connect(slot);
+			pending_object_spawns_.push_back(std::move(object));
 		}
 
 		template<typename T>
 		void createFSEObject(const sf::Vector2f spawnPos)
 		{
 			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this, spawnPos));
-			m_pendingObjectSpawns.push_back(std::move(object));
+			pending_object_spawns_.push_back(std::move(object));
 		}
 
 		template<typename T, typename SpawnedSlot>
 		void createFSEObject(const sf::Vector2f spawnPos, SpawnedSlot&& slot)
 		{
 			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this, spawnPos));
-			object->spawnedSignal.connect(slot);
-			m_pendingObjectSpawns.push_back(std::move(object));
+			object->spawned_signal_.connect(slot);
+			pending_object_spawns_.push_back(std::move(object));
 		}
 
 		void destroyFSEObject(FSEObject* FSEObject);
@@ -88,16 +88,6 @@ namespace fse
 
 
 	protected:
-		sf::RenderTarget* m_renderTarget;
-
-		std::vector<std::unique_ptr<FSEObject> > m_FSEObjects; 
-
-		std::list<std::unique_ptr<FSEObject> > m_pendingObjectSpawns;
-		std::list<FSEObject*> m_pendingObjectRemovals;
-
-
-		std::unique_ptr<Renderer> renderer;
-
 		void addFSEObject(std::unique_ptr<FSEObject> object);
 		void removeFSEObject(std::unique_ptr<FSEObject> const & object);
 
@@ -106,31 +96,42 @@ namespace fse
 		void processPendingRemovals();
 		void processPendingSpawns();
 
+
+		sf::RenderTarget* render_target_;
+
+		std::vector<std::unique_ptr<FSEObject> > fse_objects_; 
+
+		std::list<std::unique_ptr<FSEObject> > pending_object_spawns_;
+		std::list<FSEObject*> pending_object_removals_;
+
+
+		std::unique_ptr<Renderer> renderer_;
+
 	private:
-		bool m_ZOrderChanged = false;
-		int spawnCount = 0;
+		bool z_order_changed_ = false;
+		int spawn_count_ = 0;
 
-		bool paused = false;
+		bool is_paused_ = false;
 
-		float elapsedTime = 0;
+		float elapsed_time_ = 0;
 
-		Application *m_Application;
-		Signal<>::Connection WinResizeSignalConnection;
+		Application *application_;
+		Signal<>::Connection win_resize_signal_connection_;
 
 		NetworkHandler* network_handler_ = nullptr;
 		
-		FSELightWorld* m_light_world = nullptr;
+		FSELightWorld* light_world_ = nullptr;
 
-		const int32 physVelocyIters = 16;
-		const int32 physPosIters = 6;
-		b2Vec2 physGravity = b2Vec2(0, 10);
-		b2World physWorld;
-		const float32 physTimestep = 1.f / 128.f;
-		double physAccumulator = 0.0;
-		PhysContactListener phys_contact_listener;
-		PhysDebugDraw phys_debug_draw;
+		const int32 phys_velocy_iters_ = 16;
+		const int32 phys_pos_iters_ = 6;
+		b2Vec2 phys_gravity_ = b2Vec2(0, 10);
+		b2World phys_world_;
+		const float32 phys_timestep_ = 1.f / 128.f;
+		double phys_accumulator_ = 0.0;
+		PhysContactListener phys_contact_listener_;
+		PhysDebugDraw phys_debug_draw_;
 
-		bool phys_draw_debug = false;
+		bool phys_draw_debug_ = false;
 
 	};
 }

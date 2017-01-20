@@ -9,89 +9,89 @@ namespace fse
 	{
 	}
 
-	Light::Light(const Light& other) : m_scene(other.m_scene), m_LightTexture(other.m_LightTexture)
+	Light::Light(const Light& other) : scene_(other.scene_), light_texture_(other.light_texture_)
 	{
-		m_light = m_scene->getLightWorld()->getLightSystem()->createLightPointEmission();
-		*m_light = *other.m_light;
+		light_ = scene_->getLightWorld()->getLightSystem()->createLightPointEmission();
+		*light_ = *other.light_;
 	}
 
-	Light::Light(Scene* scene, const sf::Vector2f& spawnPos, const std::string& path, bool smooth) : m_scene(scene)
+	Light::Light(Scene* scene, const sf::Vector2f& spawnPos, const std::string& path, bool smooth) : scene_(scene)
 	{
-		m_LightTexture = scene->getApplication()->getAssetLoader().getTexture(path); //"lights/pointLightTexture.png"
-		m_LightTexture->setSmooth(smooth);
+		light_texture_ = scene->getApplication()->getAssetLoader().getTexture(path); //"lights/pointLightTexture.png"
+		light_texture_->setSmooth(smooth);
 
-		m_light = scene->getLightWorld()->getLightSystem()->createLightPointEmission();
-		m_light->setOrigin(sf::Vector2f(m_LightTexture->getSize().x * 0.5f, m_LightTexture->getSize().y * 0.5f));
-		m_light->setTexture(*m_LightTexture);
-		m_light->setColor(sf::Color::White);
-		m_light->setPosition(spawnPos * FSE_PIXELS_PER_METER);
+		light_ = scene->getLightWorld()->getLightSystem()->createLightPointEmission();
+		light_->setOrigin(sf::Vector2f(light_texture_->getSize().x * 0.5f, light_texture_->getSize().y * 0.5f));
+		light_->setTexture(*light_texture_);
+		light_->setColor(sf::Color::White);
+		light_->setPosition(spawnPos * FSE_PIXELS_PER_METER);
 
 	}
 
 	Light::~Light()
 	{
-		if (m_scene != nullptr && m_light != nullptr)
-			m_scene->getLightWorld()->getLightSystem()->removeLight(m_light);
+		if (scene_ != nullptr && light_ != nullptr)
+			scene_->getLightWorld()->getLightSystem()->removeLight(light_);
 	}
 
 	void Light::setPosition(const sf::Vector2f& pos)
 	{
-		m_light->setPosition(pos * FSE_PIXELS_PER_METER);
+		light_->setPosition(pos * FSE_PIXELS_PER_METER);
 	}
 
 	void Light::setColor(const sf::Color& color)
 	{
-		m_light->setColor(color);
+		light_->setColor(color);
 	}
 
 	void Light::setScale(const sf::Vector2f& scale)
 	{
-		m_light->setScale(scale);
+		light_->setScale(scale);
 	}
 
 	sf::Vector2f Light::getPosition() const
 	{
-		return m_light->getPosition() * FSE_METERS_PER_PIXEL;
+		return light_->getPosition() * FSE_METERS_PER_PIXEL;
 	}
 
 	sf::Color Light::getColor() const
 	{
-		return m_light->getColor();
+		return light_->getColor();
 	}
 
 	sf::Vector2f Light::getScale() const
 	{
-		return m_light->getScale();
+		return light_->getScale();
 	}
 
 	void Light::rotate(float angle)
 	{
-		m_light->rotate(angle);
+		light_->rotate(angle);
 	}
 
 	void Light::setRotation(float angle)
 	{
-		m_light->setRotation(angle);
+		light_->setRotation(angle);
 	}
 
 	float Light::getRotation() const
 	{
-		return m_light->getRotation();
+		return light_->getRotation();
 	}
 
 	void Light::setTurnedOn(bool on)
 	{
-		m_light->setTurnedOn(on);
+		light_->setTurnedOn(on);
 	}
 
 	bool Light::isTurnedOn() const
 	{
-		return m_light->isTurnedOn();
+		return light_->isTurnedOn();
 	}
 
 	void Light::toggleTurnedOn()
 	{
-		m_light->toggleTurnedOn();
+		light_->toggleTurnedOn();
 	}
 
 	Light& Light::operator=(const Light& other)
@@ -100,9 +100,9 @@ namespace fse
 			return *this;
 
 		Light tmp(other);
-		std::swap(m_light, tmp.m_light);
-		std::swap(m_scene, tmp.m_scene);
-		std::swap(m_LightTexture, tmp.m_LightTexture);
+		std::swap(light_, tmp.light_);
+		std::swap(scene_, tmp.scene_);
+		std::swap(light_texture_, tmp.light_texture_);
 
 		return *this;
 	}

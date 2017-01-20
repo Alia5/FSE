@@ -22,10 +22,10 @@ namespace fse
 	
 
 	private:
-		Application * m_Application = nullptr;
+		Application * application_ = nullptr;
 
-		bool showWindow = true;
-		bool run = true;
+		bool show_window_ = true;
+		bool run_ = true;
 
 	};
 }

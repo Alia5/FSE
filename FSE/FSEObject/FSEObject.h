@@ -60,27 +60,26 @@ namespace fse
 		void setTimedKill();
 
 	protected:
-		sf::Drawable *m_Drawable;
-
 		void setZOrder(int ZOrder);
-
 		std::vector<std::unique_ptr<FSEObject> >* getSceneFSEObjects() const;
 
-		/// position in METERS
-		sf::Vector2f m_position;
+		sf::Drawable *drawable_;
 
-		fse::Input* m_input;
+		/// position in METERS
+		sf::Vector2f position_;
+
+		fse::Input* input_;
 
 	private:
-		int m_ID = -1;
-		int m_ZOrder = 0;
-		bool m_isPendingKill = false;
-		bool m_pendingTimedKill = false;
+		int id_ = -1;
+		int z_order_ = 0;
+		bool is_pending_kill_ = false;
+		bool pending_timed_kill_ = false;
 
-		Scene *m_Scene;
+		Scene *scene_;
 
 	PUBLIC_SIGNALS:
-		SpawnedSignal spawnedSignal;
+		SpawnedSignal spawned_signal_;
 
 
 

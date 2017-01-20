@@ -32,9 +32,9 @@ namespace fse
 		Light& operator=(const Light& other);
 		
 	protected:
-		Scene* m_scene = nullptr;
-		fse::Texture m_LightTexture;
-		ltbl::LightPointEmission* m_light = nullptr;
+		Scene* scene_ = nullptr;
+		fse::Texture light_texture_;
+		ltbl::LightPointEmission* light_ = nullptr;
 	private:
 
 	};

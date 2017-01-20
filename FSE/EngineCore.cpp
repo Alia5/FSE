@@ -20,22 +20,22 @@ namespace fse
 	int EngineCore::exec(Application * application)
 	{
 
-		m_Application = application;
+		application_ = application;
 
-		if (showWindow)
+		if (show_window_)
 		{
 			sf::RenderWindow window(sf::VideoMode(1280, 720), "FSE");
 
 			window.setFramerateLimit(120);
 
-			m_Application->setWindow(&window);
-			m_Application->init();
+			application_->setWindow(&window);
+			application_->init();
 
-			while (window.isOpen() && run)
+			while (window.isOpen() && run_)
 			{
-				if (m_Application != nullptr)
+				if (application_ != nullptr)
 				{
-					m_Application->update();
+					application_->update();
 				}
 
 			}
@@ -44,7 +44,7 @@ namespace fse
 			/////////// restrict update rate ///////////
 			sf::Clock ApplicationTime;
 			float ticktime = 1000 / 60.f;
-			while (run)
+			while (run_)
 			{
 				float time = ApplicationTime.restart().asSeconds();
 
@@ -55,7 +55,7 @@ namespace fse
 				}
 				/////////// timehandling end ///////////
 
-				m_Application->update();
+				application_->update();
 			}
 
 		}

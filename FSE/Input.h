@@ -12,14 +12,14 @@ namespace fse
 	class Input
 	{
 	public:
-		typedef std::map<std::wstring, sf::Keyboard::Key> KeyMap;
-		typedef std::map<sf::Keyboard::Key, bool> WasPressedMap;
+		using KeyMap = std::map<std::wstring, sf::Keyboard::Key>;
+		using WasPressedMap = std::map<sf::Keyboard::Key, bool>;
 
-		typedef std::map<std::wstring, sf::Mouse::Button> MouseButtonMap;
-		typedef std::map<sf::Mouse::Button, bool> WasMousePressedMap;
+		using MouseButtonMap = std::map<std::wstring, sf::Mouse::Button>;
+		using WasMousePressedMap = std::map<sf::Mouse::Button, bool>;
 
-		typedef std::map<std::wstring, unsigned int> JoyStickButtonMap;
-		typedef std::map<unsigned int, bool> WasJoyStickButtonPressedMap;
+		using JoyStickButtonMap = std::map<std::wstring, unsigned int>;
+		using WasJoyStickButtonPressedMap = std::map<unsigned int, bool>;
 
 		Input();
 		~Input();
@@ -50,20 +50,20 @@ namespace fse
 
 	private:
 
-		bool hasFocus = true;
+		bool has_focus_ = true;
 
-		KeyMap keyMap;
-		WasPressedMap wasPressedMap;
+		KeyMap key_map_;
+		WasPressedMap was_pressed_map_;
 
-		MouseButtonMap mouseButtonMap;
-		WasMousePressedMap wasMousePressedMap;
+		MouseButtonMap mouse_button_map_;
+		WasMousePressedMap was_mouse_pressed_map_;
 
-		JoyStickButtonMap joyStickButtonMap;
-		WasJoyStickButtonPressedMap wasJoyStickButtonPressedMap; //TODO: more for multiple players
+		JoyStickButtonMap joy_stick_button_map_;
+		WasJoyStickButtonPressedMap was_joy_stick_button_pressed_map_; //TODO: more for multiple players
 
-		bool textInputEnabled = false;
-		bool singleLineText = false;
-		std::wstring enteredText;
+		bool text_input_enabled_ = false;
+		bool single_line_text_ = false;
+		std::wstring entered_text_;
 
 		//TODO: XINPUT FOR VIBRATION!
 

@@ -4,10 +4,10 @@
 namespace fse
 {
 
-	FSEObject::FSEObject(Scene *scene) : m_position(sf::Vector2f(0,0))
+	FSEObject::FSEObject(Scene *scene) : position_(sf::Vector2f(0,0))
 	{
-		m_Scene = scene;
-		m_input = scene->getApplication()->getInput();
+		scene_ = scene;
+		input_ = scene->getApplication()->getInput();
 	}
 
 	FSEObject::FSEObject(Scene* scene, const sf::Vector2f spawnPos) : FSEObject(scene)
@@ -23,12 +23,12 @@ namespace fse
 
 	void FSEObject::setPosition(const sf::Vector2f position)
 	{
-		m_position = position;
+		position_ = position;
 	}
 
 	sf::Vector2f FSEObject::getPosition()
 	{
-		return m_position;
+		return position_;
 	}
 
 	void FSEObject::BeginContact(FSEObject* otherObject, b2Contact* contact)
@@ -50,42 +50,42 @@ namespace fse
 
 	int FSEObject::getZOrder() const
 	{
-		return m_ZOrder;
+		return z_order_;
 	}
 
 	bool FSEObject::isPendingKill() const
 	{
-		if (m_pendingTimedKill)
+		if (pending_timed_kill_)
 			return true;
-		return m_isPendingKill;
+		return is_pending_kill_;
 	}
 
 	void FSEObject::setTimedKill()
 	{
-		m_pendingTimedKill = true;
+		pending_timed_kill_ = true;
 	}
 
 
 	Scene* FSEObject::getScene()
 	{
-		return m_Scene;
+		return scene_;
 	}
 
 	void FSEObject::spawn(int id)
 	{
-		m_ID = id;
+		id_ = id;
 		spawned();
-		spawnedSignal(this);
-		spawnedSignal.disconnectAll();
+		spawned_signal_(this);
+		spawned_signal_.disconnectAll();
 	}
 
 	bool FSEObject::destroy()
 	{
-		if (!m_isPendingKill)
+		if (!is_pending_kill_)
 		{
-			m_isPendingKill = true;
+			is_pending_kill_ = true;
 
-			m_Scene->destroyFSEObject(this);
+			scene_->destroyFSEObject(this);
 
 			return true;
 		}
@@ -94,18 +94,18 @@ namespace fse
 
 	int FSEObject::getID()
 	{
-		return m_ID;
+		return id_;
 	}
 
 	void FSEObject::setZOrder(int ZOrder)
 	{
-		m_ZOrder = ZOrder;
-		m_Scene->notifyZOrderChanged();
+		z_order_ = ZOrder;
+		scene_->notifyZOrderChanged();
 	}
 
 	std::vector<std::unique_ptr<FSEObject>>* FSEObject::getSceneFSEObjects() const
 	{
-		return m_Scene->getFSEObjects();
+		return scene_->getFSEObjects();
 	}
 
 }

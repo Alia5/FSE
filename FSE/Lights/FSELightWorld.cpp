@@ -13,12 +13,12 @@ namespace fse
 	FSELightWorld::FSELightWorld(Scene* scene, const sf::Vector2f& spawnPos) : FSEObject(scene, spawnPos)
 	{
 		setZOrder(255);
-		m_light_system = std::make_unique<ltbl::LightSystem>(true);
+		light_system_ = std::make_unique<ltbl::LightSystem>(true);
 	}
 
 	FSELightWorld::~FSELightWorld()
 	{
-		m_light_system->removeLight(m_Sun);
+		light_system_->removeLight(sun_);
 	}
 
 	void FSELightWorld::update(float deltaTime)
@@ -27,8 +27,8 @@ namespace fse
 
 	void FSELightWorld::draw(sf::RenderTarget& target)
 	{
-		if (m_lighting)
-			m_light_system->render(target);
+		if (lighting_)
+			light_system_->render(target);
 	}
 
 	void FSELightWorld::spawned()
@@ -37,28 +37,28 @@ namespace fse
 
 	void FSELightWorld::init(sf::RenderTarget* target)
 	{
-		m_light_system->create({ -1000.f, -1000.f, 1000.f, 1000.f }, target->getSize());
-		m_Sun = m_light_system->createLightDirectionEmission();
-		m_Sun->setColor(sf::Color::Black);
+		light_system_->create({ -1000.f, -1000.f, 2000.f, 2000.f }, target->getSize());
+		sun_ = light_system_->createLightDirectionEmission();
+		sun_->setColor(sf::Color::Black);
 	}
 
 	bool FSELightWorld::getLighting() const
 	{
-		return m_lighting;
+		return lighting_;
 	}
 
 	void FSELightWorld::setLighting(bool lighting)
 	{
-		m_lighting = lighting;
+		lighting_ = lighting;
 	}
 
 	ltbl::LightDirectionEmission* FSELightWorld::getSun() const
 	{
-		return m_Sun;
+		return sun_;
 	}
 
 	ltbl::LightSystem* FSELightWorld::getLightSystem()
 	{
-		return m_light_system.get();
+		return light_system_.get();
 	}
 }

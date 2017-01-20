@@ -19,7 +19,7 @@ namespace fse
 		void render(const std::vector<std::unique_ptr<FSEObject> > &objects);
 
 	private:
-		 sf::RenderTarget *m_renderTarget;
+		 sf::RenderTarget *render_target_;
 
 	};
 }

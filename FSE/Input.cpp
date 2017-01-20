@@ -30,25 +30,25 @@ namespace fse
 			{ L"TogglePhysDebug", sf::Keyboard::Key::F5},
 			{ L"TogglePhysDebugAABBs", sf::Keyboard::Key::F6}
 		};
-		keyMap = m;
+		key_map_ = m;
 
 		MouseButtonMap mm =
 		{
 			{ L"Shoot", sf::Mouse::Button::Left },
 			{ L"Select", sf::Mouse::Button::Left }
 		};
-		mouseButtonMap = mm;
+		mouse_button_map_ = mm;
 
 		JoyStickButtonMap mj =
 		{
 			{ L"Jump", 0 }
 		};
-		joyStickButtonMap = mj;
+		joy_stick_button_map_ = mj;
 	}
 
 	void Input::init(KeyMap map)
 	{
-		keyMap = map;
+		key_map_ = map;
 	}
 
 
@@ -56,37 +56,37 @@ namespace fse
 	void Input::updateEvents(sf::Event event)
 	{
 		if (event.type == sf::Event::GainedFocus)
-			hasFocus = true;
+			has_focus_ = true;
 		else if (event.type == sf::Event::LostFocus)
-			hasFocus = false;
+			has_focus_ = false;
 
 		else if (event.type == sf::Event::KeyReleased)
 		{
-			if (wasPressedMap.count(event.key.code))
+			if (was_pressed_map_.count(event.key.code))
 			{
-				wasPressedMap[event.key.code] = false;
+				was_pressed_map_[event.key.code] = false;
 			}
 		} 
 		else if (event.type == sf::Event::MouseButtonReleased)
 		{
-			if (wasMousePressedMap.count(event.mouseButton.button))
+			if (was_mouse_pressed_map_.count(event.mouseButton.button))
 			{
-				wasMousePressedMap[event.mouseButton.button] = false;
+				was_mouse_pressed_map_[event.mouseButton.button] = false;
 			}
 		}
 		else if (event.type == sf::Event::JoystickButtonReleased)
 		{
-			if (wasJoyStickButtonPressedMap.count(event.joystickButton.button))
+			if (was_joy_stick_button_pressed_map_.count(event.joystickButton.button))
 			{
-				wasJoyStickButtonPressedMap[event.joystickButton.button] = false;
+				was_joy_stick_button_pressed_map_[event.joystickButton.button] = false;
 			}
 		}
-		else if (textInputEnabled && event.type == sf::Event::TextEntered)
+		else if (text_input_enabled_ && event.type == sf::Event::TextEntered)
 		{
 			if (event.text.unicode == L'\b')
 			{
-				if (enteredText.length() > 0)
-					enteredText.erase(enteredText.end() - 1);
+				if (entered_text_.length() > 0)
+					entered_text_.erase(entered_text_.end() - 1);
 			}
 			else
 			{
@@ -102,9 +102,9 @@ namespace fse
 							if (pszText != nullptr)
 							{
 								std::string text(pszText);
-								enteredText += std::wstring(text.begin(), text.end());
+								entered_text_ += std::wstring(text.begin(), text.end());
 
-								std::wcout << enteredText << "\n";
+								std::wcout << entered_text_ << "\n";
 							}
 						}
 						GlobalUnlock(hData);
@@ -114,11 +114,11 @@ namespace fse
 #endif
 				if (event.text.unicode == L'\r' || event.text.unicode == L'\n')
 				{
-					if (!singleLineText)
-						enteredText += L"\n";
+					if (!single_line_text_)
+						entered_text_ += L"\n";
 				} else {
 					if (std::isprint(static_cast<wchar_t>(event.text.unicode)))
-						enteredText += static_cast<wchar_t>(event.text.unicode);
+						entered_text_ += static_cast<wchar_t>(event.text.unicode);
 				}
 			}
 		}
@@ -126,17 +126,17 @@ namespace fse
 
 	bool Input::isKeyPressed(std::wstring key)
 	{
-		if (hasFocus)
+		if (has_focus_)
 		{
-			if (keyMap.count(key) && !textInputEnabled)
-				return sf::Keyboard::isKeyPressed(keyMap[key]);
-			if (mouseButtonMap.count(key))
-				return sf::Mouse::isButtonPressed(mouseButtonMap[key]);
-			if (joyStickButtonMap.count(key))
+			if (key_map_.count(key) && !text_input_enabled_)
+				return sf::Keyboard::isKeyPressed(key_map_[key]);
+			if (mouse_button_map_.count(key))
+				return sf::Mouse::isButtonPressed(mouse_button_map_[key]);
+			if (joy_stick_button_map_.count(key))
 			{
 				if (sf::Joystick::isConnected(0))											//TODO: Overlaod for multiple Players
-					if (sf::Joystick::getButtonCount(0) > joyStickButtonMap[key])
-						return sf::Joystick::isButtonPressed(0, joyStickButtonMap[key]);
+					if (sf::Joystick::getButtonCount(0) > joy_stick_button_map_[key])
+						return sf::Joystick::isButtonPressed(0, joy_stick_button_map_[key]);
 			}
 		}
 		return false;
@@ -144,38 +144,38 @@ namespace fse
 
 	bool Input::wasKeyPressed(std::wstring key)
 	{
-		if (hasFocus)
+		if (has_focus_)
 		{
-			if (keyMap.count(key) && !textInputEnabled)
+			if (key_map_.count(key) && !text_input_enabled_)
 			{
-				bool isPressed = sf::Keyboard::isKeyPressed(keyMap[key]);
-				bool wasPressed = wasPressedMap[keyMap[key]];
+				bool isPressed = sf::Keyboard::isKeyPressed(key_map_[key]);
+				bool wasPressed = was_pressed_map_[key_map_[key]];
 				if (isPressed && !wasPressed)
 				{
-					wasPressedMap[keyMap[key]] = true;
+					was_pressed_map_[key_map_[key]] = true;
 					return true;
 				}
 			}
-			if (mouseButtonMap.count(key))
+			if (mouse_button_map_.count(key))
 			{
-				bool isPressed = sf::Mouse::isButtonPressed(mouseButtonMap[key]);
-				bool wasPressed = wasMousePressedMap[mouseButtonMap[key]];
+				bool isPressed = sf::Mouse::isButtonPressed(mouse_button_map_[key]);
+				bool wasPressed = was_mouse_pressed_map_[mouse_button_map_[key]];
 				if (isPressed && !wasPressed)
 				{
-					wasMousePressedMap[mouseButtonMap[key]] = true;
+					was_mouse_pressed_map_[mouse_button_map_[key]] = true;
 					return true;
 				}
 			}
-			if (joyStickButtonMap.count(key))
+			if (joy_stick_button_map_.count(key))
 			{
 				if (sf::Joystick::isConnected(0))											//TODO: Overlaod for multiple Players
-					if (sf::Joystick::getButtonCount(0) > joyStickButtonMap[key])
+					if (sf::Joystick::getButtonCount(0) > joy_stick_button_map_[key])
 					{
-						bool isPressed = sf::Joystick::isButtonPressed(0, joyStickButtonMap[key]);
-						bool wasPressed = wasJoyStickButtonPressedMap[joyStickButtonMap[key]];
+						bool isPressed = sf::Joystick::isButtonPressed(0, joy_stick_button_map_[key]);
+						bool wasPressed = was_joy_stick_button_pressed_map_[joy_stick_button_map_[key]];
 						if (isPressed && !wasPressed)
 						{
-							wasJoyStickButtonPressedMap[joyStickButtonMap[key]] = true;
+							was_joy_stick_button_pressed_map_[joy_stick_button_map_[key]] = true;
 							return true;
 						}
 					}
@@ -186,29 +186,29 @@ namespace fse
 
 	Input::KeyMap Input::getKeyMap()
 	{
-		return keyMap;
+		return key_map_;
 	}
 
 	void Input::setTextInput(bool enabled)
 	{
-		textInputEnabled = enabled;
-		enteredText = L"";
+		text_input_enabled_ = enabled;
+		entered_text_ = L"";
 	}
 
 	void Input::setTextInput(bool enabled, bool singleLine)
 	{
-		textInputEnabled = enabled;
-		singleLineText = singleLine;
-		enteredText = L"";
+		text_input_enabled_ = enabled;
+		single_line_text_ = singleLine;
+		entered_text_ = L"";
 	}
 
 	std::wstring Input::getEnteredText()
 	{
-		return enteredText;
+		return entered_text_;
 	}
 
 	void Input::setEnteredText(std::wstring str)
 	{
-		enteredText = str;
+		entered_text_ = str;
 	}
 }

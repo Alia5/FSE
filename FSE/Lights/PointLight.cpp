@@ -11,7 +11,7 @@ namespace fse
 
 	PointLight::PointLight(Scene* scene, const sf::Vector2f& spawnPos) : Light(scene, spawnPos, "lights/pointLightTexture.png", true)
 	{
-		m_light->setScale((FSE_PIXELS_PER_METER / m_LightTexture->getSize().x), (FSE_PIXELS_PER_METER / m_LightTexture->getSize().x));
+		light_->setScale((FSE_PIXELS_PER_METER / light_texture_->getSize().x), (FSE_PIXELS_PER_METER / light_texture_->getSize().x));
 	}
 
 	PointLight::~PointLight()
@@ -21,12 +21,12 @@ namespace fse
 
 	void PointLight::setRadius(float radius) const
 	{
-		m_light->setScale(sf::Vector2f(radius,radius) * (FSE_PIXELS_PER_METER / m_LightTexture->getSize().x));
+		light_->setScale(sf::Vector2f(radius,radius) * (FSE_PIXELS_PER_METER / light_texture_->getSize().x));
 	}
 
 	float PointLight::getRadius() const
 	{
-		return m_light->getScale().x / (FSE_PIXELS_PER_METER / m_LightTexture->getSize().x);
+		return light_->getScale().x / (FSE_PIXELS_PER_METER / light_texture_->getSize().x);
 	}
 
 }

@@ -2,9 +2,9 @@
 
 namespace fse
 {
-	Application::Application() : m_RootScene(this)
+	Application::Application() : root_scene_(this)
 	{
-		m_input.init();
+		input_.init();
 	}
 
 	Application::~Application()
@@ -14,37 +14,37 @@ namespace fse
 
 	void Application::update()
 	{
-		if (m_RWindow != nullptr)
+		if (render_window_ != nullptr)
 		{
 			sf::Event event;
-			while (m_RWindow->pollEvent(event))
+			while (render_window_->pollEvent(event))
 			{
 				if (event.type == sf::Event::Closed)
 				{
-					m_RWindow->close();
+					render_window_->close();
 					return;
 				}
 
 				if (event.type == sf::Event::Resized)
 				{
-					onWindowResized();
-					//m_RootScene.notifyResize();
+					on_window_resized_();
+					//root_scene_.notifyResize();
 				}
 
-				m_input.updateEvents(event);
+				input_.updateEvents(event);
 
 			}
 
-			m_RWindow->clear();
+			render_window_->clear();
 
-			m_RootScene.update(m_ApplicationClock.restart().asSeconds());
+			root_scene_.update(application_clock_.restart().asSeconds());
 
-			m_RootScene.draw();
+			root_scene_.draw();
 
-			m_RWindow->display();
+			render_window_->display();
 
 		} else {
-			m_RootScene.update(m_ApplicationClock.restart().asSeconds());
+			root_scene_.update(application_clock_.restart().asSeconds());
 		}
 
 
@@ -52,44 +52,44 @@ namespace fse
 
 	void Application::setWindow(sf::RenderWindow * window)
 	{
-		m_RWindow = window;
-		m_RootScene.setRenderTarget(m_RWindow);
+		render_window_ = window;
+		root_scene_.setRenderTarget(render_window_);
 	}
 
 	void Application::setServerClientType(int type)
 	{
 		if (type == 1)
-			m_isServer = true;
+			is_server_ = true;
 
 	}
 
 	bool Application::isServer() const
 	{
-		return m_isServer;
+		return is_server_;
 	}
 
 	Scene * Application::getRootScene()
 	{
-		return &m_RootScene;
+		return &root_scene_;
 	}
 
 	sf::RenderWindow* Application::getWindow()
 	{
-		return m_RWindow;
+		return render_window_;
 	}
 
 	Input* Application::getInput()
 	{
-		return &m_input;
+		return &input_;
 	}
 
 	NetworkHandler* Application::getNetworkHandler()
 	{
-		return &m_network_handler;
+		return &network_handler_;
 	}
 
 	fse::AssetLoader& Application::getAssetLoader()
 	{
-		return m_assetLoader;
+		return asset_loader_;
 	}
 }

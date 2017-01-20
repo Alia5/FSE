@@ -34,37 +34,36 @@ public:
 
 	NetworkHandler& operator=(const NetworkHandler& handler);
 
-	std::mutex mtx;
+	std::mutex mtx_;
 
 private:
-	bool runThread = false;
-
-	bool m_isServer = false;
-	bool tcpConnected = false;
-
-	unsigned short tcpPort = 23651;
-	unsigned short  udpPort = 23652;
-
-	unsigned short  udpPortClient = 23652;
-
-	sf::IpAddress ip = "192.168.1.159";
-
-	sf::TcpListener tcpListener;
-	sf::TcpSocket tcpSocket;
-
-	sf::UdpSocket udpSocket;
-
-	std::thread networkThread;
-	
-	std::list<sf::Packet> udpMessageQueue;
-	std::list<sf::Packet> udpReceivedPacketsQueue;
-
-	sf::Packet latestUDPPacket;
-
 	void swap(const NetworkHandler& other);
-
-	sf::SocketSelector sockSelector;
-
 	sf::Socket::Status receiveWithTimeout(sf::TcpSocket& socket, sf::Packet& packet, sf::Time timeout);
+
+	bool run_thread_ = false;
+
+	bool is_server_ = false;
+	bool tcp_connected_ = false;
+
+	unsigned short tcp_port_ = 23651;
+	unsigned short  udp_port_ = 23652;
+
+	unsigned short  udp_port_client_ = 23652;
+
+	sf::IpAddress ip_ = "192.168.1.159";
+
+	sf::TcpListener tcp_listener_;
+	sf::TcpSocket tcp_socket_;
+
+	sf::UdpSocket udp_socket_;
+
+	std::thread network_thread_;
+	
+	std::list<sf::Packet> udp_message_queue_;
+	std::list<sf::Packet> udp_received_packets_queue_;
+
+	sf::Packet latest_udp_packet_;
+
+	sf::SocketSelector sock_selector_;
 
 };
