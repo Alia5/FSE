@@ -31,7 +31,7 @@ namespace fse
 
 	private:
 		std::unique_ptr<ltbl::LightSystem> m_light_system;
-		bool m_lighting;
+		bool m_lighting = true;
 
 		ltbl::LightDirectionEmission* m_Sun = nullptr;
 
