@@ -35,7 +35,25 @@ LightSystem::LightSystem(bool useNormals)
 
 void LightSystem::create(const sf::FloatRect& rootRegion, const sf::Vector2u& imageSize)
 {
-	// TODO : Delete created objects
+	for (auto & lpe : mPointEmissionLights)
+	{
+		removeLight(lpe);
+	}
+
+	for (auto & lde : mDirectionEmissionLights)
+	{
+		removeLight(lde);
+	}
+
+	for (auto & lsh : mLightShapes)
+	{
+		removeShape(lsh);
+	}
+
+	for (auto & lsp : mNormalSprites)
+	{
+		removeSprite(*lsp);
+	}
 
 	// Quadtrees
     mLightShapeQuadtree.create(rootRegion, 6, 6);
