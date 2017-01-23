@@ -66,4 +66,7 @@ private:
 
 	sf::Clock network_clock_;
 
+	float tick = 1.f / 120.f;
+	int queueSize = 100;
+
 };
