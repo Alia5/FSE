@@ -1,5 +1,4 @@
 #pragma once
-#include <SFML/System/Clock.hpp>
 #include <SFML/Network/Packet.hpp>
 #include "../NetworkHandler.h"
 #include "../FSEObject/FSEObject.h"

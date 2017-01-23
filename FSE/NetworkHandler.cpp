@@ -1,5 +1,4 @@
 #include "NetworkHandler.h"
-#include <future>
 
 NetworkHandler::NetworkHandler()
 {
@@ -283,12 +282,9 @@ void NetworkHandler::netThreadRunServer()
 			}
 			mtx_.unlock();
 
-			//sf::sleep(sf::milliseconds(50));
-			//sf::sleep(sf::milliseconds(rand() % 51));
 			for (auto& toSendPacket : toSendPacks)
 			{
 				udp_socket_.send(toSendPacket, ip_, udp_port_client_);
-				//std::wcout << "Sending position packet!!!\n";
 			}
 
 			toSendPacks.clear();
@@ -369,12 +365,9 @@ void NetworkHandler::netThreadRunClient()
 			}
 			mtx_.unlock();
 
-			//sf::sleep(sf::milliseconds(50));
-			//sf::sleep(sf::milliseconds(rand() % 51));
 			for (auto& toSendPacket : toSendPacks)
 			{
 				udp_socket_.send(toSendPacket, ip_, udp_port_);
-				//std::wcout << "Sending position packet!!!\n";
 			}
 
 			toSendPacks.clear();
@@ -399,7 +392,6 @@ void NetworkHandler::netThreadRunClient()
 				udp_socket_.send(packet, ip_, udp_port_);
 
 				timer.restart();
-				//TODO: Some timeout_ stuff
 			}
 		}
 	}

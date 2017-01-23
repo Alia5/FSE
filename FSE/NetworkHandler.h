@@ -45,10 +45,9 @@ private:
 
 	unsigned short tcp_port_ = 23651;
 	unsigned short  udp_port_ = 23652;
-
 	unsigned short  udp_port_client_ = 23652;
 
-	sf::IpAddress ip_ = "192.168.1.159";
+	sf::IpAddress ip_ = "";
 
 	sf::TcpListener tcp_listener_;
 	sf::TcpSocket tcp_socket_;

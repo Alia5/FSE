@@ -13,19 +13,12 @@ namespace fse
 	void NetworkedObject::netUpdate(float deltaTime)
 	{
 		net_time_ += deltaTime;
-
-		//sf::Packet packet = network_handler_->getLatestUDPPacket(network_id_);
-		//if (!packet.endOfPacket())
-		//{
-		//	latest_udp_packet_ = packet;
-		//}
 		if (net_time_ >= tick_)
 		{
 			udp_packets_ = network_handler_->getUdpPackets(network_id_);
 			tcp_packets_ = network_handler_->getTcpPackets(network_id_);
-			all_packets_.clear();
+			all_packets_ = tcp_packets_;
 			all_packets_.reserve(udp_packets_.size() + tcp_packets_.size());
-			all_packets_.insert(all_packets_.end(), tcp_packets_.begin(), tcp_packets_.end());
 			all_packets_.insert(all_packets_.end(), udp_packets_.begin(), udp_packets_.end());
 		} 
 		else
