@@ -80,7 +80,7 @@ void LightSystem::render(sf::RenderTarget& target)
 	{
 		mNormalsTexture.clear(sf::Color(127u, 127u, 255u));
 		mNormalsTexture.setView(view);
-		for (auto itr = mNormalSprites.begin(); itr != mNormalSprites.end(); itr++)
+		for (auto itr = mNormalSprites.begin(); itr != mNormalSprites.end(); ++itr)
 		{
 			if ((*itr) != nullptr && (*itr)->isTurnedOn())
 			{

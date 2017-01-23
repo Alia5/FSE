@@ -187,7 +187,6 @@
     <ClCompile Include="Component\SmoothViewController.cpp" />
     <ClCompile Include="Component\ViewController.cpp" />
     <ClCompile Include="EngineCore.cpp" />
-    <ClCompile Include="EventBus.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FSEObject\DummyObject.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />

@@ -4,8 +4,6 @@
 
 #include <iostream>
 
-#include "../EventBus.h"
-
 #include "../Signals.h"
 
 #include <Box2D/Box2D.h>
