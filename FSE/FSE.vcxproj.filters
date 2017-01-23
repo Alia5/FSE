@@ -43,6 +43,12 @@
     <Filter Include="Header Files\Lights">
       <UniqueIdentifier>{4ccf3936-841b-4008-8df4-fab96bf1d00c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Network">
+      <UniqueIdentifier>{4f4cac07-bdcc-450f-a7c4-8d775fe09214}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{25bd9e02-f88d-48b4-a946-87fffcf121cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetLoader.h">
@@ -132,6 +138,9 @@
     <ClInclude Include="FMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Network\NetworkedObject.h">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -208,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="Lights\Light.cpp">
       <Filter>Source Files\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\NetworkedObject.cpp">
+      <Filter>Source Files\Network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

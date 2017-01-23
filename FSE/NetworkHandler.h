@@ -13,7 +13,6 @@ class NetworkHandler {
 public:
 	NetworkHandler();
 	NetworkHandler(bool server);
-	//NetworkHandler(const NetworkHandler& handler);
 	~NetworkHandler();
 
 	void setServer(bool server);
@@ -23,11 +22,10 @@ public:
 	bool connect();
 	void disconnect();
 
-	void sendPacket(sf::Packet packet, bool important);
+	void sendPacket(sf::Packet& packet, bool tcp);
 
-	sf::Packet getLatestUDPPacket();
-
-	sf::Packet getLatestUDPPacket(uint32_t objectID);
+	std::vector<sf::Packet> getUdpPackets(uint32_t objectID);
+	std::vector<sf::Packet> getTcpPackets(uint32_t objectID);
 
 	void netThreadRunServer();
 	void netThreadRunClient();
@@ -62,8 +60,11 @@ private:
 	std::list<sf::Packet> udp_message_queue_;
 	std::list<sf::Packet> udp_received_packets_queue_;
 
-	sf::Packet latest_udp_packet_;
+	std::list<sf::Packet> tcp_message_queue_;
+	std::list<sf::Packet> tcp_received_packets_queue_;
 
 	sf::SocketSelector sock_selector_;
+
+	sf::Clock network_clock_;
 
 };

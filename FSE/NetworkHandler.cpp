@@ -12,11 +12,6 @@ NetworkHandler::NetworkHandler(bool server)
 	is_server_ = server;
 }
 
-//NetworkHandler::NetworkHandler(const NetworkHandler& handler)
-//{
-//	//Copy constructor
-//}
-
 NetworkHandler::~NetworkHandler()
 {
 	if (tcp_connected_)
@@ -51,7 +46,7 @@ bool NetworkHandler::connect()
 		std::wcout << L"Binding UPD connection...\n";
 		if (udp_socket_.bind(udp_port_) != sf::Socket::Done)
 		{
-			std::wcout << L"Couldn't bind port for listening!\n";
+			std::wcout << L"Couldn't bind UDP port for listening!\n";
 		} 
 
 
@@ -75,6 +70,8 @@ bool NetworkHandler::connect()
 			std::wcout << L"Firing SERVER thread!!!" << std::endl;
 			network_thread_ = std::thread(&NetworkHandler::netThreadRunServer, this);
 
+			network_clock_.restart();
+
 			return true;
 
 		}
@@ -93,12 +90,14 @@ bool NetworkHandler::connect()
 			std::wcout << L"Binding UPD connection...\n";
 			if (udp_socket_.bind(udp_port_client_) != sf::Socket::Done)
 			{
-				std::wcout << L"Couldn't bind port for listening!\n";
+				std::wcout << L"Couldn't bind UDP port for listening!\n";
 			}
 
 			run_thread_ = true;
 			std::wcout << L"Firing CLIENT thread!!!" << std::endl;
 			network_thread_ = std::thread(&NetworkHandler::netThreadRunClient, this);
+
+			network_clock_.restart();
 
 			return true;
 
@@ -120,89 +119,117 @@ void NetworkHandler::disconnect()
 	tcp_connected_ = false;
 }
 
-void NetworkHandler::sendPacket(sf::Packet packet, bool important)
+void NetworkHandler::sendPacket(sf::Packet& packet, bool tcp)
 {
-	if (important)
+	if (tcp)
 	{
-		
+		sf::Packet pack;
+		pack << static_cast<float32>(network_clock_.getElapsedTime().asSeconds());
+		uint8_t byte;
+		while (!packet.endOfPacket()) // Why this way SFML?
+		{
+			packet >> byte;
+			pack << byte;
+		}
+
+		mtx_.lock();
+		if (tcp_message_queue_.size() > 1000)
+			tcp_message_queue_.pop_front();
+		tcp_message_queue_.push_back(pack);
+		mtx_.unlock();
 	} else {
-		
+		sf::Packet pack;
+		pack << static_cast<float32>(network_clock_.getElapsedTime().asSeconds());
+		uint8_t byte;
+		while (!packet.endOfPacket()) // Why this way SFML?
+		{
+			packet >> byte;
+			pack << byte;
+		}
+
+		mtx_.lock();
+		if (udp_message_queue_.size() > 1000)
+			udp_message_queue_.pop_front();
+		udp_message_queue_.push_back(pack);
+		mtx_.unlock();
 	}
-
-	mtx_.lock();
-	if (udp_message_queue_.size() > 1000)
-		udp_message_queue_.pop_front();
-	udp_message_queue_.push_back(packet);
-	mtx_.unlock();
 }
 
-sf::Packet NetworkHandler::getLatestUDPPacket()
-{
-	sf::Packet temp;
-	mtx_.lock();
-		temp = latest_udp_packet_;
-	mtx_.unlock();
-	return temp;
-}
 
-sf::Packet NetworkHandler::getLatestUDPPacket(uint32_t objectID)
+
+
+std::vector<sf::Packet> NetworkHandler::getUdpPackets(uint32_t objectID)
 {
-	sf::Packet pack;
+	std::vector<sf::Packet> packs;
 
 	uint32_t id;
-	float32 timestamp = 0;
 	float32 packetStamp = 0;
 
+	std::list<std::list<sf::Packet>::iterator> to_delete;
 	mtx_.lock();
-	for (auto packet = udp_received_packets_queue_.begin(); packet != udp_received_packets_queue_.end(); ++packet)
+
+	auto packet = udp_received_packets_queue_.begin();
+	while (packet != udp_received_packets_queue_.end())
 	{
 		if (!(*packet).endOfPacket())
 		{
-			(*packet) >> id >> packetStamp;
-			if (id == objectID && packetStamp > timestamp)
+			(*packet) >> packetStamp >> id;
+			if (id == objectID)
 			{
-				pack = (*packet);
-				timestamp = packetStamp;
-				udp_received_packets_queue_.erase(packet--);
+				(*packet) << packetStamp;
+				packs.push_back(*packet);
+				to_delete.push_back(packet);
 			}
 		}
+		++packet;
+	}
+	for (auto td = udp_received_packets_queue_.begin(); packet != udp_received_packets_queue_.end(); ++td)
+	{
+		udp_received_packets_queue_.erase(td);
 	}
 	mtx_.unlock();
 
-	return pack;
+	return packs;
+}
+
+std::vector<sf::Packet> NetworkHandler::getTcpPackets(uint32_t objectID)
+{
+	std::vector<sf::Packet> packs;
+
+	uint32_t id;
+	float32 packetStamp = 0;
+
+	std::list<std::list<sf::Packet>::iterator> to_delete;
+	mtx_.lock();
+
+	auto packet = tcp_received_packets_queue_.begin();
+	while (packet != tcp_received_packets_queue_.end())
+	{
+		if (!(*packet).endOfPacket())
+		{
+			(*packet) >> packetStamp >> id;
+			if (id == objectID)
+			{
+				(*packet) << packetStamp;
+				packs.push_back(*packet);
+				to_delete.push_back(packet);
+			}
+		}
+		++packet;
+	}
+	for (auto td = tcp_received_packets_queue_.begin(); packet != tcp_received_packets_queue_.end(); ++td)
+	{
+		tcp_received_packets_queue_.erase(td);
+	}
+	mtx_.unlock();
+
+	return packs;
 }
 
 void NetworkHandler::netThreadRunServer()
 {
-	//sf::Packet packet;
-	//while (run_thread_)
-	//{
-	//	udp_socket_.receive(packet, ip_, udp_port_client_);
-	//	uint8_t type;
-	//	packet >> type;
-	//	switch (type)
-	//	{
-	//	case 0x01:
-	//		std::wcout << L"Received KeepAlive packet!\n";
-	//		break;
-	//	case 0x02:
-	//		std::wcout << L"Received 0x02 packet!\n";
-	//		break;
-	//	case 0x03:
-	//		std::wcout << L"Received 0x03 packet!\n";
-	//		break;
-	//	}
-	//	//std::flush(std::wcout);
-
-	//	sf::Packet packet;
-	//	packet << 0x02;
-	//	udp_socket_.send(packet, ip_, udp_port_);
-
-	//	sf::sleep(sf::milliseconds(10));
-	//}
-
-
 	sock_selector_.add(udp_socket_);
+	sock_selector_.add(tcp_socket_);
 	uint8_t type;
 
 	sf::Packet packet;
@@ -213,8 +240,6 @@ void NetworkHandler::netThreadRunServer()
 	packet >> type;
 
 	std::wcout << "OK!\n";
-
-	//sf::Clock timer;
 
 	srand(time(nullptr));
 
@@ -228,27 +253,24 @@ void NetworkHandler::netThreadRunServer()
 				sf::Packet pack;
 				udp_socket_.receive(pack, ip_, udp_port_client_);
 
-
-				//uint8_t typ;
-				//pack >> typ;
-
-				//if (typ == 0x01)
-				//{
-				//	std::wcout << "Received KeepAlive Packet!\n";
-				//} 
-
 				mtx_.lock();
-				latest_udp_packet_ = pack;
 
 				if (udp_received_packets_queue_.size() > 1000)
 					udp_received_packets_queue_.pop_front();
 				udp_received_packets_queue_.push_back(pack);
 
+				mtx_.unlock();			
+			} 
+			else if (sock_selector_.isReady(tcp_socket_))
+			{
+				sf::Packet pack;
+				tcp_socket_.receive(pack);
+				mtx_.lock();
+				if (tcp_received_packets_queue_.size() > 1000)
+					tcp_received_packets_queue_.pop_front();
+				tcp_received_packets_queue_.push_back(pack);
 				mtx_.unlock();
-			
-
 			}
-			//timer.restart();
 		}
 		else
 		{
@@ -268,17 +290,31 @@ void NetworkHandler::netThreadRunServer()
 				udp_socket_.send(toSendPacket, ip_, udp_port_client_);
 				//std::wcout << "Sending position packet!!!\n";
 			}
+
+			toSendPacks.clear();
+			mtx_.lock();
+			if (tcp_message_queue_.size() > 0)
+			{
+				toSendPacks = tcp_message_queue_;
+				tcp_message_queue_.clear();
+			}
+			mtx_.unlock();
+			for (auto& toSendPacket : toSendPacks)
+			{
+				tcp_socket_.send(toSendPacket);
+			}
 		}
 	}
 
 	sock_selector_.remove(udp_socket_);
-
+	sock_selector_.remove(tcp_socket_);
 }
 
 void NetworkHandler::netThreadRunClient()
 {
 
 	sock_selector_.add(udp_socket_);
+	sock_selector_.add(tcp_socket_);
 	uint8_t type;
 
 	sf::Packet packet;
@@ -304,12 +340,20 @@ void NetworkHandler::netThreadRunClient()
 				udp_socket_.receive(pack, ip_, udp_port_);
 
 				mtx_.lock();
-				latest_udp_packet_ = pack;
 
 				if (udp_received_packets_queue_.size() > 1000)
 					udp_received_packets_queue_.pop_front();
 				udp_received_packets_queue_.push_back(pack);
 
+				mtx_.unlock();
+			} else if (sock_selector_.isReady(tcp_socket_))
+			{
+				sf::Packet pack;
+				tcp_socket_.receive(pack);
+				mtx_.lock();
+				if (tcp_received_packets_queue_.size() > 1000)
+					tcp_received_packets_queue_.pop_front();
+				tcp_received_packets_queue_.push_back(pack);
 				mtx_.unlock();
 			}
 
@@ -333,6 +377,19 @@ void NetworkHandler::netThreadRunClient()
 				//std::wcout << "Sending position packet!!!\n";
 			}
 
+			toSendPacks.clear();
+			mtx_.lock();
+			if (tcp_message_queue_.size() > 0)
+			{
+				toSendPacks = tcp_message_queue_;
+				tcp_message_queue_.clear();
+			}
+			mtx_.unlock();
+			for (auto& toSendPacket : toSendPacks)
+			{
+				tcp_socket_.send(toSendPacket);
+			}
+
 			if (timer.getElapsedTime().asSeconds() > 1)
 			{
 				std::wcout << L"Sending KeepAlive packet!\n";
@@ -348,6 +405,7 @@ void NetworkHandler::netThreadRunClient()
 	}
 
 	sock_selector_.remove(udp_socket_);
+	sock_selector_.remove(tcp_socket_);
 }
 
 void NetworkHandler::swap(const NetworkHandler& other)
