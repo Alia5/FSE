@@ -36,7 +36,7 @@ namespace fse
 		template <typename Slot>
 		static void singleShot(Scene* scene,int msecs, Slot&& slot)
 		{
-			auto timer = FSEObject::createObject<Timer>(scene);
+			auto timer = std::make_unique<Timer>(scene);
 			timer->setInterval(msecs);
 			timer->setSingleShot(true);
 

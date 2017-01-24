@@ -37,18 +37,6 @@ namespace fse
 		virtual void PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold);
 		virtual void PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
 
-		template<typename T>
-		static std::unique_ptr<T> createObject(Scene* scene)
-		{
-			return std::unique_ptr<T>(new T(scene));
-		}
-
-		template<typename T>
-		static std::unique_ptr<T> createObject(Scene* scene, const sf::Vector2f startPos)
-		{
-			return std::unique_ptr<T>(new T(scene, startPos));
-		}
-
 		Scene* getScene();
 
 		void spawn(int id);
@@ -58,6 +46,8 @@ namespace fse
 		int getZOrder() const;
 		bool isPendingKill() const;
 		void setTimedKill();
+
+		Scene *scene_;
 
 	protected:
 		void setZOrder(int ZOrder);
@@ -75,8 +65,6 @@ namespace fse
 		int z_order_ = 0;
 		bool is_pending_kill_ = false;
 		bool pending_timed_kill_ = false;
-
-		Scene *scene_;
 
 	PUBLIC_SIGNALS:
 		SpawnedSignal spawned_signal_;
