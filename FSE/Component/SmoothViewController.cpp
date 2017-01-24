@@ -52,7 +52,11 @@ namespace fse
 			return;
 
 		sf::View view = render_target_->getView();
-		view.setCenter(objectPos);
+		sf::Vector2f sz = view.getSize() * size_percentage_;
+		sf::Vector2f ct = view.getCenter();
+		sf::FloatRect viewRekt(ct.x - (sz.x * 0.5f), ct.y - (sz.y * 0.5f) - view.getSize().y*vertical_offset_, sz.x, sz.y);
+		objectPos = sf::Vector2f(objectPos.x, objectPos.y - (view.getSize().y * FSE_METERS_PER_PIXEL * vertical_offset_));
+		view.setCenter(objectPos * FSE_PIXELS_PER_METER);
 		oldPosition = objectPos;
 		render_target_->setView(view);
 	}
