@@ -44,7 +44,7 @@ namespace fse
 	void FPSCounter::draw(sf::RenderTarget& target)
 	{
 		current_time_ = measureclock_.restart().asSeconds();
-		fps_ = static_cast<int>((fps_ * smoothing_) + ((1 / current_time_) * (1.0 - smoothing_)));
+		fps_ = (fps_ * smoothing_) + ((1 / current_time_) * (1.0 - smoothing_));
 		if (updclock_.getElapsedTime().asMilliseconds() > 250)
 		{
 			fps_text_.setString(std::wstring(L"FPS: " + std::to_wstring(static_cast<int>(fps_))));
