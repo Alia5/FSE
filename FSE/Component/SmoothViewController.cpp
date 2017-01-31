@@ -1,5 +1,6 @@
 #include "SmoothViewController.h"
 #include "../Scene.h"
+#include "../FMath.h"
 
 namespace fse
 {

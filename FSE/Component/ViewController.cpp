@@ -8,7 +8,7 @@ namespace fse
 
 	}
 
-	ViewController::ViewController(sf::RenderTarget* render_target) : render_target_(render_target)
+	ViewController::ViewController(sf::RenderTarget* const render_target) : render_target_(render_target)
 	{
 
 	}

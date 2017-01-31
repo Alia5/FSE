@@ -5,7 +5,7 @@ namespace fse
 	class ViewController {
 	public:
 		ViewController();
-		ViewController(sf::RenderTarget* render_target);
+		ViewController(sf::RenderTarget* const render_target);
 		virtual ~ViewController() = default;
 
 		virtual void moveView(sf::Vector2f objectPos, float deltaTime);

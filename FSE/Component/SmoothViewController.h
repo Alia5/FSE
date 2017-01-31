@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../FMath.h"
 #include "ViewController.h"
 
 namespace fse
@@ -19,7 +18,7 @@ namespace fse
 		void setSizePercentage(float size_percentage);
 		void setVerticalOffset(float vertical_offset);
 	private:
-		float size_percentage_ = 0.0f;
+		float size_percentage_ = 0.75f;
 		float vertical_offset_ = 0.0f;
 	};
 }
