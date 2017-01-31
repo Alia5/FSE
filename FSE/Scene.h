@@ -29,7 +29,8 @@ namespace fse
 		~Scene();
 
 		void setRenderTarget(sf::RenderTarget* renderTarget);
-		
+		sf::RenderTarget* getRenderTarget() const;
+
 		void update(float deltaTime);
 		void draw();
 

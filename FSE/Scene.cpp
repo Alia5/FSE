@@ -42,6 +42,11 @@ namespace fse
 
 	}
 
+	sf::RenderTarget* Scene::getRenderTarget() const
+	{
+		return render_target_;
+	}
+
 
 	void Scene::update(float deltaTime)
 	{
