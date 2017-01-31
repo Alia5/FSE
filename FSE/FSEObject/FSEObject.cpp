@@ -12,7 +12,7 @@ namespace fse
 
 	FSEObject::FSEObject(Scene* scene, const sf::Vector2f spawnPos) : FSEObject(scene)
 	{
-
+		position_ = spawnPos;
 	}
 
 
