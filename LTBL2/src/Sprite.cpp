@@ -69,15 +69,12 @@ namespace ltbl
 		sf::RenderStates specularstates)
 	{
 		target.draw(*this, states);
-		//sf::View view = target.getView();
 		if (mNormalsTarget != nullptr)
 		{
-			//mNormalsTarget->setView(view);
 			renderNormals(*mNormalsTarget, normalstates);
 		}
 		if (mSpecularTarget != nullptr)
 		{
-			//mSpecularTarget->setView(view);
 			renderSpecular(*mSpecularTarget, specularstates);
 		}
 	}

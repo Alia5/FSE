@@ -80,45 +80,6 @@ namespace ltbl
 
 		sf::FloatRect viewBounds = sf::FloatRect(view.getCenter() - view.getSize() * 0.5f, view.getSize());
 
-
-		//sf::Sprite test = sf::Sprite(mNormalsTexture.getTexture());
-		//test.setPosition(view.getCenter() - view.getSize() / 2.f);
-		//target.draw(test);
-		//return;
-
-		//if (mUseNormals && mNormalSprites.size() > 0)
-		//{
-		//	mNormalsTexture.display();
-		//	mSpecularTexture.display();
-		//}
-
-		//if (mUseNormals && mNormalSprites.size() > 0)
-		//{
-		//	mNormalsTexture.clear(sf::Color(127u, 127u, 255u));
-		//	mNormalsTexture.setView(view);
-		//	for (auto itr = mNormalSprites.begin(); itr != mNormalSprites.end(); ++itr)
-		//	{
-		//		if ((*itr) != nullptr && (*itr)->isTurnedOn())
-		//		{
-		//			(*itr)->renderNormals(mNormalsTexture);
-		//		}
-		//	}
-		//	mNormalsTexture.display();
-
-
-		//	mSpecularTexture.clear(sf::Color::Black);
-		//	mSpecularTexture.setView(view);
-		//	for (auto itr = mNormalSprites.begin(); itr != mNormalSprites.end(); ++itr)
-		//	{
-		//		if ((*itr) != nullptr && (*itr)->isTurnedOn())
-		//		{
-		//			(*itr)->renderSpecular(mSpecularTexture);
-		//		}
-		//	}
-		//	mSpecularTexture.display();
-
-		//}
-
 		mSpecularCompTexture.clear(sf::Color::Black);
 		mSpecularCompTexture.setView(mSpecularCompTexture.getDefaultView());
 
@@ -189,24 +150,15 @@ namespace ltbl
 
 		mCompositionTexture.display();
 
-
-		//sf::Sprite sprite = sf::Sprite(mEmissionTempTexture.getTexture());
-		//sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
-		//target.draw(sprite);
-
 		mSpecularCompTexture.display();
 
 
-		//target.setView(target.getDefaultView());
 		sf::Sprite sprite = sf::Sprite(mCompositionTexture.getTexture());
 		sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
 		target.draw(sprite, sf::BlendMultiply);
-		//target.draw(sf::Sprite(mCompositionTexture.getTexture()), sf::BlendMultiply);
-		//target.setView(view);
 
 		sprite.setTexture(mSpecularCompTexture.getTexture());
 		target.draw(sprite, sf::BlendAdd);
-		//target.draw(sprite);
 	}
 
 	LightShape* LightSystem::createLightShape()
