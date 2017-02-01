@@ -18,6 +18,9 @@ LightSystem::LightSystem(bool useNormals)
 	, mAntumbraTempTexture()
 	, mCompositionTexture()
 	, mNormalsTexture()
+	, mSpecularTexture()
+	, mSpecularCompTexture()
+	, mSpecTempTexture()
 	, mDirectionEmissionRange(1000.0f)
 	, mDirectionEmissionRadiusMultiplier(1.1f)
 	, mAmbientColor(sf::Color(16, 16, 16))
@@ -31,6 +34,7 @@ LightSystem::LightSystem(bool useNormals)
 	mUnshadowShader.loadFromMemory(priv::unshadowFragment, sf::Shader::Fragment);
 	mLightOverShapeShader.loadFromMemory(priv::lightOverShapeFragment, sf::Shader::Fragment);
 	mNormalsShader.loadFromMemory(priv::normalFragment, sf::Shader::Fragment);
+	mSpecularShader.loadFromFile("./data/specular_shader.fs", sf::Shader::Fragment);
 }
 
 void LightSystem::create(const sf::FloatRect& rootRegion, const sf::Vector2u& imageSize)
@@ -88,18 +92,37 @@ void LightSystem::render(sf::RenderTarget& target)
 			}
 		}
 		mNormalsTexture.display();
+
+
+		mSpecularTexture.clear(sf::Color::Black);
+		mSpecularTexture.setView(view);
+		for (auto itr = mNormalSprites.begin(); itr != mNormalSprites.end(); ++itr)
+		{
+			if ((*itr) != nullptr && (*itr)->isTurnedOn())
+			{
+				(*itr)->renderSpecular(mSpecularTexture);
+			}
+		}
+		mSpecularTexture.display();
+
 	}
+
+	mSpecularCompTexture.clear(sf::Color::Black);
+	mSpecularCompTexture.setView(mSpecularCompTexture.getDefaultView());
 
     mCompositionTexture.clear(mAmbientColor);
     mCompositionTexture.setView(mCompositionTexture.getDefaultView());
 
 	mLightTempTexture.setView(view);
+	mSpecTempTexture.setView(view);
 
     // --- Point lights
 
     std::vector<priv::QuadtreeOccupant*> lightShapes;
 
     sf::Sprite lightTempSprite(mLightTempTexture.getTexture());
+
+	sf::Sprite specTempSprite(mSpecTempTexture.getTexture());
 
 	// Query lights
 	std::vector<priv::QuadtreeOccupant*> viewPointEmissionLights;
@@ -121,8 +144,11 @@ void LightSystem::render(sf::RenderTarget& target)
 			mEmissionTempTexture.display();
 
 			// Render light
-			light->render(view, mLightTempTexture, mAntumbraTempTexture, mUnshadowShader, mLightOverShapeShader, lightShapes, mUseNormals, mNormalsShader);
+			light->render(view, mLightTempTexture, mAntumbraTempTexture, mSpecTempTexture,
+				mUnshadowShader, mLightOverShapeShader, lightShapes,
+				mUseNormals, mNormalsShader, mSpecularShader);
 			mCompositionTexture.draw(lightTempSprite, sf::BlendAdd);
+			mSpecularCompTexture.draw(specTempSprite, sf::BlendAdd);
 		}
     }
 
@@ -152,12 +178,27 @@ void LightSystem::render(sf::RenderTarget& target)
 
     mCompositionTexture.display();
 
+
+	//sf::Sprite sprite = sf::Sprite(mEmissionTempTexture.getTexture());
+	//sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
+	//target.draw(sprite);
+
+	mSpecularCompTexture.display();
+	
+
 	//target.setView(target.getDefaultView());
 	sf::Sprite sprite = sf::Sprite(mCompositionTexture.getTexture());
 	sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
 	target.draw(sprite, sf::BlendMultiply);
 	//target.draw(sf::Sprite(mCompositionTexture.getTexture()), sf::BlendMultiply);
 	//target.setView(view);
+
+	sprite = sf::Sprite(mSpecularCompTexture.getTexture());
+	sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
+	target.draw(sprite, sf::BlendAdd);
+	//target.draw(sprite);
+	
+
 }
 
 LightShape* LightSystem::createLightShape()
@@ -359,6 +400,9 @@ void LightSystem::update(sf::Vector2u const& size)
 	mLightOverShapeShader.setUniform("emissionTexture", mEmissionTempTexture.getTexture());
 	mNormalsShader.setUniform("normalsTexture", mNormalsTexture.getTexture());
 	mNormalsShader.setUniform("lightTexture", sf::Shader::CurrentTexture);
+	mSpecularShader.setUniform("normalTexture", mNormalsTexture.getTexture());
+	mSpecularShader.setUniform("specularTexture", mSpecularTexture.getTexture());
+	mSpecularShader.setUniform("lightTexture", sf::Shader::CurrentTexture);
 
 	if (size.x != 0 && size.y != 0)
 	{
@@ -367,8 +411,12 @@ void LightSystem::update(sf::Vector2u const& size)
 		mAntumbraTempTexture.create(size.x, size.y);
 		mCompositionTexture.create(size.x, size.y);
 		mNormalsTexture.create(size.x, size.y);
+		mSpecularTexture.create(size.x, size.y);
+		mSpecularCompTexture.create(size.x, size.y);
+		mSpecTempTexture.create(size.x, size.y);
 
 		mNormalsShader.setUniform("targetSize", sf::Glsl::Vec2(size.x * 1.f, size.y * 1.f));
+		mSpecularShader.setUniform("targetSize", sf::Glsl::Vec2(size.x * 1.f, size.y * 1.f));
 		mLightOverShapeShader.setUniform("targetSizeInv", sf::Glsl::Vec2(1.0f / size.x, 1.0f / size.y));
 	}
 }

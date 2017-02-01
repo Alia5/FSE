@@ -169,7 +169,11 @@ class LightPointEmission : public priv::QuadtreeOccupant, public priv::BaseLight
 		/// \param lightOverShapeShader The light over shape shader
 		/// \param shapes The shapes affected by the light
 		//////////////////////////////////////////////////////////////////////////
-		void render(const sf::View& view, sf::RenderTexture& lightTempTexture, sf::RenderTexture& antumbraTempTexture, sf::Shader& unshadowShader, sf::Shader& lightOverShapeShader, const std::vector<priv::QuadtreeOccupant*>& shapes, bool normalsEnabled, sf::Shader& normalsShader);
+		void render(const sf::View& view,
+			sf::RenderTexture& lightTempTexture, sf::RenderTexture& antumbraTempTexture, sf::RenderTexture& specularTexture,
+			sf::Shader& unshadowShader, sf::Shader& lightOverShapeShader,
+			const std::vector<priv::QuadtreeOccupant*>& shapes,
+			bool normalsEnabled, sf::Shader& normalsShader, sf::Shader& specularShader);
 
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Set the local cast center of the light

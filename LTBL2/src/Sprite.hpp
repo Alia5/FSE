@@ -19,8 +19,13 @@ class Sprite : public priv::BaseLight, public sf::Sprite
 
 		const sf::Texture* getNormalsTexture() const;
 
+		void setSpecularTexture(sf::Texture& normalsTexture);
+
+		const sf::Texture* getSpecularTexture() const;
+
 		void render(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
 		void renderNormals(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
+		void renderSpecular(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
 		
 		void setZOrder(int order);
 		int getZOrder() const;
@@ -28,7 +33,9 @@ class Sprite : public priv::BaseLight, public sf::Sprite
 	private:
 		sf::Texture* mTexture;
 		sf::Texture* mNormalsTexture;
-		bool mNeedRenderNormals;
+		sf::Texture* mSpecularTexture;
+		bool mRenderNormals;
+		bool mRenderSpecular;
 		int mZOrder;
 };
 

@@ -203,6 +203,7 @@ class LightSystem : sf::NonCopyable
 		sf::Shader mUnshadowShader; ///< The unshadow shader, loaded from memory when the system is created
 		sf::Shader mLightOverShapeShader; ///< The light over shape shader, loaded from memory when the system is created
 		sf::Shader mNormalsShader; ///< The normal shader
+		sf::Shader mSpecularShader; ///< The specular shader
 
 		priv::Quadtree mLightShapeQuadtree; ///< The quadtree which handles LightShape
 		priv::Quadtree mLightPointEmissionQuadtree; ///< The quadtree which handles LightPointEmission
@@ -217,6 +218,9 @@ class LightSystem : sf::NonCopyable
 		sf::RenderTexture mAntumbraTempTexture; ///< The antumbra render texture
 		sf::RenderTexture mCompositionTexture; ///< The composition render texture
 		sf::RenderTexture mNormalsTexture; ///< The normal render texture
+		sf::RenderTexture mSpecularTexture; ///< The specular render texture
+		sf::RenderTexture mSpecTempTexture;
+		sf::RenderTexture mSpecularCompTexture;
 
 		float mDirectionEmissionRange; ///< The direction emission range
 		float mDirectionEmissionRadiusMultiplier; ///< The dreiction emission radius multiplier

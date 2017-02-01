@@ -141,7 +141,11 @@ const sf::Vector2f& LightPointEmission::getOrigin() const
 	return mSprite.getOrigin();
 }
 
-void LightPointEmission::render(const sf::View& view, sf::RenderTexture& lightTempTexture, sf::RenderTexture& antumbraTempTexture, sf::Shader& unshadowShader, sf::Shader& lightOverShapeShader, const std::vector<priv::QuadtreeOccupant*>& shapes, bool normalsEnabled, sf::Shader& normalsShader)
+void LightPointEmission::render(const sf::View& view,
+	sf::RenderTexture& lightTempTexture, sf::RenderTexture& antumbraTempTexture, sf::RenderTexture& specularTexture,
+	sf::Shader& unshadowShader, sf::Shader& lightOverShapeShader,
+	const std::vector<priv::QuadtreeOccupant*>& shapes, bool normalsEnabled,
+	sf::Shader& normalsShader, sf::Shader& specularShader)
 {
     float shadowExtension = mShadowOverExtendMultiplier * (getAABB().width + getAABB().height);
 
@@ -162,6 +166,9 @@ void LightPointEmission::render(const sf::View& view, sf::RenderTexture& lightTe
     lightTempTexture.clear();
     lightTempTexture.setView(view);
 
+	specularTexture.clear();
+	specularTexture.setView(view);
+
 	if (normalsEnabled) 
 	{
 		auto oglLightPosition = lightTempTexture.mapCoordsToPixel(mSprite.getPosition(), view);
@@ -178,6 +185,14 @@ void LightPointEmission::render(const sf::View& view, sf::RenderTexture& lightTe
 		normalsShader.setUniform("lightSize", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
 
 		lightTempTexture.draw(mSprite, &normalsShader);
+
+
+		specularShader.setUniform("lightPosSF", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(lightTempTexture.getSize().y - oglLightPosition.y), 0.15f));
+		specularShader.setUniform("lightSizeSF", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
+		specularShader.setUniform("lightColorSF", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
+
+		specularTexture.draw(mSprite, &specularShader);
+
 	}
 	else 
 	{
@@ -209,6 +224,7 @@ void LightPointEmission::render(const sf::View& view, sf::RenderTexture& lightTe
 			{
 				pLightShape->setColor(sf::Color::Black);
 				lightTempTexture.draw(*pLightShape);
+				specularTexture.draw(*pLightShape);
 			}
 
 			sf::Vector2f as = pLightShape->getTransform().transformPoint(pLightShape->getPoint(outerEdges[i]._outerBoundaryIndices[0]));
@@ -260,6 +276,11 @@ void LightPointEmission::render(const sf::View& view, sf::RenderTexture& lightTe
 				lightTempTexture.setView(lightTempTexture.getDefaultView());
 				lightTempTexture.draw(sf::Sprite(antumbraTempTexture.getTexture()), sf::BlendMultiply);
 				lightTempTexture.setView(view);
+
+				specularTexture.setView(lightTempTexture.getDefaultView());
+				specularTexture.draw(sf::Sprite(antumbraTempTexture.getTexture()), sf::BlendMultiply);
+				specularTexture.setView(view);
+
 			}
 			else
 			{
@@ -271,8 +292,11 @@ void LightPointEmission::render(const sf::View& view, sf::RenderTexture& lightTe
 				maskShape.setPoint(3, as + priv::vectorNormalize(ad) * shadowExtension);
 				maskShape.setFillColor(sf::Color::Black);
 				lightTempTexture.draw(maskShape);
+				specularTexture.draw(maskShape);
 
 				unmaskWithPenumbras(lightTempTexture, sf::BlendMultiply, unshadowShader, penumbras, shadowExtension);
+				unmaskWithPenumbras(specularTexture, sf::BlendMultiply, unshadowShader, penumbras, shadowExtension);
+
 			}
 		}
     }
@@ -285,15 +309,20 @@ void LightPointEmission::render(const sf::View& view, sf::RenderTexture& lightTe
 		{
             pLightShape->setColor(sf::Color::White);
             lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
-        }
+			//specularTexture.draw(*pLightShape, &lightOverShapeShader);
+		}
         else 
 		{
             pLightShape->setColor(sf::Color::Black);
             lightTempTexture.draw(*pLightShape);
+			//specularTexture.draw(*pLightShape);
         }
     }
 
     lightTempTexture.display();
+
+	specularTexture.display();
+
 }
 
 void LightPointEmission::setLocalCastCenter(sf::Vector2f const & localCenter)
