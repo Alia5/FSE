@@ -304,23 +304,23 @@ void LightPointEmission::render(const sf::View& view,
 		}
     }
 
-    for (unsigned i = 0; i < shapesCount; i++) 
+	for (unsigned i = 0; i < shapesCount; i++)
 	{
-        LightShape* pLightShape = static_cast<LightShape*>(shapes[i]);
+		LightShape* pLightShape = static_cast<LightShape*>(shapes[i]);
 
-        if (pLightShape->renderLightOver()) 
+		if (pLightShape->renderLightOver())
 		{
-            pLightShape->setColor(sf::Color::White);
-            lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
-			//specularTexture.draw(*pLightShape, &lightOverShapeShader);
+			pLightShape->setColor(sf::Color::White);
+			lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
 		}
-        else 
+		else
 		{
-            pLightShape->setColor(sf::Color::Black);
-            lightTempTexture.draw(*pLightShape);
-			specularTexture.draw(*pLightShape);
-        }
-    }
+			pLightShape->setColor(sf::Color::Black);
+			lightTempTexture.draw(*pLightShape);
+		}
+		pLightShape->setColor(sf::Color::Black);
+		specularTexture.draw(*pLightShape);
+	}
 
     lightTempTexture.display();
 

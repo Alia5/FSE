@@ -84,6 +84,9 @@ namespace fse
 
 			z_order_changed_ = false;
 		}
+
+		light_world_->updateView();
+
 		renderer_->render(fse_objects_);
 
 		if (phys_draw_debug_)

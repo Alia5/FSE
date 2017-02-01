@@ -22,6 +22,8 @@ namespace fse
 		bool getLighting() const;
 		void setLighting(bool lighting);
 
+		void updateView();
+
 		ltbl::LightDirectionEmission* getSun() const;
 
 		ltbl::LightSystem* getLightSystem();

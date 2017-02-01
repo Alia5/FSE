@@ -23,14 +23,7 @@ namespace fse
 
 	void FSELightWorld::update(float deltaTime)
 	{
-		if (lighting_)
-		{
-			sf::View view = scene_->getRenderTarget()->getView();
-			normal_texture_.clear(sf::Color(127u, 127u, 255u));
-			specular_texture_.clear(sf::Color::Black);
-			normal_texture_.setView(view);
-			specular_texture_.setView(view);
-		}
+
 	}
 
 	void FSELightWorld::draw(sf::RenderTarget& target)
@@ -62,6 +55,18 @@ namespace fse
 	void FSELightWorld::setLighting(bool lighting)
 	{
 		lighting_ = lighting;
+	}
+
+	void FSELightWorld::updateView()
+	{
+		if (lighting_)
+		{
+			sf::View view = scene_->getRenderTarget()->getView();
+			normal_texture_.clear(sf::Color(127u, 127u, 255u));
+			specular_texture_.clear(sf::Color::Black);
+			normal_texture_.setView(view);
+			specular_texture_.setView(view);
+		}
 	}
 
 	ltbl::LightDirectionEmission* FSELightWorld::getSun() const
