@@ -4,14 +4,17 @@
 
 namespace ltbl
 {
+	class LightSystem;
 
-//////////////////////////////////////////////////////////////////////////
-/// \brief Sprite with normals
-//////////////////////////////////////////////////////////////////////////
-class Sprite : public priv::BaseLight, public sf::Sprite
-{
+	//////////////////////////////////////////////////////////////////////////
+	/// \brief Sprite with normals
+	//////////////////////////////////////////////////////////////////////////
+	class Sprite : public priv::BaseLight, public sf::Sprite
+	{
 	public:
 		Sprite();
+		explicit Sprite(ltbl::LightSystem* light_system);
+		~Sprite();
 
 		void setTexture(sf::Texture& texture, bool resetRect = false);
 
@@ -23,20 +26,24 @@ class Sprite : public priv::BaseLight, public sf::Sprite
 
 		const sf::Texture* getSpecularTexture() const;
 
-		void render(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
+		void render(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates(),
+			sf::RenderStates normalstates = sf::RenderStates(),
+			sf::RenderStates specularstates = sf::RenderStates());
 		void renderNormals(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
 		void renderSpecular(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
-		
-		void setZOrder(int order);
-		int getZOrder() const;
 
 	private:
 		sf::Texture* mTexture;
 		sf::Texture* mNormalsTexture;
 		sf::Texture* mSpecularTexture;
+
+		ltbl::LightSystem* light_system_;
+
+		sf::RenderTarget* mNormalsTarget;
+		sf::RenderTarget* mSpecularTarget;
+
 		bool mRenderNormals;
 		bool mRenderSpecular;
-		int mZOrder;
-};
+	};
 
 } // namespace ltbl

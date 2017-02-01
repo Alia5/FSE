@@ -273,12 +273,15 @@ void LightPointEmission::render(const sf::View& view,
 
 				antumbraTempTexture.display();
 
+				sf::Sprite antumbraSprite;
+				antumbraSprite.setTexture(antumbraTempTexture.getTexture());
+
 				lightTempTexture.setView(lightTempTexture.getDefaultView());
-				lightTempTexture.draw(sf::Sprite(antumbraTempTexture.getTexture()), sf::BlendMultiply);
+				lightTempTexture.draw(antumbraSprite, sf::BlendMultiply);
 				lightTempTexture.setView(view);
 
 				specularTexture.setView(lightTempTexture.getDefaultView());
-				specularTexture.draw(sf::Sprite(antumbraTempTexture.getTexture()), sf::BlendMultiply);
+				specularTexture.draw(antumbraSprite, sf::BlendMultiply);
 				specularTexture.setView(view);
 
 			}
@@ -315,7 +318,7 @@ void LightPointEmission::render(const sf::View& view,
 		{
             pLightShape->setColor(sf::Color::Black);
             lightTempTexture.draw(*pLightShape);
-			//specularTexture.draw(*pLightShape);
+			specularTexture.draw(*pLightShape);
         }
     }
 

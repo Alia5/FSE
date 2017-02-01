@@ -13,7 +13,7 @@ namespace fse
 	FSELightWorld::FSELightWorld(Scene* scene, const sf::Vector2f& spawnPos) : FSEObject(scene, spawnPos)
 	{
 		setZOrder(255);
-		light_system_ = std::make_unique<ltbl::LightSystem>(true);
+		light_system_ = std::make_unique<ltbl::LightSystem>(normal_texture_, specular_texture_, true);
 	}
 
 	FSELightWorld::~FSELightWorld()
@@ -23,12 +23,24 @@ namespace fse
 
 	void FSELightWorld::update(float deltaTime)
 	{
+		if (lighting_)
+		{
+			sf::View view = scene_->getRenderTarget()->getView();
+			normal_texture_.clear(sf::Color(127u, 127u, 255u));
+			specular_texture_.clear(sf::Color::Black);
+			normal_texture_.setView(view);
+			specular_texture_.setView(view);
+		}
 	}
 
 	void FSELightWorld::draw(sf::RenderTarget& target)
 	{
 		if (lighting_)
+		{
+			normal_texture_.display();
+			specular_texture_.display();
 			light_system_->render(target);
+		}
 	}
 
 	void FSELightWorld::spawned()

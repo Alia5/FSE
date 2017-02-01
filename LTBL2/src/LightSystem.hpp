@@ -8,30 +8,30 @@
 namespace ltbl
 {
 
-//////////////////////////////////////////////////////////////////////////
-/// \brief System which handle lights
-//////////////////////////////////////////////////////////////////////////
-class LightSystem : sf::NonCopyable
-{
-    public:
+	//////////////////////////////////////////////////////////////////////////
+	/// \brief System which handle lights
+	//////////////////////////////////////////////////////////////////////////
+	class LightSystem : sf::NonCopyable
+	{
+	public:
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Constructor
 		/// \param useNormals Will the light system use normals ? Default to false
 		//////////////////////////////////////////////////////////////////////////
-		LightSystem(bool useNormals = false);
+		LightSystem(sf::RenderTexture& normalTexture, sf::RenderTexture& specularTexture, bool useNormals = true);
 
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Create quadtrees, resources and render textures
 		/// \param rootRegion The root region for quadtrees
 		/// \param imageSize The size of the image, used to create render texture
 		//////////////////////////////////////////////////////////////////////////
-        void create(const sf::FloatRect& rootRegion, const sf::Vector2u& imageSize);
+		void create(const sf::FloatRect& rootRegion, const sf::Vector2u& imageSize);
 
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Render the lights
 		/// \param target The render target to render the lights on
 		//////////////////////////////////////////////////////////////////////////
-        void render(sf::RenderTarget& target);
+		void render(sf::RenderTarget& target);
 
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Create a light shape
@@ -192,11 +192,33 @@ class LightSystem : sf::NonCopyable
 
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Get the normal shader
-		/// As normal shader if automatically loaded, use it only to change the shader
+		/// As normal shader is automatically loaded, use it only to change the shader
 		/// You have to call update(), right after you changed it
 		/// \return The normal shader
 		//////////////////////////////////////////////////////////////////////////
 		sf::Shader& getNormalsShader();
+
+		//////////////////////////////////////////////////////////////////////////
+		/// \brief Get the specular shader
+		/// As specular shader is automatically loaded, use it only to change the shader
+		/// You have to call update(), right after you changed it
+		/// \return The specular shader
+		//////////////////////////////////////////////////////////////////////////
+		sf::Shader& getSpecularShader();
+
+		//////////////////////////////////////////////////////////////////////////
+		/// \brief Get the normal texture
+		/// Retrieve the normalmap texture for sprites to render on to
+		/// \return The normal texture
+		//////////////////////////////////////////////////////////////////////////
+		sf::RenderTexture& getNormalTexture();
+
+		//////////////////////////////////////////////////////////////////////////
+		/// \brief Get the specular texture
+		/// Retrieve the specularmap texture for sprites to render on to
+		/// \return The specular texture
+		//////////////////////////////////////////////////////////////////////////
+		sf::RenderTexture& getSpecularTexture();
 
 	private:
 		sf::Texture mPenumbraTexture; ///< The penumbra texture, loaded from memory when the system is created
@@ -217,16 +239,16 @@ class LightSystem : sf::NonCopyable
 		sf::RenderTexture mEmissionTempTexture; ///< The emission render texture
 		sf::RenderTexture mAntumbraTempTexture; ///< The antumbra render texture
 		sf::RenderTexture mCompositionTexture; ///< The composition render texture
-		sf::RenderTexture mNormalsTexture; ///< The normal render texture
-		sf::RenderTexture mSpecularTexture; ///< The specular render texture
-		sf::RenderTexture mSpecTempTexture;
-		sf::RenderTexture mSpecularCompTexture;
+		sf::RenderTexture &mNormalsTexture; ///< The normal render texture
+		sf::RenderTexture &mSpecularTexture; ///< The specular render texture
+		sf::RenderTexture mSpecTempTexture; ///< The specular-light texture
+		sf::RenderTexture mSpecularCompTexture; ///< the specular composition texture
 
 		float mDirectionEmissionRange; ///< The direction emission range
 		float mDirectionEmissionRadiusMultiplier; ///< The dreiction emission radius multiplier
 		sf::Color mAmbientColor; ///< The ambient color
 
 		const bool mUseNormals; ///< Do the system use normals ?
-};
+	};
 
 } // namespace ltbl

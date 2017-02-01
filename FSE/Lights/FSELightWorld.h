@@ -30,6 +30,10 @@ namespace fse
 
 
 	private:
+
+		sf::RenderTexture normal_texture_;
+		sf::RenderTexture specular_texture_;
+
 		std::unique_ptr<ltbl::LightSystem> light_system_;
 		bool lighting_ = true;
 

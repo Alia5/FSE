@@ -937,6 +937,8 @@ class BaseLight
 		{
 		}
 
+		virtual ~BaseLight() = default;
+
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Enable or disable the light
 		/// \param turnedOn True to enable the light, false to disable it

@@ -1,4 +1,5 @@
 #include "Sprite.hpp"
+#include "LightSystem.hpp"
 
 namespace ltbl
 {
@@ -9,10 +10,32 @@ namespace ltbl
 		, mTexture(nullptr)
 		, mNormalsTexture(nullptr)
 		, mSpecularTexture(nullptr)
+		, light_system_(nullptr)
+		, mNormalsTarget(nullptr)
+		, mSpecularTarget(nullptr)
+		, mRenderNormals(false)
+		, mRenderSpecular(false)
+	{
+	}
+
+	Sprite::Sprite(ltbl::LightSystem* light_system) : BaseLight()
+		, sf::Sprite()
+		, mTexture(nullptr)
+		, mNormalsTexture(nullptr)
+		, mSpecularTexture(nullptr)
+		, light_system_(light_system)
+		, mNormalsTarget(&light_system->getNormalTexture())
+		, mSpecularTarget(&light_system->getSpecularTexture())
 		, mRenderNormals(true)
 		, mRenderSpecular(true)
-		, mZOrder(0)
 	{
+		light_system_->addSprite(*this);
+	}
+
+	Sprite::~Sprite()
+	{
+		if (light_system_ != nullptr)
+			light_system_->removeSprite(*this);
 	}
 
 	void Sprite::setTexture(sf::Texture& texture, bool resetRect)
@@ -41,9 +64,22 @@ namespace ltbl
 		return mSpecularTexture;
 	}
 
-	void Sprite::render(sf::RenderTarget& target, sf::RenderStates states)
+	void Sprite::render(sf::RenderTarget& target, sf::RenderStates states,
+		sf::RenderStates normalstates,
+		sf::RenderStates specularstates)
 	{
 		target.draw(*this, states);
+		//sf::View view = target.getView();
+		if (mNormalsTarget != nullptr)
+		{
+			//mNormalsTarget->setView(view);
+			renderNormals(*mNormalsTarget, normalstates);
+		}
+		if (mSpecularTarget != nullptr)
+		{
+			//mSpecularTarget->setView(view);
+			renderSpecular(*mSpecularTarget, specularstates);
+		}
 	}
 
 	void Sprite::renderNormals(sf::RenderTarget& target, sf::RenderStates states)
@@ -66,13 +102,4 @@ namespace ltbl
 		}
 	}
 
-	void Sprite::setZOrder(int order)
-	{
-		mZOrder = order;
-	}
-
-	int Sprite::getZOrder() const
-	{
-		return mZOrder;
-	}
 } // namespace ltbl
