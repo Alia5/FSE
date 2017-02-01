@@ -34,7 +34,7 @@ namespace ltbl
 		mUnshadowShader.loadFromMemory(priv::unshadowFragment, sf::Shader::Fragment);
 		mLightOverShapeShader.loadFromMemory(priv::lightOverShapeFragment, sf::Shader::Fragment);
 		mNormalsShader.loadFromMemory(priv::normalFragment, sf::Shader::Fragment);
-		mSpecularShader.loadFromFile("./data/specular_shader.fs", sf::Shader::Fragment);
+		mSpecularShader.loadFromMemory(priv::specularFragment, sf::Shader::Fragment);
 	}
 
 	void LightSystem::create(const sf::FloatRect& rootRegion, const sf::Vector2u& imageSize)

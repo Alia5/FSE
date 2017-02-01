@@ -53,9 +53,41 @@ const std::string normalFragment = "" \
 "}";
 
 const std::string specularFragment = "" \
+"uniform sampler2D normalTexture;" \
+"uniform sampler2D specularTexture;" \
+"uniform sampler2D lightTexture;" \
+"uniform vec3 lightPos;" \
+"uniform vec3 lightColorTint;" \
+"uniform vec2 lightSize;" \
+"uniform vec2 targetSize;" \
+" " \
 "void main()" \
 "{" \
-"	gl_FragColor = gl_FragColor;" \
+"	vec2 coord = gl_TexCoord[0].xy;" \
+"	vec4 lightColor = texture2D(lightTexture, coord, 1.0);" \
+"	lightColor.rgb *= lightColorTint;" \
+"	vec4 specMap = texture2D(specularTexture, gl_FragCoord.xy / targetSize, 1.0);" \
+"	vec3 normalColor = texture2D(normalTexture, gl_FragCoord.xy / targetSize).rgb;" \
+"	vec3 normal = normalize(normalColor * 2.0 - 1.0);" \
+"	vec3 lpc = texture2D(lightTexture, coord).rgb;" \
+"	float lightPower = (lpc.r + lpc.g + lpc.b) / 3.0;" \
+"	vec2 lightVector = lightPos.xy - gl_FragCoord.xy;" \
+"	vec3 lightDir = vec3(lightVector / lightSize, lightPos.z);" \
+"	lightDir = normalize(lightDir);" \
+"	float colorIntensity = max(dot(normal, lightDir), 0.0);" \
+"	vec4 specular = vec4(0.0);" \
+"	float lightSpecPower = (specMap.r + specMap.g + specMap.b) * lightPower;" \
+"	vec4 lightSpecColor = vec4(lightColor * specMap);" \
+"	if (colorIntensity > 0.0)" \
+"	{" \
+"		vec3 halfVec = normalize(lightDir + vec3(0.5, 0.5, 0.5));" \
+"		vec4 specColor = specMap;" \
+"		vec3 reflectDir = reflect(-lightDir, normal);" \
+"		float specModifier = max(dot(reflectDir, lightDir), 0.0);" \
+"		specular = pow(specModifier, lightSpecPower) * specColor * lightSpecColor;" \
+"		specular.a = 1.0;" \
+"	}" \
+"	gl_FragColor = clamp(specular, 0.0, 1.0);" \
 "}";
 
 const unsigned char penumbraTexture[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,2,0,0,0,2,0,8,3,0,0,0,195,166,36,200,0,0,3,0,80,76,84,69,0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,

@@ -187,9 +187,9 @@ void LightPointEmission::render(const sf::View& view,
 		lightTempTexture.draw(mSprite, &normalsShader);
 
 
-		specularShader.setUniform("lightPosSF", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(lightTempTexture.getSize().y - oglLightPosition.y), 0.15f));
-		specularShader.setUniform("lightSizeSF", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
-		specularShader.setUniform("lightColorSF", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
+		specularShader.setUniform("lightPos", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(lightTempTexture.getSize().y - oglLightPosition.y), 0.15f));
+		specularShader.setUniform("lightSize", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
+		specularShader.setUniform("lightColorTint", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
 
 		specularTexture.draw(mSprite, &specularShader);
 
