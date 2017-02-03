@@ -1,72 +1,130 @@
 #pragma once
 
 #include <SFML/Network.hpp>
-#include <iostream>
 #include <thread>
-#include <utility>
 #include <list>
 #include <mutex>
-#include <codecvt>
-#include <Box2D/Common/b2Settings.h>
+#include "Signals.h"
+#include <atomic>
 
-class NetworkHandler {
-public:
-	NetworkHandler();
-	NetworkHandler(bool server);
-	~NetworkHandler();
+namespace fse
+{
 
-	void setServer(bool server);
 
-	void setServerIP(std::wstring ip);
+	class NetworkHandler {
+	public:
+		NetworkHandler();
+		~NetworkHandler();
 
-	bool connect();
-	void disconnect();
+		void setServer(bool server);
+		void setMaxConnections(size_t maxConnections);
 
-	void sendPacket(sf::Packet& packet, bool tcp);
+		void setServerIP(std::wstring ip);
 
-	std::vector<sf::Packet> getUdpPackets(uint32_t objectID);
-	std::vector<sf::Packet> getTcpPackets(uint32_t objectID);
+		int getPing();
 
-	void netThreadRunServer();
-	void netThreadRunClient();
+		bool awaitConnections();
+		void disconnectAll();
 
-	NetworkHandler& operator=(const NetworkHandler& handler);
+		bool connect();
+		void disconnect();
 
-	std::mutex mtx_;
+		void updateSignals();
 
-private:
-	void swap(const NetworkHandler& other);
-	sf::Socket::Status receiveWithTimeout(sf::TcpSocket& socket, sf::Packet& packet, sf::Time timeout);
+		void sendPacket(sf::Packet& packet, bool tcp);
 
-	bool run_thread_ = false;
+		std::vector<sf::Packet> getUdpPackets(uint32_t objectID);
+		std::vector<sf::Packet> getTcpPackets(uint32_t objectID);
 
-	bool is_server_ = false;
-	bool tcp_connected_ = false;
+	private:
 
-	unsigned short tcp_port_ = 23651;
-	unsigned short  udp_port_ = 23652;
-	unsigned short  udp_port_client_ = 23652;
+		enum MessageType : uint8_t 
+		{
+			undefined = 0,
+			keepalive,
+			initial,
+			bye,
+			generic,
+		};
 
-	sf::IpAddress ip_ = "";
+		std::atomic<int> ping_ = 0;
 
-	sf::TcpListener tcp_listener_;
-	sf::TcpSocket tcp_socket_;
+		void awaitConnectionThreadRun();
+		void netThreadRun();
+		void bindListeners();
+		void process_tba_connections();
 
-	sf::UdpSocket udp_socket_;
+		sf::Socket::Status receiveWithTimeout(sf::TcpSocket& socket, sf::Packet& packet, sf::Time timeout);
 
-	std::thread network_thread_;
-	
-	std::list<sf::Packet> udp_message_queue_;
-	std::list<sf::Packet> udp_received_packets_queue_;
+		mutable std::mutex mtx_;
+		mutable std::mutex socket_mtx_;
 
-	std::list<sf::Packet> tcp_message_queue_;
-	std::list<sf::Packet> tcp_received_packets_queue_;
+		bool listener_bound_ = false;
 
-	sf::SocketSelector sock_selector_;
+		std::atomic<bool> await_connections_ = false;
 
-	sf::Clock network_clock_;
+		std::atomic<bool> run_thread_ = false;
 
-	float tick = 1.f / 120.f;
-	int queueSize = 100;
+		bool is_server_ = false;
+		bool connected_to_server_ = false;
 
-};
+		unsigned int max_client_connections = 0;
+
+		unsigned short tcp_port_ = 23651;
+		unsigned short usable_udp_ports_[16] = { 23652, 23653, 23654, 23655, 23656, 23657, 23658, 23659,
+												23660, 23661, 23662, 23663, 23664, 23665, 23666, 23667 };
+
+		sf::IpAddress server_ip_ = "127.0.0.1";
+
+		sf::TcpListener tcp_listener_;
+		std::vector<std::unique_ptr<sf::TcpSocket>> tcp_sockets_;
+		std::vector<std::unique_ptr<sf::UdpSocket>> udp_sockets_;
+		std::vector<unsigned short> udp_ports_;
+		sf::SocketSelector socket_selector;
+		std::vector<sf::Clock> tcp_timeout_clocks;
+		std::vector<sf::Clock> udp_timeout_clocks;
+
+		std::vector<std::unique_ptr<sf::TcpSocket>> tba_tcp_sockets_;
+		std::vector<std::unique_ptr<sf::UdpSocket>> tba_udp_sockets_;
+		std::vector<unsigned short> tba_udp_ports_;
+
+		unsigned int connected_clients_ = 0;
+
+		std::thread await_connections_thread_;
+		std::thread network_thread_;
+
+		std::list<sf::Packet> udp_message_queue_;
+		std::list<sf::Packet> udp_received_packets_queue_;
+
+		std::list<sf::Packet> tcp_message_queue_;
+		std::list<sf::Packet> tcp_received_packets_queue_;
+
+		sf::Clock network_clock_;
+
+		int last_udp_keepalive_sent_ = 0;
+
+		sf::Int32 timestamp_offset_ = 0;
+
+		float tick = 1.f / 120.f;
+		unsigned int queueSize = 10000;
+
+		int timeout_secs = 5;
+		int keepalive_secs = 1;
+
+		unsigned int num_clients_ = 0; ///< internal use for signals...
+		std::vector<int> tbdisconnected_clients;
+		std::vector<int> disconnected_clients_; ///< internal use for signals..
+
+	PUBLIC_SIGNALS:
+		using OnConnectedSignal = Signal<int>;
+		using OnDisconnectedSignal = Signal<std::vector<int>>;
+
+		//Number of clients connected - as a client this value is always 1
+		OnConnectedSignal onConnected;
+		//which clients are disconnected - as a client this vector is always size of 1 with value 1
+		OnDisconnectedSignal onDisconnected;
+
+
+
+	};
+}

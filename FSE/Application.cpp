@@ -47,6 +47,7 @@ namespace fse
 			root_scene_.update(application_clock_.restart().asSeconds());
 		}
 
+		network_handler_.updateSignals();
 
 	}
 
