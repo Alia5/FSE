@@ -77,6 +77,8 @@ public:
 
 	bool isConnected() const
 	{
+		if (item_ == nullptr)
+			return false;
 		return item_->isConnected();
 	}
 
