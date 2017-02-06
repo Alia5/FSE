@@ -21,17 +21,20 @@ namespace fse
 
 		void setServerIP(std::wstring ip);
 
-		int getPing();
+		int getPing() const;
 
 		bool awaitConnections();
+		void stopAwaitingConnections();
 		void disconnectAll();
-
+		bool isConnected() const;
 		bool connect();
 		void disconnect();
 
+		int getConnectedClients() const;
+
 		void updateSignals();
 
-		void sendPacket(sf::Packet& packet, bool tcp);
+		void sendPacket(sf::Packet& packet, bool tcp, bool unaltered = false);
 
 		std::vector<sf::Packet> getUdpPackets(uint32_t objectID);
 		std::vector<sf::Packet> getTcpPackets(uint32_t objectID);
@@ -52,9 +55,11 @@ namespace fse
 		void awaitConnectionThreadRun();
 		void netThreadRun();
 		void bindListeners();
+		void receive();
+		void send();
 		void process_tba_connections();
 
-		sf::Socket::Status receiveWithTimeout(sf::TcpSocket& socket, sf::Packet& packet, sf::Time timeout);
+		static sf::Socket::Status receiveWithTimeout(sf::TcpSocket& socket, sf::Packet& packet, sf::Time timeout);
 
 		mutable std::mutex mtx_;
 		mutable std::mutex socket_mtx_;
@@ -88,6 +93,15 @@ namespace fse
 		std::vector<std::unique_ptr<sf::UdpSocket>> tba_udp_sockets_;
 		std::vector<unsigned short> tba_udp_ports_;
 
+		//variables for server/client thread
+		sf::Clock tcp_keepalive_clock;
+		sf::Clock udp_keepalive_clock;
+		sf::IpAddress ip = server_ip_;
+		sf::Packet pack;
+		std::list<sf::Packet> toSendPacks;
+		uint8_t type;
+		////
+
 		unsigned int connected_clients_ = 0;
 
 		std::thread await_connections_thread_;
@@ -109,6 +123,8 @@ namespace fse
 		unsigned int queueSize = 10000;
 
 		int timeout_secs = 5;
+		int tcp_timeout_secs = 15;
+		int tcp_keepalive_secs = 5;
 		int keepalive_secs = 1;
 
 		unsigned int num_clients_ = 0; ///< internal use for signals...

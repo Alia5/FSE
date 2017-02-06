@@ -41,7 +41,7 @@ namespace fse
 		this->server_ip_ = sf::IpAddress(ipstring);
 	}
 
-	int NetworkHandler::getPing()
+	int NetworkHandler::getPing() const
 	{
 		return ping_;
 	}
@@ -54,8 +54,6 @@ namespace fse
 		if (await_connections_)
 			return false;
 		await_connections_ = true;
-
-		std::wcout << L"awaiting connections...\n";
 
 		if (!listener_bound_)
 			bindListeners();
@@ -70,8 +68,27 @@ namespace fse
 		return false;
 	}
 
+	void NetworkHandler::stopAwaitingConnections()
+	{
+		await_connections_ = false;
+	}
+
 	void NetworkHandler::disconnectAll()
 	{
+		if (connected_clients_ > 0 || connected_to_server_)
+		{
+			if (socket_mtx_.try_lock())
+			{
+				sf::Packet pack;
+				pack << static_cast<uint8_t>(MessageType::bye);
+				for (int i = 0; i < tcp_sockets_.size(); i++)
+				{
+					tcp_sockets_[i]->send(pack);
+				}
+				socket_mtx_.unlock();
+			} 
+		}
+
 		run_thread_ = false;
 		listener_bound_ = false;
 		connected_to_server_ = false;
@@ -97,9 +114,19 @@ namespace fse
 		udp_ports_.clear();
 		socket_selector.clear();
 		tcp_timeout_clocks.clear();
-		udp_timeout_clocks.clear();
+		udp_timeout_clocks.clear();	
 		connected_clients_ = 0;
-		num_clients_ = 0;
+		for (int i = 0; i < connected_clients_; i++)
+		{
+			disconnected_clients_.push_back(i);
+		}
+	}
+
+	bool NetworkHandler::isConnected() const
+	{
+		if (connected_clients_ > 0 || connected_to_server_)
+			return true;
+		return false;
 	}
 
 	bool NetworkHandler::connect()
@@ -116,57 +143,61 @@ namespace fse
 		sf::Packet packet;
 		if (tcpSocket->connect(server_ip_, tcp_port_, sf::seconds(5)) == sf::Socket::Done)
 		{
-			sf::Socket::Status status = sf::Socket::Error;
-			for (int i = 0; i < 16; i++)
+			sf::SocketSelector selector;
+			selector.add(*tcpSocket);
+			if (selector.wait(sf::seconds(5)))
 			{
-				status = udpSocket->bind(usable_udp_ports_[i]);
-				if (status == sf::Socket::Done)
-					break;
-			}
-
-			if (status == sf::Socket::Done)
-			{
-				packet << static_cast<uint8_t>(MessageType::initial);
-				packet << static_cast<uint16_t>(udpSocket->getLocalPort());
-				tcpSocket->send(packet);
-				sf::SocketSelector selector;
-				selector.add(*tcpSocket);
-				if (selector.wait(sf::seconds(5)))
+				uint8_t type;
+				tcpSocket->receive(packet);
+				packet >> type;
+				if (type == MessageType::initial)
 				{
-					packet.clear();
-					uint8_t type;
-					tcpSocket->receive(packet);
-					packet >> type;
-					if (type == MessageType::initial)
+					unsigned short udpPort;
+					packet >> udpPort;
+					packet >> timestamp_offset_;
+
+					network_clock_.restart();
+
+					sf::Socket::Status status = sf::Socket::Error;
+					for (int i = 0; i < 16; i++)
 					{
-						unsigned short udpPort;
-						packet >> udpPort;
-						packet >> timestamp_offset_;
+						if (usable_udp_ports_[i] < udpPort)
+							continue;
+						status = udpSocket->bind(usable_udp_ports_[i]);
+						if (status == sf::Socket::Done)
+							break;
+					}
 
-						network_clock_.restart();
-
-						//send a udp packet so that no udp-port has to be opened...
+					if (status == sf::Socket::Done)
+					{
+						selector.clear();
+						selector.add(*tcpSocket);
 						packet.clear();
-						packet << static_cast<uint8_t>(MessageType::keepalive);
+						packet << static_cast<uint8_t>(MessageType::initial);
+						packet << static_cast<uint16_t>(udpSocket->getLocalPort());
+						tcpSocket->send(packet);
 						udpSocket->send(packet, server_ip_, udpPort);
 
-						connected_to_server_ = true;
-						socket_mtx_.lock();
-						tba_tcp_sockets_.push_back(std::move(tcpSocket));
-						tba_udp_sockets_.push_back(std::move(udpSocket));
-						tba_udp_ports_.push_back(udpPort);
-						socket_mtx_.unlock();
-						if (!run_thread_)
+						if (selector.wait(sf::seconds(5)))
 						{
-							//start the network handling thread
-							run_thread_ = true;
-							network_thread_ = std::thread(&NetworkHandler::netThreadRun, this);
+							connected_to_server_ = true;
+							socket_mtx_.lock();
+							tba_tcp_sockets_.push_back(std::move(tcpSocket));
+							tba_udp_sockets_.push_back(std::move(udpSocket));
+							tba_udp_ports_.push_back(udpPort);
+							socket_mtx_.unlock();
+							if (!run_thread_)
+							{
+								//start the network handling thread
+								run_thread_ = true;
+								network_thread_ = std::thread(&NetworkHandler::netThreadRun, this);
+							}
+							selector.clear();
+							return true;
 						}
-						selector.clear();
-						return true;
+						udpSocket->unbind();
 					}
 				}
-				udpSocket->unbind();
 			}
 			tcpSocket->disconnect();
 		}
@@ -177,8 +208,22 @@ namespace fse
 	{
 		if (is_server_)
 			return;
-		//TODO: send special disconnect packet;
 		disconnectAll();
+	}
+
+	int NetworkHandler::getConnectedClients() const
+	{
+		int ret = 0;
+		if (socket_mtx_.try_lock())
+		{
+			ret = connected_clients_;
+			socket_mtx_.unlock();
+			return ret;
+		} 
+		else //already locked.
+		{
+			return connected_clients_;
+		}
 	}
 
 	void NetworkHandler::updateSignals()
@@ -204,17 +249,21 @@ namespace fse
 		socket_mtx_.unlock();
 	}
 
-	void NetworkHandler::sendPacket(sf::Packet& packet, bool tcp)
+	void NetworkHandler::sendPacket(sf::Packet& packet, bool tcp, bool unaltered)
 	{
 		sf::Packet pack;
 		uint8_t byte;
 
-		pack << static_cast<uint8_t>(MessageType::generic);
-		pack << static_cast<uint32_t>(network_clock_.getElapsedTime().asMilliseconds() + timestamp_offset_);
-		while (!packet.endOfPacket()) // Why this way SFML?
+		if (!unaltered)
 		{
-			packet >> byte;
-			pack << byte;
+			pack << static_cast<uint8_t>(MessageType::generic);
+			pack << static_cast<uint32_t>(network_clock_.getElapsedTime().asMilliseconds() + timestamp_offset_);
+			while (!packet.endOfPacket()) // Why this way SFML?
+			{
+				packet >> byte;
+				pack << byte;
+			}
+
 		}
 
 		mtx_.lock();
@@ -305,9 +354,7 @@ namespace fse
 			{
 				if (await_connections_) //should we still await connections?
 				{
-					std::cout << "A new client connected from " << client->getRemoteAddress().toString() << " !\n";
-
-					//do some udp holepunching for clients to not have to open a port...
+					//bind udp socket
 					auto udpSocket = std::make_unique<sf::UdpSocket>();
 					sf::IpAddress ip = client->getRemoteAddress();
 					sf::Socket::Status status = sf::Socket::Error;
@@ -321,6 +368,12 @@ namespace fse
 
 					if (status == sf::Socket::Done)
 					{
+						packet.clear();
+						packet << static_cast<uint8_t>(MessageType::initial);
+						packet << static_cast<uint16_t>(udpSocket->getLocalPort());
+						packet << network_clock_.getElapsedTime().asMilliseconds(); //for timestamp syncing
+						client->send(packet);			//send packet back to let the client know servers udp port
+						
 						sf::SocketSelector selector;
 						selector.add(*client);
 						if (selector.wait(sf::seconds(5)))	//wait for the right packet...
@@ -333,16 +386,12 @@ namespace fse
 							{
 								unsigned short udpPort;
 								packet >> udpPort;
-								packet.clear();
-								packet << static_cast<uint8_t>(MessageType::initial);
-								packet << static_cast<uint16_t>(udpSocket->getLocalPort());
-								packet << network_clock_.getElapsedTime().asMilliseconds(); //for timestamp syncing
-								client->send(packet);			//send packet back to let the client know servers udp port
 								selector.clear();
 
-								//send a udp packet so that no udp-port has to be opened...
+								//send initial keepalive packet
 								packet.clear();
 								packet << static_cast<uint8_t>(MessageType::keepalive);
+								client->send(packet);
 								udpSocket->send(packet, ip, udpPort);
 
 								socket_mtx_.lock();
@@ -351,7 +400,6 @@ namespace fse
 								tba_udp_ports_.push_back(udpPort);
 								clientConnections = connected_clients_;		//finally make the sockets usable and update connected clients
 								socket_mtx_.unlock();
-								std::cout << "Added a client, yeah!\n";
 								if (!run_thread_)
 								{
 									//start the network handling thread if not already running
@@ -374,13 +422,6 @@ namespace fse
 
 	void NetworkHandler::netThreadRun()
 	{
-		sf::Clock tcp_keepalive_clock;
-		sf::Clock udp_keepalive_clock;
-
-		uint8_t type;
-		sf::IpAddress ip = server_ip_;
-		sf::Packet pack;
-		std::list<sf::Packet> toSendPacks;
 		socket_mtx_.lock();
 		tcp_timeout_clocks.reserve(tcp_sockets_.size());
 		udp_timeout_clocks.reserve(tcp_sockets_.size());
@@ -400,153 +441,11 @@ namespace fse
 		{
 			if (socket_selector.wait(sf::seconds(tick)))
 			{
-				for (unsigned int i = 0; i < tcp_sockets_.size(); i++)
-				{
-					if (socket_selector.isReady(*tcp_sockets_[i]))
-					{
-						pack.clear();
-						tcp_sockets_[i]->receive(pack);
-						tcp_timeout_clocks[i].restart();
-
-						pack >> type;
-						switch (type)
-						{
-						case MessageType::generic:
-							mtx_.lock();
-							if (tcp_received_packets_queue_.size() > queueSize)
-							{
-								std::wcout << "TCP RECEIVED PACKAGE QUEUE FULL!!!!!\n"; //TODO: thats a problem...
-								tcp_received_packets_queue_.pop_front();
-							}
-							tcp_received_packets_queue_.push_back(pack);
-							mtx_.unlock();
-							break;
-						case MessageType::keepalive:
-
-							if (is_server_)
-							{
-								pack.clear();
-								pack << static_cast<uint8_t>(MessageType::keepalive);
-								tcp_sockets_[i]->send(pack);
-							}
-							else
-							{
-								//TODO: less tcp acking... greater tcp timeout...
-							}
-
-							break;
-						case MessageType::bye:
-							tbdisconnected_clients.push_back(i);
-							break;
-						default:
-							break;
-						}
-					}
-					if (socket_selector.isReady(*udp_sockets_[i])) //same in green for udp...
-					{
-						pack.clear();
-						if (is_server_)
-							ip = tcp_sockets_[i]->getRemoteAddress();
-
-						udp_sockets_[i]->receive(pack, ip, udp_ports_[i]);
-						udp_timeout_clocks[i].restart();
-
-						pack >> type;
-						switch (type)
-						{
-						case MessageType::generic:
-							mtx_.lock();
-							if (udp_received_packets_queue_.size() > queueSize)
-							{
-								std::wcout << "UDP RECEIVED PACKAGE QUEUE FULL!!!!!\n"; //meh.. not so important...
-								udp_received_packets_queue_.pop_front();
-							}
-							udp_received_packets_queue_.push_back(pack);
-							mtx_.unlock();
-							break;
-						case MessageType::keepalive:
-
-							if (is_server_)
-							{
-								pack.clear();
-								pack << static_cast<uint8_t>(MessageType::keepalive);
-								udp_sockets_[i]->send(pack, ip, udp_ports_[i]);
-							}
-							else
-							{
-								ping_ = network_clock_.getElapsedTime().asMilliseconds() - last_udp_keepalive_sent_;
-							}
-
-							break;
-						default:
-							break;
-						}
-					}
-				}
+				receive();
 			}
 			else
 			{
-				for (unsigned int i = 0; i < tcp_sockets_.size(); i++)
-				{
-					toSendPacks.clear();
-					mtx_.lock();
-					if (tcp_message_queue_.size() > 0)
-					{
-						toSendPacks = tcp_message_queue_;
-						tcp_message_queue_.clear();
-					}
-					mtx_.unlock();
-
-					for (auto& toSendPacket : toSendPacks)
-					{
-						tcp_sockets_[i]->send(toSendPacket);
-					}
-
-					if (!is_server_)
-					{
-						if (tcp_keepalive_clock.getElapsedTime().asSeconds() >= keepalive_secs)
-						{
-							pack.clear();
-							pack << static_cast<uint8_t>(MessageType::keepalive);
-							tcp_sockets_[i]->send(pack);
-							if (i + 1 == tcp_sockets_.size())
-								tcp_keepalive_clock.restart();
-						}
-					}
-
-
-					toSendPacks.clear();
-					mtx_.lock();
-					if (udp_message_queue_.size() > 0)
-					{
-						toSendPacks = udp_message_queue_;
-						udp_message_queue_.clear();
-					}
-					mtx_.unlock();
-
-					if (is_server_)
-						ip = tcp_sockets_[i]->getRemoteAddress();
-
-					for (auto& toSendPacket : toSendPacks)
-					{
-						udp_sockets_[i]->send(toSendPacket, ip, udp_ports_[i]);
-					}
-
-					if (!is_server_)
-					{
-						if (udp_keepalive_clock.getElapsedTime().asSeconds() >= keepalive_secs)
-						{
-							pack.clear();
-							pack << static_cast<uint8_t>(MessageType::keepalive);
-							udp_sockets_[i]->send(pack, ip, udp_ports_[i]);
-							if (i + 1 == udp_sockets_.size())
-								udp_keepalive_clock.restart();
-
-							last_udp_keepalive_sent_ = network_clock_.getElapsedTime().asMilliseconds();
-
-						}
-					}
-				}
+				send();
 			}
 			process_tba_connections();
 		}
@@ -557,7 +456,6 @@ namespace fse
 	{
 		if (is_server_ && !listener_bound_)
 		{
-			std::wcout << L"Binding TCP connection...\n";
 			if (tcp_listener_.listen(tcp_port_) != sf::Socket::Done)
 			{
 				std::wcout << L"Couldn't bind port for listening!\n";
@@ -565,6 +463,158 @@ namespace fse
 			}
 			listener_bound_ = true;
 		}
+	}
+
+	void NetworkHandler::receive()
+	{
+		sf::IpAddress ip = server_ip_;
+		for (unsigned int i = 0; i < tcp_sockets_.size(); i++)
+		{
+			if (socket_selector.isReady(*tcp_sockets_[i]))
+			{
+				pack.clear();
+				tcp_sockets_[i]->receive(pack);
+				tcp_timeout_clocks[i].restart();
+
+				pack >> type;
+				switch (type)
+				{
+				case MessageType::generic:
+					mtx_.lock();
+					if (tcp_received_packets_queue_.size() > queueSize)
+					{
+						std::wcout << "TCP RECEIVED PACKAGE QUEUE FULL!!!!!\n"; //TODO: thats a problem...
+						tcp_received_packets_queue_.pop_front();
+					}
+					tcp_received_packets_queue_.push_back(pack);
+					mtx_.unlock();
+					break;
+				case MessageType::keepalive:
+
+					if (is_server_)
+					{
+						pack.clear();
+						pack << static_cast<uint8_t>(MessageType::keepalive);
+						tcp_sockets_[i]->send(pack);
+					}
+
+					break;
+				case MessageType::bye:
+					tbdisconnected_clients.push_back(i);
+					break;
+				default:
+					break;
+				}
+			}
+			if (socket_selector.isReady(*udp_sockets_[i])) //same in green for udp...
+			{
+				pack.clear();
+				if (is_server_)
+					ip = tcp_sockets_[i]->getRemoteAddress();
+
+				udp_sockets_[i]->receive(pack, ip, udp_ports_[i]);
+				udp_timeout_clocks[i].restart();
+
+				pack >> type;
+				switch (type)
+				{
+				case MessageType::generic:
+					mtx_.lock();
+					if (udp_received_packets_queue_.size() > queueSize)
+					{
+						std::wcout << "UDP RECEIVED PACKAGE QUEUE FULL!!!!!\n"; //meh.. not so important...
+						udp_received_packets_queue_.pop_front();
+					}
+					udp_received_packets_queue_.push_back(pack);
+					mtx_.unlock();
+					break;
+				case MessageType::keepalive:
+
+					if (is_server_)
+					{
+						pack.clear();
+						pack << static_cast<uint8_t>(MessageType::keepalive);
+						udp_sockets_[i]->send(pack, ip, udp_ports_[i]);
+					}
+					else
+					{
+						ping_ = network_clock_.getElapsedTime().asMilliseconds() - last_udp_keepalive_sent_;
+					}
+
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+
+	void NetworkHandler::send()
+	{
+		for (unsigned int i = 0; i < tcp_sockets_.size(); i++)
+		{
+			toSendPacks.clear();
+			mtx_.lock();
+			if (tcp_message_queue_.size() > 0)
+			{
+				toSendPacks = tcp_message_queue_;
+			}
+			mtx_.unlock();
+
+			for (auto& toSendPacket : toSendPacks)
+			{
+				tcp_sockets_[i]->send(toSendPacket);
+			}
+
+			if (!is_server_)
+			{
+				if (tcp_keepalive_clock.getElapsedTime().asSeconds() >= tcp_keepalive_secs)
+				{
+					pack.clear();
+					pack << static_cast<uint8_t>(MessageType::keepalive);
+					tcp_sockets_[i]->send(pack);
+					if (i + 1 == tcp_sockets_.size())
+						tcp_keepalive_clock.restart();
+				}
+			}
+
+
+			toSendPacks.clear();
+			mtx_.lock();
+			if (udp_message_queue_.size() > 0)
+			{
+				toSendPacks = udp_message_queue_;
+			}
+			mtx_.unlock();
+
+			if (is_server_)
+				ip = tcp_sockets_[i]->getRemoteAddress();
+
+			for (auto& toSendPacket : toSendPacks)
+			{
+				udp_sockets_[i]->send(toSendPacket, ip, udp_ports_[i]);
+			}
+
+			if (!is_server_)
+			{
+				if (udp_keepalive_clock.getElapsedTime().asSeconds() >= keepalive_secs)
+				{
+					pack.clear();
+					pack << static_cast<uint8_t>(MessageType::keepalive);
+					udp_sockets_[i]->send(pack, ip, udp_ports_[i]);
+					if (i + 1 == udp_sockets_.size())
+						udp_keepalive_clock.restart();
+
+					last_udp_keepalive_sent_ = network_clock_.getElapsedTime().asMilliseconds();
+
+				}
+			}
+		}
+
+		mtx_.lock();
+		tcp_message_queue_.clear();
+		udp_message_queue_.clear();
+		mtx_.unlock();
 	}
 
 	void NetworkHandler::process_tba_connections()
@@ -577,7 +627,7 @@ namespace fse
 		{
 			for (unsigned int i = 0; i < tcp_timeout_clocks.size(); i++)
 			{
-				if (tcp_timeout_clocks[i].getElapsedTime().asSeconds() > timeout_secs
+				if (tcp_timeout_clocks[i].getElapsedTime().asSeconds() > tcp_timeout_secs
 					|| udp_timeout_clocks[i].getElapsedTime().asSeconds() > timeout_secs)
 				{
 					if (std::find(tbdisconnected_clients.begin(), tbdisconnected_clients.end(), i)
@@ -634,8 +684,15 @@ namespace fse
 				connected_clients_++;
 			}
 		}
-		socket_mtx_.unlock();
 
+		if (connected_clients_ == 0)
+		{
+			if (!is_server_)
+				run_thread_ = false;
+			connected_to_server_ = false;
+		}
+
+		socket_mtx_.unlock();
 	}
 
 	sf::Socket::Status NetworkHandler::receiveWithTimeout(sf::TcpSocket& socket, sf::Packet& packet, sf::Time timeout)
