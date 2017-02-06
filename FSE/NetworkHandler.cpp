@@ -81,7 +81,7 @@ namespace fse
 			{
 				sf::Packet pack;
 				pack << static_cast<uint8_t>(MessageType::bye);
-				for (int i = 0; i < tcp_sockets_.size(); i++)
+				for (unsigned int i = 0; i < tcp_sockets_.size(); i++)
 				{
 					tcp_sockets_[i]->send(pack);
 				}
@@ -116,7 +116,7 @@ namespace fse
 		tcp_timeout_clocks.clear();
 		udp_timeout_clocks.clear();	
 		connected_clients_ = 0;
-		for (int i = 0; i < connected_clients_; i++)
+		for (unsigned int i = 0; i < connected_clients_; i++)
 		{
 			disconnected_clients_.push_back(i);
 		}
@@ -180,6 +180,8 @@ namespace fse
 
 						if (selector.wait(sf::seconds(5)))
 						{
+							udpSocket->send(packet, server_ip_, udpPort);
+
 							connected_to_server_ = true;
 							socket_mtx_.lock();
 							tba_tcp_sockets_.push_back(std::move(tcpSocket));
@@ -422,7 +424,10 @@ namespace fse
 
 	void NetworkHandler::netThreadRun()
 	{
+		ip = server_ip_;
 		socket_mtx_.lock();
+		tcp_keepalive_clock.restart();
+		udp_keepalive_clock.restart();
 		tcp_timeout_clocks.reserve(tcp_sockets_.size());
 		udp_timeout_clocks.reserve(tcp_sockets_.size());
 		for (auto& socket : tcp_sockets_)
@@ -633,6 +638,7 @@ namespace fse
 					if (std::find(tbdisconnected_clients.begin(), tbdisconnected_clients.end(), i)
 						== tbdisconnected_clients.end())
 						tbdisconnected_clients.push_back(i);
+					std::wcout << L"Connection timed out...\n";
 				}
 			}
 
