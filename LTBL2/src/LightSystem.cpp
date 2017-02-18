@@ -15,6 +15,7 @@ namespace ltbl
 		, mLightShapes()
 		, mLightTempTexture()
 		, mEmissionTempTexture()
+		, mEmissionTempSpecTexture()
 		, mAntumbraTempTexture()
 		, mCompositionTexture()
 		, mNormalsTexture(normalTexture)
@@ -109,16 +110,16 @@ namespace ltbl
 				lightShapes.clear();
 				mLightShapeQuadtree.query(light->getAABB(), lightShapes);
 
-				// Render on Emission Texture : used by lightOverShapeShader
-				mEmissionTempTexture.clear();
-				mEmissionTempTexture.setView(view);
-				mEmissionTempTexture.draw(*light);
-				mEmissionTempTexture.display();
+				//// Render on Emission Texture : used by lightOverShapeShader
+				//mEmissionTempTexture.clear();
+				//mEmissionTempTexture.setView(view);
+				//mEmissionTempTexture.draw(*light);
+				//mEmissionTempTexture.display();
 
 				// Render light
 				light->render(view, mLightTempTexture, mAntumbraTempTexture, mSpecTempTexture,
 					mUnshadowShader, mLightOverShapeShader, lightShapes,
-					mUseNormals, mNormalsShader, mSpecularShader);
+					mUseNormals, mNormalsShader, mSpecularShader, mEmissionTempTexture, mEmissionTempSpecTexture);
 				mCompositionTexture.draw(lightTempSprite, sf::BlendAdd);
 				mSpecularCompTexture.draw(specTempSprite, sf::BlendAdd);
 			}
@@ -357,7 +358,6 @@ namespace ltbl
 	void LightSystem::update(sf::Vector2u const& size)
 	{
 		mUnshadowShader.setUniform("penumbraTexture", mPenumbraTexture);
-		mLightOverShapeShader.setUniform("emissionTexture", mEmissionTempTexture.getTexture());
 		mNormalsShader.setUniform("normalsTexture", mNormalsTexture.getTexture());
 		mNormalsShader.setUniform("lightTexture", sf::Shader::CurrentTexture);
 		mSpecularShader.setUniform("normalTexture", mNormalsTexture.getTexture());
@@ -368,6 +368,7 @@ namespace ltbl
 		{
 			mLightTempTexture.create(size.x, size.y);
 			mEmissionTempTexture.create(size.x, size.y);
+			mEmissionTempSpecTexture.create(size.x, size.y);
 			mAntumbraTempTexture.create(size.x, size.y);
 			mCompositionTexture.create(size.x, size.y);
 			mNormalsTexture.create(size.x, size.y);

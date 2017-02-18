@@ -173,7 +173,7 @@ class LightPointEmission : public priv::QuadtreeOccupant, public priv::BaseLight
 			sf::RenderTexture& lightTempTexture, sf::RenderTexture& antumbraTempTexture, sf::RenderTexture& specularTexture,
 			sf::Shader& unshadowShader, sf::Shader& lightOverShapeShader,
 			const std::vector<priv::QuadtreeOccupant*>& shapes,
-			bool normalsEnabled, sf::Shader& normalsShader, sf::Shader& specularShader);
+			bool normalsEnabled, sf::Shader& normalsShader, sf::Shader& specularShader, sf::RenderTexture& emissionTempTexture, sf::RenderTexture& emissionTempSpecTexture);
 
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Set the local cast center of the light

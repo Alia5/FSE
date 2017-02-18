@@ -145,7 +145,7 @@ void LightPointEmission::render(const sf::View& view,
 	sf::RenderTexture& lightTempTexture, sf::RenderTexture& antumbraTempTexture, sf::RenderTexture& specularTexture,
 	sf::Shader& unshadowShader, sf::Shader& lightOverShapeShader,
 	const std::vector<priv::QuadtreeOccupant*>& shapes, bool normalsEnabled,
-	sf::Shader& normalsShader, sf::Shader& specularShader)
+	sf::Shader& normalsShader, sf::Shader& specularShader, sf::RenderTexture& emissonTempTexture, sf::RenderTexture& emissionTempSpecTexture)
 {
     float shadowExtension = mShadowOverExtendMultiplier * (getAABB().width + getAABB().height);
 
@@ -169,6 +169,12 @@ void LightPointEmission::render(const sf::View& view,
 	specularTexture.clear();
 	specularTexture.setView(view);
 
+	emissonTempTexture.clear();
+	emissonTempTexture.setView(view);
+
+	emissionTempSpecTexture.clear();
+	emissionTempSpecTexture.setView(view);
+
 	if (normalsEnabled) 
 	{
 		auto oglLightPosition = lightTempTexture.mapCoordsToPixel(mSprite.getPosition(), view);
@@ -186,18 +192,26 @@ void LightPointEmission::render(const sf::View& view,
 
 		lightTempTexture.draw(mSprite, &normalsShader);
 
+		emissonTempTexture.draw(mSprite, &normalsShader);
+
+
 
 		specularShader.setUniform("lightPos", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(static_cast<int>(lightTempTexture.getSize().y) - oglLightPosition.y), 0.15f));
 		specularShader.setUniform("lightSize", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
 		specularShader.setUniform("lightColorTint", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
 
 		specularTexture.draw(mSprite, &specularShader);
+		emissionTempSpecTexture.draw(mSprite, &specularShader);
 
 	}
 	else 
 	{
 		lightTempTexture.draw(mSprite);
+		emissonTempTexture.draw(mSprite);
 	}
+
+	emissonTempTexture.display();
+	emissionTempSpecTexture.display();
 
     //----- Shapes
 
@@ -311,33 +325,12 @@ void LightPointEmission::render(const sf::View& view,
 		if (pLightShape->renderLightOver())
 		{
 			pLightShape->setColor(sf::Color::White);
+
+			lightOverShapeShader.setUniform("emissionTexture", emissonTempTexture.getTexture());
 			lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
 
-			if (normalsEnabled)
-			{
-				auto oglLightPosition = lightTempTexture.mapCoordsToPixel(mSprite.getPosition(), view);
-				normalsShader.setUniform("lightPosition", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(static_cast<int>(lightTempTexture.getSize().y) - oglLightPosition.y), 0.15f));
-
-				const auto& lightColor = mSprite.getColor();
-				normalsShader.setUniform("lightColor", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
-
-				auto oglOrigin = lightTempTexture.mapCoordsToPixel({ 0.f, 0.f });
-				auto oglLightWidthPos = lightTempTexture.mapCoordsToPixel({ getAABB().width, 0.f }) - oglOrigin;
-				auto oglLightHeightPos = lightTempTexture.mapCoordsToPixel({ 0.f, getAABB().height }) - oglOrigin;
-				float oglLightWidth = static_cast<float>(std::sqrt(oglLightWidthPos.x * oglLightWidthPos.x + oglLightWidthPos.y * oglLightWidthPos.y));
-				float oglLightHeight = static_cast<float>(std::sqrt(oglLightHeightPos.x * oglLightHeightPos.x + oglLightHeightPos.y * oglLightHeightPos.y));
-				normalsShader.setUniform("lightSize", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
-
-				lightTempTexture.draw(mSprite, &normalsShader);
-
-
-				specularShader.setUniform("lightPos", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(static_cast<int>(lightTempTexture.getSize().y) - oglLightPosition.y), 0.15f));
-				specularShader.setUniform("lightSize", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
-				specularShader.setUniform("lightColorTint", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
-
-				specularTexture.draw(mSprite, &specularShader);
-			}
-
+			lightOverShapeShader.setUniform("emissionTexture", emissionTempSpecTexture.getTexture());
+			specularTexture.draw(*pLightShape, &lightOverShapeShader);
 		}
 		else
 		{
@@ -345,8 +338,6 @@ void LightPointEmission::render(const sf::View& view,
 			lightTempTexture.draw(*pLightShape);
 			specularTexture.draw(*pLightShape);
 		}
-		//pLightShape->setColor(sf::Color::Black);
-		//specularTexture.draw(*pLightShape);
 	}
 
     lightTempTexture.display();

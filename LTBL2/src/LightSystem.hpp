@@ -237,6 +237,7 @@ namespace ltbl
 
 		sf::RenderTexture mLightTempTexture; ///< The light render texture
 		sf::RenderTexture mEmissionTempTexture; ///< The emission render texture
+		sf::RenderTexture mEmissionTempSpecTexture; 
 		sf::RenderTexture mAntumbraTempTexture; ///< The antumbra render texture
 		sf::RenderTexture mCompositionTexture; ///< The composition render texture
 		sf::RenderTexture &mNormalsTexture; ///< The normal render texture
