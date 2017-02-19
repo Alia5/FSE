@@ -24,7 +24,7 @@ namespace fse
 
 		void updateView();
 
-		ltbl::LightDirectionEmission* getSun() const;
+		ltbl::LightDirectionEmission* getSun();
 
 		ltbl::LightSystem* getLightSystem();
 

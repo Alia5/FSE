@@ -322,21 +322,24 @@ void LightPointEmission::render(const sf::View& view,
 	{
 		LightShape* pLightShape = static_cast<LightShape*>(shapes[i]);
 
-		if (pLightShape->renderLightOver())
+		if (pLightShape->isAwake() && pLightShape->isTurnedOn())
 		{
-			pLightShape->setColor(sf::Color::White);
+			if (pLightShape->renderLightOver())
+			{
+				pLightShape->setColor(sf::Color::White);
 
-			lightOverShapeShader.setUniform("emissionTexture", emissonTempTexture.getTexture());
-			lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
+				lightOverShapeShader.setUniform("emissionTexture", emissonTempTexture.getTexture());
+				lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
 
-			lightOverShapeShader.setUniform("emissionTexture", emissionTempSpecTexture.getTexture());
-			specularTexture.draw(*pLightShape, &lightOverShapeShader);
-		}
-		else
-		{
-			pLightShape->setColor(sf::Color::Black);
-			lightTempTexture.draw(*pLightShape);
-			specularTexture.draw(*pLightShape);
+				lightOverShapeShader.setUniform("emissionTexture", emissionTempSpecTexture.getTexture());
+				specularTexture.draw(*pLightShape, &lightOverShapeShader);
+			}
+			else
+			{
+				pLightShape->setColor(sf::Color::Black);
+				lightTempTexture.draw(*pLightShape);
+				specularTexture.draw(*pLightShape);
+			}
 		}
 	}
 

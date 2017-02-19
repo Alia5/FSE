@@ -18,7 +18,8 @@ namespace fse
 
 	FSELightWorld::~FSELightWorld()
 	{
-		light_system_->removeLight(sun_);
+		if (sun_ != nullptr)
+			light_system_->removeLight(sun_);
 	}
 
 	void FSELightWorld::update(float deltaTime)
@@ -43,8 +44,8 @@ namespace fse
 	void FSELightWorld::init(sf::RenderTarget* target)
 	{
 		light_system_->create({ -1000.f, -1000.f, 2000.f, 2000.f }, target->getSize());
-		sun_ = light_system_->createLightDirectionEmission();
-		sun_->setColor(sf::Color::Black);
+		//sun_ = light_system_->createLightDirectionEmission();
+		//sun_->setColor(sf::Color::Black);
 	}
 
 	bool FSELightWorld::getLighting() const
@@ -69,8 +70,10 @@ namespace fse
 		}
 	}
 
-	ltbl::LightDirectionEmission* FSELightWorld::getSun() const
+	ltbl::LightDirectionEmission* FSELightWorld::getSun()
 	{
+		if (sun_ == nullptr)
+			sun_ = light_system_->createLightDirectionEmission();
 		return sun_;
 	}
 
