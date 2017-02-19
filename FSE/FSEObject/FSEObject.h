@@ -32,6 +32,8 @@ namespace fse
 		virtual void setPosition(const sf::Vector2f position);
 		virtual sf::Vector2f getPosition();
 
+		virtual sf::FloatRect GetAABBs() const;
+
 		virtual void BeginContact(FSEObject* otherObject, b2Contact* contact);
 		virtual void EndContact(FSEObject* otherObject, b2Contact* contact);
 		virtual void PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold);

@@ -17,9 +17,12 @@ namespace fse
 
 	void Renderer::render(const std::vector<std::unique_ptr<FSEObject> > &objects)
 	{
+		sf::View view = render_target_->getView();
+		sf::FloatRect viewRect(view.getCenter() - view.getSize() / 2.f, view.getSize());
 		for (auto & object : objects)
 		{
-			object->draw(*render_target_);
+			if (viewRect.intersects(object->GetAABBs()))
+				object->draw(*render_target_);
 		}
 	}
 }

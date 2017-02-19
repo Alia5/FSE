@@ -31,6 +31,13 @@ namespace fse
 		return position_;
 	}
 
+	sf::FloatRect FSEObject::GetAABBs() const
+	{
+		//Always draw if not overridden...
+		sf::View v = scene_->getRenderTarget()->getView();
+		return sf::FloatRect(v.getCenter().x, v.getCenter().y, 1, 1);
+	}
+
 	void FSEObject::BeginContact(FSEObject* otherObject, b2Contact* contact)
 	{
 	}
