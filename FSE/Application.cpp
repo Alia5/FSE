@@ -69,11 +69,6 @@ namespace fse
 		return is_server_;
 	}
 
-	Scene * Application::getRootScene()
-	{
-		return &root_scene_;
-	}
-
 	sf::RenderWindow* Application::getWindow()
 	{
 		return render_window_;

@@ -34,26 +34,21 @@ namespace fse
 
 		fse::AssetLoader& getAssetLoader();
 
-	protected:
-		//Scene root_scene_;
-		Scene *getRootScene();
-
+		//Init-order
 	PUBLIC_SIGNALS:
 		Signal<> on_window_resized_;
+
+	protected:
+		Input input_;
+		Scene root_scene_;
+		NetworkHandler network_handler_;
+		fse::AssetLoader asset_loader_;
 
 	private:
 		bool is_server_ = false;
 
-		Input input_;
-
 		sf::Clock application_clock_;
 
 		sf::RenderWindow *render_window_ = nullptr;
-
-		Scene root_scene_;
-
-		NetworkHandler network_handler_;
-
-		fse::AssetLoader asset_loader_;
 	};
 }

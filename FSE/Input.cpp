@@ -1,6 +1,8 @@
 #include "Input.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <iostream>
+#include <fstream>
+#include <codecvt>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -35,7 +37,8 @@ namespace fse
 		MouseButtonMap mm =
 		{
 			{ L"Shoot", sf::Mouse::Button::Left },
-			{ L"Select", sf::Mouse::Button::Left }
+			{ L"Select", sf::Mouse::Button::Left },
+			{ L"RightClick", sf::Mouse::Button::Right },
 		};
 		mouse_button_map_ = mm;
 
@@ -51,6 +54,66 @@ namespace fse
 		key_map_ = map;
 	}
 
+	void Input::init(std::string keymap_path)
+	{
+		KeyMap km;
+		MouseButtonMap mm;
+
+		std::string keymapString;
+		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> conv;
+
+		auto it = priv::key_names_.end();
+
+		std::ifstream file;
+		file.open("./config/" + keymap_path);
+
+		if (file.is_open())
+		{
+			int pos;
+			std::wstring actionName;
+			std::string keyName;
+			while (std::getline(file, keymapString))
+			{
+				keymapString.erase(std::remove_if(keymapString.begin(), keymapString.end(), [](char x)
+				{
+					return std::isspace(x);
+				}), keymapString.end());
+				keymapString.erase(std::remove_if(keymapString.begin(), keymapString.end(), [](char x)
+				{
+					return (x == '"');
+				}), keymapString.end());
+
+				if ((pos = keymapString.find("="), pos) != std::wstring::npos)
+				{
+					actionName = conv.from_bytes(keymapString.substr(0, pos));
+					keyName = keymapString.substr(pos + 1);
+
+					if (keyName.find("Key") != std::string::npos)
+					{
+						it = priv::key_names_.find(keyName);
+						if (it != priv::key_names_.end())
+							km[actionName] = static_cast<sf::Keyboard::Key>(it->second);
+						else
+							km[actionName] = sf::Keyboard::Key::Unknown;
+					} 
+					else if (keyName.find("Mouse_Button") != std::string::npos)
+					{
+						it = priv::mouse_names_.find(keyName);
+						if (it != priv::mouse_names_.end())
+							mm[actionName] = static_cast<sf::Mouse::Button>(it->second);
+					}
+				}
+
+			}
+			file.close();
+		}
+		else
+			return;
+
+		key_map_ = km;
+		mouse_button_map_ = mm;
+
+	}
 
 
 	void Input::updateEvents(sf::Event event)
@@ -184,15 +247,9 @@ namespace fse
 		return false;
 	}
 
-	Input::KeyMap Input::getKeyMap()
+	Input::KeyMap Input::getKeyMap() const
 	{
 		return key_map_;
-	}
-
-	void Input::setTextInput(bool enabled)
-	{
-		text_input_enabled_ = enabled;
-		entered_text_ = L"";
 	}
 
 	void Input::setTextInput(bool enabled, bool singleLine)
@@ -202,7 +259,7 @@ namespace fse
 		entered_text_ = L"";
 	}
 
-	std::wstring Input::getEnteredText()
+	std::wstring Input::getEnteredText() const
 	{
 		return entered_text_;
 	}
