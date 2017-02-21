@@ -21,6 +21,14 @@ namespace fse
 		
 	}
 
+	void FSEObject::drawNormals(sf::RenderTarget& target)
+	{
+	}
+
+	void FSEObject::drawSpecular(sf::RenderTarget& target)
+	{
+	}
+
 	void FSEObject::setPosition(const sf::Vector2f position)
 	{
 		position_ = position;

@@ -17,7 +17,7 @@ namespace fse
 		void draw(sf::RenderTarget& target) override;
 		void spawned() override;
 
-		void init(sf::RenderTarget* target);
+		void init(sf::RenderTarget* target) const;
 
 		bool getLighting() const;
 		void setLighting(bool lighting);
@@ -26,7 +26,10 @@ namespace fse
 
 		ltbl::LightDirectionEmission* getSun();
 
-		ltbl::LightSystem* getLightSystem();
+		ltbl::LightSystem* getLightSystem() const;
+
+		sf::RenderTarget* getNormalTarget();
+		sf::RenderTarget* getSpecularTarget();
 
 	protected:
 

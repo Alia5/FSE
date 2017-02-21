@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Utils.hpp"
+#include <memory>
 
 namespace ltbl
 {
@@ -13,7 +14,7 @@ namespace ltbl
 	{
 	public:
 		Sprite();
-		explicit Sprite(ltbl::LightSystem* light_system);
+		explicit Sprite(LightSystem* light_system);
 		~Sprite();
 
 		void setTexture(sf::Texture& texture, bool resetRect = false);
@@ -26,13 +27,12 @@ namespace ltbl
 
 		const sf::Texture* getSpecularTexture() const;
 
-		void render(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates(),
-			sf::RenderStates normalstates = sf::RenderStates(),
-			sf::RenderStates specularstates = sf::RenderStates());
+		void render(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
 		void renderNormals(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
 		void renderSpecular(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates());
 
 	private:
+
 		sf::Texture* mTexture;
 		sf::Texture* mNormalsTexture;
 		sf::Texture* mSpecularTexture;

@@ -41,7 +41,7 @@ namespace fse
 	{
 	}
 
-	void FSELightWorld::init(sf::RenderTarget* target)
+	void FSELightWorld::init(sf::RenderTarget* target) const
 	{
 		light_system_->create({ -1000.f, -1000.f, 2000.f, 2000.f }, target->getSize());
 		//sun_ = light_system_->createLightDirectionEmission();
@@ -63,7 +63,7 @@ namespace fse
 		if (lighting_)
 		{
 			sf::View view = scene_->getRenderTarget()->getView();
-			normal_texture_.clear(sf::Color(127u, 127u, 255u));
+			normal_texture_.clear(sf::Color(128u, 128u, 255u));
 			specular_texture_.clear(sf::Color::Black);
 			normal_texture_.setView(view);
 			specular_texture_.setView(view);
@@ -77,8 +77,18 @@ namespace fse
 		return sun_;
 	}
 
-	ltbl::LightSystem* FSELightWorld::getLightSystem()
+	ltbl::LightSystem* FSELightWorld::getLightSystem() const
 	{
 		return light_system_.get();
+	}
+
+	sf::RenderTarget* FSELightWorld::getNormalTarget()
+	{
+		return &normal_texture_;
+	}
+
+	sf::RenderTarget* FSELightWorld::getSpecularTarget()
+	{
+		return &specular_texture_;
 	}
 }

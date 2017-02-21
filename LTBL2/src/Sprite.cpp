@@ -29,13 +29,10 @@ namespace ltbl
 		, mRenderNormals(true)
 		, mRenderSpecular(true)
 	{
-		light_system_->addSprite(*this);
 	}
 
 	Sprite::~Sprite()
 	{
-		if (light_system_ != nullptr)
-			light_system_->removeSprite(*this);
 	}
 
 	void Sprite::setTexture(sf::Texture& texture, bool resetRect)
@@ -64,19 +61,11 @@ namespace ltbl
 		return mSpecularTexture;
 	}
 
-	void Sprite::render(sf::RenderTarget& target, sf::RenderStates states,
-		sf::RenderStates normalstates,
-		sf::RenderStates specularstates)
+	void Sprite::render(sf::RenderTarget& target, sf::RenderStates states)
 	{
+		sf::Sprite::setTexture(*mTexture);
 		target.draw(*this, states);
-		if (mNormalsTarget != nullptr)
-		{
-			renderNormals(*mNormalsTarget, normalstates);
-		}
-		if (mSpecularTarget != nullptr)
-		{
-			renderSpecular(*mSpecularTarget, specularstates);
-		}
+
 	}
 
 	void Sprite::renderNormals(sf::RenderTarget& target, sf::RenderStates states)
@@ -85,7 +74,6 @@ namespace ltbl
 		{
 			sf::Sprite::setTexture(*mNormalsTexture);
 			target.draw(*this, states);
-			sf::Sprite::setTexture(*mTexture);
 		}
 	}
 
@@ -95,7 +83,6 @@ namespace ltbl
 		{
 			sf::Sprite::setTexture(*mSpecularTexture);
 			target.draw(*this, states);
-			sf::Sprite::setTexture(*mTexture);
 		}
 	}
 

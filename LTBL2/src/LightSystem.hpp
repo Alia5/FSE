@@ -105,18 +105,6 @@ namespace ltbl
 		void removeLight(LightDirectionEmission* light);
 
 		//////////////////////////////////////////////////////////////////////////
-		/// \brief Add a sprite
-		/// \param sprite The new sprite
-		//////////////////////////////////////////////////////////////////////////
-		void addSprite(Sprite& sprite);
-
-		//////////////////////////////////////////////////////////////////////////
-		/// \brief Remove a sprite
-		/// \param sprite The sprite to remove
-		//////////////////////////////////////////////////////////////////////////
-		void removeSprite(Sprite& sprite);
-
-		//////////////////////////////////////////////////////////////////////////
 		/// \brief Set the direction emission range
 		/// \param range The new range
 		//////////////////////////////////////////////////////////////////////////
@@ -233,7 +221,6 @@ namespace ltbl
 		std::vector<LightPointEmission*> mPointEmissionLights; ///< The LightPointEmissions of the system
 		std::vector<LightDirectionEmission*> mDirectionEmissionLights; ///< The LightDirectionEmissions of the system
 		std::vector<LightShape*> mLightShapes; ///< The LightShapes of the system
-		std::vector<Sprite*> mNormalSprites; ///< The NormalSprites of the system
 
 		sf::RenderTexture mLightTempTexture; ///< The light render texture
 		sf::RenderTexture mEmissionTempTexture; ///< The emission render texture

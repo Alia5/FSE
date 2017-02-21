@@ -55,11 +55,6 @@ namespace ltbl
 			removeShape(lsh);
 		}
 
-		for (auto & lsp : mNormalSprites)
-		{
-			removeSprite(*lsp);
-		}
-
 		// Quadtrees
 		mLightShapeQuadtree.create(rootRegion, 6, 6);
 		mLightPointEmissionQuadtree.create(rootRegion, 6, 6);
@@ -109,12 +104,6 @@ namespace ltbl
 				// Query shapes
 				lightShapes.clear();
 				mLightShapeQuadtree.query(light->getAABB(), lightShapes);
-
-				//// Render on Emission Texture : used by lightOverShapeShader
-				//mEmissionTempTexture.clear();
-				//mEmissionTempTexture.setView(view);
-				//mEmissionTempTexture.draw(*light);
-				//mEmissionTempTexture.display();
 
 				// Render light
 				light->render(view, mLightTempTexture, mAntumbraTempTexture, mSpecTempTexture,
@@ -290,33 +279,6 @@ namespace ltbl
 		{
 			mDirectionEmissionLights.erase(itr);
 			delete light;
-		}
-	}
-
-	void LightSystem::addSprite(Sprite& sprite)
-	{
-		mNormalSprites.push_back(&sprite);
-
-		//std::sort(mNormalSprites.begin(), mNormalSprites.end(),
-		//	[](const Sprite* a, const Sprite* b) {
-
-		//	return a->getZOrder() < b->getZOrder();
-
-		//});
-
-	}
-	//void LightSystem::addSprite(Sprite& sprite, int zOrder)
-	//{
-	//	mNormalSprites.push_back(&sprite);
-	//}
-
-	void LightSystem::removeSprite(Sprite& sprite)
-	{
-		//auto itr = mNormalSprites.find(&sprite);
-		auto itr = std::find(mNormalSprites.begin(), mNormalSprites.end(), &sprite);
-		if (itr != mNormalSprites.end())
-		{
-			mNormalSprites.erase(itr);
 		}
 	}
 

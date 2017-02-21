@@ -177,12 +177,13 @@ void LightPointEmission::render(const sf::View& view,
 
 	if (normalsEnabled) 
 	{
+
 		auto oglLightPosition = lightTempTexture.mapCoordsToPixel(mSprite.getPosition(), view);
 		normalsShader.setUniform("lightPosition", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(static_cast<int>(lightTempTexture.getSize().y) - oglLightPosition.y), 0.15f));
 
 		const auto& lightColor = mSprite.getColor();
 		normalsShader.setUniform("lightColor", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
-		
+
 		auto oglOrigin = lightTempTexture.mapCoordsToPixel({ 0.f, 0.f });
 		auto oglLightWidthPos = lightTempTexture.mapCoordsToPixel({ getAABB().width, 0.f }) - oglOrigin;
 		auto oglLightHeightPos = lightTempTexture.mapCoordsToPixel({ 0.f, getAABB().height }) - oglOrigin;
@@ -190,16 +191,12 @@ void LightPointEmission::render(const sf::View& view,
 		float oglLightHeight = static_cast<float>(std::sqrt(oglLightHeightPos.x * oglLightHeightPos.x + oglLightHeightPos.y * oglLightHeightPos.y));
 		normalsShader.setUniform("lightSize", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
 
-		lightTempTexture.draw(mSprite, &normalsShader);
-
-		emissonTempTexture.draw(mSprite, &normalsShader);
-
-
-
 		specularShader.setUniform("lightPos", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(static_cast<int>(lightTempTexture.getSize().y) - oglLightPosition.y), 0.15f));
 		specularShader.setUniform("lightSize", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
 		specularShader.setUniform("lightColorTint", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
 
+		lightTempTexture.draw(mSprite, &normalsShader);
+		emissonTempTexture.draw(mSprite, &normalsShader);
 		specularTexture.draw(mSprite, &specularShader);
 		emissionTempSpecTexture.draw(mSprite, &specularShader);
 

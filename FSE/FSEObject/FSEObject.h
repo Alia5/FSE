@@ -26,6 +26,8 @@ namespace fse
 		virtual void update(float deltaTime) = 0;
 
 		virtual void draw(sf::RenderTarget& target) = 0;
+		virtual void drawNormals(sf::RenderTarget& target);
+		virtual void drawSpecular(sf::RenderTarget& target);
 
 		virtual void spawned() = 0;
 

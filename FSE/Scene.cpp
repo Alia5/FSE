@@ -6,7 +6,7 @@
 namespace fse
 {
 
-	Scene::Scene(Application* application) : render_target_(nullptr), application_(application), /*phys_gravity_(0.f,10.f),*/ phys_world_(phys_gravity_)
+	Scene::Scene(Application* application) : render_target_(nullptr), application_(application), phys_world_(phys_gravity_)
 	{
 		phys_world_.SetContactListener(&phys_contact_listener_);
 		win_resize_signal_connection_ = application_->on_window_resized_.connect(this, &Scene::notifyResize);
@@ -39,6 +39,9 @@ namespace fse
 
 
 		light_world_->init(renderTarget);
+
+		renderer_->setNormalTarget(light_world_->getNormalTarget());
+		renderer_->setSpecularTarget(light_world_->getSpecularTarget());
 
 	}
 
@@ -80,7 +83,6 @@ namespace fse
 				return a->getZOrder() < b->getZOrder();
 
 			});
-
 
 			z_order_changed_ = false;
 		}
