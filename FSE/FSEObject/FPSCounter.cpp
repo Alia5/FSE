@@ -1,5 +1,6 @@
 #include "FPSCounter.h"
 #include "../Application.h"
+#include "../FSE-ImGui/imgui-plotvar.h"
 
 namespace fse
 {
@@ -31,7 +32,6 @@ namespace fse
 			counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(scene_->getApplication()->getWindow()->getSize().x),
 				static_cast<float>(scene_->getApplication()->getWindow()->getSize().y)));
 		});
-
 	}
 
 	FPSCounter::~FPSCounter()
@@ -47,25 +47,57 @@ namespace fse
 	{
 		current_time_ = measureclock_.restart().asSeconds();
 		fps_ = (fps_ * smoothing_) + ((1.f / current_time_) * (1.f - smoothing_));
-		if (updclock_.getElapsedTime().asMilliseconds() > 250)
+		if (!detailed_view_)
 		{
-			fps_text_.setString(std::wstring(L"FPS: " + std::to_wstring(static_cast<int>(fps_))));
-			sf::FloatRect rekt = fps_text_.getLocalBounds();
-			background_.setSize(sf::Vector2f(rekt.width + 10, rekt.height + 10));
-			background_.setPosition(rekt.left - 5, rekt.top - 5);
-			updclock_.restart();
+			if (updclock_.getElapsedTime().asMilliseconds() > 250)
+			{
+				fps_text_.setString(std::wstring(L"FPS: " + std::to_wstring(static_cast<int>((fps_ + last_fps_) / 2.f))));
+				last_fps_ = fps_;
+				sf::FloatRect rekt = fps_text_.getLocalBounds();
+				background_.setSize(sf::Vector2f(rekt.width + 10, rekt.height + 10));
+				background_.setPosition(rekt.left - 5, rekt.top - 5);
+				updclock_.restart();
+			}
+
+			sf::View origView = target.getView();
+			target.setView(counter_view_);
+			target.draw(background_);
+			target.draw(fps_text_);
+			target.setView(origView);
+		} 
+		else
+		{
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
+			ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.f, 0.f, 0.f, 0.5f));
+			ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.f, 0.f, 0.f, 0.0f));
+			ImGui::Begin("##FPSDetailed", nullptr,
+				ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoMove
+			| ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoTitleBar);
+			ImGui::SetWindowPos(ImVec2(0, 0));
+			if (updclock_.getElapsedTime().asSeconds() > 1)
+			{
+				ImGui::PlotVarFlushOldEntries();
+				updclock_.restart();
+			}
+			ImGui::PlotVar("FPS", 1.f / current_time_, 0, 250, 250);
+			ImGui::PlotVar("Frametime", current_time_, 0, 0.1f, 250);
+			ImGui::End();
+			ImGui::PopStyleColor(2);
+			ImGui::PopStyleVar();
 		}
-
-		sf::View origView = target.getView();
-		target.setView(counter_view_);
-		target.draw(background_);
-		target.draw(fps_text_);
-		target.setView(origView);
-
-
 	}
 
 	void FPSCounter::spawned()
 	{
+	}
+
+	void FPSCounter::setShowDetailed(bool detailed)
+	{
+		detailed_view_ = detailed;
+	}
+
+	bool FPSCounter::isDetailed() const
+	{
+		return detailed_view_;
 	}
 }
