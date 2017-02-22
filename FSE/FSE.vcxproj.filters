@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Network">
       <UniqueIdentifier>{25bd9e02-f88d-48b4-a946-87fffcf121cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\imgui-1.49">
+      <UniqueIdentifier>{e71693ec-4660-4090-be56-0a71c58e1f7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\imgui-1.49">
+      <UniqueIdentifier>{3a8e0020-6789-4f90-99f5-d4ffe794d650}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetLoader.h">
@@ -141,6 +147,27 @@
     <ClInclude Include="Network\NetworkedObject.h">
       <Filter>Header Files\Network</Filter>
     </ClInclude>
+    <ClInclude Include="..\imgui-1.49\imgui-SFML.h">
+      <Filter>Header Files\imgui-1.49</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui-1.49\imconfig.h">
+      <Filter>Header Files\imgui-1.49</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui-1.49\imgui.h">
+      <Filter>Header Files\imgui-1.49</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui-1.49\imgui_internal.h">
+      <Filter>Header Files\imgui-1.49</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui-1.49\stb_rect_pack.h">
+      <Filter>Header Files\imgui-1.49</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui-1.49\stb_textedit.h">
+      <Filter>Header Files\imgui-1.49</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui-1.49\stb_truetype.h">
+      <Filter>Header Files\imgui-1.49</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -220,6 +247,18 @@
     </ClCompile>
     <ClCompile Include="Network\NetworkedObject.cpp">
       <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui-1.49\imgui.cpp">
+      <Filter>Source Files\imgui-1.49</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui-1.49\imgui_demo.cpp">
+      <Filter>Source Files\imgui-1.49</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui-1.49\imgui_draw.cpp">
+      <Filter>Source Files\imgui-1.49</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui-1.49\imgui-SFML.cpp">
+      <Filter>Source Files\imgui-1.49</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

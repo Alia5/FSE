@@ -147,6 +147,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\imgui-1.49\imconfig.h" />
+    <ClInclude Include="..\imgui-1.49\imgui-SFML.h" />
+    <ClInclude Include="..\imgui-1.49\imgui.h" />
+    <ClInclude Include="..\imgui-1.49\imgui_internal.h" />
+    <ClInclude Include="..\imgui-1.49\stb_rect_pack.h" />
+    <ClInclude Include="..\imgui-1.49\stb_textedit.h" />
+    <ClInclude Include="..\imgui-1.49\stb_truetype.h" />
     <ClInclude Include="..\LTBL2\src\LightDirectionEmission.hpp" />
     <ClInclude Include="..\LTBL2\src\LightPointEmission.hpp" />
     <ClInclude Include="..\LTBL2\src\LightResources.hpp" />
@@ -179,6 +186,10 @@
     <ClInclude Include="Signals.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\imgui-1.49\imgui-SFML.cpp" />
+    <ClCompile Include="..\imgui-1.49\imgui.cpp" />
+    <ClCompile Include="..\imgui-1.49\imgui_demo.cpp" />
+    <ClCompile Include="..\imgui-1.49\imgui_draw.cpp" />
     <ClCompile Include="..\LTBL2\src\LightDirectionEmission.cpp" />
     <ClCompile Include="..\LTBL2\src\LightPointEmission.cpp" />
     <ClCompile Include="..\LTBL2\src\LightShape.cpp" />

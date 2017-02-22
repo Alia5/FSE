@@ -10,6 +10,8 @@ namespace fse
 	Application::~Application()
 	{
 		std::wcout << "Destroying Application Base" <<  std::endl;
+		if (render_window_ != nullptr)
+			ImGui::SFML::Shutdown();
 	}
 
 	void Application::update()
@@ -34,12 +36,16 @@ namespace fse
 				input_.updateEvents(event);
 
 			}
+			sf::Time time = application_clock_.restart();
+			ImGui::SFML::Update(*render_window_, time);
 
 			render_window_->clear();
 
-			root_scene_.update(application_clock_.restart().asSeconds());
+			root_scene_.update(time.asSeconds());
 
 			root_scene_.draw();
+
+			ImGui::Render();
 
 			render_window_->display();
 
@@ -55,13 +61,14 @@ namespace fse
 	{
 		render_window_ = window;
 		root_scene_.setRenderTarget(render_window_);
+
+		ImGui::SFML::Init(*window);
 	}
 
 	void Application::setServerClientType(int type)
 	{
 		if (type == 1)
 			is_server_ = true;
-
 	}
 
 	bool Application::isServer() const

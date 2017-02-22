@@ -1,8 +1,12 @@
 # FSE #
 
-FSE is a (work in progress) cross platform 2D-Toolkit built on top of SFML and Box2D which could be used for Games and alike.
+FSE (FlatSpot-Engine) is a (work in progress) cross platform 2D-Toolkit built on top of SFML and Box2D which could be used for Games and alike.
 
 FSE is mainly created as a side project out of personal interest.
+
+I only have limited knowledge about game- / engine-programming and thus, this is probably not the most well though out code there is. 
+Hence, this is licensed under WTFPL 
+
 
 
 *Work in Progress*
@@ -24,4 +28,9 @@ Third party libraries used
 
 [LTBL2](https://github.com/Cmdu76/LTBL2/tree/d2b51608efa2aa7e3e2d632746b018d6e2add3be) (d2b5160) which is further modified
 
-All of which are licensed under the [zLib-License](https://en.wikipedia.org/wiki/Zlib_License)
+All of the above are licensed under the [zLib-License](https://en.wikipedia.org/wiki/Zlib_License)
+
+[Dear ImGui] (https://github.com/ocornut/imgui) (1.49)
+[ImGui SFML] (https://github.com/eliasdaler/imgui-sfml) (ca738ad)
+
+Both of which are licensed under the [MIT-License](https://opensource.org/licenses/MIT)
