@@ -9,7 +9,7 @@ Hence, this is licensed under WTFPL
 
 FSE supports networking which in testing performed pretty well under pretty bad network conditions (~200ms Ping with some packetloss) with a few 100 objects
 
-It also sports a pretty neat lightimg system incl. normal and specular maps
+It also sports a pretty neat lighting system incl. normal and specular maps
 ![Lighting1](https://github.com/Alia5/FSE/blob/master/lighting1.gif?raw=true "Lighting1") ![Lighting2](https://github.com/Alia5/FSE/blob/master/lighting2.gif?raw=true "Lighting2")
 
 
