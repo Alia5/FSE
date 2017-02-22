@@ -14,8 +14,6 @@ namespace fse
 		void setRadius(float radius) const;
 		float getRadius() const;
 
-	private:
-
 
 	};
 }

@@ -34,17 +34,17 @@ namespace fse
 			scene_->getLightWorld()->getLightSystem()->removeLight(light_);
 	}
 
-	void Light::setPosition(const sf::Vector2f& pos)
+	void Light::setPosition(const sf::Vector2f& pos) const
 	{
 		light_->setPosition(pos * FSE_PIXELS_PER_METER);
 	}
 
-	void Light::setColor(const sf::Color& color)
+	void Light::setColor(const sf::Color& color) const
 	{
 		light_->setColor(color);
 	}
 
-	void Light::setScale(const sf::Vector2f& scale)
+	void Light::setScale(const sf::Vector2f& scale) const
 	{
 		light_->setScale(scale);
 	}
@@ -64,12 +64,12 @@ namespace fse
 		return light_->getScale();
 	}
 
-	void Light::rotate(float angle)
+	void Light::rotate(float angle) const
 	{
 		light_->rotate(angle);
 	}
 
-	void Light::setRotation(float angle)
+	void Light::setRotation(float angle) const
 	{
 		light_->setRotation(angle);
 	}
@@ -79,7 +79,7 @@ namespace fse
 		return light_->getRotation();
 	}
 
-	void Light::setTurnedOn(bool on)
+	void Light::setTurnedOn(bool on) const
 	{
 		light_->setTurnedOn(on);
 	}
@@ -89,7 +89,7 @@ namespace fse
 		return light_->isTurnedOn();
 	}
 
-	void Light::toggleTurnedOn()
+	void Light::toggleTurnedOn() const
 	{
 		light_->toggleTurnedOn();
 	}

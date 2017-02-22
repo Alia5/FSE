@@ -25,7 +25,7 @@ namespace fse
 	}
 
 
-	void Renderer::render(const std::vector<std::unique_ptr<FSEObject> > &objects)
+	void Renderer::render(const std::vector<std::unique_ptr<FSEObject> > &objects) const
 	{
 		sf::View view = render_target_->getView();
 		sf::FloatRect viewRect(view.getCenter() - view.getSize() / 2.f, view.getSize());

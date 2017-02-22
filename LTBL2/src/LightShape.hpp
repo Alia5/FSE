@@ -177,7 +177,7 @@ class LightShape : public priv::QuadtreeOccupant, public priv::BaseLight, public
 		/// \brief Get the AABB box of the shape
 		/// \return The AABB box
 		//////////////////////////////////////////////////////////////////////////
-		sf::FloatRect getAABB() const;
+		sf::FloatRect getAABB() const override;
 
 	private:
 		//////////////////////////////////////////////////////////////////////////
@@ -185,7 +185,7 @@ class LightShape : public priv::QuadtreeOccupant, public priv::BaseLight, public
 		/// \param target The render target to apply the shape on
 		/// \param states The render states to apply to the shape on render
 		//////////////////////////////////////////////////////////////////////////
-		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	private:
 		sf::ConvexShape mShape; ///< The shape data

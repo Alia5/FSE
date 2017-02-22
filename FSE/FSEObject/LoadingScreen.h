@@ -13,7 +13,6 @@ namespace fse
 		void update(float deltaTime) override;
 		void draw(sf::RenderTarget& target) override;
 		void spawned() override;
-	protected:
 
 	private:
 		sf::RectangleShape shape_;

@@ -41,12 +41,12 @@ namespace fse
 		virtual void PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold);
 		virtual void PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
 
-		Scene* getScene();
+		Scene* getScene() const;
 
 		void spawn(int id);
 		virtual bool destroy();
 
-		int getID();
+		int getID() const;
 		int getZOrder() const;
 		bool isPendingKill() const;
 		void setTimedKill();
@@ -56,8 +56,6 @@ namespace fse
 	protected:
 		void setZOrder(int ZOrder);
 		std::vector<std::unique_ptr<FSEObject> >* getSceneFSEObjects() const;
-
-		sf::Drawable *drawable_;
 
 		/// position in METERS
 		sf::Vector2f position_;

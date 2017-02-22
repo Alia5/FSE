@@ -199,14 +199,14 @@ namespace ltbl
 		/// Retrieve the normalmap texture for sprites to render on to
 		/// \return The normal texture
 		//////////////////////////////////////////////////////////////////////////
-		sf::RenderTexture& getNormalTexture();
+		sf::RenderTexture& getNormalTexture() const;
 
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Get the specular texture
 		/// Retrieve the specularmap texture for sprites to render on to
 		/// \return The specular texture
 		//////////////////////////////////////////////////////////////////////////
-		sf::RenderTexture& getSpecularTexture();
+		sf::RenderTexture& getSpecularTexture() const;
 
 	private:
 		sf::Texture mPenumbraTexture; ///< The penumbra texture, loaded from memory when the system is created

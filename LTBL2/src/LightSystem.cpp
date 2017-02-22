@@ -369,12 +369,12 @@ namespace ltbl
 		return mSpecularShader;
 	}
 
-	sf::RenderTexture& LightSystem::getNormalTexture()
+	sf::RenderTexture& LightSystem::getNormalTexture() const
 	{
 		return mNormalsTexture;
 	}
 
-	sf::RenderTexture& LightSystem::getSpecularTexture()
+	sf::RenderTexture& LightSystem::getSpecularTexture() const
 	{
 		return mSpecularTexture;
 	}

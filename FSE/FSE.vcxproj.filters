@@ -87,9 +87,6 @@
     <ClInclude Include="Signals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FSEObject\DummyObject.h">
-      <Filter>Header Files\FSEObject</Filter>
-    </ClInclude>
     <ClInclude Include="FSEObject\FSEObject.h">
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
@@ -202,9 +199,6 @@
     </ClCompile>
     <ClCompile Include="Component\SmoothViewController.cpp">
       <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="FSEObject\DummyObject.cpp">
-      <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
     <ClCompile Include="FSEObject\FSEObject.cpp">
       <Filter>Source Files\FSEObject</Filter>

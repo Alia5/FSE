@@ -76,7 +76,7 @@ namespace fse
 		return is_server_;
 	}
 
-	sf::RenderWindow* Application::getWindow()
+	sf::RenderWindow* Application::getWindow() const
 	{
 		return render_window_;
 	}

@@ -119,7 +119,7 @@ namespace fse
 		pending_object_removals_.push_back(object);
 	}
 
-	bool Scene::isPaused()
+	bool Scene::isPaused() const
 	{
 		return is_paused_;
 	}

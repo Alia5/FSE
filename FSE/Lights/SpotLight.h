@@ -18,7 +18,7 @@ namespace fse
 		float getAngle() const;
 
 	private:
-		float lenght_;
+		float lenght_ = 1;
 		float angle_ = 90;
 
 	};

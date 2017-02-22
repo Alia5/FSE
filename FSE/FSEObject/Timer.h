@@ -29,7 +29,7 @@ namespace fse
 		void stop();
 		void setInterval(int msecs);
 
-		bool isActive();
+		bool isActive() const;
 		
 		void setSingleShot(bool singleShot);
 

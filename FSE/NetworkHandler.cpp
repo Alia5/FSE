@@ -215,7 +215,7 @@ namespace fse
 
 	int NetworkHandler::getConnectedClients() const
 	{
-		int ret = 0;
+		int ret;
 		if (socket_mtx_.try_lock())
 		{
 			ret = connected_clients_;
@@ -624,7 +624,7 @@ namespace fse
 
 	void NetworkHandler::process_tba_connections()
 	{
-		bool signalvec_is_empty = false;
+		bool signalvec_is_empty;
 		socket_mtx_.lock();
 		signalvec_is_empty = disconnected_clients_.empty();
 		socket_mtx_.unlock();

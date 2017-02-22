@@ -81,7 +81,7 @@ namespace fse
 	}
 
 
-	Scene* FSEObject::getScene()
+	Scene* FSEObject::getScene() const
 	{
 		return scene_;
 	}
@@ -107,7 +107,7 @@ namespace fse
 		return false;
 	}
 
-	int FSEObject::getID()
+	int FSEObject::getID() const
 	{
 		return id_;
 	}

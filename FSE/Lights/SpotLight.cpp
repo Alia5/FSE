@@ -33,7 +33,7 @@ namespace fse
 	void SpotLight::setAngle(float angle)
 	{
 		angle_ = std::min(angle, 179.9f);
-		light_->setScale(light_->getScale().x * light_->getScale().y * std::tan((angle_ * 3.14159265 / 180.0) / 2.f), light_->getScale().y);
+		light_->setScale(light_->getScale().x * light_->getScale().y * std::tan((angle_ * 3.14159265f / 180.0f) / 2.f), light_->getScale().y);
 
 	}
 

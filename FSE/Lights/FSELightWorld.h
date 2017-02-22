@@ -31,8 +31,6 @@ namespace fse
 		sf::RenderTarget* getNormalTarget();
 		sf::RenderTarget* getSpecularTarget();
 
-	protected:
-
 
 	private:
 

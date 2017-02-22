@@ -24,17 +24,19 @@ namespace fse
 
 		setZOrder(257);
 
-		counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, getScene()->getApplication()->getWindow()->getSize().x, getScene()->getApplication()->getWindow()->getSize().y));
-		on_resize_connection_ = getScene()->getApplication()->on_window_resized_.connect([this]()
+		counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(scene_->getApplication()->getWindow()->getSize().x),
+			static_cast<float>(scene_->getApplication()->getWindow()->getSize().y)));
+		on_resize_connection_ = scene_->getApplication()->on_window_resized_.connect([this]()
 		{
-			counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, getScene()->getApplication()->getWindow()->getSize().x, getScene()->getApplication()->getWindow()->getSize().y));
+			counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(scene_->getApplication()->getWindow()->getSize().x),
+				static_cast<float>(scene_->getApplication()->getWindow()->getSize().y)));
 		});
 
 	}
 
 	FPSCounter::~FPSCounter()
 	{
-		getScene()->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
+		scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
 	}
 
 	void FPSCounter::update(float deltaTime)
@@ -44,7 +46,7 @@ namespace fse
 	void FPSCounter::draw(sf::RenderTarget& target)
 	{
 		current_time_ = measureclock_.restart().asSeconds();
-		fps_ = (fps_ * smoothing_) + ((1 / current_time_) * (1.0 - smoothing_));
+		fps_ = (fps_ * smoothing_) + ((1.f / current_time_) * (1.f - smoothing_));
 		if (updclock_.getElapsedTime().asMilliseconds() > 250)
 		{
 			fps_text_.setString(std::wstring(L"FPS: " + std::to_wstring(static_cast<int>(fps_))));

@@ -72,7 +72,7 @@ namespace fse
 
 		void destroyFSEObject(FSEObject* FSEObject);
 
-		bool isPaused();
+		bool isPaused() const;
 		void setPaused(bool paused);
 
 		bool getPhysDrawDebug() const;

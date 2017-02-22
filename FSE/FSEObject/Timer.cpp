@@ -41,12 +41,6 @@ namespace fse
 	{
 	}
 
-	//void Timer::start()
-	//{
-	//	active_ = true;
-
-	//}
-
 	void Timer::stop()
 	{
 		active_ = false;
@@ -57,9 +51,9 @@ namespace fse
 		interval_ = msecs;
 	}
 
-	bool Timer::isActive()
+	bool Timer::isActive() const
 	{
-		return false;
+		return active_;
 	}
 
 	void Timer::setSingleShot(bool singleShot)

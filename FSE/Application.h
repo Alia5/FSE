@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "Scene.h"
-#include "FSEObject/DummyObject.h"
 #include "Input.h"
 #include "AssetLoader.h"
 
@@ -29,7 +28,7 @@ namespace fse
 		bool isServer() const;
 
 
-		sf::RenderWindow* getWindow();
+		sf::RenderWindow* getWindow() const;
 
 		Input* getInput();
 

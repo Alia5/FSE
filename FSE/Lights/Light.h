@@ -13,21 +13,21 @@ namespace fse
 		Light(Scene* scene, const sf::Vector2f& spawnPos, const std::string& path, bool smooth);
 		virtual ~Light();
 
-		void setPosition(const sf::Vector2f& pos);
-		void setColor(const sf::Color& color);
-		void setScale(const sf::Vector2f& scale);
+		void setPosition(const sf::Vector2f& pos) const;
+		void setColor(const sf::Color& color) const;
+		void setScale(const sf::Vector2f& scale) const;
 
 		sf::Vector2f getPosition() const;
 		sf::Color getColor() const;
 		sf::Vector2f getScale() const;
 
-		void rotate(float angle);
-		void setRotation(float angle);
+		void rotate(float angle) const;
+		void setRotation(float angle) const;
 		float getRotation() const;
 
-		void setTurnedOn(bool on);
+		void setTurnedOn(bool on) const;
 		bool isTurnedOn() const;
-		void toggleTurnedOn();
+		void toggleTurnedOn() const;
 
 		Light& operator=(const Light& other);
 		
@@ -35,7 +35,6 @@ namespace fse
 		Scene* scene_ = nullptr;
 		fse::Texture light_texture_;
 		ltbl::LightPointEmission* light_ = nullptr;
-	private:
 
 	};
 }
