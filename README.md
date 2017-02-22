@@ -24,7 +24,8 @@ terms of the Do What The Fuck You Want To Public License, Version 2,
 as published by Sam Hocevar. See the license.txt file for more details.
 ```
 
-Third party libraries used
+--
+**Third party libraries used**
 
 [SFML](http://www.sfml-dev.org) (2.4.1)
 
@@ -35,6 +36,7 @@ Third party libraries used
 All of the above are licensed under the [zLib-License](https://en.wikipedia.org/wiki/Zlib_License)
 
 [Dear ImGui] (https://github.com/ocornut/imgui) (1.49)
+
 [ImGui SFML] (https://github.com/eliasdaler/imgui-sfml) (ca738ad)
 
 Both of which are licensed under the [MIT-License](https://opensource.org/licenses/MIT)
