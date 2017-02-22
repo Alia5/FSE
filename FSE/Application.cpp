@@ -21,6 +21,8 @@ namespace fse
 			sf::Event event;
 			while (render_window_->pollEvent(event))
 			{
+				ImGui::SFML::ProcessEvent(event);
+
 				if (event.type == sf::Event::Closed)
 				{
 					render_window_->close();

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <codecvt>
+#include "../../imgui-1.49/imgui.h"
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -191,9 +192,9 @@ namespace fse
 	{
 		if (has_focus_)
 		{
-			if (key_map_.count(key) && !text_input_enabled_)
+			if (key_map_.count(key) && !text_input_enabled_ && !ImGui::IsAnyItemActive())
 				return sf::Keyboard::isKeyPressed(key_map_[key]);
-			if (mouse_button_map_.count(key))
+			if (mouse_button_map_.count(key) && !ImGui::IsMouseHoveringAnyWindow())
 				return sf::Mouse::isButtonPressed(mouse_button_map_[key]);
 			if (joy_stick_button_map_.count(key))
 			{
@@ -209,7 +210,7 @@ namespace fse
 	{
 		if (has_focus_)
 		{
-			if (key_map_.count(key) && !text_input_enabled_)
+			if (key_map_.count(key) && !text_input_enabled_ && !ImGui::IsAnyItemActive())
 			{
 				bool isPressed = sf::Keyboard::isKeyPressed(key_map_[key]);
 				bool wasPressed = was_pressed_map_[key_map_[key]];
@@ -219,7 +220,7 @@ namespace fse
 					return true;
 				}
 			}
-			if (mouse_button_map_.count(key))
+			if (mouse_button_map_.count(key) && !ImGui::IsMouseHoveringAnyWindow())
 			{
 				bool isPressed = sf::Mouse::isButtonPressed(mouse_button_map_[key]);
 				bool wasPressed = was_mouse_pressed_map_[mouse_button_map_[key]];
