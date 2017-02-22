@@ -14,6 +14,9 @@ namespace fse
 {
 	class Application
 	{
+	PUBLIC_SIGNALS:
+		Signal<> on_window_resized_;
+
 	public:
 		Application();
 		virtual ~Application();
@@ -35,10 +38,6 @@ namespace fse
 		NetworkHandler* getNetworkHandler();
 
 		fse::AssetLoader& getAssetLoader();
-
-		//Init-order
-	PUBLIC_SIGNALS:
-		Signal<> on_window_resized_;
 
 	protected:
 		Input input_;
