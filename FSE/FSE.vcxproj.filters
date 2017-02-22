@@ -55,6 +55,12 @@
     <Filter Include="Header Files\imgui-1.49">
       <UniqueIdentifier>{3a8e0020-6789-4f90-99f5-d4ffe794d650}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\FSE-ImGui">
+      <UniqueIdentifier>{a648e174-fb10-43d2-ad8b-7b6bae8f7ad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSE-ImGui">
+      <UniqueIdentifier>{09bd673f-4e09-4ffd-9d77-84f304fb5f80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetLoader.h">
@@ -165,6 +171,12 @@
     <ClInclude Include="..\imgui-1.49\stb_truetype.h">
       <Filter>Header Files\imgui-1.49</Filter>
     </ClInclude>
+    <ClInclude Include="FSE-ImGui\imgui-plotvar.h">
+      <Filter>Header Files\FSE-ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="FSE-ImGui\imgui-colorpicker.h">
+      <Filter>Header Files\FSE-ImGui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -253,6 +265,12 @@
     </ClCompile>
     <ClCompile Include="..\imgui-1.49\imgui-SFML.cpp">
       <Filter>Source Files\imgui-1.49</Filter>
+    </ClCompile>
+    <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp">
+      <Filter>Source Files\FSE-ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="FSE-ImGui\imgui-colorpicker.cpp">
+      <Filter>Source Files\FSE-ImGui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

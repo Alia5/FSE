@@ -167,6 +167,8 @@
     <ClInclude Include="EngineCore.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="FMath.h" />
+    <ClInclude Include="FSE-ImGui\imgui-colorpicker.h" />
+    <ClInclude Include="FSE-ImGui\imgui-plotvar.h" />
     <ClInclude Include="FSEObject\FPSCounter.h" />
     <ClInclude Include="Network\NetworkedObject.h" />
     <ClInclude Include="Lights\Light.h" />
@@ -199,6 +201,8 @@
     <ClCompile Include="Component\ViewController.cpp" />
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="FSE-ImGui\imgui-colorpicker.cpp" />
+    <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />
     <ClCompile Include="Network\NetworkedObject.cpp" />
     <ClCompile Include="Lights\Light.cpp" />

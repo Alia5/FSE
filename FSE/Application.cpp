@@ -1,4 +1,6 @@
 #include "Application.h"
+#include "../imgui-1.49/imgui.h"
+#include "../imgui-1.49/imgui-SFML.h"
 
 namespace fse
 {
