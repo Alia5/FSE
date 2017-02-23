@@ -2,6 +2,8 @@
 #include "../Application.h"
 #include "../FSE-ImGui/imgui-plotvar.h"
 
+#include <rttr/registration>
+
 namespace fse
 {
 	FPSCounter::FPSCounter(Scene* scene) : FPSCounter(scene, sf::Vector2f(0, 0))
@@ -101,3 +103,14 @@ namespace fse
 		return detailed_view_;
 	}
 }
+
+RTTR_REGISTRATION
+{
+	using namespace rttr;
+	using namespace fse;
+
+	registration::class_<FPSCounter>("fse::FPSCounter")
+	.property("detailed_view_", &FPSCounter::detailed_view_)
+	;
+}
+

@@ -37,5 +37,7 @@ namespace fse
 
 		Signal<>::Connection on_resize_connection_;
 
+		RTTR_ENABLE(fse::FSEObject)
+		RTTR_REGISTRATION_FRIEND
 	};
 }

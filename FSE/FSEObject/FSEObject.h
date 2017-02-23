@@ -2,12 +2,14 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <rttr/type>
+
 #include <memory>
 #include <iostream>
 
 #include "../Scene.h"
-
 #include "../Input.h"
+
 
 namespace fse
 {
@@ -51,11 +53,11 @@ namespace fse
 		bool isPendingKill() const;
 		void setTimedKill();
 
-		Scene *scene_;
-
 	protected:
 		void setZOrder(int ZOrder);
 		std::vector<std::unique_ptr<FSEObject> >* getSceneFSEObjects() const;
+
+		Scene *scene_;
 
 		/// position in METERS
 		sf::Vector2f position_;
@@ -68,9 +70,11 @@ namespace fse
 		bool is_pending_kill_ = false;
 		bool pending_timed_kill_ = false;
 
+		RTTR_ENABLE()
+		RTTR_REGISTRATION_FRIEND
+
 	PUBLIC_SIGNALS:
 		SpawnedSignal spawned_signal_;
-
 
 
 	};

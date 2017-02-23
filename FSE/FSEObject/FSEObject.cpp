@@ -1,6 +1,8 @@
 #include "FSEObject.h"
 #include "../Application.h"
 
+#include <rttr/registration>
+
 namespace fse
 {
 
@@ -122,5 +124,20 @@ namespace fse
 	{
 		return scene_->getFSEObjects();
 	}
+
+}
+
+RTTR_REGISTRATION
+{
+	using namespace rttr;
+	using namespace fse;
+
+	registration::class_<FSEObject>("fse::FSEObject")
+		.property_readonly("id_", &FSEObject::getID)
+		.property("position_", &FSEObject::getPosition, &FSEObject::setPosition)
+		.property("z_order_", &FSEObject::getZOrder, &FSEObject::setZOrder)
+		.property_readonly("aabbs_", &FSEObject::GetAABBs)
+		.method("destroy", &FSEObject::destroy)
+		;
 
 }

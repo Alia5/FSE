@@ -7,11 +7,11 @@ FSE is mainly created as a side project out of personal interest.
 I only have limited knowledge about game- / engine-programming and thus, this is probably not the most well though out code there is. 
 Hence, this is licensed under WTFPL 
 
-FSE supports networking which in testing performed pretty well under pretty bad network conditions (~200ms Ping with some packetloss) with a few 100 objects
+FSE supports networking which in testing performed pretty well under pretty bad network conditions (~200ms Ping with some packet loss) with a few 100 objects
 
-I'm quite happy with with the results so far, considering this essentially being a little "sunday project"
+I'm quite happy with with the results so far, considering this essentially being a little "Sunday project"
 
-It also sports a pretty neat lighting system incl. normal and specular maps
+It also sports a pretty neat lighting system incl. normal and specular-maps
 ![Lighting1](https://github.com/Alia5/FSE/blob/master/lighting1.gif?raw=true "Lighting1") ![Lighting2](https://github.com/Alia5/FSE/blob/master/lighting2.gif?raw=true "Lighting2")
 
 *Work in Progress*
@@ -41,4 +41,6 @@ All of the above are licensed under the [zLib-License](https://en.wikipedia.org/
 
 [ImGui SFML] (https://github.com/eliasdaler/imgui-sfml) (ca738ad)
 
-Both of which are licensed under the [MIT-License](https://opensource.org/licenses/MIT)
+[RTTR (RunTimeTypeReflection)] (http://www.rttr.org) (9db33f4)
+
+All three of which are licensed under the [MIT-License](https://opensource.org/licenses/MIT)

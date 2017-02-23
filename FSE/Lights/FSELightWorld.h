@@ -24,6 +24,9 @@ namespace fse
 
 		void updateView();
 
+		sf::Color getAmbientColor() const;
+		void setAmbientColor(const sf::Color color) const;
+
 		ltbl::LightDirectionEmission* getSun();
 
 		ltbl::LightSystem* getLightSystem() const;
@@ -42,5 +45,8 @@ namespace fse
 
 		ltbl::LightDirectionEmission* sun_ = nullptr;
 
+
+		RTTR_ENABLE(fse::FSEObject)
+		RTTR_REGISTRATION_FRIEND
 	};
 }

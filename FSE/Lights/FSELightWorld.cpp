@@ -1,7 +1,7 @@
 #include "FSELightWorld.h"
 #include "../Application.h"
 
-//#include "../../LTBL2/src/LightSystem.hpp"
+#include <rttr/registration>
 
 namespace fse
 {
@@ -70,6 +70,16 @@ namespace fse
 		}
 	}
 
+	sf::Color FSELightWorld::getAmbientColor() const
+	{
+		return light_system_->getAmbientColor();
+	}
+
+	void FSELightWorld::setAmbientColor(const sf::Color color) const
+	{
+		light_system_->setAmbientColor(color);
+	}
+
 	ltbl::LightDirectionEmission* FSELightWorld::getSun()
 	{
 		if (sun_ == nullptr)
@@ -91,4 +101,15 @@ namespace fse
 	{
 		return &specular_texture_;
 	}
+}
+
+RTTR_REGISTRATION
+{
+	using namespace rttr;
+	using namespace fse;
+
+	registration::class_<FSELightWorld>("fse::FSELightWorld")
+	.property("lighting_", &FSELightWorld::lighting_)
+	.property("ambient_color_", &FSELightWorld::getAmbientColor, &FSELightWorld::setAmbientColor)
+	;
 }
