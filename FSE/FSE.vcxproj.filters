@@ -177,6 +177,9 @@
     <ClInclude Include="FSE-ImGui\imgui-colorpicker.h">
       <Filter>Header Files\FSE-ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="SceneDebugger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -271,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="FSE-ImGui\imgui-colorpicker.cpp">
       <Filter>Source Files\FSE-ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneDebugger.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
