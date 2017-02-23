@@ -23,6 +23,7 @@ namespace fse
 			std::function<void(rttr::property, FSEObject*)>> CreateDefaultItemEditMap();
 
 	private:
+		void ShowSceneStatus();
 		void ShowObjectList();
 		void ShowObjectEditor();
 

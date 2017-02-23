@@ -4,6 +4,9 @@
 #include "../FSE/FSE-ImGui/imgui-colorpicker.h"
 #include "../imgui-1.49/imgui_internal.h"
 
+#include <iomanip>
+#include <sstream>
+
 namespace fse
 {
 	SceneDebugger::SceneDebugger()
@@ -30,6 +33,8 @@ namespace fse
 			objects_.insert(object.get());
 
 		ImGui::Begin("SceneDebugger##MainMenu");
+
+		ShowSceneStatus();
 
 		ShowObjectList();
 
@@ -224,5 +229,20 @@ namespace fse
 		};
 
 		return item_edit_map_;
+	}
+
+	void SceneDebugger::ShowSceneStatus()
+	{
+		std::stringstream stream;
+		stream << "Scene: 0x" << std::hex << static_cast<void*>(scene_);
+		ImGui::Text(stream.str().data());
+
+		ImGui::Text(std::string("Object count: " + std::to_string(objects_.size())).data());
+		bool b = scene_->isPaused();
+		if (ImGui::Checkbox("Paused##SceneDebugger", &b))
+		{
+			scene_->setPaused(b);
+		}
+		ImGui::Separator();
 	}
 }
