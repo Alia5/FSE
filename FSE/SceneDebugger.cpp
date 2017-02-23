@@ -13,11 +13,9 @@ namespace fse
 
 	SceneDebugger::SceneDebugger(Scene* scene) : scene_(scene)
 	{
-		auto comp = [](FSEObject* lhs, FSEObject* rhs)
-		{
-			return lhs->getID() < rhs->getID();
-		};
-		objects_ = std::set<FSEObject*, std::function<bool(FSEObject*, FSEObject*)>>(comp);
+
+		objects_ = std::set<FSEObject*, std::function<bool(FSEObject*, FSEObject*)>>(
+			[](FSEObject* lhs, FSEObject* rhs) {return lhs->getID() < rhs->getID(); });
 
 		item_edit_funcs_ = CreateDefaultItemEditMap();
 	}
@@ -26,20 +24,17 @@ namespace fse
 	{
 		if (scene_ == nullptr)
 			return;
+
 		objects_.clear();
 		for (const auto& object : *scene_->getFSEObjects())
-		{
 			objects_.insert(object.get());
-		}
 
 		ImGui::Begin("SceneDebugger##MainMenu");
 
 		ShowObjectList();
 
 		if (ImGui::CollapsingHeader("Object Editor##SceneDebugger"))
-		{
 			ShowObjectEditor();
-		}
 
 		ImGui::End();
 	}
@@ -62,17 +57,11 @@ namespace fse
 				rttr::type type = rttr::type::get(*object);
 				std::string nodename = std::string(type.get_name().data()) + "##SceneDebugger" + std::to_string(id);
 				int pos;
-				while ((pos = nodename.find("class "), pos) != std::wstring::npos)
-				{
+				while ((pos = nodename.find("class "), pos) != std::string::npos)
 					nodename.erase(pos, 6);
-				}
 				if (ImGui::Selectable(nodename.data(), id == selected_id_))
-				{
 					selected_id_ = id;
-				}
 			}
-
-
 			ImGui::EndChild();
 		}
 	}
@@ -98,7 +87,7 @@ namespace fse
 		ImGui::Separator();
 		if(ImGui::Button("Destroy##SceneDebugger"))
 		{
-			type.invoke("destroy",*it,{});
+			type.invoke("destroy",*it,{}); //with fire
 		}
 		ImGui::PopItemWidth();
 		ImGui::EndChild();
@@ -119,7 +108,7 @@ namespace fse
 		std::unordered_map<rttr::type,
 			std::function<void(rttr::property, FSEObject*)>> item_edit_map_;
 
-		auto boolFunc = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<bool>()] = [](rttr::property prop, FSEObject* object)
 		{
 			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
 			bool val = prop.get_value(*object).convert<bool>();
@@ -127,9 +116,8 @@ namespace fse
 				if (!prop.is_readonly())
 					prop.set_value(*object, val);
 		};
-		item_edit_map_[rttr::type::get<bool>()] = boolFunc;
 
-		auto intFunc = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<int>()] = [](rttr::property prop, FSEObject* object)
 		{
 			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
 			int val = prop.get_value(*object).convert<int>();
@@ -137,9 +125,8 @@ namespace fse
 				if (!prop.is_readonly())
 					prop.set_value(*object, val);
 		};
-		item_edit_map_[rttr::type::get<int>()] = intFunc;
 
-		auto floatFunc = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<float>()] = [](rttr::property prop, FSEObject* object)
 		{
 			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
 			float val = prop.get_value(*object).convert<float>();
@@ -147,9 +134,8 @@ namespace fse
 				if (!prop.is_readonly())
 					prop.set_value(*object, val);
 		};
-		item_edit_map_[rttr::type::get<float>()] = floatFunc;
 
-		auto Vector2fFunc = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<sf::Vector2f>()] = [](rttr::property prop, FSEObject* object)
 		{
 			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
 			sf::Vector2f val = prop.get_value(*object).convert<sf::Vector2f>();
@@ -164,9 +150,8 @@ namespace fse
 				}
 			}
 		};
-		item_edit_map_[rttr::type::get<sf::Vector2f>()] = Vector2fFunc;
 
-		auto IntRectFunc = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<sf::IntRect>()] = [](rttr::property prop, FSEObject* object)
 		{
 			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
 			sf::IntRect val = prop.get_value(*object).convert<sf::IntRect>();
@@ -181,9 +166,8 @@ namespace fse
 				}
 			}
 		};
-		item_edit_map_[rttr::type::get<sf::IntRect>()] = IntRectFunc;
 
-		auto FloatRectFunc = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<sf::FloatRect>()] = [](rttr::property prop, FSEObject* object)
 		{
 			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
 			sf::FloatRect val = prop.get_value(*object).convert<sf::FloatRect>();
@@ -199,9 +183,8 @@ namespace fse
 			}
 
 		};
-		item_edit_map_[rttr::type::get<sf::FloatRect>()] = FloatRectFunc;
 
-		auto ColorFunc = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<sf::Color>()] = [](rttr::property prop, FSEObject* object)
 		{
 			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
 
@@ -239,8 +222,6 @@ namespace fse
 			}
 
 		};
-		item_edit_map_[rttr::type::get<sf::Color>()] = ColorFunc;
-
 
 		return item_edit_map_;
 	}
