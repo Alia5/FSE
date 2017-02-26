@@ -9,6 +9,10 @@
 
 namespace fse
 {
+
+	std::unordered_map<rttr::type,
+		std::function<void(rttr::property, rttr::instance*)>> SceneDebugger::item_edit_funcs_;
+
 	SceneDebugger::SceneDebugger()
 	{
 
@@ -20,7 +24,8 @@ namespace fse
 		objects_ = std::set<FSEObject*, std::function<bool(FSEObject*, FSEObject*)>>(
 			[](FSEObject* lhs, FSEObject* rhs) {return lhs->getID() < rhs->getID(); });
 
-		item_edit_funcs_ = CreateDefaultItemEditMap();
+		if (item_edit_funcs_.size() == 0)
+			item_edit_funcs_ = CreateDefaultItemEditMap();
 	}
 
 	void SceneDebugger::Update()
@@ -45,11 +50,11 @@ namespace fse
 	}
 
 	void SceneDebugger::RegisterItemEditFunc(rttr::type type,
-		std::function<void(rttr::property, FSEObject*)> func)
+		std::function<void(rttr::property, rttr::instance*)> func)
 	{
 		item_edit_funcs_[type] = func;
 	}
-
+	
 	void SceneDebugger::ShowObjectList()
 	{
 		if (ImGui::CollapsingHeader("Subscene Objects##SceneDebugger"))
@@ -87,7 +92,7 @@ namespace fse
 		ImGui::Text(std::string("Object: " + std::string(type.get_name().data())).data());
 		ImGui::Separator();
 
-		ShowObjectEditorItems(type, *it);
+		ShowObjectEditorItems(type, &rttr::instance(*it));
 
 		for (auto& method : type.get_methods())
 		{
@@ -98,7 +103,6 @@ namespace fse
 				{
 					type.invoke("destroy", *it, {}); //with fire
 				}
-				break;
 			}
 		}
 
@@ -106,51 +110,64 @@ namespace fse
 		ImGui::EndChild();
 	}
 
-	void SceneDebugger::ShowObjectEditorItems(rttr::type type, FSEObject* object)
+	void SceneDebugger::ShowObjectEditorItems(rttr::type type, rttr::instance* object)
 	{
 		for (auto& prop : type.get_properties())
+		{
 			if (item_edit_funcs_.count(prop.get_type()))
-				item_edit_funcs_[prop.get_type()](prop,object);
+				item_edit_funcs_[prop.get_type()](prop, object);
+			else if (prop.get_type().get_properties().size() > 0)
+			{
+				std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
+				if (ImGui::TreeNode(propname.data()))
+				{
+					auto val = prop.get_value(*object);
+					auto inst = rttr::instance(val);
+					ShowObjectEditorItems(prop.get_type(), &inst);
+					prop.set_value(*object, val);
+
+					ImGui::TreePop();
+				}
+			}
+		}
 	}
 
-
-
 	std::unordered_map<rttr::type,
-		std::function<void(rttr::property, FSEObject*)>> SceneDebugger::CreateDefaultItemEditMap()
+		std::function<void(rttr::property, rttr::instance*)>> SceneDebugger::CreateDefaultItemEditMap()
 	{
 		std::unordered_map<rttr::type,
-			std::function<void(rttr::property, FSEObject*)>> item_edit_map_;
+			std::function<void(rttr::property, rttr::instance*)>> item_edit_map_;
 
-		item_edit_map_[rttr::type::get<bool>()] = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<bool>()] = [](rttr::property prop, rttr::instance* object)
 		{
-			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
+			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
 			bool val = prop.get_value(*object).convert<bool>();
 			if (ImGui::Checkbox(propname.data(), &val))
 				if (!prop.is_readonly())
 					prop.set_value(*object, val);
 		};
 
-		item_edit_map_[rttr::type::get<int>()] = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<int>()] = [](rttr::property prop, rttr::instance* object)
 		{
-			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
+			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
 			int val = prop.get_value(*object).convert<int>();
 			if (ImGui::InputInt(propname.data(), &val))
 				if (!prop.is_readonly())
 					prop.set_value(*object, val);
 		};
 
-		item_edit_map_[rttr::type::get<float>()] = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<float>()] = [](rttr::property prop, rttr::instance* object)
 		{
-			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
+			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
 			float val = prop.get_value(*object).convert<float>();
 			if (ImGui::InputFloat(propname.data(), &val))
 				if (!prop.is_readonly())
 					prop.set_value(*object, val);
 		};
 
-		item_edit_map_[rttr::type::get<sf::Vector2f>()] = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<sf::Vector2f>()] = [](rttr::property prop, rttr::instance* object)
 		{
-			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
+			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
 			sf::Vector2f val = prop.get_value(*object).convert<sf::Vector2f>();
 			float arr[2] = {val.x, val.y};
 
@@ -164,9 +181,9 @@ namespace fse
 			}
 		};
 
-		item_edit_map_[rttr::type::get<sf::IntRect>()] = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<sf::IntRect>()] = [](rttr::property prop, rttr::instance* object)
 		{
-			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
+			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
 			sf::IntRect val = prop.get_value(*object).convert<sf::IntRect>();
 			int arr[4] = {val.left, val.top, val.width, val.height};
 
@@ -180,9 +197,9 @@ namespace fse
 			}
 		};
 
-		item_edit_map_[rttr::type::get<sf::FloatRect>()] = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<sf::FloatRect>()] = [](rttr::property prop, rttr::instance* object)
 		{
-			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
+			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
 			sf::FloatRect val = prop.get_value(*object).convert<sf::FloatRect>();
 			float arr[4] = { val.left, val.top, val.width, val.height };
 
@@ -197,9 +214,9 @@ namespace fse
 
 		};
 
-		item_edit_map_[rttr::type::get<sf::Color>()] = [](rttr::property prop, FSEObject* object)
+		item_edit_map_[rttr::type::get<sf::Color>()] = [](rttr::property prop, rttr::instance* object)
 		{
-			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(object->getID()));
+			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
 
 			sf::Color val = prop.get_value(*object).convert<sf::Color>();
 			float color[4] = { (val.r / 255.f), (val.g / 255.f), (val.b / 255.f), (val.a / 255.f) };
@@ -215,10 +232,10 @@ namespace fse
 					prop.set_value(*object, val);
 				}
 			}
-			if (ImGui::TreeNode(std::string("Colorpicker##" + std::to_string(object->getID())).data()))
+			if (ImGui::TreeNode(std::string("Colorpicker##" + std::to_string(reinterpret_cast<int>(object))).data()))
 			{
 				ImGui::PushItemWidth(200);
-				if (ImGui::ColorPicker4(std::string(propname + "##Picker" + std::to_string(object->getID())).data(),
+				if (ImGui::ColorPicker4(std::string(propname + "##Picker" + std::to_string(reinterpret_cast<int>(object))).data(),
 					color, ImGui::ImGuiColorEditFlags_NoSliders))
 				{
 					if (!prop.is_readonly())
@@ -233,13 +250,12 @@ namespace fse
 				ImGui::PopItemWidth();
 				ImGui::TreePop();
 			}
-
 		};
 
 		return item_edit_map_;
 	}
 
-	void SceneDebugger::ShowSceneStatus()
+	void SceneDebugger::ShowSceneStatus() const
 	{
 		std::stringstream stream;
 		stream << "Scene: 0x" << std::hex << static_cast<void*>(scene_);

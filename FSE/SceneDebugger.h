@@ -3,6 +3,7 @@
 #include <functional>
 #include <rttr/type.h>
 #include <unordered_map>
+#include "Lights/Light.h"
 
 namespace fse
 {
@@ -16,26 +17,25 @@ namespace fse
 
 		void Update();
 
-		void RegisterItemEditFunc(rttr::type type,
-			std::function<void(rttr::property, FSEObject*)> func);
+		static void RegisterItemEditFunc(rttr::type type,
+			std::function<void(rttr::property, rttr::instance*)> func);
 
 		static std::unordered_map<rttr::type,
-			std::function<void(rttr::property, FSEObject*)>> CreateDefaultItemEditMap();
+			std::function<void(rttr::property, rttr::instance*)>> CreateDefaultItemEditMap();
 
 	private:
-		void ShowSceneStatus();
+		void ShowSceneStatus() const;
 		void ShowObjectList();
 		void ShowObjectEditor();
 
-		void ShowObjectEditorItems(rttr::type type, FSEObject* object);
+		void ShowObjectEditorItems(rttr::type type, rttr::instance* object);
 
-		std::unordered_map<rttr::type, 
-				std::function<void(rttr::property, FSEObject*)>> item_edit_funcs_;
+		static std::unordered_map<rttr::type, 
+				std::function<void(rttr::property, rttr::instance*)>> item_edit_funcs_;
 
 		Scene* scene_ = nullptr;
 		int selected_id_ = -1;
 		std::set<FSEObject*, std::function<bool(FSEObject*, FSEObject*)>> objects_;
-
 
 
 
