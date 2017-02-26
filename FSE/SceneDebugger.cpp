@@ -89,11 +89,19 @@ namespace fse
 
 		ShowObjectEditorItems(type, *it);
 
-		ImGui::Separator();
-		if(ImGui::Button("Destroy##SceneDebugger"))
+		for (auto& method : type.get_methods())
 		{
-			type.invoke("destroy",*it,{}); //with fire
+			if (method.get_name().compare("destroy") == 0)
+			{
+				ImGui::Separator();
+				if (ImGui::Button("Destroy##SceneDebugger"))
+				{
+					type.invoke("destroy", *it, {}); //with fire
+				}
+				break;
+			}
 		}
+
 		ImGui::PopItemWidth();
 		ImGui::EndChild();
 	}
