@@ -118,16 +118,28 @@ namespace fse
 				item_edit_funcs_[prop.get_type()](prop, object);
 			else if (prop.get_type().get_properties().size() > 0)
 			{
-				std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
-				if (ImGui::TreeNode(propname.data()))
+				for (auto& pr : prop.get_type().get_properties())
 				{
-					auto val = prop.get_value(*object);
-					auto inst = rttr::instance(val);
-					ShowObjectEditorItems(prop.get_type(), &inst);
-					prop.set_value(*object, val);
+					if (item_edit_funcs_.count(pr.get_type()))
+					{
+						std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
+						if (ImGui::TreeNode(propname.data()))
+						{
+							auto val = prop.get_value(*object);
+							auto inst = rttr::instance(val);
+							ShowObjectEditorItems(prop.get_type(), &inst);
+							prop.set_value(*object, val);
 
-					ImGui::TreePop();
+							ImGui::TreePop();
+						}
+						break;
+					}
 				}
+			} else {
+				std::string propname("Unsupported type: " 
+					+ std::string(prop.get_type().get_name().data()) + "; "
+					+ std::string(prop.get_name().data()));
+				ImGui::Text(propname.data());
 			}
 		}
 	}
