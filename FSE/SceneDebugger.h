@@ -28,7 +28,7 @@ namespace fse
 		void ShowObjectList();
 		void ShowObjectEditor();
 
-		void ShowObjectEditorItems(rttr::type type, rttr::instance* object);
+		void ShowObjectEditorItems(rttr::type type, rttr::instance* object) const;
 
 		static std::unordered_map<rttr::type, 
 				std::function<void(rttr::property, rttr::instance*)>> item_edit_funcs_;

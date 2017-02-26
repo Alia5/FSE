@@ -110,7 +110,7 @@ namespace fse
 		ImGui::EndChild();
 	}
 
-	void SceneDebugger::ShowObjectEditorItems(rttr::type type, rttr::instance* object)
+	void SceneDebugger::ShowObjectEditorItems(rttr::type type, rttr::instance* object) const
 	{
 		for (auto& prop : type.get_properties())
 		{
