@@ -21,5 +21,8 @@ namespace fse
 		float lenght_ = 1;
 		float angle_ = 90;
 
+		RTTR_ENABLE(fse::Light)
+			RTTR_REGISTRATION_FRIEND
+
 	};
 }

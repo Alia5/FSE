@@ -1,6 +1,7 @@
 #include "SpotLight.h"
 #include "../Application.h"
 
+#include <rttr/registration.h>
 
 namespace fse
 {
@@ -41,4 +42,15 @@ namespace fse
 	{
 		return angle_;
 	}
+}
+
+RTTR_REGISTRATION
+{
+	using namespace rttr;
+using namespace fse;
+
+registration::class_<SpotLight>("fse::SpotLight")
+.property("lenght_", &SpotLight::getLenght, &SpotLight::setLenght)
+.property("angle_", &SpotLight::getAngle, &SpotLight::setAngle)
+;
 }

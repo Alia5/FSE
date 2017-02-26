@@ -14,6 +14,9 @@ namespace fse
 		void setRadius(float radius) const;
 		float getRadius() const;
 
+	private:
+		RTTR_ENABLE(fse::Light)
+			RTTR_REGISTRATION_FRIEND
 
 	};
 }

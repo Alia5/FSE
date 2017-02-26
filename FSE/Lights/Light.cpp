@@ -1,5 +1,6 @@
 #include "Light.h"
 #include "../Application.h"
+#include <rttr/registration.h>
 
 
 namespace fse
@@ -17,7 +18,7 @@ namespace fse
 
 	Light::Light(Scene* scene, const sf::Vector2f& spawnPos, const std::string& path, bool smooth) : scene_(scene)
 	{
-		light_texture_ = scene->getApplication()->getAssetLoader().getTexture(path); //"lights/pointLightTexture.png"
+		light_texture_ = scene->getApplication()->getAssetLoader().getTexture(path);
 		light_texture_->setSmooth(smooth);
 
 		light_ = scene->getLightWorld()->getLightSystem()->createLightPointEmission();
@@ -34,17 +35,17 @@ namespace fse
 			scene_->getLightWorld()->getLightSystem()->removeLight(light_);
 	}
 
-	void Light::setPosition(const sf::Vector2f& pos) const
+	void Light::setPosition(const sf::Vector2f pos) const
 	{
 		light_->setPosition(pos * FSE_PIXELS_PER_METER);
 	}
 
-	void Light::setColor(const sf::Color& color) const
+	void Light::setColor(const sf::Color color) const
 	{
 		light_->setColor(color);
 	}
 
-	void Light::setScale(const sf::Vector2f& scale) const
+	void Light::setScale(const sf::Vector2f scale) const
 	{
 		light_->setScale(scale);
 	}
@@ -106,4 +107,19 @@ namespace fse
 
 		return *this;
 	}
+}
+
+RTTR_REGISTRATION
+{
+	using namespace rttr;
+using namespace fse;
+
+registration::class_<Light>("fse::Light")
+.property("position_", &Light::getPosition, &Light::setPosition)
+.property("scale_", &Light::getScale, &Light::setScale)
+.property("turned_on_", &Light::isTurnedOn, &Light::setTurnedOn)
+.property("rotation_", &Light::getRotation, &Light::setRotation)
+.property("color_", &Light::getColor, &Light::setColor)
+;
+
 }

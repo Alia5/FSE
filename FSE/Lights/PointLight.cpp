@@ -1,6 +1,7 @@
 #include "PointLight.h"
 #include "../Application.h"
 
+#include <rttr/registration>
 
 namespace fse
 {
@@ -29,4 +30,14 @@ namespace fse
 		return light_->getScale().x / (FSE_PIXELS_PER_METER / light_texture_->getSize().x);
 	}
 
+}
+
+RTTR_REGISTRATION
+{
+	using namespace rttr;
+using namespace fse;
+
+registration::class_<PointLight>("fse::PointLight")
+.property("radius_", &PointLight::getRadius, &PointLight::setRadius)
+;
 }
