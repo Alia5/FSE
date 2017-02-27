@@ -17,11 +17,13 @@ namespace fse
 
 		void update();
 
-		static void RegisterItemEditFunc(rttr::type type,
+		void registerItemEditFunc(rttr::type type,
 			std::function<void(rttr::property, rttr::instance*)> func);
 
 		static std::unordered_map<rttr::type,
 			std::function<void(rttr::property, rttr::instance*)>> CreateDefaultItemEditMap();
+
+		void enableVector2fToMousePos();
 
 	private:
 		void ShowSceneStatus() const;
@@ -30,17 +32,17 @@ namespace fse
 		void ShowObjectEditor();
 
 
-		void ShowObjectEditorItems(rttr::type type, rttr::instance* object) const;
-
-		static std::unordered_map<rttr::type, 
-				std::function<void(rttr::property, rttr::instance*)>> item_edit_funcs_;
+		void ShowObjectEditorItems(rttr::type type, rttr::instance* object);
 
 		Scene* scene_ = nullptr;
 		int selected_id_ = -1;
 		bool mouse_selection_mode_ = false;
 		std::set<FSEObject*, std::function<bool(FSEObject*, FSEObject*)>> objects_;
 
+		std::unordered_map<rttr::type,
+			std::function<void(rttr::property, rttr::instance*)>> item_edit_funcs_;
 
+		std::unordered_map<std::string, bool> vector_to_mouse_;
 
 	};
 }

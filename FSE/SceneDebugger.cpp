@@ -12,12 +12,10 @@
 namespace fse
 {
 
-	std::unordered_map<rttr::type,
-		std::function<void(rttr::property, rttr::instance*)>> SceneDebugger::item_edit_funcs_;
-
 	SceneDebugger::SceneDebugger()
 	{
-
+		if (item_edit_funcs_.size() == 0)
+			item_edit_funcs_ = CreateDefaultItemEditMap();
 	}
 
 	SceneDebugger::SceneDebugger(Scene* scene) : scene_(scene)
@@ -53,7 +51,7 @@ namespace fse
 		ImGui::End();
 	}
 
-	void SceneDebugger::RegisterItemEditFunc(rttr::type type,
+	void SceneDebugger::registerItemEditFunc(rttr::type type,
 		std::function<void(rttr::property, rttr::instance*)> func)
 	{
 		item_edit_funcs_[type] = func;
@@ -131,7 +129,7 @@ namespace fse
 			ImGui::EndChild();
 			return;
 		} 
-		ImGui::PushItemWidth(ImGui::GetCurrentWindow()->Size.x - 150);
+		ImGui::PushItemWidth(ImGui::GetCurrentWindow()->Size.x - 250);
 		rttr::type type = rttr::type::get(**it);
 		ImGui::Text(std::string("Object: " + std::string(type.get_name().data())).data());
 		ImGui::Separator();
@@ -154,7 +152,7 @@ namespace fse
 		ImGui::EndChild();
 	}
 
-	void SceneDebugger::ShowObjectEditorItems(rttr::type type, rttr::instance* object) const
+	void SceneDebugger::ShowObjectEditorItems(rttr::type type, rttr::instance* object)
 	{
 		for (auto& prop : type.get_properties())
 		{
@@ -342,6 +340,56 @@ namespace fse
 		};
 
 		return item_edit_map_;
+	}
+
+	void SceneDebugger::enableVector2fToMousePos()
+	{
+		item_edit_funcs_[rttr::type::get<sf::Vector2f>()] = [this](rttr::property prop, rttr::instance* object)
+		{
+			std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
+			sf::Vector2f val = prop.get_value(*object).convert<sf::Vector2f>();
+			float arr[2] = { val.x, val.y };
+
+			if (ImGui::InputFloat2(propname.data(), &arr[0]))
+			{
+				if (!prop.is_readonly())
+				{
+					val = { arr[0], arr[1] };
+					prop.set_value(*object, val);
+				}
+			}
+
+			if (!prop.is_readonly())
+			{
+				if (!vector_to_mouse_.count(propname))
+					vector_to_mouse_[propname] = false;
+
+				ImGui::SameLine();
+				if (ImGui::Button(std::string("To Mouse position##" + propname).data()))
+				{
+					vector_to_mouse_[propname] = true;
+					sf::RenderWindow* window = scene_->getApplication()->getWindow();
+					sf::Mouse::setPosition(sf::Vector2i(window->getSize().x / 2, window->getSize().y/2), *window);
+				}
+
+				if (vector_to_mouse_[propname])
+				{
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+					{
+						vector_to_mouse_[propname] = false;
+						return;
+					}
+					ImGui::Text("Leftclick to end");
+
+					sf::RenderWindow* window = scene_->getApplication()->getWindow();
+					val = window->mapPixelToCoords(sf::Mouse::getPosition(*window)) * FSE_METERS_PER_PIXEL;
+					prop.set_value(*object, val);
+
+				}
+			}
+
+
+		};
 	}
 
 	void SceneDebugger::ShowSceneStatus() const
