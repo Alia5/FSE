@@ -4,8 +4,10 @@
 #include "../FSE/FSE-ImGui/imgui-colorpicker.h"
 #include "../imgui-1.49/imgui_internal.h"
 
-#include <iomanip>
+#include "../FSE/Application.h"
+
 #include <sstream>
+
 
 namespace fse
 {
@@ -40,6 +42,8 @@ namespace fse
 		ImGui::Begin("SceneDebugger##MainMenu");
 
 		ShowSceneStatus();
+
+		ShowMouseTools();
 
 		ShowObjectList();
 
@@ -76,9 +80,49 @@ namespace fse
 		}
 	}
 
+	void SceneDebugger::ShowMouseTools()
+	{
+		ImGui::Checkbox("Get mouse over Object##SceneDebugger", &mouse_selection_mode_);
+
+		if (mouse_selection_mode_)
+		{
+			ImGui::Text("\"getAABBs()\" have to be overridden properly!");
+			ImGui::Text("Leftclick to end");
+		}
+
+		if (mouse_selection_mode_)
+		{
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+			{
+				mouse_selection_mode_ = false;
+				return;
+			}
+
+			selected_id_ = -1;
+
+			//use z-order sorted list from scene directly
+			//reverse iter because of z-ordering...
+			auto objects = scene_->getFSEObjects();
+			for (auto it = objects->rbegin(); it != objects->rend(); ++it)
+			{
+				auto aabbs = it->get()->GetAABBs();
+				sf::RenderWindow* window = scene_->getApplication()->getWindow();
+				if (aabbs.contains(
+					window->mapPixelToCoords(sf::Mouse::getPosition(*window))))
+				{
+					selected_id_ = it->get()->getID();
+					break;
+				}
+			}
+		}
+
+		ImGui::Separator();
+
+	}
+
 	void SceneDebugger::ShowObjectEditor()
 	{
-		ImGui::BeginChild("##ObjectEditor##SceneDebugger", ImVec2(0, ImGui::GetCurrentWindow()->Size.y / 2.f), true);
+		ImGui::BeginChild("##ObjectEditor##SceneDebugger", ImVec2(0,0), true);
 		auto it = std::find_if(objects_.begin(), objects_.end(), [this](FSEObject* object){ return object->getID() == selected_id_;});
 		if (it == objects_.end())
 		{

@@ -26,7 +26,9 @@ namespace fse
 	private:
 		void ShowSceneStatus() const;
 		void ShowObjectList();
+		void ShowMouseTools();
 		void ShowObjectEditor();
+
 
 		void ShowObjectEditorItems(rttr::type type, rttr::instance* object) const;
 
@@ -35,6 +37,7 @@ namespace fse
 
 		Scene* scene_ = nullptr;
 		int selected_id_ = -1;
+		bool mouse_selection_mode_ = false;
 		std::set<FSEObject*, std::function<bool(FSEObject*, FSEObject*)>> objects_;
 
 
