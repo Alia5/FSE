@@ -181,28 +181,35 @@ namespace fse
 					}
 				}
 			} else if (prop.get_type().is_array())	{
-							
-				auto val = prop.get_value(*object);
-				rttr::variant_array_view arr = val.create_array_view();
-				size_t sz = arr.get_size();
-				for (size_t i = 0; i < sz; i++)
+						
+				std::string propname(std::string(prop.get_name().data()) + "[]"
+					+ "##" + std::to_string(reinterpret_cast<int>(object)));
+				if (ImGui::TreeNode(propname.data()))
 				{
-					std::string propname(std::string(prop.get_name().data()) + "[" + std::to_string(i) + "]"
-						+ "##" + std::to_string(reinterpret_cast<int>(object)));
-					if (ImGui::TreeNode(propname.data()))
+					auto val = prop.get_value(*object);
+					rttr::variant_array_view arr = val.create_array_view();
+					size_t sz = arr.get_size();
+					for (size_t i = 0; i < sz; i++)
 					{
-						auto v = arr.get_value(i);
-						auto t = v.get_type();
-						auto inst = rttr::instance(v);
-						ShowObjectEditorItems(t, &inst);
-						arr.set_value(i, v);
+						std::string propname(std::string(prop.get_name().data()) + "[" + std::to_string(i) + "]"
+							+ "##" + std::to_string(reinterpret_cast<int>(object)));
+						if (ImGui::TreeNode(propname.data()))
+						{
+							auto v = arr.get_value(i);
+							auto t = v.get_type();
+							auto inst = rttr::instance(v);
+							ShowObjectEditorItems(t, &inst);
+							arr.set_value(i, v);
 
-						ImGui::Separator();
-						ImGui::TreePop();
+							ImGui::Separator();
+							ImGui::TreePop();
+						}
 					}
+					prop.set_value(*object, val);
+						
+					ImGui::Separator();
+					ImGui::TreePop();
 				}
-
-				prop.set_value(*object, val);
 			} else {
 				std::string propname("Unsupported type: " 
 					+ std::string(prop.get_type().get_name().data()) + "; "
