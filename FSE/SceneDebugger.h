@@ -15,7 +15,7 @@ namespace fse
 		SceneDebugger();
 		explicit SceneDebugger(Scene* scene);
 
-		void Update();
+		void update();
 
 		static void RegisterItemEditFunc(rttr::type type,
 			std::function<void(rttr::property, rttr::instance*)> func);

@@ -30,7 +30,7 @@ namespace fse
 			item_edit_funcs_ = CreateDefaultItemEditMap();
 	}
 
-	void SceneDebugger::Update()
+	void SceneDebugger::update()
 	{
 		if (scene_ == nullptr)
 			return;
