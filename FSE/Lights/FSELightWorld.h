@@ -22,6 +22,9 @@ namespace fse
 		bool getLighting() const;
 		void setLighting(bool lighting);
 
+		bool getBloom() const;
+		void setBloom(bool bloom);
+
 		void updateView();
 
 		sf::Color getAmbientColor() const;
@@ -47,13 +50,11 @@ namespace fse
 		bool lighting_ = true;
 
 		bool bloom_ = true;
-		float exposure_ = 1.0f;
 
 		ltbl::LightDirectionEmission* sun_ = nullptr;
 
 		sf::Shader bloom_shader_;
 		sf::Shader gauss_blur_shader_;
-		sf::Shader blend_shader_;
 
 		RTTR_ENABLE(fse::FSEObject)
 		RTTR_REGISTRATION_FRIEND
@@ -66,10 +67,10 @@ namespace fse
 		"{" \
 		"	vec2 coord = gl_TexCoord[0].xy;" \
 		"	vec4 frColor = texture2D(currTex, coord);" \
-		"	float brightness = dot(frColor.rgb, vec3(1.2126, 1.7152, 1.0722));" \
-		"	if (brightness > 1.8)" \
+		"	float brightness = dot(frColor.rgb, vec3(0.2126, 0.7152, 0.0722));" \
+		"	if (brightness > 0.49)" \
 		"	{" \
-		"		gl_FragColor = vec4(frColor.rgb, 1.0);" \
+		"		gl_FragColor = vec4(pow(frColor.rgb, vec3(3.5, 3.5, 3.5)), 1.0);" \
 		"	}" \
 		"	else" \
 		"	{" \
@@ -83,9 +84,9 @@ namespace fse
 		"const float pi = 3.14159265;" \
 		"" \
 		"void main() {" \
-		"	const float numBlurPixelsPerSide = 17;" \
+		"	const float numBlurPixelsPerSide = 12.0;" \
 		"	vec2  blurMultiplyVec = vec2(0.0, 1.0);" \
-		"	float sigma = 15.243;" \
+		"	float sigma = 9.243;" \
 		"	if (horizontal)" \
 		"	{" \
 		"		blurMultiplyVec = vec2(1.0, 0.0);" \
@@ -114,18 +115,6 @@ namespace fse
 		"	}" \
 		"	gl_FragColor = avgValue / coefficientSum;" \
 		"}";
-		const std::string blend_shader_str_ = "" \
-			"uniform sampler2D scene;" \
-			"uniform sampler2D bloomBlur;" \
-			"uniform float exposure;" \
-			"" \
-			"void main() {" \
-			"	vec3 sceneColor = texture(scene, gl_TexCoord[0].xy).rgb;" \
-			"	vec3 bloomColor = texture(bloomBlur, gl_TexCoord[0].xy).rgb;" \
-			"	sceneColor += bloomColor;" \
-			"	vec3 result = vec3(1.0) - exp(-sceneColor * exposure);" 
-			"	gl_FragColor = vec4(result, 1.0f); }";
-
 
 	};
 }
