@@ -41,7 +41,8 @@ const std::string normalFragment = "" \
 "void main()" \
 "{" \
 "	vec2 coord = gl_TexCoord[0].xy;" \
-"	float lightPower = texture2D(lightTexture, coord).r;" \
+"	vec3 lpc = texture2D(lightTexture, coord).rgb;" \
+"	float lightPower = (lpc.r + lpc.g + lpc.b) / 3.0;" \
 "	vec4 normalsColor = texture2D(normalsTexture, gl_FragCoord.xy / targetSize);" \
 "	vec3 normals = normalize(normalsColor.rgb * 2.0 - 1.0);" \
 "	vec2 lightVector = lightPosition.xy - gl_FragCoord.xy;" \
@@ -80,7 +81,6 @@ const std::string specularFragment = "" \
 "	vec4 lightSpecColor = vec4(lightColor * specMap);" \
 "	if (colorIntensity > 0.0)" \
 "	{" \
-"		vec3 halfVec = normalize(lightDir + vec3(0.5, 0.5, 0.5));" \
 "		vec4 specColor = specMap;" \
 "		vec3 reflectDir = reflect(-lightDir, normal);" \
 "		float specModifier = max(dot(reflectDir, lightDir), 0.0);" \
