@@ -7,18 +7,27 @@
 
 namespace fse
 {
+	/*!
+	 * \brief Prebuilt Timer class
+	 * Timer is not accurate for time measuring! \n 
+	 * Emits signal once timer runs out (mid frame)
+	 */
 	class Timer : public FSEObject
 	{
 	public:
 		Timer(Scene* scene);
 		~Timer();
 
-		virtual void update(float deltaTime) override;
+		void update(float deltaTime) override;
 
-		virtual void draw(sf::RenderTarget& target) override;
+		void draw(sf::RenderTarget& target) override;
 
-		virtual void spawned() override;
+		void spawned() override;
 
+		/*!
+		 * Connects a slot to the timer and starts it
+		 * \param slot Slot
+		 */
 		template <typename Slot>
 		void start(Slot&& slot)
 		{
@@ -26,13 +35,33 @@ namespace fse
 			timeout_.connect(slot);
 		}
 
+		/*!
+		 * Stops the timer
+		 */
 		void stop();
+		/*!
+		 * Sets interval of timer
+		 * \param msecs interval (in millis)
+		 */
 		void setInterval(int msecs);
 
+		/*!
+		 * \return is timer active
+		 */
 		bool isActive() const;
 		
+		/*!
+		 * Set timer to fire **once**
+		 * \param singleShot set timer single shot
+		 */
 		void setSingleShot(bool singleShot);
 
+		/*!
+		 * \brief Create and start a single shot timer
+		 * \param scene Ptr to scene
+		 * \param msecs Timeout in millis
+		 * \param slot Slot  
+		 */
 		template <typename Slot>
 		static void singleShot(Scene* scene,int msecs, Slot&& slot)
 		{

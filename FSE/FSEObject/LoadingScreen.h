@@ -3,6 +3,10 @@
 
 namespace fse
 {
+	/*!
+	 * Base class for Loadingscreens \n 
+	 * Default implementation creates a "black" pixel that fills the screen.
+	 */
 	class LoadingScreen : public FSEObject
 	{
 	public:
@@ -14,7 +18,7 @@ namespace fse
 		void draw(sf::RenderTarget& target) override;
 		void spawned() override;
 
-	private:
+	protected:
 		sf::RectangleShape shape_;
 	};
 }

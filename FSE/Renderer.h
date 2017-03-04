@@ -9,7 +9,6 @@
 namespace fse
 {
 	class FSEObject;
-
 	class Renderer
 	{
 	public:

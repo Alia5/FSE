@@ -10,7 +10,6 @@
 namespace fse
 {
 
-
 	class NetworkHandler {
 	public:
 		NetworkHandler();

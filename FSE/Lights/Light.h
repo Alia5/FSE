@@ -5,6 +5,9 @@
 
 namespace fse
 {
+	/*!
+	 * \brief Base class for different Light types
+	 */
 	class Light
 	{
 	public:
@@ -13,12 +16,33 @@ namespace fse
 		Light(Scene* scene, const sf::Vector2f& spawnPos, const std::string& path, bool smooth);
 		virtual ~Light();
 
+		/*!
+		 * Set position of light (in meters)
+		 * \param pos position in meters
+		 */
 		void setPosition(const sf::Vector2f pos) const;
+		/*!
+		* Set color of light 
+		* \param color color
+		*/
 		void setColor(const sf::Color color) const;
+		/*!
+		* Set scale of light (as percentage)
+		* \param scale scale
+		*/
 		void setScale(const sf::Vector2f scale) const;
 
+		/*!
+		 * \return position in meters
+		 */
 		sf::Vector2f getPosition() const;
+		/*!
+		 * \return color
+		 */
 		sf::Color getColor() const;
+		/*!
+		 * \return scale percentage
+		 */
 		sf::Vector2f getScale() const;
 
 		void rotate(float angle) const;

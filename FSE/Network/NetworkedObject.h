@@ -5,22 +5,68 @@
 
 namespace fse
 {
+	/*!
+	 * \brief helper class for networked objects
+	 * Usage: Inherit networked objects in addition to FSEObject \n 
+	 * Implement hostUpdate() and ClientUpdate() \n
+	 * Call netupdate on begin of the objects update method
+	 */
 	class NetworkedObject
 	{
 	public:
 		NetworkedObject(Scene* scene);
 		virtual ~NetworkedObject() = default;
+		/*!
+		 * Called on host systems \n 
+		 * always called first
+		 * \param deltaTime elapsed time in seconds
+		 */
 		virtual void hostUpdate(float deltaTime) = 0;
+		/*! 
+		 * Called on host and clientsystems
+		 * \param deltaTime elapsed time in seconds
+		 */
 		virtual void clientUpdate(float deltaTime) = 0;
 
+		/*!
+		 * Call on begin of your objects update method
+		 * \param deltaTime elapsed time in seconds
+		 */
 		void netUpdate(float deltaTime);
 
-		void setNetworked(bool networked);
-		void setRunsOnHost(bool host);
+		/*!
+		 * Set wether the object runs networked or not \n 
+		 * default: false
+		 * \param networked networked
+		 */
 
+		void setNetworked(bool networked);
+		/*!
+		* Set wether the object runs on host or not \n
+		* default: true
+		* \param host runs on host
+		*/
+
+		void setRunsOnHost(bool host);
+		/*!
+		 * Set a unique network network id for object syncing
+		 * \param net_id unique network id for object syncing
+		 */
 		void setNetworkId(uint32_t net_id);
 
+		/*!
+		 * \brief Send UDP packet
+		 * Send UDP packet \n
+		 * Unimportant packages may get dropped by the engine
+		 * 
+		 * \param packet packet to send
+		 * \param important important package
+		 */
+
 		bool sendUdpPacket(sf::Packet& packet, bool important) const;
+		/*!
+		 * Send TCP packet
+		 */
 		void sendTcpPacket(sf::Packet& packet) const;
 
 	protected:

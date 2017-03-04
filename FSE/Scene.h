@@ -5,8 +5,6 @@
 
 #include "Renderer.h"
 
-//#include "EventBus.h"
-
 #include "Signals.h"
 #include "PhysContactListener.h"
 #include "PhysDebugDraw.h"
@@ -22,24 +20,60 @@ namespace fse
 	class Application;
 	class FSEObject;
 	class FSELightWorld;
+
+	/*!
+	 * \brief Scene where objects live in, get updated and rendered
+	 */
 	class Scene 
 	{
 	public:
 		Scene(Application *application);
 		~Scene();
 
+		/*!
+		 * Set rendertarget of scene
+		 * \param renderTarget render target
+		 */
 		void setRenderTarget(sf::RenderTarget* renderTarget);
 		sf::RenderTarget* getRenderTarget() const;
 
+		/*!
+		 * Update the scene
+		 * \param deltaTime elapsed time in seconds
+		 */
 		void update(float deltaTime);
+		/*!
+		 * Issue draw calls
+		 */
 		void draw();
 
+		/*!
+		 * \return Ptr to vector of currently active objects
+		 */
 		std::vector<std::unique_ptr<FSEObject>>* getFSEObjects();
 
+		/*!
+		 * \brief Notify of changed z-orders
+		 * re-sorts object vector \n 
+		 * you shouldn't need to call this manually
+		 */
 		void notifyZOrderChanged();
 
+		/*!
+		 * \brief Spawn FSEObject into the scene
+		 * Usage: \n 
+		 * auto obj std::make_unique<YourObject>(scene); \n
+		 * scene->spawnFSEObject(std::move(obj));
+		 * 
+		 * \param object unique_ptr to object
+		 */
 		void spawnFSEObject(std::unique_ptr<FSEObject> object);
 
+		/*!
+		 * \brief Create and spawn FSEObject
+		 * Usage: \n
+		 * scene->createFSEObject<YourObject>();
+		 */
 		template<typename T>
 		void createFSEObject()
 		{
@@ -47,6 +81,12 @@ namespace fse
 			pending_object_spawns_.push_back(std::move(object));
 		}
 
+		/*!
+		* \brief Create and spawn FSEObject, connect slot to spawned signal
+		* Usage: \n
+		* scene->createFSEObject<YourObject>(slot);
+		* \param slot Slot to call after object spawn
+		*/
 		template<typename T, typename SpawnedSlot>
 		void createFSEObject(SpawnedSlot&& slot)
 		{
@@ -55,6 +95,12 @@ namespace fse
 			pending_object_spawns_.push_back(std::move(object));
 		}
 
+		/*!
+		* \brief Create and spawn FSEObject at position
+		* Usage: \n
+		* scene->createFSEObject<YourObject>(spawnpos);
+		* \param spawnPos spawn position in meters
+		*/
 		template<typename T>
 		void createFSEObject(const sf::Vector2f spawnPos)
 		{
@@ -62,6 +108,13 @@ namespace fse
 			pending_object_spawns_.push_back(std::move(object));
 		}
 
+		/*!
+		* \brief Create and spawn FSEObject at position, connect slot to spawned signal
+		* Usage: \n
+		* scene->createFSEObject<YourObject>(spawnpos, slot);
+		* \param spawnPos spawn position in meters
+		* \param slot Slot to call after object spawn
+		*/
 		template<typename T, typename SpawnedSlot>
 		void createFSEObject(const sf::Vector2f spawnPos, SpawnedSlot&& slot)
 		{
@@ -79,12 +132,25 @@ namespace fse
 		void setPhysDrawDebug(bool drawDebug);
 		PhysDebugDraw& getPhysDebugDraw();
 
+		/*!
+		 * Notifies scene of window resize \n 
+		 */
 		void notifyResize();
 
+		/*!
+		 * \return Ptr to Application
+		 */
 		Application* getApplication() const;
 
+		/*!
+		 * \return Ptr to FSELightWorld
+		 */
 		FSELightWorld* getLightWorld() const;
 
+		/*!
+		 * Refer to Box2D docu
+		 * \return Ptr to Box2D Physics world
+		 */
 		b2World *getPhysWorld();
 
 

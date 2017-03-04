@@ -8,7 +8,7 @@ namespace ltbl
 	class LightSystem;
 
 	//////////////////////////////////////////////////////////////////////////
-	/// \brief Sprite with normals
+	/// \brief Sprite with normal and specular maps
 	//////////////////////////////////////////////////////////////////////////
 	class Sprite : public priv::BaseLight, public sf::Transformable
 	{
@@ -32,13 +32,10 @@ namespace ltbl
 		void renderSpecular(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates()) const;
 
 		void setTextureRect(const sf::IntRect& rect);
-		//void setTextureRectNormals(const sf::IntRect& rect);
-		//void setTextureRectSpecular(const sf::IntRect& rect);
 
 
 		void setColor(const sf::Color& color);
-		//You wouldn't want to tint the normal map ;)
-		void setAlphaNormals(uint32_t alpha);
+		void setAlphaNormals(uint32_t alpha); 		//You wouldn't want to tint the normal map ;)
 		void setColorSpecular(const sf::Color& color);
 
 		sf::FloatRect getLocalBounds() const;

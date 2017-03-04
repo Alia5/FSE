@@ -9,6 +9,11 @@
 
 namespace fse
 {
+	/*!
+	 * \brief Base Application class
+	 * Handles input forwarding, window events, updating network handler, manages root_scene, manages ImGUI events and rendering \n  
+	 * Usage: Inherit from
+	 */
 	class Application
 	{
 	PUBLIC_SIGNALS:
@@ -18,22 +23,50 @@ namespace fse
 		Application();
 		virtual ~Application();
 
+		/*!
+		 * \brief Called once per frame
+		 * Handles windoe events, updates and renders rootscene / ImGui
+		 */
 		virtual void update();
 
+		/*!
+		 * Set window to handle. \n 
+		 * Called by EngineCore
+		 * \param window Ptr to sf::RenderWindow
+		 */
 		void setWindow(sf::RenderWindow* window);
+		/*!
+		 * Set server client type
+		 * TODO: implement
+		 */
 		void setServerClientType(int type);
 
+		/*!
+		 *	Called before first frame is rendered, after window creation \n
+		 *	Init your stuff here
+		 */
 		virtual void init() = 0;
 
 		bool isServer() const;
 
-
+		/*!
+		 * \return Ptr to RenderWindow
+		 */
 		sf::RenderWindow* getWindow() const;
 
+		/*!
+		 * \return Ptr to input handler
+		 */
 		Input* getInput();
 
+		/*!
+		 * \return Ptr to network handler
+		 */
 		NetworkHandler* getNetworkHandler();
 
+		/*!
+		 * \return Reference to asset loader
+		 */
 		fse::AssetLoader& getAssetLoader();
 
 	protected:

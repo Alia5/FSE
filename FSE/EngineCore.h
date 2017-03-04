@@ -18,9 +18,6 @@ namespace fse
 
 		int exec(Application* application);
 
-
-	
-
 	private:
 		Application * application_ = nullptr;
 

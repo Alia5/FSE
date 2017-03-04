@@ -11,7 +11,6 @@ namespace fse
 
 	Application::~Application()
 	{
-		std::wcout << "Destroying Application Base" <<  std::endl;
 		if (render_window_ != nullptr)
 			ImGui::SFML::Shutdown();
 	}
@@ -34,7 +33,6 @@ namespace fse
 				if (event.type == sf::Event::Resized)
 				{
 					on_window_resized_();
-					//root_scene_.notifyResize();
 				}
 
 				input_.updateEvents(event);

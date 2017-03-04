@@ -10,7 +10,9 @@
 
 namespace fse
 {
-
+	/*!
+	 * \brief maps input events to pollable actions
+	 */
 	class Input
 	{
 	public:
@@ -30,17 +32,21 @@ namespace fse
 		void init(KeyMap map);
 		void init(std::string keymap_path);
 
-		/// Called from MainLoop for each sf::Event to update key and mouse UP events
+		/*!
+		 * Called from MainLoop for each sf::Event to update key and mouse UP events
+		 */
 		void updateEvents(sf::Event event);
 
-		/// Returns true while a key is beeing held down
-		///
-		/// @param key key beeing checked
+		/*!
+		* Returns true while a key is beeing held down
+		* \param key action to check
+		*/
 		bool isKeyPressed(std::wstring key);
 		
-		/// Returns true if a key is pressed only once until this key is released again
-		///
-		/// @param key key beeing checked
+		/*!
+		* Returns true if a key is pressed only once until this key is released again
+		* \param key action to check
+		*/
 		bool wasKeyPressed(std::wstring key);
 
 		KeyMap getKeyMap() const;
@@ -67,8 +73,9 @@ namespace fse
 		bool single_line_text_ = false;
 		std::wstring entered_text_;
 
+		//TODO: Proper GamepadInput
 		//TODO: XINPUT!
-		//TODO SCAPI!
+		//TODO: SCAPI!
 
 	};
 

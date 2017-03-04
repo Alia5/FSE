@@ -5,9 +5,15 @@
 
 namespace fse
 {
+	/*!
+	* \brief Handles string based texture and asset loading
+	*/
 	class AssetLoader {
 	public:
 
+		/*!
+		 * Wraps sfml textures neatly
+		 */
 		class Texture
 		{
 		public:

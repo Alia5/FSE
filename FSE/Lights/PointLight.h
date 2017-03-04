@@ -4,6 +4,9 @@
 
 namespace fse
 {
+	/*!
+	 * \brief Simple point light
+	 */
 	class PointLight : public Light
 	{
 	public:
@@ -11,12 +14,19 @@ namespace fse
 		PointLight(Scene* scene, const sf::Vector2f& spawnPos);
 		~PointLight();
 
+		/*!
+		 * Set radius of light (in meters)
+		 * \param radius radius in meters
+		 */
 		void setRadius(float radius) const;
+		/*!
+		 * \return radius of light in meters
+		 */
 		float getRadius() const;
 
 	private:
 		RTTR_ENABLE(fse::Light)
-			RTTR_REGISTRATION_FRIEND
+		RTTR_REGISTRATION_FRIEND
 
 	};
 }
