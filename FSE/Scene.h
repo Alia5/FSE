@@ -54,16 +54,20 @@ namespace fse
 
 		/*!
 		 * \brief Notify of changed z-orders
+		 * 
 		 * re-sorts object vector \n 
 		 * you shouldn't need to call this manually
 		 */
 		void notifyZOrderChanged();
 
 		/*!
-		 * \brief Spawn FSEObject into the scene
+		 * \brief Spawn FSEObject into the scene \n
+		 * 
 		 * Usage: \n 
-		 * auto obj std::make_unique<YourObject>(scene); \n
-		 * scene->spawnFSEObject(std::move(obj));
+		 *		\code
+		 *		auto obj = std::make_unique<YourObject>(scene);
+		 *		scene->spawnFSEObject(std::move(obj));
+		 *		\endcode
 		 * 
 		 * \param object unique_ptr to object
 		 */
@@ -72,7 +76,9 @@ namespace fse
 		/*!
 		 * \brief Create and spawn FSEObject
 		 * Usage: \n
-		 * scene->createFSEObject<YourObject>();
+		 *  \code
+		 *		scene->createFSEObject<YourObject>();
+		 *	\endcode
 		 */
 		template<typename T>
 		void createFSEObject()
@@ -82,9 +88,12 @@ namespace fse
 		}
 
 		/*!
-		* \brief Create and spawn FSEObject, connect slot to spawned signal
+		* \brief Create and spawn FSEObject, connect slot to spawned signal \n
+		* 
 		* Usage: \n
-		* scene->createFSEObject<YourObject>(slot);
+		* \code
+		*		scene->createFSEObject<YourObject>(slot);
+		* \endcode
 		* \param slot Slot to call after object spawn
 		*/
 		template<typename T, typename SpawnedSlot>
@@ -96,9 +105,12 @@ namespace fse
 		}
 
 		/*!
-		* \brief Create and spawn FSEObject at position
+		* \brief Create and spawn FSEObject at position \n 
+		* 
 		* Usage: \n
-		* scene->createFSEObject<YourObject>(spawnpos);
+		* \code
+		*		scene->createFSEObject<YourObject>(spawnpos);
+		* \endcode
 		* \param spawnPos spawn position in meters
 		*/
 		template<typename T>
@@ -109,9 +121,12 @@ namespace fse
 		}
 
 		/*!
-		* \brief Create and spawn FSEObject at position, connect slot to spawned signal
+		* \brief Create and spawn FSEObject at position, connect slot to spawned signal \n 
+		* 
 		* Usage: \n
-		* scene->createFSEObject<YourObject>(spawnpos, slot);
+		* \code
+		*		scene->createFSEObject<YourObject>(spawnpos, slot);
+		* \endcode
 		* \param spawnPos spawn position in meters
 		* \param slot Slot to call after object spawn
 		*/

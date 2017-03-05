@@ -131,6 +131,33 @@ private:
 	Signal<Args...> *signal_;
 };
 
+/*!
+ * \brief Signal class used for event handling
+ * 
+ * Usage \n
+ *		\code
+ *		//Emitter-Side 
+ *		PUBLIC_SIGNALS: 
+ *		using ExampleSignal = Signal<float, int>; 
+ *		ExampleSignal sig;
+ *		
+ *		void stuff() 
+ *		{
+ *			sig(1.3f, 4);
+ *		}
+ *		
+ *		//Slot side: 
+ *		auto conn = sig.connect(&function);
+ *		
+ *		//or using lambdas
+ *		auto conn = sig.connect([](float a, int b){ 
+ *			//Code here 
+ *		});
+ *		
+ *		//or using scoped connections with function ptrs or lambdas
+ *		auto conn = Signal::ScopedConnection(sig, sig.connect(&function));
+ *		\endcode
+ */
 template <typename... Args>
 class Signal
 {

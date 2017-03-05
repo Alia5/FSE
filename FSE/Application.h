@@ -10,9 +10,29 @@
 namespace fse
 {
 	/*!
-	 * \brief Base Application class
+	 * \brief Base Application class \n
 	 * Handles input forwarding, window events, updating network handler, manages root_scene, manages ImGUI events and rendering \n  
-	 * Usage: Inherit from
+	 * Usage: \n
+	 * \code
+	 *		//.h
+	 *		class YourApplicationClass : public fse::Application
+	 *		{
+	 *		public:
+	 *		YourApplicationClass();
+	 *		~YourApplicationClass();
+	 *
+	 *		void init() override;
+	 *		};
+	 *		//.cpp
+	 *		YourApplicationClass::YourApplicationClass() {
+	 *		}
+	 *		YourApplicationClass::~YourApplicationClass() {
+	 *		}
+	 *		void ProjectSidescroller::init() {
+	 *			root_scene_.createFSEObject<MainMenu>();
+	 *			input_.init("keybinds.cfg");
+	 *		}
+	 * \endcode
 	 */
 	class Application
 	{

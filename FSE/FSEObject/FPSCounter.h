@@ -6,6 +6,7 @@ namespace fse
 {
 	/*!
 	 * \brief Prebuilt FPSCounter
+	 * 
 	 * Default z-order = 257
 	 */
 	class FPSCounter : public FSEObject

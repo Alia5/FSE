@@ -8,7 +8,7 @@
 namespace fse
 {
 	/*!
-	 * \brief Prebuilt Timer class
+	 * \brief Prebuilt Timer class \n 
 	 * Timer is not accurate for time measuring! \n 
 	 * Emits signal once timer runs out (mid frame)
 	 */

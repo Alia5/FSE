@@ -4,7 +4,8 @@
 namespace fse
 {
 	/*!
-	 * Base class for Loadingscreens \n 
+	 * \brief Base class for Loadingscreens \n 
+	 * 
 	 * Default implementation creates a "black" pixel that fills the screen.
 	 */
 	class LoadingScreen : public FSEObject

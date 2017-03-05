@@ -10,7 +10,8 @@ namespace fse
 	class Scene;
 	class FSEObject;
 	/*!
-	 * \brief Scene debugger / editor
+	 * \brief Scene debugger / editor \n
+	 * 
 	 * Supports nested and array-like types (std::vector, std::array, std::list,...) \n 
 	 * Supports GUI editing bool, int, float, sf::Vector2f, sf::IntRect, sf::FloatRect and sf::Color
 	 */
@@ -26,10 +27,11 @@ namespace fse
 		void update();
 
 		/*!
-		 * \brief register or change edit function for type
+		 * \brief register or change edit function for type \n 
+		 * 
 		 * Usage: \n
-		 * registerItemEditFunc(rttr::type::get<int>(), [](rttr::property prop, rttr::instance* object){ \n 
-		 * your ImGui code here }); \n
+		 *		registerItemEditFunc(rttr::type::get<int>(), [](rttr::property prop, rttr::instance* object){ \n 
+		 *		your ImGui code here }); \n
 		 * \param type rttr type 
 		 * \param func property edit function
 		 */

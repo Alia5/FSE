@@ -7,7 +7,7 @@
 namespace fse
 {
 	/*!
-	 * \brief Class holds and manages LTBL2 Light System
+	 * \brief Class holds and manages LTBL2 Light System \n 
 	 * Default z-order = 255
 	 */
 	class FSELightWorld : public FSEObject
