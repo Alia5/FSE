@@ -152,6 +152,7 @@ namespace fse
 		{
 			return false;
 		}
+		(*it)->detach();
 		components_.erase(it);
 		return true;
 	}

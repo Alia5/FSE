@@ -21,6 +21,11 @@ namespace fse
 
 		FSEObject* getAttachedObject() const;
 		void attachToObject(FSEObject* object);
+
+		bool isAttached() const;
+
+		void detach();
+
 	protected:
 		FSEObject* object_ = nullptr;
 

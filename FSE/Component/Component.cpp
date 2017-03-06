@@ -17,6 +17,18 @@ namespace fse
 	{
 		object_ = object;
 	}
+
+	bool Component::isAttached() const
+	{
+		if (object_ == nullptr)
+			return false;
+		return true;
+	}
+
+	void Component::detach()
+	{
+		object_ = nullptr;
+	}
 }
 
 
@@ -26,5 +38,6 @@ RTTR_REGISTRATION
 	using namespace fse;
 
 	registration::class_<Component>("fse::Component")
+	.property_readonly("attached_", &Component::isAttached)
 ;
 }
