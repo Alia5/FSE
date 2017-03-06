@@ -171,8 +171,8 @@ namespace fse
 
 	void Scene::addFSEObject(std::unique_ptr<FSEObject> object)
 	{
-		object->spawn(spawn_count_++);
 		fse_objects_.push_back(std::move(object));
+		fse_objects_.rbegin()->get()->spawn(spawn_count_++);
 		z_order_changed_ = true;
 	}
 
