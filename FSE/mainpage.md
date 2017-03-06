@@ -8,6 +8,7 @@ For setting up a project with FSE, see the Readme of / use the template project.
 
 - [SFML](http://www.sfml-dev.org/tutorials/2.4/)
 - [Box2D](http://box2d.org/documentation/) and the doc inside the prebuilt Box2D folder of the project template
+  Also very worth looking at are iForce2D's Box2D tutorials [here](http://www.iforce2d.net/b2dtut/)
 - [RTTR](http://www.rttr.org/doc/master/tutorial_page.html)
 - [DearImgui:](https://github.com/ocornut/imgui) Dear ImGui's documentation is included here
 - LTBL2's doc is included  here
