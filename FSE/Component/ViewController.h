@@ -1,11 +1,13 @@
 #pragma once
 #include <SFML/Graphics/RenderTarget.hpp>
+#include "Component.h"
+
 namespace fse
 {
 	/*!
 	 * \brief Class to control sf::View;
 	 */
-	class ViewController {
+	class ViewController : public Component {
 	public:
 		ViewController();
 		/*!
@@ -14,6 +16,17 @@ namespace fse
 		 */
 		explicit ViewController(sf::RenderTarget* const render_target);
 		virtual ~ViewController() = default;
+
+		void update(float deltaTime) override;
+
+		/*!
+		 * \brief is the ViewControllerComponent currently following the attached object
+		 */
+		bool isFollowingObject() const;
+		/*!
+		 * \brief Set if the ViewControllerComponent should follow the attached object
+		 */
+		void setFollowObject(bool follow);
 
 		/*!
 		 * Update View position
@@ -25,5 +38,8 @@ namespace fse
 	protected:
 		sf::RenderTarget* render_target_;
 		sf::Vector2f oldPosition = sf::Vector2f(0, 0);
+		
+		bool follow_object_ = true;
+
 	};
 }

@@ -180,6 +180,9 @@
     <ClInclude Include="SceneDebugger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Component\Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -276,6 +279,9 @@
       <Filter>Source Files\FSE-ImGui</Filter>
     </ClCompile>
     <ClCompile Include="SceneDebugger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

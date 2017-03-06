@@ -1,5 +1,6 @@
 #include "FSEObject.h"
 #include "../Application.h"
+#include "../Component/Component.h"
 
 #include <rttr/registration>
 
@@ -125,6 +126,35 @@ namespace fse
 		return scene_->getFSEObjects();
 	}
 
+	void FSEObject::updateComponents(float deltaTime)
+	{
+		for (auto& component : components_)
+		{
+			component->update(deltaTime);
+		}
+	}
+
+	bool FSEObject::attachComponent(std::unique_ptr<Component>  component)
+	{
+		if (std::find(components_.begin(), components_.end(), component) != components_.end())
+		{
+			return false;
+		}
+		component->attachToObject(this);
+		components_.push_back(std::move(component));
+		return true;
+	}
+
+	bool FSEObject::detachComponent(std::unique_ptr<Component>  component)
+	{
+		auto it = std::find(components_.begin(), components_.end(), component);
+		if (it == components_.end())
+		{
+			return false;
+		}
+		components_.erase(it);
+		return true;
+	}
 }
 
 RTTR_REGISTRATION

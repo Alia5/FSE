@@ -170,6 +170,7 @@
     <ClInclude Include="..\LTBL2\src\Sprite.hpp" />
     <ClInclude Include="..\LTBL2\src\Utils.hpp" />
     <ClInclude Include="AssetLoader.h" />
+    <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\SmoothViewController.h" />
     <ClInclude Include="Component\ViewController.h" />
     <ClInclude Include="EngineCore.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="..\LTBL2\src\LightSystem.cpp" />
     <ClCompile Include="..\LTBL2\src\Sprite.cpp" />
     <ClCompile Include="AssetLoader.cpp" />
+    <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Component\SmoothViewController.cpp" />
     <ClCompile Include="Component\ViewController.cpp" />
     <ClCompile Include="EngineCore.cpp" />

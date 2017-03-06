@@ -9,6 +9,7 @@
 
 #include "../Scene.h"
 #include "../Input.h"
+#include "../Component/Component.h"
 
 
 namespace fse
@@ -158,6 +159,33 @@ namespace fse
 		 * Use when you for some odd reason need to query ALL objects, otherwise don't
 		 */
 		std::vector<std::unique_ptr<FSEObject> >* getSceneFSEObjects() const;
+
+		/*!
+		 * \brief update all currently attached components
+		 */
+		void updateComponents(float deltaTime);
+
+		/*!
+		 * \brief attach a component to this object.
+		 * 
+		 * Usage:
+		 * \code
+		 * attachComponent(std::move(component))
+		 * \endcode
+		 * \returns attachment success
+		 */
+		bool attachComponent(std::unique_ptr<Component>  component);
+
+		/*!
+		* \brief detach a component from this object;
+		* \returns detachment success
+		*/
+		bool detachComponent(std::unique_ptr<Component>  component);
+
+		/*!
+		 * \brief Vector of attached components;
+		 */
+		std::vector<std::unique_ptr<Component> > components_;
 
 		/*!
 		 * Ptr to scene the object lives in
