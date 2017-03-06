@@ -20,6 +20,19 @@ namespace fse
 	class FSEObject
 	{
 	public:
+
+		/*!
+		* \brief Signal gets emitted upon object spawn \n
+		*
+		* Signal gets emitted upon object spawn when using \code Scene::createFSEObject() \endcode with according overloads \n
+		* \see FSEObject, \see Signal \n
+		* Connections get disconnected and cleaned up after call \n
+		* Note: ATTENTION: \n
+		* It is NOT reccommended to store across multiple frames pointers to objects if you can't guarantee they will outlive you or live as long as you do.
+		* Args: Ptr to spawned FSEObject (this)
+		*/
+		using SpawnedSignal = Signal<FSEObject*>;
+
 		FSEObject(Scene *scene);
 		FSEObject(Scene *scene, const sf::Vector2f spawnPos);
 		virtual ~FSEObject();
@@ -219,7 +232,6 @@ namespace fse
 		* It is NOT reccommended to store across multiple frames pointers to objects if you can't guarantee they will outlive you or live as long as you do.
 		* Args: Ptr to spawned FSEObject (this)
 		*/
-		using SpawnedSignal = Signal<FSEObject*>;
 		SpawnedSignal spawned_signal_;
 
 
