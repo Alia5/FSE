@@ -66,7 +66,7 @@ If you, however, need to store a Raw-Pointer for any odd reason, you have to gua
 You also **could** query every currently alive FSEObject of your scene.
 Do keep in mind, however, that when you have a lot of objects, this will slow down your application significantly and thus is only really useful in rare-cases, such as debugging tools.
 
-### Auto-cleanup, RAII, Texture handling
+### Auto-cleanup, RAII, Texture handling, Lights
 
 Almost all SFML and FSE classes are using RAII to ensure auto-cleanup.
 
@@ -78,6 +78,9 @@ sf::Textures are neatly wrapped by fse::Texture with a bit of help from the fse:
 
 You can, and should always use fse::Textures where possible as the AssetLoader ensures automatic cleanup if they are not needed anymore.
 You can, however, get a direct reference to the raw sf::Texture from the AssetLoader if needed. Do keep in mind however, that you have to manually unload them if you don't need them anymore.
+
+Texture based light emissions are also neatly wrapped by fse::Lights and also auto cleanup themselves
+Basic pointlights and spotlights are included with FSE. Take a look at those for more information on how to create your own.
 
 ### Physics
 
