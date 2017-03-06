@@ -48,6 +48,10 @@ namespace fse
 		void draw();
 
 		/*!
+		 * \brief Returns a ptr to all currently active objects \n
+		 * 
+		 * Iterating over all objects in a scene is a very expensive task,
+		 * don't do it if you don't need to 
 		 * \return Ptr to vector of currently active objects
 		 */
 		std::vector<std::unique_ptr<FSEObject>>* getFSEObjects();
@@ -94,6 +98,9 @@ namespace fse
 		* \code
 		*		scene->createFSEObject<YourObject>(slot);
 		* \endcode
+		* Spawned signal gets emitted after the object has spawned \see FSEObject, \see Signal \n
+		* Note: ATTENTION: \n
+		* It is NOT reccommended to store across multiple frames pointers to objects if you can't guarantee they will outlive you or live as long as you do.
 		* \param slot Slot to call after object spawn
 		*/
 		template<typename T, typename SpawnedSlot>
@@ -127,6 +134,9 @@ namespace fse
 		* \code
 		*		scene->createFSEObject<YourObject>(spawnpos, slot);
 		* \endcode
+		* Spawned signal gets emitted after the object has spawned \see FSEObject, \see Signal \n
+		* Note: ATTENTION: \n
+		* It is NOT reccommended to store across multiple frames pointers to objects if you can't guarantee they will outlive you or live as long as you do.
 		* \param spawnPos spawn position in meters
 		* \param slot Slot to call after object spawn
 		*/

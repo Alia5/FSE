@@ -132,21 +132,32 @@ private:
 };
 
 /*!
- * \brief Signal class used for event handling
+ * \brief Signal class used for event handling \n
+ * 
+ * 
  * 
  * Usage \n
  *		\code
  *		//Emitter-Side 
+ *		
+ *		//Define and declare signal and arguments
  *		PUBLIC_SIGNALS: 
  *		using ExampleSignal = Signal<float, int>; 
  *		ExampleSignal sig;
  *		
+ *		//Call the signal
  *		void stuff() 
  *		{
  *			sig(1.3f, 4);
  *		}
  *		
+ *		////////////////////
+ *		
  *		//Slot side: 
+ *		
+ *		//A slot can be any function or functor
+ *		//free function pointers, member functions, lambdas, or std::function
+ *		
  *		auto conn = sig.connect(&function);
  *		
  *		//or using lambdas
@@ -156,6 +167,14 @@ private:
  *		
  *		//or using scoped connections with function ptrs or lambdas
  *		auto conn = Signal::ScopedConnection(sig, sig.connect(&function));
+ *		
+ *		//member functions:
+ *		sig.connect(this, &ClassName::functionName);
+ *		
+ *		//or using std::bind
+ *		sig.Connect(std::bind(&DummyObject::functionName, this, std::placeholders::_1, std::placeholders::_2));
+ *		
+ *		
  *		\endcode
  */
 template <typename... Args>
