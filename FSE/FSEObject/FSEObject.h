@@ -168,37 +168,33 @@ namespace fse
 		/*!
 		 * \brief attach a component to this object.
 		 * 
-		 * Usage:
-		 * \code
-		 * attachComponent(std::move(component))
-		 * \endcode
 		 * \returns attachment success
 		 */
-		bool attachComponent(std::unique_ptr<Component>  component);
+		bool attachComponent(Component*  component);
 
 		/*!
-		* \brief detach a component from this object;
+		* \brief detach a component from this object.
 		* \returns detachment success
 		*/
-		bool detachComponent(std::unique_ptr<Component>  component);
+		bool detachComponent(Component*  component);
 
 		/*!
-		 * \brief Vector of attached components;
+		 * \brief Vector of attached components.
 		 */
-		std::vector<std::unique_ptr<Component> > components_;
+		std::vector<Component*> components_;
 
 		/*!
-		 * Ptr to scene the object lives in
+		 * Ptr to scene the object lives in.
 		 */
 		Scene *scene_;
 
 		/*!
-		 * position in meters
+		 * position in meters.
 		 */
 		sf::Vector2f position_;
 
 		/*!
-		 * Ptr to input handling class 
+		 * Ptr to input handling class.
 		 */
 		fse::Input* input_;
 
@@ -210,6 +206,7 @@ namespace fse
 
 		RTTR_ENABLE()
 		RTTR_REGISTRATION_FRIEND
+
 
 	PUBLIC_SIGNALS:
 		/*!

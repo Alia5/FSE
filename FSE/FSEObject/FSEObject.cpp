@@ -134,7 +134,7 @@ namespace fse
 		}
 	}
 
-	bool FSEObject::attachComponent(std::unique_ptr<Component>  component)
+	bool FSEObject::attachComponent(Component*  component)
 	{
 		if (std::find(components_.begin(), components_.end(), component) != components_.end())
 		{
@@ -145,7 +145,7 @@ namespace fse
 		return true;
 	}
 
-	bool FSEObject::detachComponent(std::unique_ptr<Component>  component)
+	bool FSEObject::detachComponent(Component*  component)
 	{
 		auto it = std::find(components_.begin(), components_.end(), component);
 		if (it == components_.end())
@@ -167,6 +167,7 @@ RTTR_REGISTRATION
 		.property("position_", &FSEObject::getPosition, &FSEObject::setPosition)
 		.property("z_order_", &FSEObject::getZOrder, &FSEObject::setZOrder)
 		.property_readonly("aabbs_", &FSEObject::GetAABBs)
+		.property("components_", &FSEObject::components_)
 		.method("destroy", &FSEObject::destroy)
 		;
 

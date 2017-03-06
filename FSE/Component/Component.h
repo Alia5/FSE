@@ -1,5 +1,7 @@
 #pragma once
 
+#include <rttr/type>
+
 namespace fse
 {
 	class FSEObject;
@@ -21,5 +23,9 @@ namespace fse
 		void attachToObject(FSEObject* object);
 	protected:
 		FSEObject* object_ = nullptr;
+
+	private:
+		RTTR_ENABLE()
+		RTTR_REGISTRATION_FRIEND
 	};
 }

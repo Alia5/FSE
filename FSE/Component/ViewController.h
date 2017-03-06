@@ -41,5 +41,9 @@ namespace fse
 		
 		bool follow_object_ = true;
 
+	private:
+		RTTR_ENABLE(fse::Component)
+		RTTR_REGISTRATION_FRIEND
+
 	};
 }

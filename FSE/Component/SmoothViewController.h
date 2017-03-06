@@ -54,5 +54,8 @@ namespace fse
 	private:
 		float size_percentage_ = 0.75f;
 		float vertical_offset_ = 0.0f;
+
+		RTTR_ENABLE(fse::ViewController)
+		RTTR_REGISTRATION_FRIEND
 	};
 }

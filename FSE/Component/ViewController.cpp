@@ -2,6 +2,8 @@
 #include "../Scene.h"
 #include "../FSEObject/FSEObject.h"
 
+#include <rttr/registration>
+
 namespace fse
 {
 	ViewController::ViewController()  : render_target_(nullptr)
@@ -43,4 +45,14 @@ namespace fse
 
 		render_target_->setView(view);
 	}
+}
+
+RTTR_REGISTRATION
+{
+	using namespace rttr;
+	using namespace fse;
+
+registration::class_<ViewController>("fse::ViewController")
+.property("follow_object_", &ViewController::isFollowingObject, &ViewController::setFollowObject)
+;
 }

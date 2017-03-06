@@ -2,6 +2,7 @@
 #include "../Scene.h"
 #include "../FMath.h"
 
+#include <rttr/registration.h>
 namespace fse
 {
 	SmoothViewController::SmoothViewController() : ViewController()
@@ -79,4 +80,15 @@ namespace fse
 		return vertical_offset_;
 	}
 
+}
+
+RTTR_REGISTRATION
+{
+	using namespace rttr;
+	using namespace fse;
+
+registration::class_<SmoothViewController>("fse::SmoothViewController")
+	.property("size_percentage_", &SmoothViewController::getSizePercentage, &SmoothViewController::setSizePercentage)	
+	.property("vertical_offset_", &SmoothViewController::getVerticalOffset, &SmoothViewController::setVerticalOffset)
+;
 }

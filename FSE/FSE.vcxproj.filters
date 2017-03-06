@@ -181,7 +181,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Component\Component.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -282,7 +282,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Component\Component.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
