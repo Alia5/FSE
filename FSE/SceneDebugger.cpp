@@ -154,6 +154,32 @@ namespace fse
 
 	void SceneDebugger::ShowObjectEditorItems(rttr::type type, rttr::instance* object)
 	{
+		if (type.is_pointer())
+		{
+			auto t = type.get_raw_type();
+			auto tdclasses = t.get_derived_classes();
+
+			//search the most derived valid type
+			auto valid_t = t;
+			for (auto it = tdclasses.begin(); it != tdclasses.end(); ++it)
+			{
+				bool valid = true;
+				for (auto& prop : it->get_properties())
+				{
+					if (!prop.get_value(*object).is_valid())
+					{
+						valid = false;
+						break;
+					} 
+				}
+				if (!valid)
+					break;
+				valid_t = *it;
+			}
+			ShowObjectEditorItems(valid_t, object);
+			return;
+		}
+
 		for (auto& prop : type.get_properties())
 		{
 			if (item_edit_funcs_.count(prop.get_type()))
