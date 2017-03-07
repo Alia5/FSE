@@ -81,7 +81,9 @@ namespace fse
 		virtual sf::Vector2f getPosition();
 
 		/*!
-		* Returns AABBs of the object  \n 
+		* \brief Returns AABBs of the object (in PIXELS).
+		* 
+		* Returns Axis Aligned Bounding Box of the object in PIXELS \n 
 		* Overwrite to not get draw calls once outside view.
 		* \return object AABBs
 		*/
