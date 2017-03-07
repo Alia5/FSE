@@ -176,6 +176,7 @@ namespace fse
 					break;
 				valid_t = *it;
 			}
+			ImGui::Text(valid_t.get_name().data());
 			ShowObjectEditorItems(valid_t, object);
 			return;
 		}
