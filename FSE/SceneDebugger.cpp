@@ -60,7 +60,12 @@ namespace fse
 	{
 		item_edit_funcs_[type] = func;
 	}
-	
+
+	void SceneDebugger::registerDefaultValue(rttr::type type, const rttr::variant& variant)
+	{
+		default_vals_[type] = rttr::variant(variant);
+	}
+
 	void SceneDebugger::ShowObjectList()
 	{
 		if (ImGui::CollapsingHeader("Subscene Objects##SceneDebugger"))
