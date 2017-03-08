@@ -77,6 +77,9 @@ namespace fse
 		Scene* scene_ = nullptr;
 		int selected_id_ = -1;
 		bool mouse_selection_mode_ = false;
+		bool mouse_spawn_mode_ = false;
+		bool mouse_spawn_until_right = false;
+		bool mouse_spawn_timeout_ = false;
 		std::set<FSEObject*, std::function<bool(FSEObject*, FSEObject*)>> objects_;
 
 		std::unordered_map<rttr::type,

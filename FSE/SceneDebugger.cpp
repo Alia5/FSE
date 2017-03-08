@@ -1,6 +1,5 @@
 #include "SceneDebugger.h"
 #include "FSEObject/FSEObject.h"
-//#include "../imgui-1.49/imgui.h"
 #include "../FSE/FSE-ImGui/imgui-colorpicker.h"
 #include "../imgui-1.49/imgui_internal.h"
 
@@ -202,6 +201,74 @@ namespace fse
 										arguvec.push_back(arg);
 									if (arguvec.size() > 0)
 										ctor.invoke_variadic(arguvec);
+								}
+
+								ImGui::SameLine();
+								if (ImGui::Button(std::string(std::string(" SPAWN AT CLICK ##") + nodename).data()))
+								{
+									mouse_spawn_mode_ = true;
+									mouse_spawn_timeout_ = false;
+									sf::RenderWindow* window = scene_->getApplication()->getWindow();
+									sf::Mouse::setPosition(sf::Vector2i(window->getSize().x / 2, window->getSize().y / 2), *window);
+								}
+								ImGui::SameLine();
+								if (ImGui::Button(std::string(std::string(" SPAWN AT CLICK UNTIL RIGHTCLICK ##") + nodename).data()))
+								{
+									mouse_spawn_mode_ = true;
+									mouse_spawn_timeout_ = false;
+									mouse_spawn_until_right = true;
+									sf::RenderWindow* window = scene_->getApplication()->getWindow();
+									sf::Mouse::setPosition(sf::Vector2i(window->getSize().x / 2, window->getSize().y / 2), *window);
+								}
+
+								if (mouse_spawn_mode_)
+								{
+									ImGui::Text("Leftclick to SPAWN");
+
+									if (mouse_spawn_until_right)
+									{
+										ImGui::Text("Rightclick to END");
+										if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right))
+										{
+											mouse_spawn_mode_ = false;
+											mouse_spawn_until_right = false;
+											mouse_spawn_timeout_ = false;
+										}
+									}
+
+									sf::RenderWindow* window = scene_->getApplication()->getWindow();
+									auto mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window)) * FSE_METERS_PER_PIXEL;
+
+									ImGui::Text(std::string("SPAWNPOS: X=" + std::to_string(mousePos.x) + ", Y=" + std::to_string(mousePos.y)).data());
+
+									if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+									{
+										if (!mouse_spawn_until_right)
+											mouse_spawn_mode_ = false;
+
+										if (!mouse_spawn_timeout_)
+										{
+											std::vector<rttr::argument> arguvec;
+											bool setPos = false;
+											for (auto & arg : args)
+											{
+												if (!setPos && arg.get_type() == rttr::type::get<sf::Vector2f>())
+												{
+													arguvec.push_back(rttr::variant(mousePos));
+													setPos = true;
+												}
+												else
+													arguvec.push_back(arg);
+											}
+											if (arguvec.size() > 0)
+												ctor.invoke_variadic(arguvec);
+
+											if (mouse_spawn_until_right)
+												mouse_spawn_timeout_ = true;
+										}
+									} else {
+										mouse_spawn_timeout_ = false;
+									}
 								}
 
 								ImGui::Separator();
