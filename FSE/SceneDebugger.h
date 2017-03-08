@@ -72,7 +72,7 @@ namespace fse
 
 		void ShowObjectEditorItems(rttr::type type, rttr::instance* object);
 
-		std::unordered_map<rttr::type, rttr::variant> CreateDefaultDefaultValueMap();
+		void CreateDefaultDefaultValueMap();
 
 		Scene* scene_ = nullptr;
 		int selected_id_ = -1;

@@ -27,7 +27,7 @@ namespace fse
 		if (item_edit_funcs_.size() == 0)
 			item_edit_funcs_ = CreateDefaultItemEditMap();
 
-		default_vals_ = CreateDefaultDefaultValueMap();
+		CreateDefaultDefaultValueMap();
 	}
 
 	void SceneDebugger::update()
@@ -456,7 +456,7 @@ namespace fse
 		return item_edit_map_;
 	}
 
-	std::unordered_map<rttr::type, rttr::variant> SceneDebugger::CreateDefaultDefaultValueMap()
+	void SceneDebugger::CreateDefaultDefaultValueMap()
 	{
 		default_vals_[rttr::type::get<fse::Scene*>()] = rttr::variant(scene_);
 		default_vals_[rttr::type::get<bool>()] = rttr::variant(false);
