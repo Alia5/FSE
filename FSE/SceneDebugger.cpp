@@ -45,9 +45,9 @@ namespace fse
 
 		ShowMouseTools();
 
-		ShowObjectSpawner();
-
 		ShowObjectList();
+
+		ShowObjectSpawner();
 
 		if (ImGui::CollapsingHeader("Object Editor##SceneDebugger"))
 			ShowObjectEditor();
@@ -462,6 +462,27 @@ namespace fse
 			}
 		};
 
+		item_edit_map_[rttr::type::get<std::string>()] = [](rttr::variant& variant, std::string name, rttr::instance* instance)
+		{
+			std::string propname(name + "##" + std::to_string(reinterpret_cast<int>(instance)));
+			std::string val = variant.convert<std::string>();
+
+			std::vector<char> stringvec;
+			stringvec.reserve(256);
+			for (auto& ch : val)
+			{
+				stringvec.push_back(ch);
+			}
+			stringvec.resize(256);
+
+			if (ImGui::InputText(propname.data(), stringvec.data(), stringvec.size()))
+			{
+				val = std::string(stringvec.data());
+				variant = rttr::variant(val);
+			}
+
+		};
+
 		return item_edit_map_;
 	}
 
@@ -475,6 +496,7 @@ namespace fse
 		default_vals_[rttr::type::get<sf::IntRect>()] = rttr::variant(sf::IntRect(0, 0, 0, 0));
 		default_vals_[rttr::type::get<sf::FloatRect>()] = rttr::variant(sf::FloatRect(0.f, 0.f, 0.f, 0.f));
 		default_vals_[rttr::type::get<sf::Color>()] = rttr::variant(sf::Color::White);
+		default_vals_[rttr::type::get<std::string>()] = rttr::variant(std::string(""));
 	}
 
 	void SceneDebugger::enableVector2fToMousePos()

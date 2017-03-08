@@ -13,10 +13,10 @@ namespace fse
 	 * \brief Scene debugger / editor.
 	 * 
 	 * Supports nested and array-like types (std::vector, std::array, std::list,...) \n 
-	 * Supports GUI editing for bool, int, float, sf::Vector2f, sf::IntRect, sf::FloatRect and sf::Color \n
+	 * Supports GUI editing for bool, int, float, sf::Vector2f, sf::IntRect, sf::FloatRect, sf::Color and std::strings with up to 256 characters \n
 	 * \n
-	 * However, you can register support for more types using \ref registerItemEditFunc() \n
-	 * If you additionally wish to create objects with, also register a default value for the new type \ref registerDefaultValue \n
+	 * However, you can register support for more types or change how they are handled using \ref registerItemEditFunc() \n
+	 * If you additionally wish to create objects with, also register a default value for the new type \ref registerDefaultValue() \n
 	 */
 	class SceneDebugger
 	{
