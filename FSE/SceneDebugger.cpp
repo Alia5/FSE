@@ -229,7 +229,8 @@ namespace fse
 		ImGui::Text(std::string("Object: " + std::string(type.get_name().data())).data());
 		ImGui::Separator();
 
-		ShowObjectEditorItems(type, &rttr::instance(*it));
+		auto inst = rttr::instance(*it);
+		ShowObjectEditorItems(type, &inst);
 
 		for (auto& method : type.get_methods())
 		{
@@ -281,11 +282,12 @@ namespace fse
 			if (item_edit_funcs_.count(prop.get_type()))
 			{
 				auto val = prop.get_value(*object);
+				auto bkup = val;
 				std::string name(prop.get_name().data());
 				if (prop.is_readonly())
-					name += ", READONLY";
+					name += " -READONLY-";
 				item_edit_funcs_[prop.get_type()](val, name, object);
-				if (!prop.is_readonly())
+				if (!prop.is_readonly() && bkup != val)
 					prop.set_value(*object, val);
 			}
 			else if (prop.get_type().get_properties().size() > 0)
@@ -298,9 +300,11 @@ namespace fse
 						if (ImGui::TreeNode(propname.data()))
 						{
 							auto val = prop.get_value(*object);
+							auto bkup = val;
 							auto inst = rttr::instance(val);
 							ShowObjectEditorItems(prop.get_type(), &inst);
-							prop.set_value(*object, val);
+							if (!prop.is_readonly() && bkup != val)
+								prop.set_value(*object, val);
 
 							ImGui::Separator();
 							ImGui::TreePop();
@@ -310,8 +314,10 @@ namespace fse
 				}
 			} else if (prop.get_type().is_array())	{
 						
-				std::string propname(std::string(prop.get_name().data()) + "[]"
-					+ "##" + std::to_string(reinterpret_cast<int>(object)));
+				std::string propname(std::string(prop.get_name().data()) + "[]");
+				if (prop.is_readonly())
+					propname += " -READONLY-";
+				propname += "##" + std::to_string(reinterpret_cast<int>(object));
 				if (ImGui::TreeNode(propname.data()))
 				{
 					auto val = prop.get_value(*object);
@@ -319,21 +325,26 @@ namespace fse
 					size_t sz = arr.get_size();
 					for (size_t i = 0; i < sz; i++)
 					{
-						std::string propname(std::string(prop.get_name().data()) + "[" + std::to_string(i) + "]"
-							+ "##" + std::to_string(reinterpret_cast<int>(object)));
-						if (ImGui::TreeNode(propname.data()))
+						std::string propn(std::string(prop.get_name().data()) + "[" + std::to_string(i) + "]");
+						if (prop.is_readonly())
+							propn += " -READONLY-";
+						propn += "##" + std::to_string(reinterpret_cast<int>(object));
+						if (ImGui::TreeNode(propn.data()))
 						{
 							auto v = arr.get_value(i);
+							auto bkup = v;
 							auto t = v.get_type();
 							auto inst = rttr::instance(v);
 							ShowObjectEditorItems(t, &inst);
-							arr.set_value(i, v);
+							if (bkup != val)
+								arr.set_value(i, v);
 
 							ImGui::Separator();
 							ImGui::TreePop();
 						}
 					}
-					prop.set_value(*object, val);
+					if (!prop.is_readonly())
+						prop.set_value(*object, val);
 						
 					ImGui::Separator();
 					ImGui::TreePop();
@@ -344,8 +355,6 @@ namespace fse
 					+ std::string(prop.get_name().data()));
 				ImGui::Text(propname.data());
 			}
-
-
 		}
 	}
 
@@ -479,8 +488,8 @@ namespace fse
 			if (ImGui::InputFloat2(propname.data(), &arr[0]))
 			{
 				val = { arr[0], arr[1] };
+				variant = rttr::variant(val);
 			}
-			variant = rttr::variant(val);
 
 			if (!vector_to_mouse_.count(propname))
 				vector_to_mouse_[propname] = false;
