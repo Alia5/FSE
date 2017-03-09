@@ -69,8 +69,8 @@ namespace fse
 			it->get()->update(deltaTime);
 		}
 
-		processPendingRemovals();
 		processPendingSpawns();
+		processPendingRemovals();
 	}
 
 	void Scene::draw()
