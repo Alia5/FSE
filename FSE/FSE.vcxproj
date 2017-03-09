@@ -179,6 +179,7 @@
     <ClInclude Include="FSE-ImGui\imgui-colorpicker.h" />
     <ClInclude Include="FSE-ImGui\imgui-plotvar.h" />
     <ClInclude Include="FSEObject\FPSCounter.h" />
+    <ClInclude Include="FSEObject\KillVolume.h" />
     <ClInclude Include="Network\NetworkedObject.h" />
     <ClInclude Include="Lights\Light.h" />
     <ClInclude Include="Lights\FSELightWorld.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="FSE-ImGui\imgui-colorpicker.cpp" />
     <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />
+    <ClCompile Include="FSEObject\KillVolume.cpp" />
     <ClCompile Include="Network\NetworkedObject.cpp" />
     <ClCompile Include="Lights\Light.cpp" />
     <ClCompile Include="Lights\FSELightWorld.cpp" />
