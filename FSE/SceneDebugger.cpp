@@ -624,6 +624,14 @@ namespace fse
 		{
 			scene_->setPaused(b);
 		}
+		ImGui::SameLine();
+		bool drawPhysDebug = scene_->getPhysDrawDebug();
+		if (ImGui::Checkbox("Draw Phys debug", &drawPhysDebug))
+		{
+			scene_->setPhysDrawDebug(drawPhysDebug);
+		}
+
+
 		ImGui::Separator();
 	}
 }
