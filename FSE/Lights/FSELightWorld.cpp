@@ -41,6 +41,11 @@ namespace fse
 	{
 	}
 
+	bool FSELightWorld::destroy()
+	{
+		return false;
+	}
+
 	void FSELightWorld::init(sf::RenderTarget* target) const
 	{
 		light_system_->create({ -1000.f, -1000.f, 2000.f, 2000.f }, target->getSize());
