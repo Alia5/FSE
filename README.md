@@ -29,9 +29,9 @@ as published by Sam Hocevar. See the license.txt file for more details.
 --
 **Third party libraries used**
 
-[SFML](http://www.sfml-dev.org) (2.4.1)
+[SFML](http://www.sfml-dev.org) (2.4.2)
 
-[Box2D](https://github.com/erincatto/Box2D/tree/374664b2a4ce2e7c24fbad6e1ed34bebcc9ab6bc) (374664b)
+[Box2D](https://github.com/erincatto/Box2D/) (71a6079)
 
 [LTBL2](https://github.com/Cmdu76/LTBL2/tree/d2b51608efa2aa7e3e2d632746b018d6e2add3be) (d2b5160) which is further modified
 
@@ -41,6 +41,6 @@ All of the above are licensed under the [zLib-License](https://en.wikipedia.org/
 
 [ImGui SFML] (https://github.com/eliasdaler/imgui-sfml) (ca738ad)
 
-[RTTR (RunTimeTypeReflection)] (http://www.rttr.org) (9db33f4)
+[RTTR (RunTimeTypeReflection)] (http://www.rttr.org) (c37d0e3)
 
 All three of which are licensed under the [MIT-License](https://opensource.org/licenses/MIT)
