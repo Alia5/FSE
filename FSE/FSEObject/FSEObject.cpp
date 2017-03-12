@@ -143,8 +143,8 @@ namespace fse
 		{
 			return nullptr;
 		}
+		component->attachToObject(this);
 		components_.push_back(std::move(component));
-		(*components_.rbegin())->attachToObject(this);
 		return (*components_.rbegin()).get();
 	}
 
@@ -174,9 +174,10 @@ namespace fse
 
 	void FSEObject::setRttrComponentsRttr(std::vector<Component*> components)
 	{
-
 		for (auto& component : components)
 		{
+			if (component == nullptr)
+				continue;
 			auto it = std::find_if(components_.begin(), components_.end(), [&](const std::unique_ptr<Component> & obj) {
 				return obj.get() == component;
 			});
@@ -192,8 +193,8 @@ namespace fse
 			{
 				prop.set_value(instA, prop.get_value(instB));
 			}
-		}
 
+		}
 	}
 }
 

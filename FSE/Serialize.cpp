@@ -485,8 +485,6 @@ namespace fse
 					if (t != type)
 						break;
 
-					auto inst = rttr::instance(ptr);
-
 					for (auto& prop : type.get_properties())
 					{
 						if (prop.is_readonly())
@@ -501,15 +499,15 @@ namespace fse
 							continue;
 
 						auto& tval = json_memb->value;
-						auto val = prop.get_value(inst);
+						auto val = prop.get_value(ptr);
 						extractFromJson(val, tval, scene);
 						if (val.get_type() != prop.get_type())
 						{
 							val.convert(prop.get_type());
 						}
 
-						if (val != prop.get_value(inst))
-							prop.set_value(inst, val);
+						if (val != prop.get_value(ptr))
+							prop.set_value(ptr, val);
 					}
 				}
 				break;
@@ -708,7 +706,7 @@ namespace fse
 				if (jsonmemb == jsonValue.MemberEnd())
 					continue;
 
-				rttr::variant var;
+				rttr::variant var = prop.get_value(val);
 				extractFromJson(var, jsonmemb->value, scene);
 
 				if (var.get_type() != prop.get_type())
