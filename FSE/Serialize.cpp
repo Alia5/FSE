@@ -429,7 +429,9 @@ namespace fse
 					if (info.get_index() == 1)
 					{
 						auto& tval = jsonValue.FindMember("position_")->value;
-						spawn_args.push_back(extractObjectFromJson(tval, scene));
+						rttr::variant var(sf::Vector2f(0.f, 0.f));
+						extractObjectFromJson(var, tval, scene);
+						spawn_args.push_back(var);
 						used_json_vals.push_back("position_");
 
 						continue;
@@ -524,7 +526,9 @@ namespace fse
 		for (size_t i = 0; i < size; i++)
 		{
 			auto& json_index_value = jsonValue[i];
-			rttr::variant var;
+			rttr::variant var = array_view.get_value(i);
+			auto t = var.get_type();
+			auto inst = rttr::instance(var);
 			extractFromJson(var, json_index_value, scene);
 			array_view.set_value(i, var);
 		}
@@ -539,7 +543,7 @@ namespace fse
 		}
 		else if (jsonValue.GetType() == rapidjson::kObjectType)
 		{
-			val = extractObjectFromJson(jsonValue, scene);
+			extractObjectFromJson(val, jsonValue, scene);
 		}
 		else
 		{
@@ -581,16 +585,16 @@ namespace fse
 		return rttr::variant();
 	}
 
-	rttr::variant Serializer::extractObjectFromJson(rapidjson::Value& jsonValue, fse::Scene* scene)
+	void Serializer::extractObjectFromJson(rttr::variant& val, rapidjson::Value& jsonValue, fse::Scene* scene)
 	{
 		auto tmemb = jsonValue.FindMember("type");
 		if (tmemb == jsonValue.MemberEnd())
-			return rttr::variant();
+			return;
 
 		auto& tval = tmemb->value;
 
 		if (tval.GetType() != rapidjson::kStringType)
-			return rttr::variant();
+			return;
 
 		std::string typestr(tval.GetString());
 
@@ -601,7 +605,7 @@ namespace fse
 			if (base == rttr::type::get<fse::FSEObject>())
 			{
 				FSEObjectFromJson(jsonValue, scene);
-				return rttr::variant();
+				return;
 			}
 		}
 
@@ -609,17 +613,17 @@ namespace fse
 		if (ctors.size() > 0)
 		{
 			auto ctor = type.get_constructor({});
-			rttr::variant obj;
+			
 			if (ctor.is_valid())
 			{
-				obj = ctor.invoke();
+				val = ctor.invoke();
 			} 
 			else
 			{
 				ctor = type.get_constructor({ rttr::type::get<fse::Scene*>() });
 				if (ctor.is_valid())
 				{
-					obj = ctor.invoke(scene);
+					val = ctor.invoke(scene);
 				} else {
 					
 					ctor = type.get_constructor({ rttr::type::get<FSEObject*>() });
@@ -630,38 +634,13 @@ namespace fse
 							auto it = scene->pending_object_spawns_.rbegin();
 							FSEObject* ptr = (*it).get();
 
-							obj = ctor.invoke(ptr);
+							val = ctor.invoke(ptr);
 
 						}
 					}
 
 				}
 			}
-
-
-			for (auto& prop : type.get_properties())
-			{
-				if (prop.is_readonly())
-					continue;
-
-				auto jsonmemb = jsonValue.FindMember(prop.get_name().data());
-				if (jsonmemb == jsonValue.MemberEnd())
-					continue;
-
-				rttr::variant val;
-				extractFromJson(val, jsonmemb->value, scene);
-
-				if (val.get_type() != prop.get_type())
-				{
-					if (!val.convert(prop.get_type()))
-						continue;
-				}
-
-				if (val != prop.get_value(obj))
-					prop.set_value(obj, val);
-
-			}
-			return obj;
 		}
 
 
@@ -672,7 +651,9 @@ namespace fse
 			vec.x = jsonValue.FindMember("x")->value.GetFloat();
 			vec.y = jsonValue.FindMember("y")->value.GetFloat();
 
-			return rttr::variant(vec);
+			val = vec;
+
+			return;
 		}
 
 		if (typestr == std::string(rttr::type::get<sf::Color>().get_name().data()))
@@ -684,33 +665,63 @@ namespace fse
 			col.b = jsonValue.FindMember("b")->value.GetInt();
 			col.a = jsonValue.FindMember("a")->value.GetInt();
 
-			return rttr::variant(col);
+			val = col;
+
+			return;
 		}
 
 		if (typestr == std::string(rttr::type::get<sf::FloatRect>().get_name().data()))
 		{
-			sf::FloatRect val;
+			sf::FloatRect rekt;
 
-			val.left = jsonValue.FindMember("left")->value.GetFloat();
-			val.top = jsonValue.FindMember("top")->value.GetFloat();
-			val.width = jsonValue.FindMember("width")->value.GetFloat();
-			val.height = jsonValue.FindMember("height")->value.GetFloat();
+			rekt.left = jsonValue.FindMember("left")->value.GetFloat();
+			rekt.top = jsonValue.FindMember("top")->value.GetFloat();
+			rekt.width = jsonValue.FindMember("width")->value.GetFloat();
+			rekt.height = jsonValue.FindMember("height")->value.GetFloat();
 
-			return rttr::variant(val);
+			val = rekt;
+			return;
 		}
 
 		if (typestr == std::string(rttr::type::get<sf::IntRect>().get_name().data()))
 		{
-			sf::IntRect val;
+			sf::IntRect rekt;
 
-			val.left = jsonValue.FindMember("left")->value.GetInt();
-			val.top = jsonValue.FindMember("top")->value.GetInt();
-			val.width = jsonValue.FindMember("width")->value.GetInt();
-			val.height = jsonValue.FindMember("height")->value.GetInt();
+			rekt.left = jsonValue.FindMember("left")->value.GetInt();
+			rekt.top = jsonValue.FindMember("top")->value.GetInt();
+			rekt.width = jsonValue.FindMember("width")->value.GetInt();
+			rekt.height = jsonValue.FindMember("height")->value.GetInt();
 
-			return rttr::variant(val);
+			val = rekt;
+			return;
+		}
+
+		if (val.is_valid())
+		{
+			for (auto& prop : type.get_properties())
+			{
+				if (prop.is_readonly())
+					continue;
+
+				auto jsonmemb = jsonValue.FindMember(prop.get_name().data());
+				if (jsonmemb == jsonValue.MemberEnd())
+					continue;
+
+				rttr::variant var;
+				extractFromJson(var, jsonmemb->value, scene);
+
+				if (var.get_type() != prop.get_type())
+				{
+					var.convert(prop.get_type());
+				}
+
+				if (var != prop.get_value(val))
+					prop.set_value(val, var);
+
+			}
+
 		}
 		
-		return rttr::variant();
+		return;
 	}
 }
