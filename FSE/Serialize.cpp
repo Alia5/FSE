@@ -1,6 +1,5 @@
 #include "Serialize.h"
 
-#define RAPIDJSON_HAS_STDSTRING 1
 #include "../rapidjson/prettywriter.h" 
 #include "../rapidjson/document.h"
 
@@ -522,7 +521,7 @@ namespace fse
 		auto size = jsonValue.Size();
 		array_view.set_size(size);
 
-		for (auto i = 0; i < size; i++)
+		for (size_t i = 0; i < size; i++)
 		{
 			auto& json_index_value = jsonValue[i];
 			rttr::variant var;
