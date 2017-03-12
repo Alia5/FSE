@@ -21,6 +21,8 @@ namespace fse
 		void draw(sf::RenderTarget& target) override;
 		void spawned() override;
 
+		bool destroy() override;
+
 		/*!
 		 * \brief initializes Lighting system
 		 * \param target Ptr to RenderTarget 

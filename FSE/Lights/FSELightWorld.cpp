@@ -48,7 +48,7 @@ namespace fse
 
 	void FSELightWorld::init(sf::RenderTarget* target) const
 	{
-		light_system_->create({ -1000.f, -1000.f, 2000.f, 2000.f }, target->getSize());
+		light_system_->create({ -1000.f, -1000.f, 1000.f, 1000.f }, target->getSize());
 		//sun_ = light_system_->createLightDirectionEmission();
 		//sun_->setColor(sf::Color::Black);
 	}
@@ -114,6 +114,9 @@ RTTR_REGISTRATION
 	using namespace fse;
 
 	registration::class_<FSELightWorld>("fse::FSELightWorld")
+	(
+		metadata("SERIALIZE_NO_RECRATE", true)
+	)
 	.property("lighting_", &FSELightWorld::lighting_)
 	.property("ambient_color_", &FSELightWorld::getAmbientColor, &FSELightWorld::setAmbientColor)
 	;

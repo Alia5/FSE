@@ -1,6 +1,6 @@
 # FSE #
 
-FSE (FlatSpot-Engine) is a (work in progress) cross platform 2D-Toolkit built on top of SFML and Box2D which could be used for Games and alike.
+FSE is a (work in progress) cross platform 2D-Toolkit built on top of SFML and Box2D which could be used for Games and alike.
 
 FSE is mainly created as a side project out of personal interest.
 
@@ -43,4 +43,6 @@ All of the above are licensed under the [zLib-License](https://en.wikipedia.org/
 
 [RTTR (RunTimeTypeReflection)] (http://www.rttr.org) (c37d0e3)
 
-All three of which are licensed under the [MIT-License](https://opensource.org/licenses/MIT)
+[RapidJSON](https://github.com/miloyip/rapidjson) (1.1.0)
+
+All four of which are licensed under the [MIT-License](https://opensource.org/licenses/MIT)

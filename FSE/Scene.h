@@ -225,5 +225,7 @@ namespace fse
 
 		bool phys_draw_debug_ = false;
 
+		friend class Serializer;
+
 	};
 }

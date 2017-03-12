@@ -3,6 +3,9 @@
 #include "../FMath.h"
 
 #include <rttr/registration.h>
+
+#include "../FSEObject/FSEObject.h"
+
 namespace fse
 {
 	SmoothViewController::SmoothViewController() : ViewController()
@@ -36,7 +39,7 @@ namespace fse
 			{
 				view.setCenter(toCenter);
 			}
- 			view.move((objectPos - oldPosition) * FSE_PIXELS_PER_METER);
+			view.move((objectPos - oldPosition) * FSE_PIXELS_PER_METER);
 		}
 		else
 		{

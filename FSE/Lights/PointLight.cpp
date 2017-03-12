@@ -35,9 +35,16 @@ namespace fse
 RTTR_REGISTRATION
 {
 	using namespace rttr;
-using namespace fse;
+	using namespace fse;
 
 registration::class_<PointLight>("fse::PointLight")
+.constructor([](Scene* scene)
+{
+	return PointLight(scene, sf::Vector2f(0, 0));
+})
+(
+	parameter_names("scene")			
+)
 .property("radius_", &PointLight::getRadius, &PointLight::setRadius)
 ;
 }

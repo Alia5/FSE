@@ -169,6 +169,9 @@ RTTR_REGISTRATION
 		.property("z_order_", &FSEObject::getZOrder, &FSEObject::setZOrder)
 		.property_readonly("aabbs_", &FSEObject::GetAABBs)
 		.property("components_", &FSEObject::components_)
+		(
+			metadata("NO_SERIALIZE", true)
+		)
 		.method("destroy", &FSEObject::destroy)
 		;
 

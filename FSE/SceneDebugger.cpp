@@ -6,6 +6,7 @@
 #include "../FSE/Application.h"
 
 #include <sstream>
+#include "Serialize.h"
 
 
 namespace fse
@@ -324,28 +325,9 @@ namespace fse
 	{
 		if (type.is_pointer())
 		{
-			auto t = type.get_raw_type();
-			auto tdclasses = t.get_derived_classes();
-
-			//search the most derived valid type
-			auto valid_t = t;
-			for (auto it = tdclasses.begin(); it != tdclasses.end(); ++it)
-			{
-				bool valid = true;
-				for (auto& prop : it->get_properties())
-				{
-					if (!prop.get_value(*object).is_valid())
-					{
-						valid = false;
-						break;
-					} 
-				}
-				if (!valid)
-					break;
-				valid_t = *it;
-			}
-			ImGui::Text(valid_t.get_name().data());
-			ShowObjectEditorItems(valid_t, object);
+			auto t = object->get_derived_type();
+			ImGui::Text(t.get_name().data());
+			ShowObjectEditorItems(t, object);
 			return;
 		}
 
@@ -364,26 +346,21 @@ namespace fse
 			}
 			else if (prop.get_type().get_properties().size() > 0)
 			{
-				for (auto& pr : prop.get_type().get_properties())
-				{
-					if (item_edit_funcs_.count(pr.get_type()))
-					{
-						std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
-						if (ImGui::TreeNode(propname.data()))
-						{
-							auto val = prop.get_value(*object);
-							auto bkup = val;
-							auto inst = rttr::instance(val);
-							ShowObjectEditorItems(prop.get_type(), &inst);
-							if (!prop.is_readonly() && bkup != val)
-								prop.set_value(*object, val);
 
-							ImGui::Separator();
-							ImGui::TreePop();
-						}
-						break;
-					}
+				std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
+				if (ImGui::TreeNode(propname.data()))
+				{
+					auto val = prop.get_value(*object);
+					auto bkup = val;
+					auto inst = rttr::instance(val);
+					ShowObjectEditorItems(prop.get_type(), &inst);
+					if (!prop.is_readonly() && bkup != val)
+						prop.set_value(*object, val);
+
+					ImGui::Separator();
+					ImGui::TreePop();
 				}
+
 			} else if (prop.get_type().is_array())	{
 						
 				std::string propname(std::string(prop.get_name().data()) + "[]");
@@ -626,11 +603,24 @@ namespace fse
 		}
 		ImGui::SameLine();
 		bool drawPhysDebug = scene_->getPhysDrawDebug();
-		if (ImGui::Checkbox("Draw Phys debug", &drawPhysDebug))
+		if (ImGui::Checkbox("Draw Phys debug##SceneDebugger", &drawPhysDebug))
 		{
 			scene_->setPhysDrawDebug(drawPhysDebug);
 		}
 
+		ImGui::SameLine();
+		if(ImGui::Button("TestSerialize##SceneDebugger"))
+		{
+			Serializer serializer;
+			serializer.saveScene(scene_, "testJSON.json");
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("TestLoad##SceneDebugger"))
+		{
+			Serializer serializer;
+			serializer.loadScene(scene_, "testJSON.json");
+		}
 
 		ImGui::Separator();
 	}

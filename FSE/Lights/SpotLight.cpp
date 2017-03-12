@@ -50,6 +50,13 @@ RTTR_REGISTRATION
 using namespace fse;
 
 registration::class_<SpotLight>("fse::SpotLight")
+.constructor([](Scene* scene)
+{
+	return SpotLight(scene, sf::Vector2f(0, 0));
+})
+(
+	parameter_names("scene")
+)
 .property("lenght_", &SpotLight::getLenght, &SpotLight::setLenght)
 .property("angle_", &SpotLight::getAngle, &SpotLight::setAngle)
 ;
