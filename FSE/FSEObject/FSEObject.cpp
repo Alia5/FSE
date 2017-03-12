@@ -134,20 +134,25 @@ namespace fse
 		}
 	}
 
-	bool FSEObject::attachComponent(Component*  component)
+	Component* FSEObject::attachComponent(std::unique_ptr<Component> component)
 	{
-		if (std::find(components_.begin(), components_.end(), component) != components_.end())
+		auto it = std::find_if(components_.begin(), components_.end(), [&](const std::unique_ptr<Component> & obj) {
+			return obj.get() == component.get();
+		});
+		if (it != components_.end())
 		{
-			return false;
+			return nullptr;
 		}
-		component->attachToObject(this);
 		components_.push_back(std::move(component));
-		return true;
+		(*components_.rbegin())->attachToObject(this);
+		return (*components_.rbegin()).get();
 	}
 
 	bool FSEObject::detachComponent(Component*  component)
 	{
-		auto it = std::find(components_.begin(), components_.end(), component);
+		auto it = std::find_if(components_.begin(), components_.end(), [&](const std::unique_ptr<Component> & obj) {
+			return obj.get() == component;
+		});
 		if (it == components_.end())
 		{
 			return false;
@@ -155,6 +160,40 @@ namespace fse
 		(*it)->detach();
 		components_.erase(it);
 		return true;
+	}
+
+	std::vector<Component*> FSEObject::getComponentsRttr()
+	{
+		std::vector<Component*> res;
+
+		for (auto& comp : components_)
+			res.push_back(comp.get());
+
+		return res;
+	}
+
+	void FSEObject::setRttrComponentsRttr(std::vector<Component*> components)
+	{
+
+		for (auto& component : components)
+		{
+			auto it = std::find_if(components_.begin(), components_.end(), [&](const std::unique_ptr<Component> & obj) {
+				return obj.get() == component;
+			});
+			if (it == components_.end())
+				continue;
+
+			rttr::type type = rttr::type::get(*component);
+			rttr::instance instA = rttr::instance(component);
+
+			rttr::instance instB = rttr::instance(*it);
+
+			for (auto& prop : type.get_properties())
+			{
+				prop.set_value(instA, prop.get_value(instB));
+			}
+		}
+
 	}
 }
 
@@ -168,10 +207,7 @@ RTTR_REGISTRATION
 		.property("position_", &FSEObject::getPosition, &FSEObject::setPosition)
 		.property("z_order_", &FSEObject::getZOrder, &FSEObject::setZOrder)
 		.property_readonly("aabbs_", &FSEObject::GetAABBs)
-		.property("components_", &FSEObject::components_)
-		(
-			metadata("NO_SERIALIZE", true)
-		)
+		.property("components_", &FSEObject::getComponentsRttr, &FSEObject::setRttrComponentsRttr)
 		.method("destroy", &FSEObject::destroy)
 		;
 

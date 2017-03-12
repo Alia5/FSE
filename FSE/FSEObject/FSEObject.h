@@ -183,9 +183,9 @@ namespace fse
 		/*!
 		 * \brief attach a component to this object.
 		 * 
-		 * \returns attachment success
+		 * \returns ptr to component, nullptr on failure
 		 */
-		bool attachComponent(Component*  component);
+		Component* attachComponent(std::unique_ptr<Component>  component);
 
 		/*!
 		* \brief detach a component from this object.
@@ -196,7 +196,7 @@ namespace fse
 		/*!
 		 * \brief Vector of attached components.
 		 */
-		std::vector<Component*> components_;
+		std::vector<std::unique_ptr<Component> > components_;
 
 		/*!
 		 * Ptr to scene the object lives in.
@@ -218,6 +218,9 @@ namespace fse
 		int z_order_ = 0;
 		bool is_pending_kill_ = false;
 		bool pending_timed_kill_ = false;
+
+		std::vector<Component*> getComponentsRttr();
+		void setRttrComponentsRttr(std::vector<Component*> components);
 
 		RTTR_ENABLE()
 		RTTR_REGISTRATION_FRIEND
