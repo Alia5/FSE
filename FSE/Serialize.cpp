@@ -521,14 +521,15 @@ namespace fse
 	{
 		auto array_view = val.create_array_view();
 		auto size = jsonValue.Size();
+		auto sizeBf = array_view.get_size();
 		array_view.set_size(size);
 
 		for (size_t i = 0; i < size; i++)
 		{
 			auto& json_index_value = jsonValue[i];
-			rttr::variant var = array_view.get_value(i);
-			auto t = var.get_type();
-			auto inst = rttr::instance(var);
+			rttr::variant var;
+			if (i < sizeBf)
+				var = array_view.get_value(i);
 			extractFromJson(var, json_index_value, scene);
 			array_view.set_value(i, var);
 		}
