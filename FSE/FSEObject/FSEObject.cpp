@@ -176,8 +176,6 @@ namespace fse
 	{
 		for (auto& component : components)
 		{
-			if (component == nullptr)
-				continue;
 			auto it = std::find_if(components_.begin(), components_.end(), [&](const std::unique_ptr<Component> & obj) {
 				return obj.get() == component;
 			});
