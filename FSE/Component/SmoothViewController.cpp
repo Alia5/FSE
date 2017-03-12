@@ -91,13 +91,6 @@ RTTR_REGISTRATION
 	using namespace fse;
 
 registration::class_<SmoothViewController>("fse::SmoothViewController")
-	.constructor([](FSEObject* object)
-	{
-		return SmoothViewController(object->getScene()->getRenderTarget());
-	})
-	(
-		parameter_names("object")	
-	)
 	.property("size_percentage_", &SmoothViewController::getSizePercentage, &SmoothViewController::setSizePercentage)	
 	.property("vertical_offset_", &SmoothViewController::getVerticalOffset, &SmoothViewController::setVerticalOffset)
 ;
