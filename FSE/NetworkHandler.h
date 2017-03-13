@@ -49,7 +49,7 @@ namespace fse
 			generic,
 		};
 
-		std::atomic<int> ping_ = 0;
+		std::atomic<int> ping_;
 
 		void awaitConnectionThreadRun();
 		void netThreadRun();
@@ -65,9 +65,9 @@ namespace fse
 
 		bool listener_bound_ = false;
 
-		std::atomic<bool> await_connections_ = false;
+		std::atomic<bool> await_connections_;
 
-		std::atomic<bool> run_thread_ = false;
+		std::atomic<bool> run_thread_ ;
 
 		bool is_server_ = false;
 		bool connected_to_server_ = false;

@@ -10,6 +10,9 @@ namespace fse
 	{
 		is_server_ = false;
 		run_thread_ = false;
+        ping_ = 0;
+        await_connections_ = false;
+        run_thread_ = false;
 	}
 
 	NetworkHandler::~NetworkHandler()

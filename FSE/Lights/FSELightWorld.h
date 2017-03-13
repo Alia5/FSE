@@ -141,7 +141,7 @@ namespace fse
 		"		blurSize = 1.0 / texSize.x;" \
 		"	}" \
 		"	vec3 incrementalGaussian;" \
-		"	incrementalGaussian.x = 1.0f / (sqrt(2.0 * pi) * sigma);" \
+		"	incrementalGaussian.x = 1.0 / (sqrt(2.0 * pi) * sigma);" \
 		"	incrementalGaussian.y = exp(-0.5 / (sigma * sigma));" \
 		"	incrementalGaussian.z = incrementalGaussian.y * incrementalGaussian.y;" \
 		"	vec4 avgValue = vec4(0.0, 0.0, 0.0, 0.0);" \
@@ -154,7 +154,7 @@ namespace fse
 		"			blurMultiplyVec) * incrementalGaussian.x;" \
 		"		avgValue += texture2D(currTex, gl_TexCoord[0].xy + i * blurSize *" \
 		"			blurMultiplyVec) * incrementalGaussian.x;" \
-		"		coefficientSum += 2 * incrementalGaussian.x;" \
+		"		coefficientSum += 2.0 * incrementalGaussian.x;" \
 		"		incrementalGaussian.xy *= incrementalGaussian.yz;" \
 		"	}" \
 		"	gl_FragColor = avgValue / coefficientSum;" \
