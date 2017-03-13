@@ -66,7 +66,9 @@ namespace fse
 
 					bloom_texture_.display();
 
+					auto sz = view.getSize();
 					sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
+					sprite.setScale(sz.x / target.getSize().x, sz.y / target.getSize().y);
 					target.draw(sprite, sf::BlendAdd);
 
 				}
