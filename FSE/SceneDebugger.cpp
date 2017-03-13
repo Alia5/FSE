@@ -582,8 +582,9 @@ namespace fse
 				}
 				ImGui::Text("Leftclick to end");
 
+				sf::RenderTarget* target = scene_->getRenderTarget();
 				sf::RenderWindow* window = scene_->getApplication()->getWindow();
-				val = window->mapPixelToCoords(sf::Mouse::getPosition(*window)) * FSE_METERS_PER_PIXEL;
+				val = target->mapPixelToCoords(sf::Mouse::getPosition(*window)) * FSE_METERS_PER_PIXEL;
 				variant = rttr::variant(val);
 			}
 		};

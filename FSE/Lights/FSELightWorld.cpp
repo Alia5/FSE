@@ -3,6 +3,8 @@
 
 #include <rttr/registration>
 
+#include <SFML/Graphics.hpp>
+
 namespace fse
 {
 	FSELightWorld::FSELightWorld(Scene* scene) : FSELightWorld(scene, sf::Vector2f(0, 0))
@@ -14,6 +16,9 @@ namespace fse
 	{
 		setZOrder(255);
 		light_system_ = std::make_unique<ltbl::LightSystem>(normal_texture_, specular_texture_, true);
+		bloom_texture_.create(1, 1);
+		bloom_shader_.loadFromMemory(bloom_shader_str_, sf::Shader::Fragment);
+		gauss_blur_shader_.loadFromMemory(gauss_blur_shader_str_, sf::Shader::Fragment);
 	}
 
 	FSELightWorld::~FSELightWorld()
@@ -34,6 +39,38 @@ namespace fse
 			normal_texture_.display();
 			specular_texture_.display();
 			light_system_->render(target);
+
+			if (bloom_)
+			{
+				if (sf::RenderTexture* r_texture = dynamic_cast<sf::RenderTexture*>(&target))
+				{
+					//r_texture->display();
+					sf::Sprite sprite = sf::Sprite(bloom_texture_.getTexture());
+					auto view = target.getView();
+
+					bloom_shader_.setUniform("currTex", r_texture->getTexture());
+					bloom_shader_.setUniform("lightCompTex", light_system_->getLightCompTexture().getTexture());
+					bloom_shader_.setUniform("specCompTex", light_system_->getSpecCompTexture().getTexture());
+
+					bloom_texture_.draw(sprite, &bloom_shader_);
+
+					gauss_blur_shader_.setUniform("currTex", bloom_texture_.getTexture());
+					gauss_blur_shader_.setUniform("texSize", sf::Vector2f(target.getSize().x, target.getSize().y));
+					bool horizontal = false;
+					for (int i = 0; i < 4; i++)
+					{
+						horizontal = !horizontal;
+						gauss_blur_shader_.setUniform("horizontal", horizontal);
+						bloom_texture_.draw(sf::Sprite(bloom_texture_.getTexture()), &gauss_blur_shader_);
+					}
+
+					bloom_texture_.display();
+
+					sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
+					target.draw(sprite, sf::BlendAdd);
+
+				}
+			}
 		}
 	}
 
@@ -63,15 +100,38 @@ namespace fse
 		lighting_ = lighting;
 	}
 
+	bool FSELightWorld::getBloom() const
+	{
+		return bloom_;
+	}
+
+	void FSELightWorld::setBloom(bool bloom)
+	{
+		if (sf::RenderTexture* rTexture = dynamic_cast<sf::RenderTexture*>(scene_->getRenderTarget()))
+		{
+			bloom_ = bloom;
+		} 
+		else
+		{
+			std::cout << "Cannot use bloom directly on Window!\n";
+			bloom_ = false;
+		}
+	}
+
 	void FSELightWorld::updateView()
 	{
 		if (lighting_)
 		{
+			if (bloom_texture_.getSize() != scene_->getRenderTarget()->getSize())
+			{
+				bloom_texture_.create(scene_->getRenderTarget()->getSize().x, scene_->getRenderTarget()->getSize().y);
+			}
+
 			sf::View view = scene_->getRenderTarget()->getView();
-			normal_texture_.clear(sf::Color(128u, 128u, 255u));
-			specular_texture_.clear(sf::Color::Black);
 			normal_texture_.setView(view);
 			specular_texture_.setView(view);
+			normal_texture_.clear(sf::Color(128u, 128u, 255u));
+			specular_texture_.clear(sf::Color::Black);
 		}
 	}
 
@@ -118,6 +178,7 @@ RTTR_REGISTRATION
 		metadata("SERIALIZE_NO_RECRATE", true)
 	)
 	.property("lighting_", &FSELightWorld::lighting_)
+	.property("bloom_", &FSELightWorld::getBloom, &FSELightWorld::setBloom)
 	.property("ambient_color_", &FSELightWorld::getAmbientColor, &FSELightWorld::setAmbientColor)
 	;
 }
