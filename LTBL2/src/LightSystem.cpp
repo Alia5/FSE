@@ -65,7 +65,6 @@ namespace ltbl
 	void LightSystem::render(sf::RenderTarget& target)
 	{
 		sf::View view = target.getView();
-
 		if (target.getSize() != mLightTempTexture.getSize())
 		{
 			update(target.getSize());
@@ -142,9 +141,10 @@ namespace ltbl
 
 		mSpecularCompTexture.display();
 
-
+		auto sz = view.getSize();
 		sf::Sprite sprite = sf::Sprite(mCompositionTexture.getTexture());
 		sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
+		sprite.setScale(sz.x / target.getSize().x, sz.y / target.getSize().y);
 		target.draw(sprite, sf::BlendMultiply);
 
 		sprite.setTexture(mSpecularCompTexture.getTexture());

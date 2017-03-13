@@ -45,6 +45,28 @@ namespace fse
 
 		render_target_->setView(view);
 	}
+
+	float ViewController::getZoomLevel() const
+	{
+		return zoom_level_;
+	}
+
+	void ViewController::setZoomLevel(float zoom)
+	{
+		if (render_target_ == nullptr)
+			return;
+
+		if (zoom <= 0.0f)
+			zoom = 0.01f;
+
+		auto size = render_target_->getSize();
+		auto view = render_target_->getView();
+		auto center = view.getCenter();
+		view.setSize(size.x / zoom, size.y / zoom);
+		view.setCenter(center);
+		render_target_->setView(view);
+		zoom_level_ = zoom;
+	}
 }
 
 RTTR_REGISTRATION
@@ -54,5 +76,6 @@ RTTR_REGISTRATION
 
 registration::class_<ViewController>("fse::ViewController")
 .property("follow_object_", &ViewController::isFollowingObject, &ViewController::setFollowObject)
+.property("zoom_level_", &ViewController::getZoomLevel, &ViewController::setZoomLevel )
 ;
 }

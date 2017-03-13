@@ -51,6 +51,8 @@ namespace fse
 		 */
 		void setVerticalOffset(float vertical_offset);
 
+		void setZoomLevel(float zoom) override;
+
 	private:
 		float size_percentage_ = 0.75f;
 		float vertical_offset_ = 0.0f;

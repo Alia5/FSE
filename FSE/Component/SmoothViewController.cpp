@@ -73,6 +73,23 @@ namespace fse
 		vertical_offset_ = vertical_offset;
 	}
 
+	void SmoothViewController::setZoomLevel(float zoom)
+	{
+		if (render_target_ == nullptr)
+			return;
+
+		if (zoom <= 0.0f)
+			zoom = 0.01f;
+
+		auto size = render_target_->getSize();
+		auto view = render_target_->getView();
+		view.setSize(size.x / zoom, size.y / zoom);
+		render_target_->setView(view);
+		auto objectPos = sf::Vector2f(oldPosition.x, oldPosition.y + (view.getSize().y * FSE_METERS_PER_PIXEL * vertical_offset_));
+		setView(objectPos);
+		zoom_level_ = zoom;
+	}
+
 	float SmoothViewController::getSizePercentage() const
 	{
 		return size_percentage_;

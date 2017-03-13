@@ -35,13 +35,19 @@ namespace fse
 		 */
 		virtual void moveView(sf::Vector2f objectPos, float deltaTime);
 
+		float getZoomLevel() const;
+		virtual void setZoomLevel(float zoom);
+
 	protected:
 		sf::RenderTarget* render_target_;
 		sf::Vector2f oldPosition = sf::Vector2f(0, 0);
 		
 		bool follow_object_ = true;
 
+		float zoom_level_ = 1.0f;
+
 	private:
+
 		RTTR_ENABLE(fse::Component)
 		RTTR_REGISTRATION_FRIEND
 
