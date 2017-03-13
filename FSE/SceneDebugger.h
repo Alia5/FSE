@@ -4,6 +4,8 @@
 #include <rttr/type.h>
 #include <unordered_map>
 #include "Lights/Light.h"
+#include <vector>
+#include <string>
 
 namespace fse
 {
@@ -61,7 +63,7 @@ namespace fse
 		void enableVector2fToMousePos();
 
 	private:
-		void ShowSceneStatus() const;
+		void ShowSceneStatus();
 		void ShowObjectList();
 		void ShowMouseTools();
 
@@ -89,6 +91,8 @@ namespace fse
 
 		std::unordered_map<std::string, std::vector<rttr::variant>> spawn_args_;
 		std::unordered_map<rttr::type, rttr::variant> default_vals_;
+
+		std::string serialize_file_name_ = "debug_level.json";
 
 	};
 }

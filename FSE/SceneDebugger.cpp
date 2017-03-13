@@ -517,12 +517,12 @@ namespace fse
 			std::string val = variant.convert<std::string>();
 
 			std::vector<char> stringvec;
-			stringvec.reserve(256);
+			stringvec.reserve(512);
 			for (auto& ch : val)
 			{
 				stringvec.push_back(ch);
 			}
-			stringvec.resize(256);
+			stringvec.resize(512);
 
 			if (ImGui::InputText(propname.data(), stringvec.data(), stringvec.size()))
 			{
@@ -589,7 +589,7 @@ namespace fse
 		};
 	}
 
-	void SceneDebugger::ShowSceneStatus() const
+	void SceneDebugger::ShowSceneStatus()
 	{
 		std::stringstream stream;
 		stream << "Scene: 0x" << std::hex << static_cast<void*>(scene_);
@@ -608,18 +608,31 @@ namespace fse
 			scene_->setPhysDrawDebug(drawPhysDebug);
 		}
 
-		ImGui::SameLine();
-		if(ImGui::Button("TestSerialize##SceneDebugger"))
+		ImGui::Separator();
+
+		std::vector<char> buffer;
+		buffer.reserve(512);
+		for (auto& c : serialize_file_name_)
+			buffer.push_back(c);
+		buffer.resize(512);
+
+		if (ImGui::InputText("Filename##SceneDebugger", buffer.data(), buffer.size()))
+		{
+			serialize_file_name_ = buffer.data();
+		}
+
+
+		if(ImGui::Button("Serialze Scene##SceneDebugger"))
 		{
 			Serializer serializer;
-			serializer.saveScene(scene_, "testJSON.json");
+			serializer.saveScene(scene_, serialize_file_name_);
 		}
 
 		ImGui::SameLine();
-		if (ImGui::Button("TestLoad##SceneDebugger"))
+		if (ImGui::Button("Load Scene##SceneDebugger"))
 		{
 			Serializer serializer;
-			serializer.loadScene(scene_, "testJSON.json");
+			serializer.loadScene(scene_, serialize_file_name_);
 		}
 
 		ImGui::Separator();
