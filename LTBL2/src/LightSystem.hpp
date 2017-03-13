@@ -208,6 +208,10 @@ namespace ltbl
 		//////////////////////////////////////////////////////////////////////////
 		sf::RenderTexture& getSpecularTexture() const;
 
+
+		const sf::RenderTexture& getLightCompTexture() const;
+		const sf::RenderTexture& getSpecCompTexture() const;
+
 	private:
 		sf::Texture mPenumbraTexture; ///< The penumbra texture, loaded from memory when the system is created
 		sf::Shader mUnshadowShader; ///< The unshadow shader, loaded from memory when the system is created

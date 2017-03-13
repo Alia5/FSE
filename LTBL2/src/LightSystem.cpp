@@ -378,4 +378,14 @@ namespace ltbl
 	{
 		return mSpecularTexture;
 	}
+
+	const sf::RenderTexture& LightSystem::getLightCompTexture() const
+	{
+		return mCompositionTexture;
+	}
+
+	const sf::RenderTexture& LightSystem::getSpecCompTexture() const
+	{
+		return mSpecularCompTexture;
+	}
 } // namespace ltbl

@@ -17,8 +17,6 @@ namespace fse
 		setZOrder(255);
 		light_system_ = std::make_unique<ltbl::LightSystem>(normal_texture_, specular_texture_, true);
 		bloom_texture_.create(1, 1);
-		b_texture_.create(1, 1);
-
 		bloom_shader_.loadFromMemory(bloom_shader_str_, sf::Shader::Fragment);
 		gauss_blur_shader_.loadFromMemory(gauss_blur_shader_str_, sf::Shader::Fragment);
 	}
@@ -44,46 +42,35 @@ namespace fse
 
 			if (bloom_)
 			{
-				bloom_texture_.clear(sf::Color::Black);
-
-				sf::View view = scene_->getRenderTarget()->getView();
-
-				if (sf::RenderWindow* window = dynamic_cast<sf::RenderWindow*>(&target))
+				if (sf::RenderTexture* r_texture = dynamic_cast<sf::RenderTexture*>(&target))
 				{
+					//r_texture->display();
+					sf::Sprite sprite = sf::Sprite(bloom_texture_.getTexture());
+					auto view = target.getView();
 
-					b_texture_.update(*window);
-				}
-				else if (sf::RenderTexture* rTexture = dynamic_cast<sf::RenderTexture*>(&target))
-				{
-					b_texture_ = rTexture->getTexture();
-				}
+					bloom_shader_.setUniform("currTex", r_texture->getTexture());
+					bloom_shader_.setUniform("lightCompTex", light_system_->getLightCompTexture().getTexture());
+					bloom_shader_.setUniform("specCompTex", light_system_->getSpecCompTexture().getTexture());
 
-				sf::Sprite sprite = sf::Sprite(b_texture_);
-				bloom_shader_.setUniform("currTex", sf::Shader::CurrentTexture);
+					bloom_texture_.draw(sprite, &bloom_shader_);
 
-				bloom_texture_.draw(sprite, &bloom_shader_);
-				bloom_texture_.display();
+					gauss_blur_shader_.setUniform("currTex", bloom_texture_.getTexture());
+					gauss_blur_shader_.setUniform("texSize", sf::Vector2f(target.getSize().x, target.getSize().y));
+					bool horizontal = false;
+					for (int i = 0; i < 4; i++)
+					{
+						horizontal = !horizontal;
+						gauss_blur_shader_.setUniform("horizontal", horizontal);
+						bloom_texture_.draw(sf::Sprite(bloom_texture_.getTexture()), &gauss_blur_shader_);
+					}
 
-				gauss_blur_shader_.setUniform("currTex", sf::Shader::CurrentTexture);
-				gauss_blur_shader_.setUniform("texSize", view.getSize());
-
-				bool horizontal = false;
-				for (int i = 0; i < 4; i++)
-				{
-					horizontal = !horizontal;
-					gauss_blur_shader_.setUniform("horizontal", horizontal);
-					bloom_texture_.draw(sf::Sprite(bloom_texture_.getTexture()), &gauss_blur_shader_);
 					bloom_texture_.display();
+
+					sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
+					target.draw(sprite, sf::BlendAdd);
+
 				}
-
-
-				sprite = sf::Sprite(bloom_texture_.getTexture());
-				sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
-
-				target.draw(sprite, sf::BlendAdd);
-
 			}
-
 		}
 	}
 
@@ -120,7 +107,15 @@ namespace fse
 
 	void FSELightWorld::setBloom(bool bloom)
 	{
-		bloom_ = bloom;
+		if (sf::RenderTexture* rTexture = dynamic_cast<sf::RenderTexture*>(scene_->getRenderTarget()))
+		{
+			bloom_ = bloom;
+		} 
+		else
+		{
+			std::cout << "Cannot use bloom directly on Window!\n";
+			bloom_ = false;
+		}
 	}
 
 	void FSELightWorld::updateView()
@@ -130,7 +125,6 @@ namespace fse
 			if (bloom_texture_.getSize() != scene_->getRenderTarget()->getSize())
 			{
 				bloom_texture_.create(scene_->getRenderTarget()->getSize().x, scene_->getRenderTarget()->getSize().y);
-				b_texture_.create(scene_->getRenderTarget()->getSize().x, scene_->getRenderTarget()->getSize().y);
 			}
 
 			sf::View view = scene_->getRenderTarget()->getView();

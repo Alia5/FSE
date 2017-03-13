@@ -84,12 +84,11 @@ namespace fse
 		sf::RenderTexture specular_texture_;
 
 		sf::RenderTexture bloom_texture_;
-		sf::Texture b_texture_;
 
 		std::unique_ptr<ltbl::LightSystem> light_system_;
 		bool lighting_ = true;
 
-		bool bloom_ = true;
+		bool bloom_ = false;
 
 		ltbl::LightDirectionEmission* sun_ = nullptr;
 
@@ -102,15 +101,20 @@ namespace fse
 
 		const std::string bloom_shader_str_ = "" \
 		"uniform sampler2D currTex;" \
+		"uniform sampler2D lightCompTex;" \
+		"uniform sampler2D specCompTex;" \
 		"" \
 		"void main()" \
 		"{" \
 		"	vec2 coord = gl_TexCoord[0].xy;" \
 		"	vec4 frColor = texture2D(currTex, coord);" \
+		"	vec4 lColor = texture2D(lightCompTex, coord);" \
+		"	lColor += texture2D(specCompTex, coord);" \
+		"	float lstrength = dot(lColor.rgb, vec3(0.2126, 0.7152, 0.0722));" \
 		"	float brightness = dot(frColor.rgb, vec3(0.2126, 0.7152, 0.0722));" \
-		"	if (brightness > 0.49)" \
+		"	if (brightness > 0.5 && lstrength > 0.75)" \
 		"	{" \
-		"		gl_FragColor = vec4(pow(frColor.rgb, vec3(3.5, 3.5, 3.5)), 1.0);" \
+		"		gl_FragColor = vec4(frColor.rgb, 1.0);" \
 		"	}" \
 		"	else" \
 		"	{" \
@@ -126,7 +130,7 @@ namespace fse
 		"void main() {" \
 		"	const float numBlurPixelsPerSide = 12.0;" \
 		"	vec2  blurMultiplyVec = vec2(0.0, 1.0);" \
-		"	float sigma = 9.243;" \
+		"	float sigma = 8.243;" \
 		"	if (horizontal)" \
 		"	{" \
 		"		blurMultiplyVec = vec2(1.0, 0.0);" \
