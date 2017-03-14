@@ -114,8 +114,9 @@ namespace fse
 			{
 				auto aabbs = it->get()->GetAABBs();
 				sf::RenderWindow* window = scene_->getApplication()->getWindow();
+				sf::RenderTarget* target = scene_->getRenderTarget();
 				if (aabbs.contains(
-					window->mapPixelToCoords(sf::Mouse::getPosition(*window))))
+					target->mapPixelToCoords(sf::Mouse::getPosition(*window))))
 				{
 					selected_id_ = it->get()->getID();
 					break;
