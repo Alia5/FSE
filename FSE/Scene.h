@@ -10,7 +10,8 @@
 #include "PhysDebugDraw.h"
 #include "NetworkHandler.h"
 
-#define FSE_RADTODEG 57.2958f
+#define FSE_RADTODEG 57.2957795f
+#define FSE_DEGTORAD 0.01745329f
 #define FSE_PXMRATIO = 25.f
 #define FSE_PIXELS_PER_METER 25.f
 #define FSE_METERS_PER_PIXEL (1.f/25.f)
