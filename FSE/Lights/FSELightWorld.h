@@ -110,54 +110,40 @@ namespace fse
 		"	vec4 frColor = texture2D(currTex, coord);" \
 		"	vec4 lColor = texture2D(lightCompTex, coord);" \
 		"	lColor += texture2D(specCompTex, coord);" \
-		"	float lstrength = dot(lColor.rgb, vec3(0.2126, 0.7152, 0.0722));" \
+		"	float lstrength = clamp(dot(lColor.rgb, vec3(0.2126, 0.7152, 0.0722)), 0.0, 1.0);" \
 		"	float brightness = dot(frColor.rgb, vec3(0.2126, 0.7152, 0.0722));" \
-		"	if (brightness > 0.5 && lstrength > 0.75)" \
+		"	if (lstrength > 0.1)" \
 		"	{" \
-		"		gl_FragColor = vec4(frColor.rgb, 1.0);" \
-		"	}" \
-		"	else" \
-		"	{" \
-		"		gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);" \
+		"		gl_FragColor = vec4(lColor.rgb, lstrength * brightness);" \
 		"	}" \
 		"}";
 		const std::string gauss_blur_shader_str_ = "" \
 		"uniform sampler2D currTex;" \
 		"uniform bool horizontal;" \
 		"uniform vec2 texSize; " \
-		"const float pi = 3.14159265;" \
+		"const float weight[5] = float[5](0.227027, 0.1945946, 0.1216216, 0.054054, 0.016216);" \
 		"" \
 		"void main() {" \
-		"	const float numBlurPixelsPerSide = 12.0;" \
-		"	vec2  blurMultiplyVec = vec2(0.0, 1.0);" \
-		"	float sigma = 8.243;" \
+		"	vec2 coord = gl_TexCoord[0].xy;" \
+		"	vec2 tex_offset = 1.0 / texSize;" \
+		"	vec3 result = texture(currTex, coord).rgb * weight[0];" \
 		"	if (horizontal)" \
 		"	{" \
-		"		blurMultiplyVec = vec2(1.0, 0.0);" \
+		"		for(int i = 1; i < 5; ++i)" \
+		"		{" \
+		"		   result += texture(currTex, coord + vec2(tex_offset.x * i, 0.0)).rgb * weight[i];" \
+		"		   result += texture(currTex, coord - vec2(tex_offset.x * i, 0.0)).rgb * weight[i];" \
+		"		}" \
 		"	}" \
-		"	float blurSize = 1.0 / texSize.y;" \
-		"	if (horizontal)" \
+		"	else" \
 		"	{" \
-		"		blurSize = 1.0 / texSize.x;" \
+		"		for(int i = 1; i < 5; ++i)" \
+		"		{" \
+		"		    result += texture(currTex, coord + vec2(0.0, tex_offset.y * i)).rgb * weight[i];" \
+		"		    result += texture(currTex, coord - vec2(0.0, tex_offset.y * i)).rgb * weight[i];" \
+		"		}" \
 		"	}" \
-		"	vec3 incrementalGaussian;" \
-		"	incrementalGaussian.x = 1.0 / (sqrt(2.0 * pi) * sigma);" \
-		"	incrementalGaussian.y = exp(-0.5 / (sigma * sigma));" \
-		"	incrementalGaussian.z = incrementalGaussian.y * incrementalGaussian.y;" \
-		"	vec4 avgValue = vec4(0.0, 0.0, 0.0, 0.0);" \
-		"	float coefficientSum = 0.0;" \
-		"	avgValue += texture2D(currTex, gl_TexCoord[0].xy) * incrementalGaussian.x;" \
-		"	coefficientSum += incrementalGaussian.x;" \
-		"	incrementalGaussian.xy *= incrementalGaussian.yz;" \
-		"	for (float i = 1.0; i <= numBlurPixelsPerSide; i++) {" \
-		"		avgValue += texture2D(currTex, gl_TexCoord[0].xy - i * blurSize *" \
-		"			blurMultiplyVec) * incrementalGaussian.x;" \
-		"		avgValue += texture2D(currTex, gl_TexCoord[0].xy + i * blurSize *" \
-		"			blurMultiplyVec) * incrementalGaussian.x;" \
-		"		coefficientSum += 2.0 * incrementalGaussian.x;" \
-		"		incrementalGaussian.xy *= incrementalGaussian.yz;" \
-		"	}" \
-		"	gl_FragColor = avgValue / coefficientSum;" \
+		"	gl_FragColor = vec4(result, 1.0);" \
 		"}";
 
 	};

@@ -45,6 +45,7 @@ namespace fse
 				if (sf::RenderTexture* r_texture = dynamic_cast<sf::RenderTexture*>(&target))
 				{
 					//r_texture->display();
+					bloom_texture_.clear();
 					sf::Sprite sprite = sf::Sprite(bloom_texture_.getTexture());
 					auto view = target.getView();
 
