@@ -42,14 +42,14 @@ namespace fse
 		 * Used to update the object
 		 * \param deltaTime elapsed time in seconds
 		 */
-		virtual void update(float deltaTime) = 0;
+		virtual void update(float deltaTime);
 
 		/*!
 		* Called once per frame, except when AABBs are out of view bounds \n 
 		* Used to draw the diffuse of the object
 		* \param target reference to the RenderTarget
 		*/
-		virtual void draw(sf::RenderTarget& target) = 0;
+		virtual void draw(sf::RenderTarget& target);
 		/*!
 		* Called once per frame, except when AABBs are out of view bounds \n 
 		* Used to draw the normal map of the object
@@ -179,6 +179,40 @@ namespace fse
 		 * \brief update all currently attached components
 		 */
 		void updateComponents(float deltaTime);
+
+		/*!
+		* \brief Calls callback for all components - Called on Contact begin
+		* Refer to Box2D doc
+		*
+		* \param otherObject Ptr to other object
+		* \param contact Ptr to b2Contact class
+		*/
+		virtual void BeginContactComponents(FSEObject* otherObject, b2Contact* contact);
+		/*!
+		* \brief Calls callback for all components - Called on Contact end
+		* Refer to Box2D doc
+		* \param otherObject Ptr to other object
+		* \param contact Ptr to b2Contact class
+		*/
+		virtual void EndContactComponents(FSEObject* otherObject, b2Contact* contact);
+		/*!
+		* \brief Calls callback for all components - Called before solving collision
+		* Refer to Box2D doc
+		*
+		* \param otherObject Ptr to other object
+		* \param contact Ptr to b2Contact class
+		* \param oldManifold Ptr to old contact manifold
+		*/
+		virtual void PreSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold);
+		/*!
+		* \brief Calls callback for all components -  Called after solving collision
+		* Refer to Box2D doc
+		*
+		* \param otherObject Ptr to other object
+		* \param contact Ptr to b2Contact class
+		* \param impulse Ptr to contact impulse
+		*/
+		virtual void PostSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
 
 		/*!
 		 * \brief attach a component to this object.

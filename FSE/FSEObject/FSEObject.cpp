@@ -24,6 +24,15 @@ namespace fse
 		
 	}
 
+	void FSEObject::update(float deltaTime)
+	{
+		updateComponents(deltaTime);
+	}
+
+	void FSEObject::draw(sf::RenderTarget& target)
+	{
+	}
+
 	void FSEObject::drawNormals(sf::RenderTarget& target)
 	{
 	}
@@ -51,18 +60,22 @@ namespace fse
 
 	void FSEObject::BeginContact(FSEObject* otherObject, b2Contact* contact)
 	{
+		BeginContactComponents(otherObject, contact);
 	}
 
 	void FSEObject::EndContact(FSEObject* otherObject, b2Contact* contact)
 	{
+		EndContactComponents(otherObject, contact);
 	}
 
 	void FSEObject::PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold)
 	{
+		PreSolveComponents(otherObject, contact, oldManifold);
 	}
 
 	void FSEObject::PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
 	{
+		PostSolveComponents(otherObject, contact, impulse);
 	}
 
 
@@ -129,9 +142,31 @@ namespace fse
 	void FSEObject::updateComponents(float deltaTime)
 	{
 		for (auto& component : components_)
-		{
 			component->update(deltaTime);
-		}
+	}
+
+	void FSEObject::BeginContactComponents(FSEObject* otherObject, b2Contact* contact)
+	{
+		for (auto& component : components_)
+			component->BeginContact(otherObject, contact);
+	}
+
+	void FSEObject::EndContactComponents(FSEObject* otherObject, b2Contact* contact)
+	{
+		for (auto& component : components_)
+			component->EndContact(otherObject, contact);
+	}
+
+	void FSEObject::PreSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold)
+	{
+		for (auto& component : components_)
+			component->PreSolve(otherObject, contact, oldManifold);
+	}
+
+	void FSEObject::PostSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
+	{
+		for (auto& component : components_)
+			component->PostSolve(otherObject, contact, impulse);
 	}
 
 	Component* FSEObject::attachComponent(std::unique_ptr<Component> component)
