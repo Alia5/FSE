@@ -237,8 +237,9 @@ namespace fse
 										}
 									}
 
+									sf::RenderTarget* target = scene_->getRenderTarget();
 									sf::RenderWindow* window = scene_->getApplication()->getWindow();
-									auto mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window)) * FSE_METERS_PER_PIXEL;
+									auto mousePos = target->mapPixelToCoords(sf::Mouse::getPosition(*window)) * FSE_METERS_PER_PIXEL;
 
 									ImGui::Text(std::string("SPAWNPOS: X=" + std::to_string(mousePos.x) + ", Y=" + std::to_string(mousePos.y)).data());
 
