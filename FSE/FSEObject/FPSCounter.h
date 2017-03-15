@@ -37,7 +37,7 @@ namespace fse
 		sf::Clock measureclock_;
 		float fps_ = 0;
 		float last_fps_ = 0;
-		float smoothing_ = 0.78f;
+		float smoothing_ = 0.58f;
 		sf::Clock updclock_;
 
 		Signal<>::Connection on_resize_connection_;

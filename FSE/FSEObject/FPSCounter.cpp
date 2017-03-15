@@ -81,7 +81,7 @@ namespace fse
 				ImGui::PlotVarFlushOldEntries();
 				updclock_.restart();
 			}
-			ImGui::PlotVar("FPS", 1.f / current_time_, 0, 250, 250);
+			ImGui::PlotVar("FPS", fps_, 0, 250, 250);
 			ImGui::PlotVar("Frametime", current_time_, 0, 0.1f, 250);
 			ImGui::End();
 			ImGui::PopStyleColor(2);
