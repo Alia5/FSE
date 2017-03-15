@@ -97,6 +97,12 @@ namespace fse
 	}
 
 
+	const std::vector<std::unique_ptr<Component>>* FSEObject::getComponents() const
+	{
+		return &components_;
+	}
+
+
 	Scene* FSEObject::getScene() const
 	{
 		return scene_;
@@ -134,7 +140,7 @@ namespace fse
 		scene_->notifyZOrderChanged();
 	}
 
-	std::vector<std::unique_ptr<FSEObject>>* FSEObject::getSceneFSEObjects() const
+	const std::vector<std::unique_ptr<FSEObject>>* FSEObject::getSceneFSEObjects() const
 	{
 		return scene_->getFSEObjects();
 	}
@@ -178,23 +184,24 @@ namespace fse
 		{
 			return nullptr;
 		}
-		component->attachToObject(this);
 		components_.push_back(std::move(component));
+		(*components_.rbegin())->attachToObject(this);
 		return (*components_.rbegin()).get();
 	}
 
-	bool FSEObject::detachComponent(Component*  component)
+	std::unique_ptr<Component> FSEObject::detachComponent(Component*  component)
 	{
 		auto it = std::find_if(components_.begin(), components_.end(), [&](const std::unique_ptr<Component> & obj) {
 			return obj.get() == component;
 		});
 		if (it == components_.end())
 		{
-			return false;
+			return nullptr;
 		}
-		(*it)->detach();
+		it->get()->detach();
+		auto res = std::move(*it);
 		components_.erase(it);
-		return true;
+		return res;
 	}
 
 	std::vector<Component*> FSEObject::getComponentsRttr()

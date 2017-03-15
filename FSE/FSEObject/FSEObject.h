@@ -163,6 +163,28 @@ namespace fse
 		 */
 		void setTimedKill();
 
+
+		/*!
+		* \brief attach a component to this object.
+		*
+		* \returns ptr to component, nullptr on failure
+		*/
+		Component* attachComponent(std::unique_ptr<Component>  component);
+
+		/*!
+		* \brief detach a component from this object.
+		* \returns uninqie ptr w/ detached component. nullptr on failure
+		*/
+		std::unique_ptr<Component> detachComponent(Component*  component);
+
+
+		/*!
+		* \brief Returns a ptr to all currently attached components.
+		*
+		* \return Ptr to vector of currently attached components
+		*/
+		const std::vector<std::unique_ptr<Component>>* getComponents() const;
+
 	protected:
 		/*!
 		 * Set z-order of object
@@ -173,7 +195,7 @@ namespace fse
 		 * \brief Returns Ptr to scene's vector of currently active FSEObjects \n 
 		 * Use when you for some odd reason need to query ALL objects, otherwise don't
 		 */
-		std::vector<std::unique_ptr<FSEObject> >* getSceneFSEObjects() const;
+		const std::vector<std::unique_ptr<FSEObject> >* getSceneFSEObjects() const;
 
 		/*!
 		 * \brief update all currently attached components
@@ -213,19 +235,6 @@ namespace fse
 		* \param impulse Ptr to contact impulse
 		*/
 		virtual void PostSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
-
-		/*!
-		 * \brief attach a component to this object.
-		 * 
-		 * \returns ptr to component, nullptr on failure
-		 */
-		Component* attachComponent(std::unique_ptr<Component>  component);
-
-		/*!
-		* \brief detach a component from this object.
-		* \returns detachment success
-		*/
-		bool detachComponent(Component*  component);
 
 		/*!
 		 * \brief Vector of attached components.
