@@ -213,7 +213,7 @@ void LightPointEmission::render(const sf::View& view,
 
 	// Mask off light shape (over-masking - mask too much, reveal penumbra/antumbra afterwards)
 	unsigned int shapesCount = shapes.size();
-	for (unsigned int i = 0; i < shapesCount; ++i) 
+	for (unsigned int i = 0; i < shapesCount; ++i)
 	{
 		LightShape* pLightShape = static_cast<LightShape*>(shapes[i]);
 		if (pLightShape->isAwake() && pLightShape->isTurnedOn())
@@ -230,11 +230,6 @@ void LightPointEmission::render(const sf::View& view,
 			}
 
 			// Render shape
-			//if (!pLightShape->renderLightOver())
-			//{
-			//	pLightShape->setColor(sf::Color::Black);
-			//	lightTempTexture.draw(*pLightShape);
-			//}
 
 			sf::Vector2f as = pLightShape->getTransform().transformPoint(pLightShape->getPoint(outerEdges[i]._outerBoundaryIndices[0]));
 			sf::Vector2f bs = pLightShape->getTransform().transformPoint(pLightShape->getPoint(outerEdges[i]._outerBoundaryIndices[1]));
@@ -278,8 +273,24 @@ void LightPointEmission::render(const sf::View& view,
 					antumbraTempTexture.draw(maskShape);
 				}
 
-				unmaskWithPenumbras(antumbraTempTexture, sf::BlendAdd, unshadowShader, penumbras, shadowExtension);
+				if (pLightShape->isAwake() && pLightShape->isTurnedOn())
+				{
+					if (pLightShape->receiveShadow())
+					{
+						if (pLightShape->renderLightOver())
+						{
+							pLightShape->setColor(sf::Color::White);
+							antumbraTempTexture.draw(*pLightShape);
+						}
+						else
+						{
+							pLightShape->setColor(sf::Color::Black);
+							antumbraTempTexture.draw(*pLightShape);
+						}
+					}
+				}
 
+				unmaskWithPenumbras(antumbraTempTexture, sf::BlendAdd, unshadowShader, penumbras, shadowExtension);
 				antumbraTempTexture.display();
 
 				sf::Sprite antumbraSprite;
@@ -288,6 +299,7 @@ void LightPointEmission::render(const sf::View& view,
 				lightTempTexture.setView(lightTempTexture.getDefaultView());
 				lightTempTexture.draw(antumbraSprite, sf::BlendMultiply);
 				lightTempTexture.setView(view);
+
 			}
 			else
 			{
@@ -299,6 +311,24 @@ void LightPointEmission::render(const sf::View& view,
 				maskShape.setPoint(3, as + priv::vectorNormalize(ad) * shadowExtension);
 				maskShape.setFillColor(sf::Color::Black);
 				lightTempTexture.draw(maskShape);
+
+				if (pLightShape->isAwake() && pLightShape->isTurnedOn())
+				{
+					if (pLightShape->receiveShadow())
+					{
+						if (pLightShape->renderLightOver())
+						{
+							lightOverShapeShader.setUniform("emissionTexture", emissonTempTexture.getTexture());
+							lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
+						}
+						else
+						{
+							pLightShape->setColor(sf::Color::Black);
+							lightTempTexture.draw(*pLightShape);
+						}
+					}
+				}
+
 				unmaskWithPenumbras(lightTempTexture, sf::BlendMultiply, unshadowShader, penumbras, shadowExtension);
 			}
 		}
@@ -312,10 +342,11 @@ void LightPointEmission::render(const sf::View& view,
 		{
 			if (pLightShape->renderLightOver())
 			{
-				pLightShape->setColor(sf::Color::White);
-
-				lightOverShapeShader.setUniform("emissionTexture", emissonTempTexture.getTexture());
-				lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
+				if (!pLightShape->receiveShadow())
+				{
+					lightOverShapeShader.setUniform("emissionTexture", emissonTempTexture.getTexture());
+					lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
+				}
 			}
 			else
 			{

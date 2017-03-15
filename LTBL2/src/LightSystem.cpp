@@ -87,7 +87,6 @@ namespace ltbl
 		// --- Point lights
 
 		std::vector<priv::QuadtreeOccupant*> lightShapes;
-
 		sf::Sprite lightTempSprite(mLightTempTexture.getTexture());
 		sf::Sprite specTempSprite(mSpecTempTexture.getTexture());
 

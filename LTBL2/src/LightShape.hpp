@@ -5,11 +5,11 @@
 namespace ltbl
 {
 
-//////////////////////////////////////////////////////////////////////////
-/// \brief Shape which can block light
-//////////////////////////////////////////////////////////////////////////
-class LightShape : public priv::QuadtreeOccupant, public priv::BaseLight, public sf::Drawable
-{
+	//////////////////////////////////////////////////////////////////////////
+	/// \brief Shape which can block light
+	//////////////////////////////////////////////////////////////////////////
+	class LightShape : public priv::QuadtreeOccupant, public priv::BaseLight, public sf::Drawable
+	{
 	public:
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Ctor
@@ -159,7 +159,7 @@ class LightShape : public priv::QuadtreeOccupant, public priv::BaseLight, public
 		/// \brief Get the origin of the shape
 		/// \return Current origin
 		//////////////////////////////////////////////////////////////////////////
-		const sf::Vector2f& getOrigin() const; 
+		const sf::Vector2f& getOrigin() const;
 
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Set if the light render over the shape
@@ -179,6 +179,9 @@ class LightShape : public priv::QuadtreeOccupant, public priv::BaseLight, public
 		//////////////////////////////////////////////////////////////////////////
 		sf::FloatRect getAABB() const override;
 
+		bool receiveShadow() const;
+		void setReceiveShadow(bool receive);
+
 	private:
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Draw the shape
@@ -187,9 +190,9 @@ class LightShape : public priv::QuadtreeOccupant, public priv::BaseLight, public
 		//////////////////////////////////////////////////////////////////////////
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	private:
 		sf::ConvexShape mShape; ///< The shape data
 		bool mRenderLightOver; ///< Do light render over the shape ?
-};
+		bool recieve_shadow_;
+	};
 
 } // namespace ltbl

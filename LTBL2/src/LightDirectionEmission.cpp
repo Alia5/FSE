@@ -33,7 +33,7 @@ void LightDirectionEmission::render(const sf::View& view, sf::RenderTexture& lig
 	for (unsigned int i = 0; i < shapesCount; ++i)
 	{
         LightShape* pLightShape = static_cast<LightShape*>(shapes[i]);
-		if (pLightShape != nullptr && pLightShape->isTurnedOn())
+		if (pLightShape != nullptr && pLightShape->isTurnedOn() && pLightShape->isAwake())
 		{
 			// Get boundaries
 			std::vector<priv::Penumbra> penumbras;
@@ -68,6 +68,20 @@ void LightDirectionEmission::render(const sf::View& view, sf::RenderTexture& lig
 			maskShape.setFillColor(sf::Color::Black);
 			antumbraTempTexture.draw(maskShape);
 
+			if (pLightShape->isAwake() && pLightShape->isTurnedOn())
+			{
+				if (pLightShape->renderLightOver())
+				{
+					pLightShape->setColor(sf::Color::White);
+					antumbraTempTexture.draw(*pLightShape);
+				}
+				else
+				{
+					pLightShape->setColor(sf::Color::Black);
+					antumbraTempTexture.draw(*pLightShape);
+				}
+			} 
+
 			unmaskWithPenumbras(antumbraTempTexture, sf::BlendAdd, unshadowShader, penumbras, totalShadowExtension);
 
 			antumbraTempTexture.display();
@@ -81,10 +95,9 @@ void LightDirectionEmission::render(const sf::View& view, sf::RenderTexture& lig
     for (unsigned int i = 0; i < shapesCount; i++) 
 	{
         LightShape* pLightShape = static_cast<LightShape*>(shapes[i]);
-        if (pLightShape->renderLightOver() && pLightShape->isTurnedOn()) 
+        if (pLightShape->renderLightOver() && pLightShape->isTurnedOn() && pLightShape->renderLightOver() && !pLightShape->receiveShadow())
 		{
             pLightShape->setColor(sf::Color::White);
-
             lightTempTexture.draw(*pLightShape);
         }
     }
