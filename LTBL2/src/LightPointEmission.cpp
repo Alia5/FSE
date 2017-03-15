@@ -275,18 +275,18 @@ void LightPointEmission::render(const sf::View& view,
 
 				if (pLightShape->isAwake() && pLightShape->isTurnedOn())
 				{
-					if (pLightShape->receiveShadow())
+					if (pLightShape->renderLightOver())
 					{
-						if (pLightShape->renderLightOver())
+						if (pLightShape->receiveShadow())
 						{
 							pLightShape->setColor(sf::Color::White);
 							antumbraTempTexture.draw(*pLightShape);
 						}
-						else
-						{
-							pLightShape->setColor(sf::Color::Black);
-							antumbraTempTexture.draw(*pLightShape);
-						}
+					}
+					else
+					{
+						pLightShape->setColor(sf::Color::Black);
+						antumbraTempTexture.draw(*pLightShape);
 					}
 				}
 
@@ -314,18 +314,18 @@ void LightPointEmission::render(const sf::View& view,
 
 				if (pLightShape->isAwake() && pLightShape->isTurnedOn())
 				{
-					if (pLightShape->receiveShadow())
+					if (pLightShape->renderLightOver())
 					{
-						if (pLightShape->renderLightOver())
+						if (pLightShape->receiveShadow())
 						{
 							lightOverShapeShader.setUniform("emissionTexture", emissonTempTexture.getTexture());
 							lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
 						}
-						else
-						{
-							pLightShape->setColor(sf::Color::Black);
-							lightTempTexture.draw(*pLightShape);
-						}
+					}
+					else
+					{
+						pLightShape->setColor(sf::Color::Black);
+						lightTempTexture.draw(*pLightShape);
 					}
 				}
 
@@ -347,11 +347,6 @@ void LightPointEmission::render(const sf::View& view,
 					lightOverShapeShader.setUniform("emissionTexture", emissonTempTexture.getTexture());
 					lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
 				}
-			}
-			else
-			{
-				pLightShape->setColor(sf::Color::Black);
-				lightTempTexture.draw(*pLightShape);
 			}
 		}
 	}
