@@ -97,7 +97,7 @@ namespace fse
 		}
 	}
 
-	std::vector<std::unique_ptr<FSEObject> >* Scene::getFSEObjects()
+	const std::vector<std::unique_ptr<FSEObject> >* Scene::getFSEObjects() const
 	{
 		return &fse_objects_;
 	}

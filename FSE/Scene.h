@@ -55,7 +55,7 @@ namespace fse
 		 * don't do it if you don't need to 
 		 * \return Ptr to vector of currently active objects
 		 */
-		std::vector<std::unique_ptr<FSEObject>>* getFSEObjects();
+		const std::vector<std::unique_ptr<FSEObject>>* getFSEObjects() const;
 
 		/*!
 		 * \brief Notify of changed z-orders
