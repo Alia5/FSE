@@ -139,14 +139,13 @@ namespace ltbl
 
 		mCompositionTexture.display();
 
-		mSpecularCompTexture.display();
-
 		auto sz = view.getSize();
 		sf::Sprite sprite = sf::Sprite(mCompositionTexture.getTexture());
+		mSpecularCompTexture.draw(sprite, sf::BlendMultiply);
+		mSpecularCompTexture.display();
 		sprite.setPosition(view.getCenter() - view.getSize() / 2.f);
 		sprite.setScale(sz.x / target.getSize().x, sz.y / target.getSize().y);
 		target.draw(sprite, sf::BlendMultiply);
-
 		sprite.setTexture(mSpecularCompTexture.getTexture());
 		target.draw(sprite, sf::BlendAdd);
 	}

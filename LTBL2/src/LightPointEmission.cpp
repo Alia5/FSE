@@ -147,24 +147,24 @@ void LightPointEmission::render(const sf::View& view,
 	const std::vector<priv::QuadtreeOccupant*>& shapes, bool normalsEnabled,
 	sf::Shader& normalsShader, sf::Shader& specularShader, sf::RenderTexture& emissonTempTexture, sf::RenderTexture& emissionTempSpecTexture)
 {
-    float shadowExtension = mShadowOverExtendMultiplier * (getAABB().width + getAABB().height);
+	float shadowExtension = mShadowOverExtendMultiplier * (getAABB().width + getAABB().height);
 
-    struct OuterEdges 
+	struct OuterEdges 
 	{
-        std::vector<int> _outerBoundaryIndices;
-        std::vector<sf::Vector2f> _outerBoundaryVectors;
-    };
+		std::vector<int> _outerBoundaryIndices;
+		std::vector<sf::Vector2f> _outerBoundaryVectors;
+	};
 
-    std::vector<OuterEdges> outerEdges(shapes.size());
+	std::vector<OuterEdges> outerEdges(shapes.size());
 
-    std::vector<int> innerBoundaryIndices;
-    std::vector<sf::Vector2f> innerBoundaryVectors;
-    std::vector<priv::Penumbra> penumbras;
+	std::vector<int> innerBoundaryIndices;
+	std::vector<sf::Vector2f> innerBoundaryVectors;
+	std::vector<priv::Penumbra> penumbras;
 
-    //----- Emission
+	//----- Emission
 
-    lightTempTexture.clear();
-    lightTempTexture.setView(view);
+	lightTempTexture.clear();
+	lightTempTexture.setView(view);
 
 	specularTexture.clear();
 	specularTexture.setView(view);
@@ -198,7 +198,6 @@ void LightPointEmission::render(const sf::View& view,
 		lightTempTexture.draw(mSprite, &normalsShader);
 		emissonTempTexture.draw(mSprite, &normalsShader);
 		specularTexture.draw(mSprite, &specularShader);
-		emissionTempSpecTexture.draw(mSprite, &specularShader);
 
 	}
 	else 
@@ -208,15 +207,15 @@ void LightPointEmission::render(const sf::View& view,
 	}
 
 	emissonTempTexture.display();
-	emissionTempSpecTexture.display();
+	specularTexture.display();
 
-    //----- Shapes
+	//----- Shapes
 
-    // Mask off light shape (over-masking - mask too much, reveal penumbra/antumbra afterwards)
-    unsigned int shapesCount = shapes.size();
-    for (unsigned int i = 0; i < shapesCount; ++i) 
+	// Mask off light shape (over-masking - mask too much, reveal penumbra/antumbra afterwards)
+	unsigned int shapesCount = shapes.size();
+	for (unsigned int i = 0; i < shapesCount; ++i) 
 	{
-        LightShape* pLightShape = static_cast<LightShape*>(shapes[i]);
+		LightShape* pLightShape = static_cast<LightShape*>(shapes[i]);
 		if (pLightShape->isAwake() && pLightShape->isTurnedOn())
 		{
 			// Get boundaries
@@ -231,12 +230,11 @@ void LightPointEmission::render(const sf::View& view,
 			}
 
 			// Render shape
-			if (!pLightShape->renderLightOver())
-			{
-				pLightShape->setColor(sf::Color::Black);
-				lightTempTexture.draw(*pLightShape);
-				specularTexture.draw(*pLightShape);
-			}
+			//if (!pLightShape->renderLightOver())
+			//{
+			//	pLightShape->setColor(sf::Color::Black);
+			//	lightTempTexture.draw(*pLightShape);
+			//}
 
 			sf::Vector2f as = pLightShape->getTransform().transformPoint(pLightShape->getPoint(outerEdges[i]._outerBoundaryIndices[0]));
 			sf::Vector2f bs = pLightShape->getTransform().transformPoint(pLightShape->getPoint(outerEdges[i]._outerBoundaryIndices[1]));
@@ -290,11 +288,6 @@ void LightPointEmission::render(const sf::View& view,
 				lightTempTexture.setView(lightTempTexture.getDefaultView());
 				lightTempTexture.draw(antumbraSprite, sf::BlendMultiply);
 				lightTempTexture.setView(view);
-
-				specularTexture.setView(lightTempTexture.getDefaultView());
-				specularTexture.draw(antumbraSprite, sf::BlendMultiply);
-				specularTexture.setView(view);
-
 			}
 			else
 			{
@@ -306,14 +299,10 @@ void LightPointEmission::render(const sf::View& view,
 				maskShape.setPoint(3, as + priv::vectorNormalize(ad) * shadowExtension);
 				maskShape.setFillColor(sf::Color::Black);
 				lightTempTexture.draw(maskShape);
-				specularTexture.draw(maskShape);
-
 				unmaskWithPenumbras(lightTempTexture, sf::BlendMultiply, unshadowShader, penumbras, shadowExtension);
-				unmaskWithPenumbras(specularTexture, sf::BlendMultiply, unshadowShader, penumbras, shadowExtension);
-
 			}
 		}
-    }
+	}
 
 	for (unsigned i = 0; i < shapesCount; i++)
 	{
@@ -327,21 +316,16 @@ void LightPointEmission::render(const sf::View& view,
 
 				lightOverShapeShader.setUniform("emissionTexture", emissonTempTexture.getTexture());
 				lightTempTexture.draw(*pLightShape, &lightOverShapeShader);
-
-				lightOverShapeShader.setUniform("emissionTexture", emissionTempSpecTexture.getTexture());
-				specularTexture.draw(*pLightShape, &lightOverShapeShader);
 			}
 			else
 			{
 				pLightShape->setColor(sf::Color::Black);
 				lightTempTexture.draw(*pLightShape);
-				specularTexture.draw(*pLightShape);
 			}
 		}
 	}
 
-    lightTempTexture.display();
-
+	lightTempTexture.display();
 	specularTexture.display();
 
 }
