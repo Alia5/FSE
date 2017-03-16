@@ -215,7 +215,7 @@ class LightPointEmission : public priv::QuadtreeOccupant, public priv::BaseLight
 		/// \brief Get the AABB box of the light
 		/// \return The AABB box
 		//////////////////////////////////////////////////////////////////////////
-		sf::FloatRect getAABB() const;
+		sf::FloatRect getAABB() const override;
 
 	private:
 		//////////////////////////////////////////////////////////////////////////
@@ -240,7 +240,7 @@ class LightPointEmission : public priv::QuadtreeOccupant, public priv::BaseLight
 		/// \param target The render target to apply the light on
 		/// \param states The render states to apply to the light on render
 		//////////////////////////////////////////////////////////////////////////
-		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	private:
 		sf::Sprite mSprite; ///< The sprite of the light
