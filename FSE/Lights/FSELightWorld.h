@@ -117,33 +117,43 @@ namespace fse
 		"		gl_FragColor = vec4(lColor.rgb, lstrength * brightness);" \
 		"	}" \
 		"}";
-		const std::string gauss_blur_shader_str_ = "" \
+        const std::string gauss_blur_shader_str_ = "" \
 		"uniform sampler2D currTex;" \
 		"uniform bool horizontal;" \
 		"uniform vec2 texSize; " \
-		"const float weight[5] = float[5](0.227027, 0.1945946, 0.1216216, 0.054054, 0.016216);" \
+		"const float pi = 3.14159265;" \
 		"" \
 		"void main() {" \
-		"	vec2 coord = gl_TexCoord[0].xy;" \
-		"	vec2 tex_offset = 1.0 / texSize;" \
-		"	vec3 result = texture(currTex, coord).rgb * weight[0];" \
+		"	const float numBlurPixelsPerSide = 4.0;" \
+		"	vec2  blurMultiplyVec = vec2(0.0, 1.0);" \
+		"	float sigma = 5.243;" \
 		"	if (horizontal)" \
 		"	{" \
-		"		for(int i = 1; i < 5; ++i)" \
-		"		{" \
-		"		   result += texture(currTex, coord + vec2(tex_offset.x * i, 0.0)).rgb * weight[i];" \
-		"		   result += texture(currTex, coord - vec2(tex_offset.x * i, 0.0)).rgb * weight[i];" \
-		"		}" \
+		"		blurMultiplyVec = vec2(1.0, 0.0);" \
 		"	}" \
-		"	else" \
+		"	float blurSize = 1.0 / texSize.y;" \
+		"	if (horizontal)" \
 		"	{" \
-		"		for(int i = 1; i < 5; ++i)" \
-		"		{" \
-		"		    result += texture(currTex, coord + vec2(0.0, tex_offset.y * i)).rgb * weight[i];" \
-		"		    result += texture(currTex, coord - vec2(0.0, tex_offset.y * i)).rgb * weight[i];" \
-		"		}" \
+		"		blurSize = 1.0 / texSize.x;" \
 		"	}" \
-		"	gl_FragColor = vec4(result, 1.0);" \
+		"	vec3 incrementalGaussian;" \
+		"	incrementalGaussian.x = 1.0 / (sqrt(2.0 * pi) * sigma);" \
+		"	incrementalGaussian.y = exp(-0.5 / (sigma * sigma));" \
+		"	incrementalGaussian.z = incrementalGaussian.y * incrementalGaussian.y;" \
+		"	vec4 avgValue = vec4(0.0, 0.0, 0.0, 0.0);" \
+		"	float coefficientSum = 0.0;" \
+		"	avgValue += texture2D(currTex, gl_TexCoord[0].xy) * incrementalGaussian.x;" \
+		"	coefficientSum += incrementalGaussian.x;" \
+		"	incrementalGaussian.xy *= incrementalGaussian.yz;" \
+		"	for (float i = 1.0; i <= numBlurPixelsPerSide; i++) {" \
+		"		avgValue += texture2D(currTex, gl_TexCoord[0].xy - i * blurSize *" \
+		"			blurMultiplyVec) * incrementalGaussian.x;" \
+		"		avgValue += texture2D(currTex, gl_TexCoord[0].xy + i * blurSize *" \
+		"			blurMultiplyVec) * incrementalGaussian.x;" \
+		"		coefficientSum += 2.0 * incrementalGaussian.x;" \
+		"		incrementalGaussian.xy *= incrementalGaussian.yz;" \
+		"	}" \
+		"	gl_FragColor = avgValue / coefficientSum;" \
 		"}";
 
 	};
