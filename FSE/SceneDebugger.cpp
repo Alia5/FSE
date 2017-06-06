@@ -349,7 +349,7 @@ namespace fse
 			else if (prop.get_type().get_properties().size() > 0)
 			{
 
-				std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<int>(object)));
+				std::string propname(std::string(prop.get_name().data()) + "##" + std::to_string(reinterpret_cast<size_t>(object)));
 				if (ImGui::TreeNode(propname.data()))
 				{
 					auto val = prop.get_value(*object);
@@ -368,7 +368,7 @@ namespace fse
 				std::string propname(std::string(prop.get_name().data()) + "[]");
 				if (prop.is_readonly())
 					propname += " -READONLY-";
-				propname += "##" + std::to_string(reinterpret_cast<int>(object));
+				propname += "##" + std::to_string(reinterpret_cast<size_t>(object));
 				if (ImGui::TreeNode(propname.data()))
 				{
 					auto val = prop.get_value(*object);
@@ -379,7 +379,7 @@ namespace fse
 						std::string propn(std::string(prop.get_name().data()) + "[" + std::to_string(i) + "]");
 						if (prop.is_readonly())
 							propn += " -READONLY-";
-						propn += "##" + std::to_string(reinterpret_cast<int>(object));
+						propn += "##" + std::to_string(reinterpret_cast<size_t>(object));
 						if (ImGui::TreeNode(propn.data()))
 						{
 							auto v = arr.get_value(i);
@@ -417,7 +417,7 @@ namespace fse
 
 		item_edit_map_[rttr::type::get<bool>()] = [](rttr::variant& variant, std::string name, rttr::instance* instance)
 		{
-			std::string propname(name + "##" + std::to_string(reinterpret_cast<int>(instance)));
+			std::string propname(name + "##" + std::to_string(reinterpret_cast<size_t>(instance)));
 			bool val = variant.convert<bool>();
 			if (ImGui::Checkbox(propname.data(), &val))
 				variant = rttr::variant(val);
@@ -425,7 +425,7 @@ namespace fse
 
 		item_edit_map_[rttr::type::get<int>()] = [](rttr::variant& variant, std::string name, rttr::instance* instance)
 		{
-			std::string propname(name + "##" + std::to_string(reinterpret_cast<int>(instance)));
+			std::string propname(name + "##" + std::to_string(reinterpret_cast<size_t>(instance)));
 			int val = variant.convert<int>();
 			if (ImGui::InputInt(propname.data(), &val))
 				variant = rttr::variant(val);
@@ -433,7 +433,7 @@ namespace fse
 
 		item_edit_map_[rttr::type::get<float>()] = [](rttr::variant& variant, std::string name, rttr::instance* instance)
 		{
-			std::string propname(name + "##" + std::to_string(reinterpret_cast<int>(instance)));
+			std::string propname(name + "##" + std::to_string(reinterpret_cast<size_t>(instance)));
 			float val = variant.convert<float>();
 			if (ImGui::InputFloat(propname.data(), &val))
 				variant = rttr::variant(val);
@@ -441,7 +441,7 @@ namespace fse
 
 		item_edit_map_[rttr::type::get<sf::Vector2f>()] = [](rttr::variant& variant, std::string name, rttr::instance* instance)
 		{
-			std::string propname(name + "##" + std::to_string(reinterpret_cast<int>(instance)));
+			std::string propname(name + "##" + std::to_string(reinterpret_cast<size_t>(instance)));
 			sf::Vector2f val = variant.convert<sf::Vector2f>();
 			float arr[2] = {val.x, val.y};
 
@@ -454,7 +454,7 @@ namespace fse
 
 		item_edit_map_[rttr::type::get<sf::IntRect>()] = [](rttr::variant& variant, std::string name, rttr::instance* instance)
 		{
-			std::string propname(name + "##" + std::to_string(reinterpret_cast<int>(instance)));
+			std::string propname(name + "##" + std::to_string(reinterpret_cast<size_t>(instance)));
 			sf::IntRect val = variant.convert<sf::IntRect>();
 			int arr[4] = {val.left, val.top, val.width, val.height};
 
@@ -467,7 +467,7 @@ namespace fse
 
 		item_edit_map_[rttr::type::get<sf::FloatRect>()] = [](rttr::variant& variant, std::string name, rttr::instance* instance)
 		{
-			std::string propname(name + "##" + std::to_string(reinterpret_cast<int>(instance)));
+			std::string propname(name + "##" + std::to_string(reinterpret_cast<size_t>(instance)));
 			sf::FloatRect val = variant.convert<sf::FloatRect>();
 			float arr[4] = { val.left, val.top, val.width, val.height };
 
@@ -481,7 +481,7 @@ namespace fse
 
 		item_edit_map_[rttr::type::get<sf::Color>()] = [](rttr::variant& variant, std::string name, rttr::instance* instance)
 		{
-			std::string propname(name + "##" + std::to_string(reinterpret_cast<int>(instance)));
+			std::string propname(name + "##" + std::to_string(reinterpret_cast<size_t>(instance)));
 
 			sf::Color val = variant.convert<sf::Color>();
 			float color[4] = { (val.r / 255.f), (val.g / 255.f), (val.b / 255.f), (val.a / 255.f) };
@@ -495,10 +495,10 @@ namespace fse
 						static_cast<sf::Uint8>(color[3] * 255.f) };
 				variant = rttr::variant(val);
 			}
-			if (ImGui::TreeNode(std::string("Colorpicker##" + std::to_string(reinterpret_cast<int>(instance))).data()))
+			if (ImGui::TreeNode(std::string("Colorpicker##" + std::to_string(reinterpret_cast<size_t>(instance))).data()))
 			{
 				ImGui::PushItemWidth(200);
-				if (ImGui::ColorPicker4(std::string(propname + "##Picker" + std::to_string(reinterpret_cast<int>(instance))).data(),
+				if (ImGui::ColorPicker4(std::string(propname + "##Picker" + std::to_string(reinterpret_cast<size_t>(instance))).data(),
 					color, ImGui::ImGuiColorEditFlags_NoSliders))
 				{
 
@@ -515,7 +515,7 @@ namespace fse
 
 		item_edit_map_[rttr::type::get<std::string>()] = [](rttr::variant& variant, std::string name, rttr::instance* instance)
 		{
-			std::string propname(name + "##" + std::to_string(reinterpret_cast<int>(instance)));
+			std::string propname(name + "##" + std::to_string(reinterpret_cast<size_t>(instance)));
 			std::string val = variant.convert<std::string>();
 
 			std::vector<char> stringvec;
@@ -554,7 +554,7 @@ namespace fse
 	{
 		item_edit_funcs_[rttr::type::get<sf::Vector2f>()] = [this](rttr::variant& variant, std::string name, rttr::instance* instance)
 		{
-			std::string propname(name + "##" + std::to_string(reinterpret_cast<int>(instance)));
+			std::string propname(name + "##" + std::to_string(reinterpret_cast<size_t>(instance)));
 			sf::Vector2f val = variant.convert<sf::Vector2f>();
 			float arr[2] = { val.x, val.y };
 
