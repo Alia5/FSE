@@ -38,9 +38,9 @@ as published by Sam Hocevar. See the license.txt file for more details.
 
 All of the above are licensed under the [zLib-License](https://en.wikipedia.org/wiki/Zlib_License)
 
-[Dear ImGui](https://github.com/ocornut/imgui) (1.49)
+[Dear ImGui](https://github.com/ocornut/imgui) (1.51)
 
-[ImGui SFML](https://github.com/eliasdaler/imgui-sfml) (ca738ad)
+[ImGui SFML](https://github.com/eliasdaler/imgui-sfml) (0e92b6d)
 
 [RTTR (RunTimeTypeReflection)](http://www.rttr.org) (c37d0e3)
 
