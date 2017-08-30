@@ -20,11 +20,15 @@
 //#define IMGUI_DISABLE_WIN32_DEFAULT_CLIPBOARD_FUNCS
 //#define IMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCS
 
-//---- Don't implement help and test window functionality (ShowUserGuide()/ShowStyleEditor()/ShowTestWindow() methods will be empty)
+//---- Don't implement test window functionality (ShowTestWindow()/ShowStyleEditor()/ShowUserGuide() methods will be empty)
+//---- It is very strongly recommended to NOT disable the test windows. Please read the comment at the top of imgui_demo.cpp to learn why.
 //#define IMGUI_DISABLE_TEST_WINDOWS
 
-//---- Don't define obsolete functions names
+//---- Don't define obsolete functions names. Consider enabling from time to time or when updating to reduce like hood of using already obsolete function/names
 //#define IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+
+//---- Pack colors to BGRA instead of RGBA (remove need to post process vertex buffer in back ends)
+//#define IMGUI_USE_BGRA_PACKED_COLOR
 
 //---- Implement STB libraries in a namespace to avoid conflicts
 //#define IMGUI_STB_NAMESPACE     ImGuiStb
@@ -40,6 +44,9 @@
         operator MyVec4() const { return MyVec4(x,y,z,w); }
 */
 
+//---- Use 32-bit vertex indices (instead of default: 16-bit) to allow meshes with more than 64K vertices
+//#define ImDrawIdx unsigned int
+
 //---- Tip: You can add extra functions within the ImGui:: namespace, here or in your own headers files.
 //---- e.g. create variants of the ImGui::Value() helper for your low-level math types, or your own widgets/helpers.
 /*
@@ -48,9 +55,6 @@ namespace ImGui
     void    Value(const char* prefix, const MyMatrix44& v, const char* float_format = NULL);
 }
 */
-
-// Add this to your imconfig.h
-
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Color.hpp>
 
@@ -77,3 +81,4 @@ namespace ImGui
             static_cast<sf::Uint8>(z * 255.f),                          \
             static_cast<sf::Uint8>(w * 255.f));                         \
     }
+

@@ -1,8 +1,8 @@
 #include "SceneDebugger.h"
 #include "FSEObject/FSEObject.h"
-#include "../FSE/FSE-ImGui/imgui-colorpicker.h"
-#include "../imgui-1.49/imgui_internal.h"
 
+#include "../imgui-1.51/imgui.h"
+#include "../imgui-1.51/imgui_internal.h"
 #include "../FSE/Application.h"
 
 #include <sstream>
@@ -495,11 +495,13 @@ namespace fse
 						static_cast<sf::Uint8>(color[3] * 255.f) };
 				variant = rttr::variant(val);
 			}
+
+
 			if (ImGui::TreeNode(std::string("Colorpicker##" + std::to_string(reinterpret_cast<size_t>(instance))).data()))
 			{
 				ImGui::PushItemWidth(200);
 				if (ImGui::ColorPicker4(std::string(propname + "##Picker" + std::to_string(reinterpret_cast<size_t>(instance))).data(),
-					color, ImGui::ImGuiColorEditFlags_NoSliders))
+					color, ImGuiColorEditFlags_NoInputs))
 				{
 
 						val = { static_cast<sf::Uint8>(color[0] * 255.f),

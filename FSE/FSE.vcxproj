@@ -164,13 +164,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\imgui-1.49\imconfig.h" />
-    <ClInclude Include="..\imgui-1.49\imgui-SFML.h" />
-    <ClInclude Include="..\imgui-1.49\imgui.h" />
-    <ClInclude Include="..\imgui-1.49\imgui_internal.h" />
-    <ClInclude Include="..\imgui-1.49\stb_rect_pack.h" />
-    <ClInclude Include="..\imgui-1.49\stb_textedit.h" />
-    <ClInclude Include="..\imgui-1.49\stb_truetype.h" />
+    <ClInclude Include="..\imgui-1.51\imconfig.h" />
+    <ClInclude Include="..\imgui-1.51\imgui-SFML.h" />
+    <ClInclude Include="..\imgui-1.51\imgui.h" />
+    <ClInclude Include="..\imgui-1.51\imgui_internal.h" />
+    <ClInclude Include="..\imgui-1.51\stb_rect_pack.h" />
+    <ClInclude Include="..\imgui-1.51\stb_textedit.h" />
+    <ClInclude Include="..\imgui-1.51\stb_truetype.h" />
     <ClInclude Include="..\LTBL2\src\LightDirectionEmission.hpp" />
     <ClInclude Include="..\LTBL2\src\LightPointEmission.hpp" />
     <ClInclude Include="..\LTBL2\src\LightResources.hpp" />
@@ -220,7 +220,6 @@
     <ClInclude Include="EngineCore.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="FMath.h" />
-    <ClInclude Include="FSE-ImGui\imgui-colorpicker.h" />
     <ClInclude Include="FSE-ImGui\imgui-plotvar.h" />
     <ClInclude Include="FSEObject\FPSCounter.h" />
     <ClInclude Include="FSEObject\KillVolume.h" />
@@ -243,10 +242,10 @@
     <ClInclude Include="Signals.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\imgui-1.49\imgui-SFML.cpp" />
-    <ClCompile Include="..\imgui-1.49\imgui.cpp" />
-    <ClCompile Include="..\imgui-1.49\imgui_demo.cpp" />
-    <ClCompile Include="..\imgui-1.49\imgui_draw.cpp" />
+    <ClCompile Include="..\imgui-1.51\imgui-SFML.cpp" />
+    <ClCompile Include="..\imgui-1.51\imgui.cpp" />
+    <ClCompile Include="..\imgui-1.51\imgui_demo.cpp" />
+    <ClCompile Include="..\imgui-1.51\imgui_draw.cpp" />
     <ClCompile Include="..\LTBL2\src\LightDirectionEmission.cpp" />
     <ClCompile Include="..\LTBL2\src\LightPointEmission.cpp" />
     <ClCompile Include="..\LTBL2\src\LightShape.cpp" />
@@ -258,7 +257,6 @@
     <ClCompile Include="Component\ViewController.cpp" />
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="FSE-ImGui\imgui-colorpicker.cpp" />
     <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />
     <ClCompile Include="FSEObject\KillVolume.cpp" />
