@@ -24,14 +24,21 @@ namespace fse
 
 		if (show_window_)
 		{
+#ifdef ANDROID
+			sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "");
+            window.setFramerateLimit(60);
+#else
 			sf::RenderWindow window(sf::VideoMode(1280, 720), "FSE");
-
-			window.setFramerateLimit(120);
+            window.setFramerateLimit(120);
+#endif
 
 			application_->setWindow(&window);
 			application_->init();
-
+#ifdef ANDROID
+            while (window.isOpen() && window.hasFocus() && run_)
+#else
 			while (window.isOpen() && run_)
+#endif
 			{
 				if (application_ != nullptr)
 				{
