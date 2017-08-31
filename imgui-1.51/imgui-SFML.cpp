@@ -77,7 +77,7 @@ void Init(sf::RenderTarget& target, bool loadDefaultFont)
     }
     s_fontTexture = new sf::Texture;
 
-    if (loadDefaultFont) { 
+    if (loadDefaultFont) {
         // this will load default font automatically
         // No need to call AddDefaultFont
         UpdateFontTexture();
@@ -333,6 +333,7 @@ ImVec2 getDownRightAbsolute(const sf::FloatRect & rect)
 // Rendering callback
 void RenderDrawLists(ImDrawData* draw_data)
 {
+#ifndef ANDROID
     if (draw_data->CmdListsCount == 0) {
         return;
     }
@@ -367,6 +368,7 @@ void RenderDrawLists(ImDrawData* draw_data)
     glLoadIdentity();
     glOrtho(0.0f, io.DisplaySize.x, io.DisplaySize.y, 0.0f, -1.0f, +1.0f);
 
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -393,8 +395,8 @@ void RenderDrawLists(ImDrawData* draw_data)
             idx_buffer += pcmd->ElemCount;
         }
     }
-
     glPopAttrib();
+#endif
 }
 
 bool imageButtonImpl(const sf::Texture& texture, const sf::FloatRect& textureRect, const sf::Vector2f& size, const int framePadding,
