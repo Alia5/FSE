@@ -1,7 +1,6 @@
 #include "FPSCounter.h"
 #include "../Application.h"
 #include "../FSE-ImGui/imgui-plotvar.h"
-
 #include <rttr/registration>
 
 namespace fse
@@ -12,7 +11,7 @@ namespace fse
 
 	FPSCounter::FPSCounter(Scene* scene, const sf::Vector2f& spawnPos) : FSEObject(scene, spawnPos)
 	{
-		font_.loadFromFile("./data/fonts/bitstream-vera/VeraMoBd.ttf");
+		font_.loadFromFile("data/fonts/bitstream-vera/VeraMoBd.ttf");
 
 
 		fps_text_.setFont(font_);
@@ -95,7 +94,11 @@ namespace fse
 
 	void FPSCounter::setShowDetailed(bool detailed)
 	{
+#ifdef ANDROID
+        detailed_view_ = false;
+#else
 		detailed_view_ = detailed;
+#endif
 	}
 
 	bool FPSCounter::isDetailed() const
