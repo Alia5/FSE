@@ -170,6 +170,9 @@ add_library( # Sets the name of the library.
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
 
+target_compile_definitions(FSE PRIVATE USE_JNI=1)
+target_compile_definitions(fsetest-lib PRIVATE USE_JNI=1)
+
 target_link_libraries ( FSE
 
                        log

@@ -13,6 +13,99 @@
 #include <cmath> // abs
 #include <cstddef> // offsetof, NULL
 #include <cassert>
+#include <SFML/Window/Touch.hpp>
+
+#ifdef ANDROID
+#ifdef USE_JNI
+
+#include <jni.h>
+#include <android/native_activity.h>
+#include <SFML/System/NativeActivity.hpp>
+
+static bool s_wantTextInput = false;
+
+int openKeyboardIME()
+{
+    ANativeActivity *activity = sf::getNativeActivity();
+    JavaVM* vm = activity->vm;
+    JNIEnv* env = activity->env;
+    JavaVMAttachArgs attachargs;
+    attachargs.version = JNI_VERSION_1_6;
+    attachargs.name = "NativeThread";
+    attachargs.group = NULL;
+    jint res = vm->AttachCurrentThread(&env, &attachargs);
+    if (res == JNI_ERR)
+        return EXIT_FAILURE;
+
+    jclass natact = env->FindClass("android/app/NativeActivity");
+    jclass context = env->FindClass("android/content/Context");
+
+    jfieldID fid = env->GetStaticFieldID(context, "INPUT_METHOD_SERVICE", "Ljava/lang/String;");
+    jobject svcstr = env->GetStaticObjectField(context, fid);
+
+
+    jmethodID getss = env->GetMethodID(natact, "getSystemService", "(Ljava/lang/String;)Ljava/lang/Object;");
+    jobject imm_obj = env->CallObjectMethod(activity->clazz, getss, svcstr);
+
+    jclass imm_cls = env->GetObjectClass(imm_obj);
+    jmethodID toggleSoftInput = env->GetMethodID(imm_cls, "toggleSoftInput", "(II)V");
+
+    env->CallVoidMethod(imm_obj, toggleSoftInput, 2, 0);
+
+    env->DeleteLocalRef(imm_obj);
+    env->DeleteLocalRef(imm_cls);
+    env->DeleteLocalRef(svcstr);
+    env->DeleteLocalRef(context);
+    env->DeleteLocalRef(natact);
+
+    vm->DetachCurrentThread();
+
+    return EXIT_SUCCESS;
+
+}
+
+int closeKeyboardIME()
+{
+    ANativeActivity *activity = sf::getNativeActivity();
+    JavaVM* vm = activity->vm;
+    JNIEnv* env = activity->env;
+    JavaVMAttachArgs attachargs;
+    attachargs.version = JNI_VERSION_1_6;
+    attachargs.name = "NativeThread";
+    attachargs.group = NULL;
+    jint res = vm->AttachCurrentThread(&env, &attachargs);
+    if (res == JNI_ERR)
+        return EXIT_FAILURE;
+
+    jclass natact = env->FindClass("android/app/NativeActivity");
+    jclass context = env->FindClass("android/content/Context");
+
+    jfieldID fid = env->GetStaticFieldID(context, "INPUT_METHOD_SERVICE", "Ljava/lang/String;");
+    jobject svcstr = env->GetStaticObjectField(context, fid);
+
+
+    jmethodID getss = env->GetMethodID(natact, "getSystemService", "(Ljava/lang/String;)Ljava/lang/Object;");
+    jobject imm_obj = env->CallObjectMethod(activity->clazz, getss, svcstr);
+
+    jclass imm_cls = env->GetObjectClass(imm_obj);
+    jmethodID toggleSoftInput = env->GetMethodID(imm_cls, "toggleSoftInput", "(II)V");
+
+    env->CallVoidMethod(imm_obj, toggleSoftInput, 1, 0);
+
+    env->DeleteLocalRef(imm_obj);
+    env->DeleteLocalRef(imm_cls);
+    env->DeleteLocalRef(svcstr);
+    env->DeleteLocalRef(context);
+    env->DeleteLocalRef(natact);
+
+    vm->DetachCurrentThread();
+
+    return EXIT_SUCCESS;
+
+}
+
+#endif
+#endif
 
 // Supress warnings caused by converting from uint to void* in pCmd->TextureID
 #ifdef __clang__
@@ -23,6 +116,9 @@
 
 static bool s_windowHasFocus = true;
 static bool s_mousePressed[3] = { false, false, false };
+static bool s_touchDown[3] = { false, false, false };
+static bool s_mouseMoved = false;
+static sf::Vector2i s_touchPos;
 static sf::Texture* s_fontTexture = NULL; // owning pointer to internal font atlas which is used if user doesn't set custom sf::Texture.
 namespace
 {
@@ -57,8 +153,12 @@ void Init(sf::RenderTarget& target, bool loadDefaultFont)
     io.KeyMap[ImGuiKey_PageDown] = sf::Keyboard::PageDown;
     io.KeyMap[ImGuiKey_Home] = sf::Keyboard::Home;
     io.KeyMap[ImGuiKey_End] = sf::Keyboard::End;
+#ifdef ANDROID
+    io.KeyMap[ImGuiKey_Backspace] = sf::Keyboard::Delete;
+#else
     io.KeyMap[ImGuiKey_Delete] = sf::Keyboard::Delete;
     io.KeyMap[ImGuiKey_Backspace] = sf::Keyboard::BackSpace;
+#endif
     io.KeyMap[ImGuiKey_Enter] = sf::Keyboard::Return;
     io.KeyMap[ImGuiKey_Escape] = sf::Keyboard::Escape;
     io.KeyMap[ImGuiKey_A] = sf::Keyboard::A;
@@ -90,6 +190,9 @@ void ProcessEvent(const sf::Event& event)
     if (s_windowHasFocus) {
         switch (event.type)
         {
+            case sf::Event::MouseMoved:
+                s_mouseMoved = true;
+                break;
             case sf::Event::MouseButtonPressed: // fall-through
             case sf::Event::MouseButtonReleased:
                 {
@@ -97,6 +200,17 @@ void ProcessEvent(const sf::Event& event)
                     if (event.type == sf::Event::MouseButtonPressed &&
                         button >= 0 && button < 3) {
                         s_mousePressed[event.mouseButton.button] = true;
+                    }
+                }
+                break;
+            case sf::Event::TouchBegan: // fall-through
+            case sf::Event::TouchEnded:
+                {
+                    s_mouseMoved = false;
+                    int button = event.touch.finger;
+                    if (event.type == sf::Event::TouchBegan &&
+                        button >= 0 && button < 3) {
+                        s_touchDown[event.touch.finger] = true;
                     }
                 }
                 break;
@@ -140,7 +254,16 @@ void Update(sf::RenderWindow& window, sf::Time dt)
 
 void Update(sf::Window& window, sf::RenderTarget& target, sf::Time dt)
 {
-    Update(sf::Mouse::getPosition(window), static_cast<sf::Vector2f>(target.getSize()), dt);
+
+    if (!s_mouseMoved)
+    {
+        if (sf::Touch::isDown(0))
+            s_touchPos = sf::Touch::getPosition(0, window);
+
+        Update(s_touchPos, static_cast<sf::Vector2f>(target.getSize()), dt);
+    } else {
+        Update(sf::Mouse::getPosition(window), static_cast<sf::Vector2f>(target.getSize()), dt);
+    }
     window.setMouseCursorVisible(!ImGui::GetIO().MouseDrawCursor); // don't draw mouse cursor if ImGui draws it
 }
 
@@ -152,11 +275,27 @@ void Update(const sf::Vector2i& mousePos, const sf::Vector2f& displaySize, sf::T
 
     if (s_windowHasFocus) {
         io.MousePos = mousePos;
-        for (int i = 0; i < 3; ++i) {
-            io.MouseDown[i] = s_mousePressed[i] || sf::Mouse::isButtonPressed((sf::Mouse::Button)i);
+        for (unsigned int i = 0; i < 3; i++) {
+            io.MouseDown[i] =  s_touchDown[i] || sf::Touch::isDown(i) || s_mousePressed[i] || sf::Mouse::isButtonPressed((sf::Mouse::Button)i);
             s_mousePressed[i] = false;
+            s_touchDown[i] = false;
         }
     }
+
+#ifdef ANDROID
+#ifdef USE_JNI
+        if (io.WantTextInput && !s_wantTextInput)
+        {
+            openKeyboardIME();
+            s_wantTextInput = true;
+        }
+        if (!io.WantTextInput && s_wantTextInput)
+        {
+            closeKeyboardIME();
+            s_wantTextInput = false;
+        }
+#endif
+#endif
 
     assert(io.Fonts->Fonts.Size > 0); // You forgot to create and set up font atlas (see createFontTexture)
     ImGui::NewFrame();
@@ -349,7 +488,7 @@ void RenderDrawLists(ImDrawData* draw_data)
 
 
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CL_1_1
             GLint last_program, last_texture, last_array_buffer, last_element_array_buffer;
             glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
             glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &last_array_buffer);
@@ -377,10 +516,10 @@ void RenderDrawLists(ImDrawData* draw_data)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-#ifdef ANDROID
-    glOrthof(0.0f, io.DisplaySize.x, io.DisplaySize.y, 0.0f, -1.0f, +1.0f);
+#ifdef GL_VERSION_ES_CL_1_1
+        glOrthof(0.0f, io.DisplaySize.x, io.DisplaySize.y, 0.0f, -1.0f, +1.0f);
 #else
-    glOrtho(0.0f, io.DisplaySize.x, io.DisplaySize.y, 0.0f, -1.0f, +1.0f);
+        glOrtho(0.0f, io.DisplaySize.x, io.DisplaySize.y, 0.0f, -1.0f, +1.0f);
 #endif
 
     glMatrixMode(GL_MODELVIEW);
@@ -409,8 +548,8 @@ void RenderDrawLists(ImDrawData* draw_data)
             idx_buffer += pcmd->ElemCount;
         }
     }
-#ifdef ANDROID
-            glBindTexture(GL_TEXTURE_2D, last_texture);
+#ifdef GL_VERSION_ES_CL_1_1
+        glBindTexture(GL_TEXTURE_2D, last_texture);
             glBindBuffer(GL_ARRAY_BUFFER, last_array_buffer);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, last_element_array_buffer);
             glDisable(GL_SCISSOR_TEST);
