@@ -2,6 +2,12 @@
 #include "../imgui-1.51/imgui.h"
 #include "../imgui-1.51/imgui-SFML.h"
 
+#ifdef ANDROID
+#include <android/log.h>
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
+#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity", __VA_ARGS__))
+#endif
+
 namespace fse
 {
 	Application::Application() : root_scene_(this)
@@ -30,14 +36,33 @@ namespace fse
 					return;
 				}
 
+#ifdef ANDROID
+                if (event.type == sf::Event::MouseEntered)
+                {
+                    LOGI("MOUSE_ENTERED");
+                    isActive_ = true;
+                }
+                
+                if (event.type == sf::Event::MouseLeft)
+                {
+                    LOGI("MOUSE_LEFT");
+                    isActive_ = false;
+                    return;
+                }
+#endif
 				if (event.type == sf::Event::Resized)
 				{
-					on_window_resized_();
+                    on_window_resized_();
 				}
 
 				input_.updateEvents(event);
 
 			}
+#ifdef ANDROID
+            if (!isActive_)
+                return;
+#endif
+
 			sf::Time time = application_clock_.restart();
 			ImGui::SFML::Update(*render_window_, time);
 

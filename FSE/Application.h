@@ -96,6 +96,9 @@ namespace fse
 		Scene root_scene_;
 		NetworkHandler network_handler_;
 		fse::AssetLoader asset_loader_;
+#ifdef ANDROID
+		bool isActive_ = false;
+#endif
 
 	private:
 		bool is_server_ = false;

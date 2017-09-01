@@ -34,11 +34,7 @@ namespace fse
 
 			application_->setWindow(&window);
 			application_->init();
-#ifdef ANDROID
-            while (window.isOpen() && window.hasFocus() && run_)
-#else
 			while (window.isOpen() && run_)
-#endif
 			{
 				if (application_ != nullptr)
 				{
