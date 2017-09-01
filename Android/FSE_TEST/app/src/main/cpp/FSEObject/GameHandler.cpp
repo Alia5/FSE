@@ -27,7 +27,6 @@ void GameHandler::update(float deltaTime)
 void GameHandler::draw(sf::RenderTarget& target)
 {
 	drawSubScene(target);
-
 }
 
 

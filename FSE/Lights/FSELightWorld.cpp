@@ -19,6 +19,10 @@ namespace fse
 		bloom_texture_.create(1, 1);
 		bloom_shader_.loadFromMemory(bloom_shader_str_, sf::Shader::Fragment);
 		gauss_blur_shader_.loadFromMemory(gauss_blur_shader_str_, sf::Shader::Fragment);
+
+#ifdef ANDROID
+        lighting_ = false;
+#endif
 	}
 
 	FSELightWorld::~FSELightWorld()
@@ -100,6 +104,10 @@ namespace fse
 
 	void FSELightWorld::setLighting(bool lighting)
 	{
+#ifdef ANDROID
+        lighting_ = false;
+        return;
+#endif
 		lighting_ = lighting;
 	}
 

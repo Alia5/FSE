@@ -4,6 +4,12 @@
 #include "FSE/FSEObject/FPSCounter.h"
 #include "FSEObject/GameHandler.h"
 
+#ifdef ANDROID
+#include <android/log.h>
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
+#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity", __VA_ARGS__))
+#endif
+
 TestApp::TestApp() : Application()
 {
 
@@ -19,7 +25,6 @@ void TestApp::init()
     initGlobalSettings(); //TODO: create neatly wrapped settings class
 
     auto window_size_ = getWindow()->getSize();
-    in_game_target_.create(window_size_.x, window_size_.y);
     on_resize_connection_ = on_window_resized_.connect(this, &TestApp::onWindowResized);
 
     root_scene_.getLightWorld()->setLighting(false);
@@ -33,6 +38,8 @@ const sf::RenderTexture* TestApp::getInGameTarget() const
 void TestApp::onWindowResized()
 {
     auto window_size_ = getWindow()->getSize();
+    in_game_target_.create(window_size_.x, window_size_.y);
+    LOGI("TestApp: Window_Resized");
     std::cout << "TestApp: WinResized\n";
 }
 

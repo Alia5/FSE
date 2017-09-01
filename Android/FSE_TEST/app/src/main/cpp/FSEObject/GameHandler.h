@@ -1,4 +1,6 @@
 #pragma once
+
+#include <FSE/Lights/PointLight.h>
 #include "FSE/FSEObject/FSEObject.h"
 #include "FSE/SceneDebugger.h"
 #include "../TestApp.h"
@@ -33,5 +35,4 @@ private:
 
 
 	fse::SceneDebugger scene_debugger_;
-
 };

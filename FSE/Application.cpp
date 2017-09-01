@@ -42,7 +42,7 @@ namespace fse
                     LOGI("MOUSE_ENTERED");
                     isActive_ = true;
                 }
-                
+
                 if (event.type == sf::Event::MouseLeft)
                 {
                     LOGI("MOUSE_LEFT");
