@@ -5,7 +5,7 @@ FSE is a (work in progress) cross platform 2D-Toolkit built on top of SFML and B
 FSE is mainly created as a side project out of personal interest.
 
 I only have limited knowledge about game- / engine-programming and thus, this is probably not the most well though out code there is. 
-Hence, this is licensed under WTFPL 
+I wouldn't recommend using it. If you'd really like to however, it's licensed under MIT, so feel free.
 
 FSE supports networking which in testing performed pretty well under pretty bad network conditions (~200ms Ping with some packet loss) with a few 100 objects
 
@@ -20,10 +20,12 @@ It also sports a pretty neat lighting system incl. normal and specular-maps
 
 ```
 Copyright © 2016 Peter Repukat - FlatspotSoftware
-This work is free.
-It comes without any warranty, to the extent permitted by applicable law.
-You can redistribute it and/or modify it under the terms of the Do What The Fuck You Want To Public License, Version 2,
-as published by Sam Hocevar. See the license.txt file for more details.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 **Licenses to included third party libs, _including modifications_, still apply!**
 
