@@ -2,6 +2,7 @@
 #include <FSE/Lights/FSELightWorld.h>
 #include <imgui-1.51/imgui.h>
 #include "FSE/FSEObject/FPSCounter.h"
+#include "FSEObject/GameHandler.h"
 
 TestApp::TestApp() : Application()
 {
@@ -18,11 +19,16 @@ void TestApp::init()
     initGlobalSettings(); //TODO: create neatly wrapped settings class
 
     auto window_size_ = getWindow()->getSize();
+    in_game_target_.create(window_size_.x, window_size_.y);
     on_resize_connection_ = on_window_resized_.connect(this, &TestApp::onWindowResized);
 
     root_scene_.getLightWorld()->setLighting(false);
 }
 
+const sf::RenderTexture* TestApp::getInGameTarget() const
+{
+    return &in_game_target_;
+}
 
 void TestApp::onWindowResized()
 {
@@ -42,8 +48,9 @@ void TestApp::initGlobalSettings()
     root_scene_.createFSEObject<fse::FPSCounter>([](fse::FSEObject* fpscounter) {
         (static_cast<fse::FPSCounter*>(fpscounter))->setShowDetailed(true);
     });
-}
 
-void TestApp::update() {
-    fse::Application::update();
+    root_scene_.createFSEObject<GameHandler>();
+
+    /*auto gh = std::make_unique<GameHandler>(root_scene_);
+    root_scene_.spawnFSEObject(std::move(gh));*/
 }

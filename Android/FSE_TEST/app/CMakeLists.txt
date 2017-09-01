@@ -155,6 +155,9 @@ add_library( # Sets the name of the library.
              src/main/cpp/TestApp.h
              src/main/cpp/TestApp.cpp
 
+             src/main/cpp/FSEObject/GameHandler.h
+             src/main/cpp/FSEObject/GameHandler.cpp
+
 
 
               )

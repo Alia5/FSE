@@ -1,6 +1,7 @@
 #pragma once
 
 #include <FSE/Application.h>
+#include <FSE/SceneDebugger.h>
 
 class TestApp : public fse::Application
 {
@@ -20,14 +21,16 @@ public:
 
     void init() override;
 
-    virtual void update() override;
+    const sf::RenderTexture* getInGameTarget() const;
+
 
 private:
+
+    sf::RenderTexture in_game_target_;
 
     void onWindowResized();
 
     void initGlobalSettings();
 
     Signal<>::Connection on_resize_connection_;
-
 };

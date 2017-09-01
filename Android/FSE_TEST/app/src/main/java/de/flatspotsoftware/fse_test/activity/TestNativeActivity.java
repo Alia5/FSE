@@ -1,6 +1,7 @@
 package de.flatspotsoftware.fse_test.activity;
 
 import android.app.NativeActivity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -38,7 +40,7 @@ public class TestNativeActivity extends NativeActivity implements CPPCallbacks {
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                                     | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                                    //| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
                                     | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                                     | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
@@ -63,11 +65,29 @@ public class TestNativeActivity extends NativeActivity implements CPPCallbacks {
         //showOverlay();
     }
 
+    //For open keyboard
+    public void OpenKeyBoard(Context mContext){
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+    }
+    //For close keyboard
+    public void CloseKeyBoard(Context mContext){
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         Log.d("onResume", "onResume");
         stickyHandler.post(stickRunnable);
+        /*new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                OpenKeyBoard(TestNativeActivity.this);
+            }
+        }, 3000);*/
     }
 
     @Override
@@ -148,5 +168,6 @@ public class TestNativeActivity extends NativeActivity implements CPPCallbacks {
             }
         }, 2000);
     }
+
 
 }
