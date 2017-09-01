@@ -40,7 +40,7 @@ All of the above are licensed under the [zLib-License](https://en.wikipedia.org/
 
 [Dear ImGui](https://github.com/ocornut/imgui) (1.51)
 
-[ImGui SFML](https://github.com/eliasdaler/imgui-sfml) (0e92b6d)
+[ImGui SFML](https://github.com/eliasdaler/imgui-sfml) (141cd93)
 
 [RTTR (RunTimeTypeReflection)](http://www.rttr.org) (c37d0e3)
 
