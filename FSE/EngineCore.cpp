@@ -26,10 +26,10 @@ namespace fse
 		{
 #ifdef ANDROID
 			sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "");
-            window.setFramerateLimit(60);
+			window.setFramerateLimit(60);
 #else
 			sf::RenderWindow window(sf::VideoMode(1280, 720), "FSE");
-            window.setFramerateLimit(120);
+			window.setFramerateLimit(120);
 #endif
 
 			application_->setWindow(&window);
@@ -65,4 +65,42 @@ namespace fse
 
 		return 0;
 	}
+}
+
+#include <rttr/registration>
+RTTR_REGISTRATION
+{
+	using namespace rttr;
+
+registration::class_<sf::Vector2f>("sf::Vector2f")
+.property("x", &sf::Vector2f::x)
+.property("y", &sf::Vector2f::y)
+;
+
+registration::class_<sf::Vector2i>("sf::Vector2i")
+.property("x", &sf::Vector2i::x)
+.property("y", &sf::Vector2i::y)
+;
+
+registration::class_<sf::IntRect>("sf::IntRect")
+.property("top", &sf::IntRect::top)
+.property("left", &sf::IntRect::left)
+.property("width", &sf::IntRect::width)
+.property("height", &sf::IntRect::height)
+;
+
+registration::class_<sf::FloatRect>("sf::FloatRect")
+.property("top", &sf::FloatRect::top)
+.property("left", &sf::FloatRect::left)
+.property("width", &sf::FloatRect::width)
+.property("height", &sf::FloatRect::height)
+;
+
+registration::class_<sf::Color>("sf::Color")
+.property("r", &sf::Color::r)
+.property("g", &sf::Color::g)
+.property("b", &sf::Color::b)
+.property("a", &sf::Color::a)
+;
+
 }
