@@ -6,6 +6,8 @@ namespace fse
 {
 	namespace FMath
 	{
+#define PI 3.14159265358979323846
+
 		static float Lerp(float a, float b, float t)
 		{
 			if (t > 1.0f)
@@ -46,6 +48,17 @@ namespace fse
 		{
 			return sqrtf(vec.x*vec.x + vec.y * vec.y);
 		}
+
+		static float angle(const sf::Vector2f p1, const sf::Vector2f p2)
+		{
+			return std::atan2(p2.y - p1.y, p2.x - p1.x);
+		}
+
+		static float angleDegree(const sf::Vector2f p1, const sf::Vector2f p2)
+		{
+			return std::atan2(p2.y - p1.y, p2.x - p1.x) * (180 / PI);
+		}
+
 
 	}
 
