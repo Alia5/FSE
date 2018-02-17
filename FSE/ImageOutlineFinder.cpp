@@ -1,5 +1,5 @@
 #include "ImageOutlineFinder.h"
-
+#include "FMath.h"
 
 
 ImageOutlineFinder::ImageOutlineFinder()
@@ -122,6 +122,52 @@ std::vector<sf::Vector2i> ImageOutlineFinder::getVertices() const
 	return vertices_;
 }
 
+std::vector<sf::Vector2i> ImageOutlineFinder::getSimplifiedVertices(const float limit, int average) const
+{
+	if (average < 1)
+		average = 1;
+	std::vector<sf::Vector2i> smoothed_line;
+	std::vector<sf::Vector2i> simplified_line;
+
+	smoothed_line.push_back(vertices_[0]);
+	std::vector<sf::Vector2i>  average_vertices;
+
+	// Loop over the next [average] vertices and 
+	// add the result to the array of smoothed points
+	for (int i = 0; i < vertices_.size() - average; i++) {
+
+		average_vertices.clear();
+		for (int j = 0; j<average; j++) {
+			average_vertices.push_back(vertices_[i + j]);
+		}
+		smoothed_line.push_back(ImageOutlineFinder::average(average_vertices));
+	}
+
+	float curvature_total = 0.f;
+	float curvature = 0.f;
+
+	for (int i = 0; i<smoothed_line.size() - 3; i++) {
+		// Calculate the curvature
+		curvature = ImageOutlineFinder::curvature(smoothed_line[i], smoothed_line[i + 1], smoothed_line[i + 2]);
+
+		// Use a curvature accumulator to prevent cases
+		// where a line curves gradually - this would be 
+		// be picked up if we just used the curvature because
+		// each individual curvature may be less than our limit
+		curvature_total += curvature;
+
+		// If the total curvature is greater than our set
+		// limit then add the point to our simplified line
+		if (curvature_total > limit) {
+			curvature_total = 0;
+			simplified_line.push_back(smoothed_line[i]);
+		}
+	}
+
+
+	return simplified_line;
+}
+
 
 bool ImageOutlineFinder::isBoundary(const sf::Vector2i point) const
 {
@@ -152,6 +198,31 @@ bool ImageOutlineFinder::pointHasAlpha(const sf::Vector2i point) const
 		return true;
 
 	return false;
+}
+
+sf::Vector2i ImageOutlineFinder::average(std::vector<sf::Vector2i> vertices)
+{
+	sf::Vector2i average;
+	for (auto& v : vertices) 
+		average = { average.x + v.x, average.y + v.y };
+	average = { static_cast<int>(average.x / vertices.size()), static_cast<int>(average.y / vertices.size()) };
+	return average;
+}
+
+sf::Vector2i ImageOutlineFinder::midPoint(const sf::Vector2i v1, const sf::Vector2i v2)
+{
+	return { (v1.x + v2.x) / 2, (v1.y + v2.y) / 2 };
+}
+
+float ImageOutlineFinder::curvature(const sf::Vector2i v1, const sf::Vector2i v2, const sf::Vector2i v3)
+{
+	const sf::Vector2i mid_point = midPoint(v1, v3);
+	return sq(mid_point.x - v2.x) + sq(mid_point.y - v2.y);
+}
+
+float ImageOutlineFinder::sq(const float f)
+{
+	return f * f;
 }
 
 
