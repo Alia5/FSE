@@ -49,3 +49,7 @@ All of the above are licensed under the [zLib-License](https://en.wikipedia.org/
 [RapidJSON](https://github.com/miloyip/rapidjson) (1.1.0)
 
 All four of which are licensed under the [MIT-License](https://opensource.org/licenses/MIT)
+
+poly2tri
+
+Licensed under the BSD 3-Clause "Revised" License

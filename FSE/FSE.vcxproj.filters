@@ -64,6 +64,24 @@
     <Filter Include="Header Files\rapidjson">
       <UniqueIdentifier>{c706491c-e212-4cfc-8dfb-3f9491547146}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\poly2tri">
+      <UniqueIdentifier>{9eeefeea-4dd1-4ecc-ab61-8941bc8883a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\poly2tri\common">
+      <UniqueIdentifier>{41c9830e-2448-4f3b-a5af-18d4d4a5551a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\poly2tri\sweep">
+      <UniqueIdentifier>{45f966ed-f160-4c04-9251-a83a0ab31de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\poly2tri">
+      <UniqueIdentifier>{e334c4b3-ffc0-44f9-bb09-9fb47eb4519c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\poly2tri\common">
+      <UniqueIdentifier>{fe938304-5ca8-4b03-b8a6-99776e827896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\poly2tri\sweep">
+      <UniqueIdentifier>{738dc465-94f4-4322-9082-6f34224a6e92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetLoader.h">
@@ -297,6 +315,27 @@
     <ClInclude Include="ImageOutlineFinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\poly2tri\common\shapes.h">
+      <Filter>Header Files\poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\common\utils.h">
+      <Filter>Header Files\poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\sweep\advancing_front.h">
+      <Filter>Header Files\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\sweep\cdt.h">
+      <Filter>Header Files\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\poly2tri.h">
+      <Filter>Header Files\poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\sweep\sweep.h">
+      <Filter>Header Files\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\sweep\sweep_context.h">
+      <Filter>Header Files\poly2tri\sweep</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -403,6 +442,21 @@
     </ClCompile>
     <ClCompile Include="ImageOutlineFinder.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\poly2tri\sweep\sweep.cc">
+      <Filter>Source Files\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\poly2tri\sweep\sweep_context.cc">
+      <Filter>Source Files\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\poly2tri\sweep\cdt.cc">
+      <Filter>Source Files\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\poly2tri\common\shapes.cc">
+      <Filter>Source Files\poly2tri\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\poly2tri\sweep\advancing_front.cc">
+      <Filter>Source Files\poly2tri\sweep</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

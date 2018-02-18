@@ -1,6 +1,8 @@
 #include "ImageOutlineFinder.h"
 #include "FMath.h"
 
+#include "../poly2tri/poly2tri.h"
+#include <iostream>
 
 ImageOutlineFinder::ImageOutlineFinder()
 {
@@ -70,7 +72,22 @@ void ImageOutlineFinder::traverseBoundary(sf::Vector2i startingPoint)
 		if (next.x == start.x && next.y == start.y)
 			break;
 
-		vertices_.push_back(next);
+		if (next.x < 0 || next.y < 0)
+		{
+			sf::Vector2i nnext = next;
+
+			if (nnext.x < 0)
+				nnext.x = 0;
+
+			if (nnext.y < 0)
+				nnext.y = 0;
+
+			vertices_.push_back(nnext);
+		}
+		else
+		{
+			vertices_.push_back(next);
+		}
 	}
 }
 
@@ -166,6 +183,46 @@ std::vector<sf::Vector2i> ImageOutlineFinder::getSimplifiedVertices(const float 
 
 
 	return simplified_line;
+}
+
+std::vector<std::vector<sf::Vector2i>> ImageOutlineFinder::getSimplifiedTriangles(const float limit, const int average) const
+{
+	std::vector<std::vector<sf::Vector2i>> result;
+
+	std::vector<sf::Vector2i> simplified_verts = getSimplifiedVertices(limit, average);
+
+	std::vector<p2t::Point*> polyline;
+
+	polyline.reserve(simplified_verts.size());
+	for (auto& point : simplified_verts)
+	{
+		polyline.push_back(new p2t::Point(point.x, point.y));
+	}
+
+
+	p2t::CDT* cdt = new p2t::CDT(polyline);
+	cdt->Triangulate();
+	auto tris = cdt->GetTriangles();
+
+	for (auto& tri : tris)
+	{
+		std::vector<sf::Vector2i> sf_tri;
+		sf_tri.reserve(3);
+		p2t::Point* p = tri->GetPoint(0);
+		sf_tri.emplace_back( p->x, p->y );
+		p = tri->PointCCW(*p);
+		sf_tri.emplace_back( p->x, p->y );
+		p = tri->PointCCW(*p);
+		sf_tri.emplace_back( p->x, p->y );
+		result.push_back(sf_tri);
+	}
+
+	for (auto & i : polyline) {
+		delete i;
+	}
+	polyline.clear();
+	delete cdt;
+	return result;
 }
 
 

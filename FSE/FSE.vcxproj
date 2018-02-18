@@ -178,6 +178,13 @@
     <ClInclude Include="..\LTBL2\src\LightSystem.hpp" />
     <ClInclude Include="..\LTBL2\src\Sprite.hpp" />
     <ClInclude Include="..\LTBL2\src\Utils.hpp" />
+    <ClInclude Include="..\poly2tri\common\shapes.h" />
+    <ClInclude Include="..\poly2tri\common\utils.h" />
+    <ClInclude Include="..\poly2tri\poly2tri.h" />
+    <ClInclude Include="..\poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="..\poly2tri\sweep\cdt.h" />
+    <ClInclude Include="..\poly2tri\sweep\sweep.h" />
+    <ClInclude Include="..\poly2tri\sweep\sweep_context.h" />
     <ClInclude Include="..\rapidjson\allocators.h" />
     <ClInclude Include="..\rapidjson\document.h" />
     <ClInclude Include="..\rapidjson\encodedstream.h" />
@@ -252,6 +259,11 @@
     <ClCompile Include="..\LTBL2\src\LightShape.cpp" />
     <ClCompile Include="..\LTBL2\src\LightSystem.cpp" />
     <ClCompile Include="..\LTBL2\src\Sprite.cpp" />
+    <ClCompile Include="..\poly2tri\common\shapes.cc" />
+    <ClCompile Include="..\poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="..\poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="..\poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="..\poly2tri\sweep\sweep_context.cc" />
     <ClCompile Include="AssetLoader.cpp" />
     <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Component\SmoothViewController.cpp" />

@@ -12,8 +12,9 @@ public:
 	void findOutLines(const sf::Image image);
 
 	std::vector<sf::Vector2i> getVertices() const;
-	std::vector<sf::Vector2i> getSimplifiedVertices(float lim, int average) const;
+	std::vector<sf::Vector2i> getSimplifiedVertices(float limit, int average) const;
 
+	std::vector<std::vector<sf::Vector2i>> getSimplifiedTriangles(float limit, int average) const;
 
 private:
 

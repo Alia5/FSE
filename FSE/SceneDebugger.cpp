@@ -14,7 +14,7 @@ namespace fse
 
 	SceneDebugger::SceneDebugger()
 	{
-		if (item_edit_funcs_.size() == 0)
+		if (item_edit_funcs_.size() != 0)
 			item_edit_funcs_ = CreateDefaultItemEditMap();
 	}
 
@@ -24,7 +24,7 @@ namespace fse
 		objects_ = std::set<FSEObject*, std::function<bool(FSEObject*, FSEObject*)>>(
 			[](FSEObject* lhs, FSEObject* rhs) {return lhs->getID() < rhs->getID(); });
 
-		if (item_edit_funcs_.size() == 0)
+		if (item_edit_funcs_.empty())
 			item_edit_funcs_ = CreateDefaultItemEditMap();
 
 		CreateDefaultDefaultValueMap();
