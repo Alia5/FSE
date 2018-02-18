@@ -307,6 +307,7 @@ namespace fse
 		auto inst = rttr::instance(*it);
 		ShowObjectEditorItems(type, &inst);
 
+		ImGui::Separator();
 		for (auto& method : type.get_methods())
 		{
 			if (method.get_name().compare("destroy") == 0)
@@ -316,9 +317,26 @@ namespace fse
 				{
 					type.invoke("destroy", *it, {}); //with fire
 				}
+				ImGui::Separator();
+			}
+
+		}
+		if (ImGui::CollapsingHeader("Object Methods##SceneDebugger"))
+		{
+			ImGui::BeginChild("##Methods##SceneDebugger", ImVec2(0, 250), true);
+			for (auto& method : type.get_methods())
+			{
+				if (method.get_name().compare("destroy") != 0)
+				{
+					if (ImGui::Button(std::string(std::string(" ") + method.get_name() + " ##SceneDebugger").c_str()))
+					{
+						type.invoke(method.get_name(), *it, {});
+					}
+				}
+
 			}
 		}
-
+		ImGui::EndChild();
 		ImGui::PopItemWidth();
 		ImGui::EndChild();
 	}
