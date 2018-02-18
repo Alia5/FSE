@@ -139,23 +139,23 @@ std::vector<sf::Vector2i> ImageOutlineFinder::getVertices() const
 	return vertices_;
 }
 
-std::vector<sf::Vector2i> ImageOutlineFinder::getSimplifiedVertices(const float limit, int average) const
+std::vector<sf::Vector2f> ImageOutlineFinder::getSimplifiedVertices(const float limit, int average) const
 {
 	if (average < 1)
 		average = 1;
-	std::vector<sf::Vector2i> smoothed_line;
-	std::vector<sf::Vector2i> simplified_line;
+	std::vector<sf::Vector2f> smoothed_line;
+	std::vector<sf::Vector2f> simplified_line;
 
-	smoothed_line.push_back(vertices_[0]);
-	std::vector<sf::Vector2i>  average_vertices;
+	smoothed_line.emplace_back( vertices_[0].x, vertices_[0].y );
+	std::vector<sf::Vector2f>  average_vertices;
 
 	// Loop over the next [average] vertices and 
 	// add the result to the array of smoothed points
-	for (int i = 0; i < vertices_.size() - average; i++) {
+	for (unsigned int i = 0; i < vertices_.size() - average; i++) {
 
 		average_vertices.clear();
 		for (int j = 0; j<average; j++) {
-			average_vertices.push_back(vertices_[i + j]);
+			average_vertices.emplace_back( vertices_[i + j].x, vertices_[i + j].y );
 		}
 		smoothed_line.push_back(ImageOutlineFinder::average(average_vertices));
 	}
@@ -163,7 +163,7 @@ std::vector<sf::Vector2i> ImageOutlineFinder::getSimplifiedVertices(const float 
 	float curvature_total = 0.f;
 	float curvature = 0.f;
 
-	for (int i = 0; i<smoothed_line.size() - 3; i++) {
+	for (unsigned int i = 0; i<smoothed_line.size() - 3; i++) {
 		// Calculate the curvature
 		curvature = ImageOutlineFinder::curvature(smoothed_line[i], smoothed_line[i + 1], smoothed_line[i + 2]);
 
@@ -177,7 +177,9 @@ std::vector<sf::Vector2i> ImageOutlineFinder::getSimplifiedVertices(const float 
 		// limit then add the point to our simplified line
 		if (curvature_total > limit) {
 			curvature_total = 0;
-			simplified_line.push_back(smoothed_line[i]);
+			if (simplified_line.empty()
+				|| simplified_line.back().x != smoothed_line[i].x && simplified_line.back().y != smoothed_line[i].y)
+				simplified_line.push_back(smoothed_line[i]);
 		}
 	}
 
@@ -185,11 +187,11 @@ std::vector<sf::Vector2i> ImageOutlineFinder::getSimplifiedVertices(const float 
 	return simplified_line;
 }
 
-std::vector<std::vector<sf::Vector2i>> ImageOutlineFinder::getSimplifiedTriangles(const float limit, const int average) const
+std::vector<std::vector<sf::Vector2f>> ImageOutlineFinder::getSimplifiedTriangles(const float limit, const int average) const
 {
-	std::vector<std::vector<sf::Vector2i>> result;
+	std::vector<std::vector<sf::Vector2f>> result;
 
-	std::vector<sf::Vector2i> simplified_verts = getSimplifiedVertices(limit, average);
+	std::vector<sf::Vector2f> simplified_verts = getSimplifiedVertices(limit, average);
 
 	std::vector<p2t::Point*> polyline;
 
@@ -206,7 +208,7 @@ std::vector<std::vector<sf::Vector2i>> ImageOutlineFinder::getSimplifiedTriangle
 
 	for (auto& tri : tris)
 	{
-		std::vector<sf::Vector2i> sf_tri;
+		std::vector<sf::Vector2f> sf_tri;
 		sf_tri.reserve(3);
 		p2t::Point* p = tri->GetPoint(0);
 		sf_tri.emplace_back( p->x, p->y );
@@ -257,23 +259,23 @@ bool ImageOutlineFinder::pointHasAlpha(const sf::Vector2i point) const
 	return false;
 }
 
-sf::Vector2i ImageOutlineFinder::average(std::vector<sf::Vector2i> vertices)
+sf::Vector2f ImageOutlineFinder::average(std::vector<sf::Vector2f> vertices)
 {
-	sf::Vector2i average;
+	sf::Vector2f average;
 	for (auto& v : vertices) 
 		average = { average.x + v.x, average.y + v.y };
-	average = { static_cast<int>(average.x / vertices.size()), static_cast<int>(average.y / vertices.size()) };
+	average = { average.x / vertices.size(), average.y / vertices.size() };
 	return average;
 }
 
-sf::Vector2i ImageOutlineFinder::midPoint(const sf::Vector2i v1, const sf::Vector2i v2)
+sf::Vector2f ImageOutlineFinder::midPoint(const sf::Vector2f v1, const sf::Vector2f v2)
 {
 	return { (v1.x + v2.x) / 2, (v1.y + v2.y) / 2 };
 }
 
-float ImageOutlineFinder::curvature(const sf::Vector2i v1, const sf::Vector2i v2, const sf::Vector2i v3)
+float ImageOutlineFinder::curvature(const sf::Vector2f v1, const sf::Vector2f v2, const sf::Vector2f v3)
 {
-	const sf::Vector2i mid_point = midPoint(v1, v3);
+	const sf::Vector2f mid_point = midPoint(v1, v3);
 	return sq(mid_point.x - v2.x) + sq(mid_point.y - v2.y);
 }
 

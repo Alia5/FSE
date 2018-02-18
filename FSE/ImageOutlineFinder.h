@@ -12,9 +12,9 @@ public:
 	void findOutLines(const sf::Image image);
 
 	std::vector<sf::Vector2i> getVertices() const;
-	std::vector<sf::Vector2i> getSimplifiedVertices(float limit, int average) const;
+	std::vector<sf::Vector2f> getSimplifiedVertices(float limit, int average) const;
 
-	std::vector<std::vector<sf::Vector2i>> getSimplifiedTriangles(float limit, int average) const;
+	std::vector<std::vector<sf::Vector2f>> getSimplifiedTriangles(float limit, int average) const;
 
 private:
 
@@ -30,9 +30,9 @@ private:
 	bool pointHasAlpha(sf::Vector2i point) const;
 
 
-	static sf::Vector2i average(std::vector<sf::Vector2i> vertices);
-	static sf::Vector2i midPoint(sf::Vector2i v1, sf::Vector2i v2);
-	static float curvature(sf::Vector2i v1, sf::Vector2i v2, sf::Vector2i v3);
+	static sf::Vector2f average(std::vector<sf::Vector2f> vertices);
+	static sf::Vector2f midPoint(sf::Vector2f v1, sf::Vector2f v2);
+	static float curvature(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3);
 	static float sq(float f);
 
 	sf::Image image_;
