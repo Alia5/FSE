@@ -6,10 +6,10 @@
 class ImageOutlineFinder
 {
 public:
-	ImageOutlineFinder();
-	~ImageOutlineFinder();
+	ImageOutlineFinder() = default;
+	~ImageOutlineFinder() = default;
 
-	void findOutLines(const sf::Image image);
+	void findOutLines(const sf::Image& image, int alpha_threshold);
 
 	std::vector<sf::Vector2i> getVertices() const;
 	std::vector<sf::Vector2f> getSimplifiedVertices(float limit, int average);
@@ -20,7 +20,7 @@ private:
 
 	sf::Vector2i findStartingPoint() const;
 
-	void traverseBoundary(sf::Vector2i startingPoint);
+	void traverseBoundary(sf::Vector2i starting_point);
 
 	sf::Vector2i findNextBoundaryPoint(sf::Vector2i point, sf::Vector2i sp) const;
 	static sf::Vector2i clockWise(sf::Vector2i sp);
@@ -35,6 +35,7 @@ private:
 	static float curvature(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3);
 	static float sq(float f);
 
+	int alpha_threshold_ = 200;
 	sf::Image image_;
 	std::vector<sf::Vector2i> vertices_;
 };

@@ -4,17 +4,16 @@
 #include "../poly2tri/poly2tri.h"
 #include <iostream>
 
-ImageOutlineFinder::ImageOutlineFinder()
-{
-}
 
+ImageOutlineFinder::ImageOutlineFinder()
+= default;
 
 ImageOutlineFinder::~ImageOutlineFinder()
-{
-}
+= default;
 
-void ImageOutlineFinder::findOutLines(const sf::Image image)
+void ImageOutlineFinder::findOutLines(const sf::Image& image, const int alpha_threshold)
 {
+	alpha_threshold_ = alpha_threshold;
 	image_ = image;
 	const sf::Vector2i starting_point = findStartingPoint();
 	if (starting_point.x > -1)
@@ -36,9 +35,9 @@ sf::Vector2i ImageOutlineFinder::findStartingPoint() const
 	return {-1, -1};
 }
 
-void ImageOutlineFinder::traverseBoundary(sf::Vector2i startingPoint)
+void ImageOutlineFinder::traverseBoundary(const sf::Vector2i starting_point)
 {
-	const sf::Vector2i start = sf::Vector2i(startingPoint.x, startingPoint.y);
+	const sf::Vector2i start = sf::Vector2i(starting_point.x, starting_point.y);
 	sf::Vector2i next = start;
 	sf::Vector2i old = sf::Vector2i(-1, -1);
 
@@ -253,13 +252,11 @@ bool ImageOutlineFinder::isBoundary(const sf::Vector2i point) const
 
 bool ImageOutlineFinder::pointHasAlpha(const sf::Vector2i point) const
 {
-	if (point.x < 0 || point.x > (image_.getSize().x - 1) || point.y < 0 || point.y > (image_.getSize().y - 1)) 
+	if (point.x < 0 || point.x > static_cast<int>(image_.getSize().x - 1) 
+		|| point.y < 0 || point.y > static_cast<int>(image_.getSize().y - 1)) 
 		return true;
 	
-	if (image_.getPixel(point.x, point.y).a < 255)
-		return true;
-
-	return false;
+	return image_.getPixel(point.x, point.y).a < alpha_threshold_;
 }
 
 sf::Vector2f ImageOutlineFinder::average(std::vector<sf::Vector2f> vertices)
