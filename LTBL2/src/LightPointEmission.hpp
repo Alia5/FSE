@@ -11,7 +11,7 @@ namespace ltbl
 //////////////////////////////////////////////////////////////////////////
 class LightPointEmission : public priv::QuadtreeOccupant, public priv::BaseLight, public sf::Drawable
 {
-    public:
+	public:
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Ctor
 		//////////////////////////////////////////////////////////////////////////
@@ -250,6 +250,10 @@ class LightPointEmission : public priv::QuadtreeOccupant, public priv::BaseLight
 		float mSourceRadius; ///< The source radius
 
 		float mShadowOverExtendMultiplier; ///< The shadow over extend multiplier
+
+		sf::ConvexShape mask_shape_;
+		std::vector<bool> facingFrontBothEdges;
+		std::vector<bool> facingFrontOneEdge;
 };
 
 } // namespace ltbl

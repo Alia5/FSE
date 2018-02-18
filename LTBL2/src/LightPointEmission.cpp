@@ -253,24 +253,22 @@ void LightPointEmission::render(const sf::View& view,
 
 				if (priv::rayIntersect(asi, adi, bsi, bdi, intersectionInner))
 				{
-					sf::ConvexShape maskShape;
-					maskShape.setPointCount(3);
-					maskShape.setPoint(0, asi);
-					maskShape.setPoint(1, bsi);
-					maskShape.setPoint(2, intersectionInner);
-					maskShape.setFillColor(sf::Color::Black);
-					antumbraTempTexture.draw(maskShape);
+					mask_shape_.setPointCount(3);
+					mask_shape_.setPoint(0, asi);
+					mask_shape_.setPoint(1, bsi);
+					mask_shape_.setPoint(2, intersectionInner);
+					mask_shape_.setFillColor(sf::Color::Black);
+					antumbraTempTexture.draw(mask_shape_);
 				}
 				else
 				{
-					sf::ConvexShape maskShape;
-					maskShape.setPointCount(4);
-					maskShape.setPoint(0, asi);
-					maskShape.setPoint(1, bsi);
-					maskShape.setPoint(2, bsi + priv::vectorNormalize(bdi) * shadowExtension);
-					maskShape.setPoint(3, asi + priv::vectorNormalize(adi) * shadowExtension);
-					maskShape.setFillColor(sf::Color::Black);
-					antumbraTempTexture.draw(maskShape);
+					mask_shape_.setPointCount(4);
+					mask_shape_.setPoint(0, asi);
+					mask_shape_.setPoint(1, bsi);
+					mask_shape_.setPoint(2, bsi + priv::vectorNormalize(bdi) * shadowExtension);
+					mask_shape_.setPoint(3, asi + priv::vectorNormalize(adi) * shadowExtension);
+					mask_shape_.setFillColor(sf::Color::Black);
+					antumbraTempTexture.draw(mask_shape_);
 				}
 
 				if (pLightShape->isAwake() && pLightShape->isTurnedOn())
@@ -303,14 +301,13 @@ void LightPointEmission::render(const sf::View& view,
 			}
 			else
 			{
-				sf::ConvexShape maskShape;
-				maskShape.setPointCount(4);
-				maskShape.setPoint(0, as);
-				maskShape.setPoint(1, bs);
-				maskShape.setPoint(2, bs + priv::vectorNormalize(bd) * shadowExtension);
-				maskShape.setPoint(3, as + priv::vectorNormalize(ad) * shadowExtension);
-				maskShape.setFillColor(sf::Color::Black);
-				lightTempTexture.draw(maskShape);
+				mask_shape_.setPointCount(4);
+				mask_shape_.setPoint(0, as);
+				mask_shape_.setPoint(1, bs);
+				mask_shape_.setPoint(2, bs + priv::vectorNormalize(bd) * shadowExtension);
+				mask_shape_.setPoint(3, as + priv::vectorNormalize(ad) * shadowExtension);
+				mask_shape_.setFillColor(sf::Color::Black);
+				lightTempTexture.draw(mask_shape_);
 
 				if (pLightShape->isAwake() && pLightShape->isTurnedOn())
 				{
@@ -398,9 +395,11 @@ sf::Vector2f LightPointEmission::getCastCenter() const
 	return t.transformPoint(mLocalCastCenter);
 }
 
-void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbras, std::vector<int>& innerBoundaryIndices, std::vector<sf::Vector2f>& innerBoundaryVectors, std::vector<int>& outerBoundaryIndices, std::vector<sf::Vector2f>& outerBoundaryVectors, const LightShape& shape)
+void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbras, std::vector<int>& innerBoundaryIndices, 
+	std::vector<sf::Vector2f>& innerBoundaryVectors, std::vector<int>& outerBoundaryIndices,
+	std::vector<sf::Vector2f>& outerBoundaryVectors, const LightShape& shape)
 {
-	sf::Vector2f sourceCenter = getCastCenter();
+	const sf::Vector2f sourceCenter = getCastCenter();
 
 	const int numPoints = shape.getPointCount();
 
@@ -411,13 +410,12 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 	oneEdgeBoundaryWindings.reserve(2);
 
 	// Calculate front and back facing sides
-	std::vector<bool> facingFrontBothEdges;
+	facingFrontBothEdges.clear();
 	facingFrontBothEdges.reserve(numPoints);
-
-	std::vector<bool> facingFrontOneEdge;
+	facingFrontOneEdge.clear();
 	facingFrontOneEdge.reserve(numPoints);
-
-	for (int i = 0; i < numPoints; i++) 
+	int i = 0;
+	for (i = 0; i < numPoints; i++) 
 	{
 		sf::Vector2f point = shape.getTransform().transformPoint(shape.getPoint(i));
 		sf::Vector2f nextPoint = shape.getTransform().transformPoint(shape.getPoint((i < numPoints - 1) ? i + 1 : 0));
@@ -444,33 +442,33 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 		sf::Vector2f normal = priv::vectorNormalize(sf::Vector2f(-pointToNextPoint.y, pointToNextPoint.x));
 
 		// Front facing, mark it
-		facingFrontBothEdges.push_back((priv::vectorDot(firstEdgeRay, normal) > 0.0f && priv::vectorDot(secondEdgeRay, normal) > 0.0f) || (priv::vectorDot(firstNextEdgeRay, normal) > 0.0f && priv::vectorDot(secondNextEdgeRay, normal) > 0.0f));
-		facingFrontOneEdge.push_back((priv::vectorDot(firstEdgeRay, normal) > 0.0f || priv::vectorDot(secondEdgeRay, normal) > 0.0f) || priv::vectorDot(firstNextEdgeRay, normal) > 0.0f || priv::vectorDot(secondNextEdgeRay, normal) > 0.0f);
+		facingFrontBothEdges.emplace_back((priv::vectorDot(firstEdgeRay, normal) > 0.0f && priv::vectorDot(secondEdgeRay, normal) > 0.0f) || (priv::vectorDot(firstNextEdgeRay, normal) > 0.0f && priv::vectorDot(secondNextEdgeRay, normal) > 0.0f));
+		facingFrontOneEdge.emplace_back((priv::vectorDot(firstEdgeRay, normal) > 0.0f || priv::vectorDot(secondEdgeRay, normal) > 0.0f) || priv::vectorDot(firstNextEdgeRay, normal) > 0.0f || priv::vectorDot(secondNextEdgeRay, normal) > 0.0f);
 	}
 
 	// Go through front/back facing list. Where the facing direction switches, there is a boundary
-	for (int i = 1; i < numPoints; i++)
+	for (i = 1; i < numPoints; i++)
 	{
 		if (facingFrontBothEdges[i] != facingFrontBothEdges[i - 1])
 		{
-			innerBoundaryIndices.push_back(i);
-			bothEdgesBoundaryWindings.push_back(facingFrontBothEdges[i]);
+			innerBoundaryIndices.emplace_back(i);
+			bothEdgesBoundaryWindings.emplace_back(facingFrontBothEdges[i]);
 		}
 	}
 
 	// Check looping indices separately
 	if (facingFrontBothEdges[0] != facingFrontBothEdges[numPoints - 1]) 
 	{
-		innerBoundaryIndices.push_back(0);
+		innerBoundaryIndices.emplace_back(0);
 		bothEdgesBoundaryWindings.push_back(facingFrontBothEdges[0]);
 	}
 
 	// Go through front/back facing list. Where the facing direction switches, there is a boundary
-	for (int i = 1; i < numPoints; i++)
+	for (i = 1; i < numPoints; i++)
 	{
 		if (facingFrontOneEdge[i] != facingFrontOneEdge[i - 1]) 
 		{
-			outerBoundaryIndices.push_back(i);
+			outerBoundaryIndices.emplace_back(i);
 			oneEdgeBoundaryWindings.push_back(facingFrontOneEdge[i]);
 		}
 	}
@@ -478,30 +476,30 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 	// Check looping indices separately
 	if (facingFrontOneEdge[0] != facingFrontOneEdge[numPoints - 1]) 
 	{
-		outerBoundaryIndices.push_back(0);
+		outerBoundaryIndices.emplace_back(0);
 		oneEdgeBoundaryWindings.push_back(facingFrontOneEdge[0]);
 	}
 
 	// Compute outer boundary vectors
 	for (unsigned bi = 0; bi < outerBoundaryIndices.size(); bi++) 
 	{
-		int penumbraIndex = outerBoundaryIndices[bi];
-		bool winding = oneEdgeBoundaryWindings[bi];
+		const int penumbraIndex = outerBoundaryIndices[bi];
+		const bool winding = oneEdgeBoundaryWindings[bi];
 
-		sf::Vector2f point = shape.getTransform().transformPoint(shape.getPoint(penumbraIndex));
-		sf::Vector2f sourceToPoint = point - sourceCenter;
-		sf::Vector2f perpendicularOffset = priv::vectorNormalize({ -sourceToPoint.y, sourceToPoint.x }) * mSourceRadius;
+		const sf::Vector2f point = shape.getTransform().transformPoint(shape.getPoint(penumbraIndex));
+		const sf::Vector2f sourceToPoint = point - sourceCenter;
+		const sf::Vector2f perpendicularOffset = priv::vectorNormalize({ -sourceToPoint.y, sourceToPoint.x }) * mSourceRadius;
 		sf::Vector2f firstEdgeRay = point - (sourceCenter + perpendicularOffset);
 		sf::Vector2f secondEdgeRay = point - (sourceCenter - perpendicularOffset);
 
 		// Add boundary vector
-		outerBoundaryVectors.push_back(winding ? firstEdgeRay : secondEdgeRay);
+		outerBoundaryVectors.emplace_back(winding ? firstEdgeRay : secondEdgeRay);
 	}
 
 	for (unsigned bi = 0; bi < innerBoundaryIndices.size(); bi++) 
 	{
 		int penumbraIndex = innerBoundaryIndices[bi];
-		bool winding = bothEdgesBoundaryWindings[bi];
+		const bool winding = bothEdgesBoundaryWindings[bi];
 
 		sf::Vector2f point = shape.getTransform().transformPoint(shape.getPoint(penumbraIndex));
 		sf::Vector2f sourceToPoint = point - sourceCenter;
@@ -510,12 +508,12 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 		sf::Vector2f secondEdgeRay = point - (sourceCenter - perpendicularOffset);
 
 		// Add boundary vector
-		innerBoundaryVectors.push_back(winding ? secondEdgeRay : firstEdgeRay);
+		innerBoundaryVectors.emplace_back(winding ? secondEdgeRay : firstEdgeRay);
 		sf::Vector2f outerBoundaryVector = winding ? firstEdgeRay : secondEdgeRay;
 
 		if (innerBoundaryIndices.size() == 1)
 		{
-			innerBoundaryVectors.push_back(outerBoundaryVector);
+			innerBoundaryVectors.emplace_back(outerBoundaryVector);
 		}
 
 		// Add penumbras
@@ -527,13 +525,13 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 
 		while (penumbraIndex != -1) 
 		{
-			int nextPointIndex = (penumbraIndex < numPoints - 1) ? penumbraIndex + 1 : 0;
-			sf::Vector2f nextPoint = shape.getTransform().transformPoint(shape.getPoint(nextPointIndex));
-			sf::Vector2f pointToNextPoint = nextPoint - point;
+			const int nextPointIndex = (penumbraIndex < numPoints - 1) ? penumbraIndex + 1 : 0;
+			const sf::Vector2f nextPoint = shape.getTransform().transformPoint(shape.getPoint(nextPointIndex));
+			const sf::Vector2f pointToNextPoint = nextPoint - point;
 
-			int prevPointIndex = (penumbraIndex > 0) ? penumbraIndex - 1 : numPoints - 1;
-			sf::Vector2f prevPoint = shape.getTransform().transformPoint(shape.getPoint(prevPointIndex));
-			sf::Vector2f pointToPrevPoint = prevPoint - point;
+			const int prevPointIndex = (penumbraIndex > 0) ? penumbraIndex - 1 : numPoints - 1;
+			const sf::Vector2f prevPoint = shape.getTransform().transformPoint(shape.getPoint(prevPointIndex));
+			const sf::Vector2f pointToPrevPoint = prevPoint - point;
 
 			priv::Penumbra penumbra;
 			penumbra._source = point;
@@ -545,8 +543,8 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 				penumbra._lightBrightness = prevBrightness;
 
 				// Next point, check for intersection
-				float intersectionAngle = std::acos(priv::vectorDot(priv::vectorNormalize(penumbra._lightEdge), priv::vectorNormalize(pointToNextPoint)));
-				float penumbraAngle = std::acos(priv::vectorDot(priv::vectorNormalize(penumbra._lightEdge), priv::vectorNormalize(penumbra._darkEdge)));
+				const float intersectionAngle = std::acos(priv::vectorDot(priv::vectorNormalize(penumbra._lightEdge), priv::vectorNormalize(pointToNextPoint)));
+				const float penumbraAngle = std::acos(priv::vectorDot(priv::vectorNormalize(penumbra._lightEdge), priv::vectorNormalize(penumbra._darkEdge)));
 
 				if (intersectionAngle < penumbraAngle) 
 				{
@@ -606,8 +604,8 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 				penumbra._lightBrightness = prevBrightness;
 
 				// Next point, check for intersection
-				float intersectionAngle = std::acos(priv::vectorDot(priv::vectorNormalize(penumbra._lightEdge), priv::vectorNormalize(pointToPrevPoint)));
-				float penumbraAngle = std::acos(priv::vectorDot(priv::vectorNormalize(penumbra._lightEdge), priv::vectorNormalize(penumbra._darkEdge)));
+				const float intersectionAngle = std::acos(priv::vectorDot(priv::vectorNormalize(penumbra._lightEdge), priv::vectorNormalize(pointToPrevPoint)));
+				const float penumbraAngle = std::acos(priv::vectorDot(priv::vectorNormalize(penumbra._lightEdge), priv::vectorNormalize(penumbra._darkEdge)));
 
 				if (intersectionAngle < penumbraAngle) 
 				{
@@ -661,7 +659,7 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 				}
 			}
 
-			penumbras.push_back(penumbra);
+			penumbras.emplace_back(penumbra);
 		}
 	}
 }
