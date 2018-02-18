@@ -88,6 +88,14 @@ void ImageOutlineFinder::traverseBoundary(const sf::Vector2i starting_point)
 			vertices_.push_back(next);
 		}
 	}
+
+
+	for (auto& vert : vertices_)
+	{
+		vert.x -= image_.getSize().x / 2.f;
+		vert.y -= image_.getSize().y / 2.f;
+	}
+
 }
 
 sf::Vector2i ImageOutlineFinder::findNextBoundaryPoint(const sf::Vector2i point, const sf::Vector2i sp) const
