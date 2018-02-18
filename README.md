@@ -14,6 +14,8 @@ I'm quite happy with with the results so far, considering this essentially being
 It also sports a pretty neat lighting system incl. normal and specular-maps
 ![Lighting1](https://github.com/Alia5/FSE/blob/master/lighting1.gif?raw=true "Lighting1") ![Lighting2](https://github.com/Alia5/FSE/blob/master/lighting2.gif?raw=true "Lighting2")
 
+FSE can also trace any sprite (with alpha channel) and output triangulated convex polys for use with the physics engine.
+
 *Work in Progress*
 
 ## License
