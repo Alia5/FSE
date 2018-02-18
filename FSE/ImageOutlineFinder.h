@@ -6,8 +6,8 @@
 class ImageOutlineFinder
 {
 public:
-	ImageOutlineFinder() = default;
-	~ImageOutlineFinder() = default;
+	ImageOutlineFinder();
+	~ImageOutlineFinder();
 
 	void findOutLines(const sf::Image& image, int alpha_threshold);
 
