@@ -335,8 +335,8 @@ namespace fse
 				}
 
 			}
+			ImGui::EndChild();
 		}
-		ImGui::EndChild();
 		ImGui::PopItemWidth();
 		ImGui::EndChild();
 	}
