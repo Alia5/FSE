@@ -1,4 +1,5 @@
 #include "LightSystem.hpp"
+#include <thread>
 
 namespace ltbl
 {
@@ -70,75 +71,77 @@ namespace ltbl
 			update(target.getSize());
 		}
 
-		mLightShapeQuadtree.update();
-		mLightPointEmissionQuadtree.update();
 
-		sf::FloatRect viewBounds = sf::FloatRect(view.getCenter() - view.getSize() * 0.5f, view.getSize());
+			mLightShapeQuadtree.update();
+			mLightPointEmissionQuadtree.update();
 
-		mSpecularCompTexture.clear(sf::Color::Black);
-		mSpecularCompTexture.setView(mSpecularCompTexture.getDefaultView());
+		const sf::FloatRect viewBounds = sf::FloatRect(view.getCenter() - view.getSize() * 0.5f, view.getSize());
 
-		mCompositionTexture.clear(mAmbientColor);
-		mCompositionTexture.setView(mCompositionTexture.getDefaultView());
+			mSpecularCompTexture.clear(sf::Color::Black);
+			mSpecularCompTexture.setView(mSpecularCompTexture.getDefaultView());
 
-		mLightTempTexture.setView(view);
-		mSpecTempTexture.setView(view);
+			mCompositionTexture.clear(mAmbientColor);
+			mCompositionTexture.setView(mCompositionTexture.getDefaultView());
 
-		// --- Point lights
+			mLightTempTexture.setView(view);
+			mSpecTempTexture.setView(view);
 
-		std::vector<priv::QuadtreeOccupant*> lightShapes;
-		sf::Sprite lightTempSprite(mLightTempTexture.getTexture());
-		sf::Sprite specTempSprite(mSpecTempTexture.getTexture());
+			// --- Point lights
 
-		// Query lights
-		std::vector<priv::QuadtreeOccupant*> viewPointEmissionLights;
-		mLightPointEmissionQuadtree.query(viewBounds, viewPointEmissionLights);
+			std::vector<priv::QuadtreeOccupant*> lightShapes;
+		const sf::Sprite lightTempSprite(mLightTempTexture.getTexture());
+		const sf::Sprite specTempSprite(mSpecTempTexture.getTexture());
 
-		for (const auto& occupant : viewPointEmissionLights)
-		{
-			LightPointEmission* light = static_cast<LightPointEmission*>(occupant);
-			if (light != nullptr && light->isTurnedOn())
+			// Query lights
+			std::vector<priv::QuadtreeOccupant*> viewPointEmissionLights;
+			mLightPointEmissionQuadtree.query(viewBounds, viewPointEmissionLights);
+
+			for (const auto& occupant : viewPointEmissionLights)
 			{
+				LightPointEmission* light = static_cast<LightPointEmission*>(occupant);
+				if (light != nullptr && light->isTurnedOn())
+				{
+					// Query shapes
+					lightShapes.clear();
+					mLightShapeQuadtree.query(light->getAABB(), lightShapes);
+
+					// Render light
+					light->render(view, mLightTempTexture, mAntumbraTempTexture, mSpecTempTexture,
+						mUnshadowShader, mLightOverShapeShader, lightShapes,
+						mUseNormals, mNormalsShader, mSpecularShader, mEmissionTempTexture, mEmissionTempSpecTexture);
+					mCompositionTexture.draw(lightTempSprite, sf::BlendAdd);
+					mSpecularCompTexture.draw(specTempSprite, sf::BlendAdd);
+				}
+			}
+
+			//----- Direction lights
+
+		const float shadowExtension = priv::vectorMagnitude(view.getSize() * -0.5f) * mDirectionEmissionRadiusMultiplier;
+		const sf::Vector2f extendedBounds = sf::Vector2f(1.f, 1.f) * std::max(viewBounds.width, viewBounds.height) * mDirectionEmissionRadiusMultiplier;
+			sf::FloatRect extendedViewBounds = priv::rectFromBounds(-extendedBounds, extendedBounds + sf::Vector2f(mDirectionEmissionRange, 0.0f));
+
+			std::vector<priv::QuadtreeOccupant*> viewLightShapes;
+
+			for (const auto& light : mDirectionEmissionLights)
+			{
+				// Create light shape
+				sf::ConvexShape directionShape = priv::shapeFromRect(extendedViewBounds);
+				directionShape.setPosition(view.getCenter());
+				directionShape.setRotation(light->getCastAngle());
+
 				// Query shapes
-				lightShapes.clear();
-				mLightShapeQuadtree.query(light->getAABB(), lightShapes);
+				viewLightShapes.clear();
+				mLightShapeQuadtree.query(directionShape, viewLightShapes);
 
 				// Render light
-				light->render(view, mLightTempTexture, mAntumbraTempTexture, mSpecTempTexture,
-					mUnshadowShader, mLightOverShapeShader, lightShapes,
-					mUseNormals, mNormalsShader, mSpecularShader, mEmissionTempTexture, mEmissionTempSpecTexture);
-				mCompositionTexture.draw(lightTempSprite, sf::BlendAdd);
-				mSpecularCompTexture.draw(specTempSprite, sf::BlendAdd);
+				light->render(view, mLightTempTexture, mAntumbraTempTexture, mUnshadowShader, viewLightShapes, shadowExtension);
+				mCompositionTexture.draw(sf::Sprite(mLightTempTexture.getTexture()), sf::BlendAdd);
 			}
-		}
 
-		//----- Direction lights
+			mCompositionTexture.display();
 
-		float shadowExtension = priv::vectorMagnitude(view.getSize() * -0.5f) * mDirectionEmissionRadiusMultiplier;
-		sf::Vector2f extendedBounds = sf::Vector2f(1.f, 1.f) * std::max(viewBounds.width, viewBounds.height) * mDirectionEmissionRadiusMultiplier;
-		sf::FloatRect extendedViewBounds = priv::rectFromBounds(-extendedBounds, extendedBounds + sf::Vector2f(mDirectionEmissionRange, 0.0f));
 
-		std::vector<priv::QuadtreeOccupant*> viewLightShapes;
-
-		for (const auto& light : mDirectionEmissionLights)
-		{
-			// Create light shape
-			sf::ConvexShape directionShape = priv::shapeFromRect(extendedViewBounds);
-			directionShape.setPosition(view.getCenter());
-			directionShape.setRotation(light->getCastAngle());
-
-			// Query shapes
-			viewLightShapes.clear();
-			mLightShapeQuadtree.query(directionShape, viewLightShapes);
-
-			// Render light
-			light->render(view, mLightTempTexture, mAntumbraTempTexture, mUnshadowShader, viewLightShapes, shadowExtension);
-			mCompositionTexture.draw(sf::Sprite(mLightTempTexture.getTexture()), sf::BlendAdd);
-		}
-
-		mCompositionTexture.display();
-
-		auto sz = view.getSize();
+		const auto sz = view.getSize();
 		sf::Sprite sprite = sf::Sprite(mCompositionTexture.getTexture());
 		mSpecularCompTexture.draw(sprite, sf::BlendMultiply);
 		mSpecularCompTexture.display();
@@ -175,7 +178,7 @@ namespace ltbl
 	LightShape* LightSystem::createLightShape(const sf::ConvexShape& shape)
 	{
 		LightShape* lightShape = createLightShape();
-		unsigned int pointCount = shape.getPointCount();
+		const unsigned int pointCount = shape.getPointCount();
 		lightShape->setPointCount(pointCount);
 		for (unsigned int i = 0; i < pointCount; i++)
 		{
@@ -233,7 +236,7 @@ namespace ltbl
 
 	void LightSystem::removeShape(LightShape* shape)
 	{
-		auto itr = std::find(mLightShapes.begin(), mLightShapes.end(), shape);
+		const auto itr = std::find(mLightShapes.begin(), mLightShapes.end(), shape);
 		//auto itr = mLightShapes.find(shape);
 		if (itr != mLightShapes.end())
 		{
@@ -272,7 +275,7 @@ namespace ltbl
 	void LightSystem::removeLight(LightDirectionEmission* light)
 	{
 		//auto itr = mDirectionEmissionLights.find(light);
-		auto itr = std::find(mDirectionEmissionLights.begin(), mDirectionEmissionLights.end(), light);
+		const auto itr = std::find(mDirectionEmissionLights.begin(), mDirectionEmissionLights.end(), light);
 		if (itr != mDirectionEmissionLights.end())
 		{
 			mDirectionEmissionLights.erase(itr);

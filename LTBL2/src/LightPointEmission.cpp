@@ -212,17 +212,19 @@ void LightPointEmission::render(const sf::View& view,
 	//----- Shapes
 
 	// Mask off light shape (over-masking - mask too much, reveal penumbra/antumbra afterwards)
-	unsigned int shapesCount = shapes.size();
-	for (unsigned int i = 0; i < shapesCount; ++i)
+	int i = 0;
+	LightShape* pLightShape;
+	for (auto& shape : shapes)
 	{
-		LightShape* pLightShape = static_cast<LightShape*>(shapes[i]);
+		pLightShape = static_cast<LightShape*>(shape);
 		if (pLightShape->isAwake() && pLightShape->isTurnedOn())
 		{
 			// Get boundaries
 			innerBoundaryIndices.clear();
 			innerBoundaryVectors.clear();
 			penumbras.clear();
-			getPenumbrasPoint(penumbras, innerBoundaryIndices, innerBoundaryVectors, outerEdges[i]._outerBoundaryIndices, outerEdges[i]._outerBoundaryVectors, *pLightShape);
+			getPenumbrasPoint(penumbras, innerBoundaryIndices,
+				innerBoundaryVectors, outerEdges[i]._outerBoundaryIndices, outerEdges[i]._outerBoundaryVectors, *pLightShape);
 
 			if (innerBoundaryIndices.size() != 2 || outerEdges[i]._outerBoundaryIndices.size() != 2)
 			{
@@ -329,11 +331,12 @@ void LightPointEmission::render(const sf::View& view,
 				unmaskWithPenumbras(lightTempTexture, sf::BlendMultiply, unshadowShader, penumbras, shadowExtension);
 			}
 		}
+		i++;
 	}
 
-	for (unsigned i = 0; i < shapesCount; i++)
+	for (auto& shape : shapes)
 	{
-		LightShape* pLightShape = static_cast<LightShape*>(shapes[i]);
+		pLightShape = static_cast<LightShape*>(shape);
 
 		if (pLightShape->isAwake() && pLightShape->isTurnedOn())
 		{
@@ -493,7 +496,7 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 		sf::Vector2f secondEdgeRay = point - (sourceCenter - perpendicularOffset);
 
 		// Add boundary vector
-		outerBoundaryVectors.emplace_back(winding ? firstEdgeRay : secondEdgeRay);
+		outerBoundaryVectors.push_back(winding ? firstEdgeRay : secondEdgeRay);
 	}
 
 	for (unsigned bi = 0; bi < innerBoundaryIndices.size(); bi++) 
