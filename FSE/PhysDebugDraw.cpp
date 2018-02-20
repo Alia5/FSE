@@ -75,7 +75,7 @@ void PhysDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
 	polygon.setPoint(3, sf::Vector2f(aabb->lowerBound.x*RATIO, aabb->upperBound.y*RATIO));
 
 	polygon.setFillColor(this->B2SFColor(color, 50));
-	polygon.setOutlineColor(this->B2SFColor(color));
+	polygon.setOutlineColor(this->B2SFColor(color, 64));
 	polygon.setOutlineThickness(1.0f);
 	this->window->draw(polygon);
 }
