@@ -36,7 +36,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 [SFML](http://www.sfml-dev.org) (2.4.2)
 
-[Liquidfun / Box2D](https://github.com/google/liquidfun) (7f20402)
+[Liquidfun / Box2D](https://github.com/google/liquidfun) (7f20402) (incl. [this](https://github.com/google/liquidfun/pull/82) pull-request)
 
 [LTBL2](https://github.com/Cmdu76/LTBL2/tree/d2b51608efa2aa7e3e2d632746b018d6e2add3be) (d2b5160) which is further modified
 
