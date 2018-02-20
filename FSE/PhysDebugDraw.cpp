@@ -14,6 +14,7 @@ PhysDebugDraw::PhysDebugDraw(sf::RenderTarget &window)
 	flags += true			* b2Draw::e_jointBit;
 	flags += false			* b2Draw::e_aabbBit;
 	flags += true				* b2Draw::e_centerOfMassBit;
+	flags += true * b2Draw::e_particleBit;
 	//drawContactPoints = false;
 	//drawContactNormals = false;
 	//drawContactImpulse = false;
@@ -38,11 +39,14 @@ sf::Color PhysDebugDraw::B2SFColor(const b2Color &color, int alpha = 255)
 
 void PhysDebugDraw::DrawParticles(const b2Vec2* centers, float32 radius, const b2ParticleColor* colors, int32 count)
 {
-	//sf::CircleShape shape;
-
-
-
-
+	sf::CircleShape shape;
+	shape.setRadius(radius * RATIO);
+	for (int i = 0; i < count; i++)
+	{
+		shape.setPosition(centers[i].x*RATIO - radius*RATIO, centers[i].y*RATIO - radius*RATIO);
+		shape.setFillColor(this->B2SFColor(colors[i].GetColor()));
+		this->window->draw(shape);
+	}
 }
 
 void PhysDebugDraw::drawAABBs(bool aabbs)
