@@ -36,6 +36,15 @@ sf::Color PhysDebugDraw::B2SFColor(const b2Color &color, int alpha = 255)
 	return result;
 }
 
+void PhysDebugDraw::DrawParticles(const b2Vec2* centers, float32 radius, const b2ParticleColor* colors, int32 count)
+{
+	//sf::CircleShape shape;
+
+
+
+
+}
+
 void PhysDebugDraw::drawAABBs(bool aabbs)
 {
 	uint32 flags = 0;
@@ -81,10 +90,6 @@ void PhysDebugDraw::DrawTransform(const b2Transform& xf)
 	//green (Y axis)
 	p2 = p1 + (lineProportion * xf.q.GetYAxis());
 	this->DrawSegment(p1, p2, b2Color(0, 255, 0));
-}
-
-void PhysDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
-{
 }
 
 void PhysDebugDraw::DrawString(int x, int y, const char* string, ...)
