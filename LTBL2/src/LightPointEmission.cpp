@@ -411,6 +411,7 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 
 	std::vector<bool> oneEdgeBoundaryWindings;
 	oneEdgeBoundaryWindings.reserve(2);
+	outerBoundaryIndices.clear();
 
 	// Calculate front and back facing sides
 	facingFrontBothEdges.clear();
