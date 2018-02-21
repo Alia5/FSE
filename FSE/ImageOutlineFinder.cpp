@@ -1,7 +1,7 @@
 #include "ImageOutlineFinder.h"
 #include "FMath.h"
 
-#include "../poly2tri/poly2tri.h"
+#include <poly2tri.h>
 #include <iostream>
 
 

@@ -49,38 +49,44 @@
     <Filter Include="Source Files\Network">
       <UniqueIdentifier>{25bd9e02-f88d-48b4-a946-87fffcf121cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\imgui-1.51">
-      <UniqueIdentifier>{e71693ec-4660-4090-be56-0a71c58e1f7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\imgui-1.51">
-      <UniqueIdentifier>{3a8e0020-6789-4f90-99f5-d4ffe794d650}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\FSE-ImGui">
       <UniqueIdentifier>{a648e174-fb10-43d2-ad8b-7b6bae8f7ad4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\FSE-ImGui">
       <UniqueIdentifier>{09bd673f-4e09-4ffd-9d77-84f304fb5f80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\rapidjson">
-      <UniqueIdentifier>{c706491c-e212-4cfc-8dfb-3f9491547146}</UniqueIdentifier>
+    <Filter Include="Header Files\imgui">
+      <UniqueIdentifier>{86c1c668-303b-4ece-bd34-86f4477b559d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\imgui-sfml">
+      <UniqueIdentifier>{9fd4b5b6-22f7-420c-913a-086b513391e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\imgui">
+      <UniqueIdentifier>{45245ea7-d4c8-4f7d-b4d5-b148dc0ebf29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\imgui-sfml">
+      <UniqueIdentifier>{49508a73-ca10-44d0-86b5-ff8540c12a4e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\poly2tri">
-      <UniqueIdentifier>{9eeefeea-4dd1-4ecc-ab61-8941bc8883a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\poly2tri\common">
-      <UniqueIdentifier>{41c9830e-2448-4f3b-a5af-18d4d4a5551a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\poly2tri\sweep">
-      <UniqueIdentifier>{45f966ed-f160-4c04-9251-a83a0ab31de2}</UniqueIdentifier>
+      <UniqueIdentifier>{4a71832f-e063-4a5e-8545-effe56a8a40e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\poly2tri">
-      <UniqueIdentifier>{e334c4b3-ffc0-44f9-bb09-9fb47eb4519c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\poly2tri\common">
-      <UniqueIdentifier>{fe938304-5ca8-4b03-b8a6-99776e827896}</UniqueIdentifier>
+      <UniqueIdentifier>{59a90832-2cba-445e-984c-15820c5fd4b9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\poly2tri\sweep">
-      <UniqueIdentifier>{738dc465-94f4-4322-9082-6f34224a6e92}</UniqueIdentifier>
+      <UniqueIdentifier>{65a1a43b-4349-43ac-b819-f6830b8d3080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\poly2tri\common">
+      <UniqueIdentifier>{3848fac8-8118-4209-bc32-a0aa1e8ad788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\poly2tri\common">
+      <UniqueIdentifier>{d8ac3638-3469-49ea-b2fa-229db8be7e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\poly2tri\sweep">
+      <UniqueIdentifier>{f7de128e-c884-4c19-b2e2-0e48e98771fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\imgui-sfml-config">
+      <UniqueIdentifier>{4f9190db-89f7-4c31-84f3-2ab5241a466c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,155 +192,50 @@
     <ClInclude Include="Serialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\rapidjson\allocators.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\biginteger.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\diyfp.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\document.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\dtoa.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\error\en.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\encodedstream.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\encodings.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\error\error.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\filereadstream.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\filewritestream.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\fwd.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\ieee754.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\msinttypes\inttypes.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\istreamwrapper.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\itoa.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\memorybuffer.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\memorystream.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\meta.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\ostreamwrapper.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\pointer.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\pow10.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\prettywriter.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\rapidjson.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\reader.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\regex.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\schema.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\stack.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\msinttypes\stdint.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\stream.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\strfunc.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\stringbuffer.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\strtod.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\internal\swap.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\rapidjson\writer.h">
-      <Filter>Header Files\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\imgui-1.51\imconfig.h">
-      <Filter>Header Files\imgui-1.51</Filter>
-    </ClInclude>
-    <ClInclude Include="..\imgui-1.51\imgui-SFML.h">
-      <Filter>Header Files\imgui-1.51</Filter>
-    </ClInclude>
-    <ClInclude Include="..\imgui-1.51\imgui.h">
-      <Filter>Header Files\imgui-1.51</Filter>
-    </ClInclude>
-    <ClInclude Include="..\imgui-1.51\imgui_internal.h">
-      <Filter>Header Files\imgui-1.51</Filter>
-    </ClInclude>
-    <ClInclude Include="..\imgui-1.51\stb_rect_pack.h">
-      <Filter>Header Files\imgui-1.51</Filter>
-    </ClInclude>
-    <ClInclude Include="..\imgui-1.51\stb_textedit.h">
-      <Filter>Header Files\imgui-1.51</Filter>
-    </ClInclude>
-    <ClInclude Include="..\imgui-1.51\stb_truetype.h">
-      <Filter>Header Files\imgui-1.51</Filter>
-    </ClInclude>
     <ClInclude Include="ImageOutlineFinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\poly2tri\common\shapes.h">
-      <Filter>Header Files\poly2tri\common</Filter>
+    <ClInclude Include="..\imgui\imgui.h">
+      <Filter>Header Files\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\poly2tri\common\utils.h">
-      <Filter>Header Files\poly2tri\common</Filter>
+    <ClInclude Include="..\imgui\imgui_internal.h">
+      <Filter>Header Files\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\poly2tri\sweep\advancing_front.h">
-      <Filter>Header Files\poly2tri\sweep</Filter>
+    <ClInclude Include="..\imgui\stb_rect_pack.h">
+      <Filter>Header Files\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\poly2tri\sweep\cdt.h">
-      <Filter>Header Files\poly2tri\sweep</Filter>
+    <ClInclude Include="..\imgui\stb_textedit.h">
+      <Filter>Header Files\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\poly2tri\poly2tri.h">
+    <ClInclude Include="..\imgui\stb_truetype.h">
+      <Filter>Header Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui-sfml\imgui-SFML.h">
+      <Filter>Header Files\imgui-sfml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\poly2tri\poly2tri.h">
       <Filter>Header Files\poly2tri</Filter>
     </ClInclude>
-    <ClInclude Include="..\poly2tri\sweep\sweep.h">
+    <ClInclude Include="..\poly2tri\poly2tri\sweep\advancing_front.h">
       <Filter>Header Files\poly2tri\sweep</Filter>
     </ClInclude>
-    <ClInclude Include="..\poly2tri\sweep\sweep_context.h">
+    <ClInclude Include="..\poly2tri\poly2tri\sweep\cdt.h">
       <Filter>Header Files\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep.h">
+      <Filter>Header Files\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep_context.h">
+      <Filter>Header Files\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\poly2tri\common\shapes.h">
+      <Filter>Header Files\poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\poly2tri\poly2tri\common\utils.h">
+      <Filter>Header Files\poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui-sfml-config\imconfig.h">
+      <Filter>Header Files\imgui-sfml-config</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -413,18 +314,6 @@
     <ClCompile Include="Network\NetworkedObject.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\imgui-1.51\imgui.cpp">
-      <Filter>Source Files\imgui-1.51</Filter>
-    </ClCompile>
-    <ClCompile Include="..\imgui-1.51\imgui_demo.cpp">
-      <Filter>Source Files\imgui-1.51</Filter>
-    </ClCompile>
-    <ClCompile Include="..\imgui-1.51\imgui_draw.cpp">
-      <Filter>Source Files\imgui-1.51</Filter>
-    </ClCompile>
-    <ClCompile Include="..\imgui-1.51\imgui-SFML.cpp">
-      <Filter>Source Files\imgui-1.51</Filter>
-    </ClCompile>
     <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp">
       <Filter>Source Files\FSE-ImGui</Filter>
     </ClCompile>
@@ -443,19 +332,28 @@
     <ClCompile Include="ImageOutlineFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\poly2tri\sweep\sweep.cc">
-      <Filter>Source Files\poly2tri\sweep</Filter>
+    <ClCompile Include="..\imgui\imgui.cpp">
+      <Filter>Source Files\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\poly2tri\sweep\sweep_context.cc">
-      <Filter>Source Files\poly2tri\sweep</Filter>
+    <ClCompile Include="..\imgui\imgui_draw.cpp">
+      <Filter>Source Files\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\poly2tri\sweep\cdt.cc">
-      <Filter>Source Files\poly2tri\sweep</Filter>
+    <ClCompile Include="..\imgui-sfml\imgui-SFML.cpp">
+      <Filter>Source Files\imgui-sfml</Filter>
     </ClCompile>
-    <ClCompile Include="..\poly2tri\common\shapes.cc">
+    <ClCompile Include="..\poly2tri\poly2tri\common\shapes.cc">
       <Filter>Source Files\poly2tri\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\poly2tri\sweep\advancing_front.cc">
+    <ClCompile Include="..\poly2tri\poly2tri\sweep\advancing_front.cc">
+      <Filter>Source Files\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\poly2tri\poly2tri\sweep\cdt.cc">
+      <Filter>Source Files\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\poly2tri\poly2tri\sweep\sweep.cc">
+      <Filter>Source Files\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\poly2tri\poly2tri\sweep\sweep_context.cc">
       <Filter>Source Files\poly2tri\sweep</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,8 +1,8 @@
 #pragma once
 #include "FSEObject/FSEObject.h"
-#include "../rapidjson/stringbuffer.h"
-#include "../rapidjson/prettywriter.h"
-#include "../rapidjson/fwd.h"
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/prettywriter.h>
+#include <rapidjson/fwd.h>
 
 namespace fse
 {

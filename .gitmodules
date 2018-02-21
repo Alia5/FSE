@@ -1,0 +1,12 @@
+[submodule "rapidjson"]
+	path = rapidjson
+	url = https://github.com/Tencent/rapidjson/
+[submodule "poly2tri"]
+	path = poly2tri
+	url = https://github.com/greenm01/poly2tri/
+[submodule "imgui"]
+	path = imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "imgui-sfml"]
+	path = imgui-sfml
+	url = https://github.com/eliasdaler/imgui-sfml

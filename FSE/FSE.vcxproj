@@ -88,7 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\SFML-2.4.2-x86\include;C:\liquidfun\liquidfun\Box2D;C:\rttr-0.9.6-win32-vs2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-2.4.2-x86\include;C:\liquidfun\liquidfun\Box2D;C:\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\imgui;..\imgui-sfml;..\rapidjson\include;..\poly2tri\poly2tri;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CreateHotpatchableImage>true</CreateHotpatchableImage>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -128,7 +128,7 @@
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\SFML-2.4.2-x86\include;C:\liquidfun\liquidfun\Box2D;C:\rttr-0.9.6-win32-vs2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-2.4.2-x86\include;C:\liquidfun\liquidfun\Box2D;C:\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\imgui;..\imgui-sfml;..\rapidjson\include;..\poly2tri\poly2tri;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpp14</LanguageStandard>
@@ -164,13 +164,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\imgui-1.51\imconfig.h" />
-    <ClInclude Include="..\imgui-1.51\imgui-SFML.h" />
-    <ClInclude Include="..\imgui-1.51\imgui.h" />
-    <ClInclude Include="..\imgui-1.51\imgui_internal.h" />
-    <ClInclude Include="..\imgui-1.51\stb_rect_pack.h" />
-    <ClInclude Include="..\imgui-1.51\stb_textedit.h" />
-    <ClInclude Include="..\imgui-1.51\stb_truetype.h" />
+    <ClInclude Include="..\imgui-sfml-config\imconfig.h" />
+    <ClInclude Include="..\imgui-sfml\imgui-SFML.h" />
+    <ClInclude Include="..\imgui\imgui.h" />
+    <ClInclude Include="..\imgui\imgui_internal.h" />
+    <ClInclude Include="..\imgui\stb_rect_pack.h" />
+    <ClInclude Include="..\imgui\stb_textedit.h" />
+    <ClInclude Include="..\imgui\stb_truetype.h" />
     <ClInclude Include="..\LTBL2\src\LightDirectionEmission.hpp" />
     <ClInclude Include="..\LTBL2\src\LightPointEmission.hpp" />
     <ClInclude Include="..\LTBL2\src\LightResources.hpp" />
@@ -178,48 +178,13 @@
     <ClInclude Include="..\LTBL2\src\LightSystem.hpp" />
     <ClInclude Include="..\LTBL2\src\Sprite.hpp" />
     <ClInclude Include="..\LTBL2\src\Utils.hpp" />
-    <ClInclude Include="..\poly2tri\common\shapes.h" />
-    <ClInclude Include="..\poly2tri\common\utils.h" />
-    <ClInclude Include="..\poly2tri\poly2tri.h" />
-    <ClInclude Include="..\poly2tri\sweep\advancing_front.h" />
-    <ClInclude Include="..\poly2tri\sweep\cdt.h" />
-    <ClInclude Include="..\poly2tri\sweep\sweep.h" />
-    <ClInclude Include="..\poly2tri\sweep\sweep_context.h" />
-    <ClInclude Include="..\rapidjson\allocators.h" />
-    <ClInclude Include="..\rapidjson\document.h" />
-    <ClInclude Include="..\rapidjson\encodedstream.h" />
-    <ClInclude Include="..\rapidjson\encodings.h" />
-    <ClInclude Include="..\rapidjson\error\en.h" />
-    <ClInclude Include="..\rapidjson\error\error.h" />
-    <ClInclude Include="..\rapidjson\filereadstream.h" />
-    <ClInclude Include="..\rapidjson\filewritestream.h" />
-    <ClInclude Include="..\rapidjson\fwd.h" />
-    <ClInclude Include="..\rapidjson\internal\biginteger.h" />
-    <ClInclude Include="..\rapidjson\internal\diyfp.h" />
-    <ClInclude Include="..\rapidjson\internal\dtoa.h" />
-    <ClInclude Include="..\rapidjson\internal\ieee754.h" />
-    <ClInclude Include="..\rapidjson\internal\itoa.h" />
-    <ClInclude Include="..\rapidjson\internal\meta.h" />
-    <ClInclude Include="..\rapidjson\internal\pow10.h" />
-    <ClInclude Include="..\rapidjson\internal\regex.h" />
-    <ClInclude Include="..\rapidjson\internal\stack.h" />
-    <ClInclude Include="..\rapidjson\internal\strfunc.h" />
-    <ClInclude Include="..\rapidjson\internal\strtod.h" />
-    <ClInclude Include="..\rapidjson\internal\swap.h" />
-    <ClInclude Include="..\rapidjson\istreamwrapper.h" />
-    <ClInclude Include="..\rapidjson\memorybuffer.h" />
-    <ClInclude Include="..\rapidjson\memorystream.h" />
-    <ClInclude Include="..\rapidjson\msinttypes\inttypes.h" />
-    <ClInclude Include="..\rapidjson\msinttypes\stdint.h" />
-    <ClInclude Include="..\rapidjson\ostreamwrapper.h" />
-    <ClInclude Include="..\rapidjson\pointer.h" />
-    <ClInclude Include="..\rapidjson\prettywriter.h" />
-    <ClInclude Include="..\rapidjson\rapidjson.h" />
-    <ClInclude Include="..\rapidjson\reader.h" />
-    <ClInclude Include="..\rapidjson\schema.h" />
-    <ClInclude Include="..\rapidjson\stream.h" />
-    <ClInclude Include="..\rapidjson\stringbuffer.h" />
-    <ClInclude Include="..\rapidjson\writer.h" />
+    <ClInclude Include="..\poly2tri\poly2tri\common\shapes.h" />
+    <ClInclude Include="..\poly2tri\poly2tri\common\utils.h" />
+    <ClInclude Include="..\poly2tri\poly2tri\poly2tri.h" />
+    <ClInclude Include="..\poly2tri\poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="..\poly2tri\poly2tri\sweep\cdt.h" />
+    <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep.h" />
+    <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep_context.h" />
     <ClInclude Include="AssetLoader.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\SmoothViewController.h" />
@@ -250,20 +215,19 @@
     <ClInclude Include="Signals.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\imgui-1.51\imgui-SFML.cpp" />
-    <ClCompile Include="..\imgui-1.51\imgui.cpp" />
-    <ClCompile Include="..\imgui-1.51\imgui_demo.cpp" />
-    <ClCompile Include="..\imgui-1.51\imgui_draw.cpp" />
+    <ClCompile Include="..\imgui-sfml\imgui-SFML.cpp" />
+    <ClCompile Include="..\imgui\imgui.cpp" />
+    <ClCompile Include="..\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\LTBL2\src\LightDirectionEmission.cpp" />
     <ClCompile Include="..\LTBL2\src\LightPointEmission.cpp" />
     <ClCompile Include="..\LTBL2\src\LightShape.cpp" />
     <ClCompile Include="..\LTBL2\src\LightSystem.cpp" />
     <ClCompile Include="..\LTBL2\src\Sprite.cpp" />
-    <ClCompile Include="..\poly2tri\common\shapes.cc" />
-    <ClCompile Include="..\poly2tri\sweep\advancing_front.cc" />
-    <ClCompile Include="..\poly2tri\sweep\cdt.cc" />
-    <ClCompile Include="..\poly2tri\sweep\sweep.cc" />
-    <ClCompile Include="..\poly2tri\sweep\sweep_context.cc" />
+    <ClCompile Include="..\poly2tri\poly2tri\common\shapes.cc" />
+    <ClCompile Include="..\poly2tri\poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="..\poly2tri\poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="..\poly2tri\poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="..\poly2tri\poly2tri\sweep\sweep_context.cc" />
     <ClCompile Include="AssetLoader.cpp" />
     <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Component\SmoothViewController.cpp" />

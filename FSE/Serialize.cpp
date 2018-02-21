@@ -1,7 +1,7 @@
 #include "Serialize.h"
 
-#include "../rapidjson/prettywriter.h" 
-#include "../rapidjson/document.h"
+#include <rapidjson/prettywriter.h>
+#include <rapidjson/document.h>
 
 #include <fstream>
 #include <iostream>
