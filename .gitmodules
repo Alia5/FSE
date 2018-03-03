@@ -10,3 +10,6 @@
 [submodule "imgui-sfml"]
 	path = imgui-sfml
 	url = https://github.com/eliasdaler/imgui-sfml
+[submodule "chaiscript"]
+	path = chaiscript
+	url = https://github.com/ChaiScript/ChaiScript
