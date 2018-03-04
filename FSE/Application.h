@@ -9,6 +9,8 @@
 #include "Input.h"
 #include "AssetLoader.h"
 
+#include <chaiscript/chaiscript.hpp>
+
 namespace fse
 {
 	/*!
@@ -51,6 +53,8 @@ namespace fse
 		 */
 		virtual void update();
 
+		virtual void initChai();
+
 		/*!
 		 * Set window to handle. \n 
 		 * Called by EngineCore
@@ -67,7 +71,7 @@ namespace fse
 		 *	Called before first frame is rendered, after window creation \n
 		 *	Init your stuff here
 		 */
-		virtual void init() = 0;
+		virtual void init();
 
 		bool isServer() const;
 
@@ -91,11 +95,20 @@ namespace fse
 		 */
 		fse::AssetLoader& getAssetLoader();
 
+		/*!
+		* \return  ptr to chaiscript engine
+		*/
+		chaiscript::ChaiScript* getChai();
+
 	protected:
 		Input input_;
 		Scene root_scene_;
 		NetworkHandler network_handler_;
 		fse::AssetLoader asset_loader_;
+
+		chaiscript::ChaiScript::State base_chai_state_;
+		chaiscript::ChaiScript chai_;
+
 #ifdef ANDROID
 		bool isActive_ = false;
 #endif

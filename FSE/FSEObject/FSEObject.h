@@ -10,7 +10,7 @@
 #include "../Scene.h"
 #include "../Input.h"
 #include "../Component/Component.h"
-
+#include <chaiscript/chaiscript.hpp>
 
 namespace fse
 {
@@ -235,6 +235,8 @@ namespace fse
 		* \param impulse Ptr to contact impulse
 		*/
 		virtual void PostSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
+
+		chaiscript::ChaiScript* getChai() const;
 
 		/*!
 		 * \brief Vector of attached components.

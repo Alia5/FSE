@@ -175,6 +175,11 @@ namespace fse
 			component->PostSolve(otherObject, contact, impulse);
 	}
 
+	chaiscript::ChaiScript* FSEObject::getChai() const
+	{
+		return scene_->getApplication()->getChai();
+	}
+
 	Component* FSEObject::attachComponent(std::unique_ptr<Component> component)
 	{
 		auto it = std::find_if(components_.begin(), components_.end(), [&](const std::unique_ptr<Component> & obj) {

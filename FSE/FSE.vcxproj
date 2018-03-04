@@ -88,7 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\SFML-2.4.2-x86\include;C:\liquidfun\liquidfun\Box2D;C:\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\imgui;..\imgui-sfml;..\rapidjson\include;..\poly2tri\poly2tri;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-2.4.2-x86\include;C:\liquidfun\liquidfun\Box2D;C:\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\imgui;..\imgui-sfml;..\rapidjson\include;..\poly2tri\poly2tri;..\chaiscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CreateHotpatchableImage>true</CreateHotpatchableImage>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -128,7 +128,7 @@
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\SFML-2.4.2-x86\include;C:\liquidfun\liquidfun\Box2D;C:\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\imgui;..\imgui-sfml;..\rapidjson\include;..\poly2tri\poly2tri;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-2.4.2-x86\include;C:\liquidfun\liquidfun\Box2D;C:\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\imgui;..\imgui-sfml;..\rapidjson\include;..\poly2tri\poly2tri;..\chaiscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpp14</LanguageStandard>

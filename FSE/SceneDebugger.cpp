@@ -654,6 +654,7 @@ namespace fse
 		ImGui::SameLine();
 		if (ImGui::Button("Load Scene##SceneDebugger"))
 		{
+			scene_->getApplication()->initChai();
 			Serializer serializer;
 			serializer.loadScene(scene_, serialize_file_name_);
 		}

@@ -2,6 +2,7 @@
 #include <../imgui-sfml-config/imconfig.h>
 #include <imgui.h>
 #include <imgui-SFML.h>
+#include "FSEObject/FSEObject.h"
 
 #ifdef ANDROID
 #include <android/log.h>
@@ -14,6 +15,7 @@ namespace fse
 	Application::Application() : root_scene_(this)
 	{
 		input_.init();
+		base_chai_state_ = chai_.get_state();
 	}
 
 	Application::~Application()
@@ -85,6 +87,20 @@ namespace fse
 
 	}
 
+	void Application::initChai()
+	{
+		chai_.set_state(base_chai_state_);
+
+		chai_.add(chaiscript::user_type<sf::Vector2f>(), "Vector2f");
+		chai_.add(chaiscript::fun(&sf::Vector2f::x), "x");
+		chai_.add(chaiscript::fun(&sf::Vector2f::y), "y");
+		chai_.add(chaiscript::constructor<sf::Vector2f(float, float)>(), "Vector2f");
+
+		chai_.add(chaiscript::user_type<FSEObject>(), "FSEObject_NATIVE");
+		chai_.add(chaiscript::fun(static_cast<sf::Vector2f(FSEObject::*)()>(&FSEObject::getPosition)), "getPosition");
+		chai_.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
+	}
+
 	void Application::setWindow(sf::RenderWindow * window)
 	{
 		render_window_ = window;
@@ -97,6 +113,11 @@ namespace fse
 	{
 		if (type == 1)
 			is_server_ = true;
+	}
+
+	void Application::init()
+	{
+		initChai();
 	}
 
 	bool Application::isServer() const
@@ -122,5 +143,10 @@ namespace fse
 	fse::AssetLoader& Application::getAssetLoader()
 	{
 		return asset_loader_;
+	}
+
+	chaiscript::ChaiScript* Application::getChai() 
+	{
+		return &chai_;
 	}
 }
