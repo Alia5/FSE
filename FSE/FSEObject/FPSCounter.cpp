@@ -95,12 +95,12 @@ namespace fse
 	void FPSCounter::setShowDetailed(bool detailed)
 	{
 #ifdef ANDROID
-        detailed_view_ = false;
+		detailed_view_ = false;
 #else
 		detailed_view_ = detailed;
 #endif
 
-        detailed_view_ = detailed;
+		detailed_view_ = detailed;
 	}
 
 	bool FPSCounter::isDetailed() const

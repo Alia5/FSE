@@ -193,6 +193,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="FMath.h" />
     <ClInclude Include="FSE-ImGui\imgui-plotvar.h" />
+    <ClInclude Include="FSEObject\ChaiConsole.h" />
     <ClInclude Include="FSEObject\FPSCounter.h" />
     <ClInclude Include="FSEObject\KillVolume.h" />
     <ClInclude Include="ImageOutlineFinder.h" />
@@ -217,6 +218,7 @@
   <ItemGroup>
     <ClCompile Include="..\imgui-sfml\imgui-SFML.cpp" />
     <ClCompile Include="..\imgui\imgui.cpp" />
+    <ClCompile Include="..\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\LTBL2\src\LightDirectionEmission.cpp" />
     <ClCompile Include="..\LTBL2\src\LightPointEmission.cpp" />
@@ -235,6 +237,7 @@
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp" />
+    <ClCompile Include="FSEObject\ChaiConsole.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />
     <ClCompile Include="FSEObject\KillVolume.cpp" />
     <ClCompile Include="ImageOutlineFinder.cpp" />

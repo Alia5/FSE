@@ -237,6 +237,9 @@
     <ClInclude Include="..\imgui-sfml-config\imconfig.h">
       <Filter>Header Files\imgui-sfml-config</Filter>
     </ClInclude>
+    <ClInclude Include="FSEObject\ChaiConsole.h">
+      <Filter>Header Files\FSEObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -355,6 +358,12 @@
     </ClCompile>
     <ClCompile Include="..\poly2tri\poly2tri\sweep\sweep_context.cc">
       <Filter>Source Files\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEObject\ChaiConsole.cpp">
+      <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_demo.cpp">
+      <Filter>Source Files\imgui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -31,7 +31,9 @@ namespace fse
 			{ L"Left", sf::Keyboard::Key::A },
 			{ L"Right", sf::Keyboard::Key::D },
 			{ L"TogglePhysDebug", sf::Keyboard::Key::F5},
-			{ L"TogglePhysDebugAABBs", sf::Keyboard::Key::F6}
+			{ L"TogglePhysDebugAABBs", sf::Keyboard::Key::F6},
+			{ L"ToggleConsole0", sf::Keyboard::Key::Tab},
+			{ L"ToggleConsole1", sf::Keyboard::Key::LControl}
 		};
 		key_map_ = m;
 
