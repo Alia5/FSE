@@ -22,6 +22,11 @@ namespace fse
 	class FSEObject;
 	class FSELightWorld;
 
+	namespace priv
+	{
+		class FSEChaiRegister;
+	}
+
 	/*!
 	 * \brief Scene where objects live in, get updated and rendered
 	 */
@@ -227,6 +232,7 @@ namespace fse
 		bool phys_draw_debug_ = false;
 
 		friend class Serializer;
+		friend class fse::priv::FSEChaiRegister;
 
 	};
 }

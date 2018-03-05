@@ -15,7 +15,7 @@
 namespace fse
 {
 	namespace priv {
-		struct ChaiRegister;
+		struct FSEChaiRegister;
 	}
 
 	/*!
@@ -275,7 +275,7 @@ namespace fse
 		RTTR_ENABLE()
 			RTTR_REGISTRATION_FRIEND
 
-		friend struct fse::priv::ChaiRegister;
+		friend class fse::priv::FSEChaiRegister;
 
 	PUBLIC_SIGNALS:
 		/*!

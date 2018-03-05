@@ -1,13 +1,15 @@
 #include <chaiscript/chaiscript.hpp>
 #include "FSEObject/KillVolume.h"
+#include "Lights/FSELightWorld.h"
 
 namespace fse
 {
 	namespace priv
 	{
-		struct ChaiRegister
+		class FSEChaiRegister
 		{
-			static  void registerFSETypes(chaiscript::ChaiScript& chai)
+		public:
+			static void registerFSETypes(chaiscript::ChaiScript& chai)
 			{
 				chai.add(chaiscript::user_type<sf::Vector2f>(), "Vector2f");
 				chai.add(chaiscript::fun(&sf::Vector2f::x), "x");
@@ -32,7 +34,6 @@ namespace fse
 				chai.add(chaiscript::fun([](sf::Vector2i& lhs, const sf::Vector2i& rhs) { return lhs + rhs; }), "+");
 				chai.add(chaiscript::fun([](sf::Vector2i& lhs, const sf::Vector2i& rhs) { return lhs - rhs; }), "-");
 				chai.add(chaiscript::fun([](const sf::Vector2i& lhs, const sf::Vector2i& rhs) { return lhs == rhs; }), "==");
-
 
 
 				chai.add(chaiscript::user_type<sf::IntRect>(), "IntRect");
@@ -72,7 +73,16 @@ namespace fse
 				chai.add(chaiscript::fun([](const sf::Color& lhs, const sf::Color& rhs) { return lhs == rhs; }), "==");
 
 
-				chai.add(chaiscript::user_type<FSEObject>(), "FSEObject_NATIVE");
+				chai.add(chaiscript::user_type<Scene>(), "FSEScene");
+				chai.add(chaiscript::fun(static_cast<bool(Scene::*)() const>(&Scene::isPaused)), "isPaused");
+				chai.add(chaiscript::fun(static_cast<void(Scene::*)(bool)>(&Scene::setPaused)), "setPaused");
+				chai.add(chaiscript::fun(static_cast<bool(Scene::*)() const>(&Scene::getPhysDrawDebug)), "getPhysDrawDebug");
+				chai.add(chaiscript::fun(static_cast<void(Scene::*)(bool)>(&Scene::setPhysDrawDebug)), "setPhysDrawDebug");
+				chai.add(chaiscript::fun(static_cast<FSELightWorld*(Scene::*)() const>(&Scene::getLightWorld)), "getLightWorld");
+				chai.add(chaiscript::fun(static_cast<b2World*(Scene::*)()>(&Scene::getPhysWorld)), "getPhysWorld");
+				
+
+				chai.add(chaiscript::user_type<FSEObject>(), "FSEObject");
 				chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
 				chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getZOrder)), "getZOrder");
 				chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(int)>(&FSEObject::setZOrder)), "setZOrder");
@@ -87,24 +97,23 @@ namespace fse
 					"getScene");
 
 
-
-				chai.add(chaiscript::user_type<KillVolume>(), "KillVolume_NATIVE");
+				chai.add(chaiscript::user_type<KillVolume>(), "KillVolume");
+				chai.add(chaiscript::base_class<fse::FSEObject, KillVolume>());
 				chai.add(chaiscript::fun(static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize)), "getSize");
 				chai.add(chaiscript::fun(static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize)),
 					"setSize");
+
+
+				chai.add(chaiscript::user_type<FSELightWorld>(), "FSELightWorld");
+				chai.add(chaiscript::base_class<fse::FSEObject, FSELightWorld>());
+				chai.add(chaiscript::fun((&FSELightWorld::lighting_)), "lighting");
+				chai.add(chaiscript::fun(static_cast<bool(FSELightWorld::*)() const>(&FSELightWorld::getBloom)), "getBloom");
+				chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(bool)>(&FSELightWorld::setBloom)), "setBloom");
+				chai.add(chaiscript::fun(static_cast<sf::Color(FSELightWorld::*)() const>(&FSELightWorld::getAmbientColor)), "getAmbientColor");
+				chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(const sf::Color color) const>(&FSELightWorld::setAmbientColor)), "setAmbientColor");
 
 			}
 		};
 	}
 }
 
-
-//
-//registration::class_<sf::Color>("sf::Color")
-//.property("r", &sf::Color::r)
-//.property("g", &sf::Color::g)
-//.property("b", &sf::Color::b)
-//.property("a", &sf::Color::a)
-//;
-//
-//}

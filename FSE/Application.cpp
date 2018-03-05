@@ -91,7 +91,7 @@ namespace fse
 	void Application::initChai()
 	{
 		chai_.set_state(base_chai_state_);
-		priv::ChaiRegister::registerFSETypes(chai_);
+		priv::FSEChaiRegister::registerFSETypes(chai_);
 	}
 
 	void Application::setWindow(sf::RenderWindow * window)
