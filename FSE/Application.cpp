@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include <imgui-SFML.h>
 #include "FSEObject/FSEObject.h"
+#include "ChaiInitClasses.h"
 
 #ifdef ANDROID
 #include <android/log.h>
@@ -90,15 +91,7 @@ namespace fse
 	void Application::initChai()
 	{
 		chai_.set_state(base_chai_state_);
-
-		chai_.add(chaiscript::user_type<sf::Vector2f>(), "Vector2f");
-		chai_.add(chaiscript::fun(&sf::Vector2f::x), "x");
-		chai_.add(chaiscript::fun(&sf::Vector2f::y), "y");
-		chai_.add(chaiscript::constructor<sf::Vector2f(float, float)>(), "Vector2f");
-
-		chai_.add(chaiscript::user_type<FSEObject>(), "FSEObject_NATIVE");
-		chai_.add(chaiscript::fun(static_cast<sf::Vector2f(FSEObject::*)()>(&FSEObject::getPosition)), "getPosition");
-		chai_.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
+		priv::ChaiRegister::registerFSETypes(chai_);
 	}
 
 	void Application::setWindow(sf::RenderWindow * window)

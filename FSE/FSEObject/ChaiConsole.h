@@ -23,8 +23,12 @@ namespace fse
 
 	private:
 
+		void addDefaultFuns();
+
 		bool shown_ = false;
 		bool input_should_gain_focus_ = true;
+
+		bool output_to_bottom_ = true;
 
 		std::array<char, 512> input_data_;
 		std::stringstream output_data_;

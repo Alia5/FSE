@@ -30,19 +30,8 @@ namespace fse
 		{
 			win_size_ = scene_->getApplication()->getWindow()->getSize();
 		});
-		getChai()->add(chaiscript::fun([this](const std::string& string)
-		{
-			
-			output_data_ << string;
+		addDefaultFuns();
 
-		}), "ig_puts");
-
-		getChai()->add(chaiscript::fun([this](const std::string& string)
-		{
-
-			output_data_ << string << '\n';
-
-		}), "ig_print");
 	}
 
 	void ChaiConsole::update(float deltaTime)
@@ -76,10 +65,12 @@ namespace fse
 				ImGuiInputTextFlags_ReadOnly);
 			ImGui::PopStyleColor(1);
 
-			ImGui::BeginChild(ImGui::GetID("##ScriptOutput"));
-			ImGui::SetScrollY(ImGui::GetScrollMaxY());
-			ImGui::EndChild();
-
+			if (output_to_bottom_)
+			{
+				ImGui::BeginChild(ImGui::GetID("##ScriptOutput"));
+				ImGui::SetScrollY(ImGui::GetScrollMaxY());
+				ImGui::EndChild();
+			}
 
 			if (ImGui::InputTextMultiline("##ScriptInput", input_data_.data(), input_data_.size(),
 				ImVec2(ImGui::GetCurrentWindow()->Size.x - 15, 13 * newlines + 25),
@@ -91,6 +82,8 @@ namespace fse
 				}
 				catch (const chaiscript::exception::eval_error& error) {
 					output_data_ << error.pretty_print();
+				} catch(...) {
+					
 				}
 				input_history_[input_history_.size() - 1] = (input_data_.data());
 				input_history_.reserve(1);
@@ -98,6 +91,7 @@ namespace fse
 				history_pos_ = input_history_.size() - 1;
 				input_data_[0] = 0;
 				input_should_gain_focus_ = true;
+				output_to_bottom_ = true;
 			}
 
 			if (input_should_gain_focus_)
@@ -107,7 +101,7 @@ namespace fse
 			}
 
 			ImGuiIO& io = ImGui::GetIO();
-			if (io.KeyShift && (ImGui::IsKeyPressed(io.KeyMap[ImGuiKey_UpArrow]) || ImGui::IsKeyPressed(io.KeyMap[ImGuiKey_DownArrow])))
+			if (io.KeyCtrl && (ImGui::IsKeyPressed(io.KeyMap[ImGuiKey_UpArrow]) || ImGui::IsKeyPressed(io.KeyMap[ImGuiKey_DownArrow])))
 			{
 				if (ImGui::IsKeyPressed(io.KeyMap[ImGuiKey_UpArrow]))
 				{
@@ -130,6 +124,8 @@ namespace fse
 
 			} 
 
+			ImGui::Checkbox("Auto Scroll##ChaiConsole", &output_to_bottom_);
+
 			ImGui::End();
 		}
 	}
@@ -143,6 +139,15 @@ namespace fse
 	{
 		getChai()->set_state(state);
 
+		addDefaultFuns();
+
+		getChai()->eval("GLOBAL print = fun[print](s) { ig_print(\"${s}\"); }");
+		getChai()->eval("GLOBAL puts = fun[print](s) { ig_puts(\"${s}\"); }");
+		return getChai()->get_state();
+	}
+
+	void ChaiConsole::addDefaultFuns()
+	{
 		getChai()->add(chaiscript::fun([this](const std::string& string)
 		{
 
@@ -157,9 +162,20 @@ namespace fse
 
 		}), "ig_print");
 
-		getChai()->eval("GLOBAL print = fun[print](s) { ig_print(\"${s}\"); }");
-		getChai()->eval("GLOBAL puts = fun[print](s) { ig_puts(\"${s}\"); }");
-		return getChai()->get_state();
-	}
+		getChai()->add(chaiscript::fun([this]()
+		{
 
+			shown_ = false;
+
+		}), "exit");
+
+		getChai()->add(chaiscript::fun([this]()
+		{
+
+			output_data_.str(std::string());
+
+		}), "clear");
+
+
+	}
 }

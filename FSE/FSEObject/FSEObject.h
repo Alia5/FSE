@@ -14,6 +14,10 @@
 
 namespace fse
 {
+	namespace priv {
+		struct ChaiRegister;
+	}
+
 	/*!
 	 * \brief Base Class for every Object that can live in a Scene
 	 */
@@ -185,12 +189,13 @@ namespace fse
 		*/
 		const std::vector<std::unique_ptr<Component>>* getComponents() const;
 
-	protected:
 		/*!
-		 * Set z-order of object
-		 * \param ZOrder z-order
-		 */
+		* Set z-order of object
+		* \param ZOrder z-order
+		*/
 		void setZOrder(int ZOrder);
+
+	protected:
 		/*!
 		 * \brief Returns Ptr to scene's vector of currently active FSEObjects \n 
 		 * Use when you for some odd reason need to query ALL objects, otherwise don't
@@ -268,8 +273,9 @@ namespace fse
 		void setRttrComponentsRttr(std::vector<Component*> components);
 
 		RTTR_ENABLE()
-		RTTR_REGISTRATION_FRIEND
+			RTTR_REGISTRATION_FRIEND
 
+		friend struct fse::priv::ChaiRegister;
 
 	PUBLIC_SIGNALS:
 		/*!

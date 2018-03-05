@@ -186,6 +186,7 @@
     <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep.h" />
     <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep_context.h" />
     <ClInclude Include="AssetLoader.h" />
+    <ClInclude Include="ChaiInitClasses.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\SmoothViewController.h" />
     <ClInclude Include="Component\ViewController.h" />
