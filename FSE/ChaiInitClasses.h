@@ -1,4 +1,5 @@
 #include <chaiscript/chaiscript.hpp>
+#include "FSEObject/KillVolume.h"
 
 namespace fse
 {
@@ -59,6 +60,18 @@ namespace fse
 				chai.add(chaiscript::fun([](const sf::FloatRect* rect, const sf::Vector2f& vec) {return rect->contains(vec); }), "contains");
 				chai.add(chaiscript::fun([](const sf::FloatRect* rect, const sf::FloatRect& other) {return rect->intersects(other); }), "intersects");
 
+
+				chai.add(chaiscript::user_type<sf::Color>(), "Color");
+				chai.add(chaiscript::fun(&sf::Color::r), "r");
+				chai.add(chaiscript::fun(&sf::Color::g), "g");
+				chai.add(chaiscript::fun(&sf::Color::b), "b");
+				chai.add(chaiscript::fun(&sf::Color::a), "a");
+				chai.add(chaiscript::constructor<sf::Color(int, int, int, int)>(), "Color");
+				chai.add(chaiscript::constructor<sf::Color(const sf::Color&)>(), "Color");
+				chai.add(chaiscript::fun([](sf::Color& lhs, const sf::Color& rhs) { return lhs = rhs; }), "=");
+				chai.add(chaiscript::fun([](const sf::Color& lhs, const sf::Color& rhs) { return lhs == rhs; }), "==");
+
+
 				chai.add(chaiscript::user_type<FSEObject>(), "FSEObject_NATIVE");
 				chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
 				chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getZOrder)), "getZOrder");
@@ -72,6 +85,14 @@ namespace fse
 					"destroy");
 				chai.add(chaiscript::fun(static_cast<Scene*(FSEObject::*)() const>(&FSEObject::getScene)),
 					"getScene");
+
+
+
+				chai.add(chaiscript::user_type<KillVolume>(), "KillVolume_NATIVE");
+				chai.add(chaiscript::fun(static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize)), "getSize");
+				chai.add(chaiscript::fun(static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize)),
+					"setSize");
+
 			}
 		};
 	}
