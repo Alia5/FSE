@@ -44,7 +44,7 @@ void PhysDebugDraw::DrawParticles(const b2Vec2* centers, float32 radius, const b
 	for (int i = 0; i < count; i++)
 	{
 		shape.setPosition(centers[i].x*RATIO - radius*RATIO, centers[i].y*RATIO - radius*RATIO);
-		shape.setFillColor(this->B2SFColor(colors[i].GetColor()));
+		shape.setFillColor(this->B2SFColor(colors[i].GetColor(), 64));
 		this->window->draw(shape);
 	}
 }
@@ -56,6 +56,7 @@ void PhysDebugDraw::drawAABBs(bool aabbs)
 	flags += true * b2Draw::e_jointBit;
 	flags += aabbs * b2Draw::e_aabbBit;
 	flags += true * b2Draw::e_centerOfMassBit;
+	flags += true * b2Draw::e_particleBit;
 	this->SetFlags(flags);
 	aabbs_ = aabbs;
 }
