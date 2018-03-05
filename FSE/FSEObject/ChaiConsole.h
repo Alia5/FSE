@@ -30,7 +30,7 @@ namespace fse
 
 		bool output_to_bottom_ = true;
 
-		std::array<char, 512> input_data_;
+		std::array<char, 4096> input_data_;
 		std::stringstream output_data_;
 
 		std::vector<std::string> input_history_;
