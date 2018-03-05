@@ -72,8 +72,11 @@ namespace fse
 				ImGui::EndChild();
 			}
 
+			int winHeight = 13 * newlines + 25;
+			if (winHeight >= ImGui::GetCurrentWindow()->Size.y - 100)
+				winHeight = ImGui::GetCurrentWindow()->Size.y - 100;
 			if (ImGui::InputTextMultiline("##ScriptInput", input_data_.data(), input_data_.size(),
-				ImVec2(ImGui::GetCurrentWindow()->Size.x - 15, 13 * newlines + 25),
+				ImVec2(ImGui::GetCurrentWindow()->Size.x - 15, winHeight),
 				ImGuiInputTextFlags_CtrlEnterForNewLine | ImGuiInputTextFlags_AllowTabInput
 				| ImGuiInputTextFlags_EnterReturnsTrue))
 			{
