@@ -1,6 +1,9 @@
+#pragma once
+
 #include <chaiscript/chaiscript.hpp>
 #include "FSEObject/KillVolume.h"
 #include "Lights/FSELightWorld.h"
+#include <regex>
 
 namespace fse
 {
@@ -11,6 +14,9 @@ namespace fse
 		public:
 			static void registerFSETypes(chaiscript::ChaiScript& chai)
 			{
+				chai.add(chaiscript::vector_conversion<std::vector<FSEObject*>>());
+				chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<FSEObject*>>("ObjectList"));
+
 				chai.add(chaiscript::user_type<sf::Vector2f>(), "Vector2f");
 				chai.add(chaiscript::fun(&sf::Vector2f::x), "x");
 				chai.add(chaiscript::fun(&sf::Vector2f::y), "y");
@@ -35,7 +41,6 @@ namespace fse
 				chai.add(chaiscript::fun([](sf::Vector2i& lhs, const sf::Vector2i& rhs) { return lhs - rhs; }), "-");
 				chai.add(chaiscript::fun([](const sf::Vector2i& lhs, const sf::Vector2i& rhs) { return lhs == rhs; }), "==");
 
-
 				chai.add(chaiscript::user_type<sf::IntRect>(), "IntRect");
 				chai.add(chaiscript::fun(&sf::IntRect::top), "top");
 				chai.add(chaiscript::fun(&sf::IntRect::left), "left");
@@ -48,7 +53,6 @@ namespace fse
 				chai.add(chaiscript::fun([](const sf::IntRect* rect, const sf::Vector2i& vec) {return rect->contains(vec); }), "contains");
 				chai.add(chaiscript::fun([](const sf::IntRect* rect, const sf::IntRect& other) {return rect->intersects(other); }), "intersects");
 
-
 				chai.add(chaiscript::user_type<sf::FloatRect>(), "FloatRect");
 				chai.add(chaiscript::fun(&sf::FloatRect::top), "top");
 				chai.add(chaiscript::fun(&sf::FloatRect::left), "left");
@@ -60,7 +64,6 @@ namespace fse
 				chai.add(chaiscript::fun([](const sf::FloatRect* rect, float x, float y) {return rect->contains(x, y); }), "contains");
 				chai.add(chaiscript::fun([](const sf::FloatRect* rect, const sf::Vector2f& vec) {return rect->contains(vec); }), "contains");
 				chai.add(chaiscript::fun([](const sf::FloatRect* rect, const sf::FloatRect& other) {return rect->intersects(other); }), "intersects");
-
 
 				chai.add(chaiscript::user_type<sf::Color>(), "Color");
 				chai.add(chaiscript::fun(&sf::Color::r), "r");
@@ -80,9 +83,17 @@ namespace fse
 				chai.add(chaiscript::fun(static_cast<void(Scene::*)(bool)>(&Scene::setPhysDrawDebug)), "setPhysDrawDebug");
 				chai.add(chaiscript::fun(static_cast<FSELightWorld*(Scene::*)() const>(&Scene::getLightWorld)), "getLightWorld");
 				chai.add(chaiscript::fun(static_cast<b2World*(Scene::*)()>(&Scene::getPhysWorld)), "getPhysWorld");
-				
+				chai.add(chaiscript::fun(([](Scene* scene)
+				{
+					std::vector<FSEObject*> result;
+					for (auto& object : *scene->getFSEObjects())
+						result.push_back(object.get());
+					return result;
+				}))
+					, "getObjects");
 
-				chai.add(chaiscript::user_type<FSEObject>(), "FSEObject");
+
+				registerChaiUserTypeFromRTTR<FSEObject>(chai);
 				chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
 				chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getZOrder)), "getZOrder");
 				chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(int)>(&FSEObject::setZOrder)), "setZOrder");
@@ -95,16 +106,20 @@ namespace fse
 					"destroy");
 				chai.add(chaiscript::fun(static_cast<Scene*(FSEObject::*)() const>(&FSEObject::getScene)),
 					"getScene");
+				chai.add(chaiscript::fun(([](const FSEObject* object){
+					std::string typeName = object->get_type().get_name().to_string();
+					typeName = std::regex_replace(typeName, std::regex("(fse::)"), "");
+					typeName = std::regex_replace(typeName, std::regex("(::)"), "");
+					return typeName;
+				})), "getTypeName");
 
-
-				chai.add(chaiscript::user_type<KillVolume>(), "KillVolume");
+				registerChaiUserTypeFromRTTR<KillVolume>(chai);
 				chai.add(chaiscript::base_class<fse::FSEObject, KillVolume>());
 				chai.add(chaiscript::fun(static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize)), "getSize");
 				chai.add(chaiscript::fun(static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize)),
 					"setSize");
 
-
-				chai.add(chaiscript::user_type<FSELightWorld>(), "FSELightWorld");
+				registerChaiUserTypeFromRTTR<FSELightWorld>(chai);
 				chai.add(chaiscript::base_class<fse::FSEObject, FSELightWorld>());
 				chai.add(chaiscript::fun((&FSELightWorld::lighting_)), "lighting");
 				chai.add(chaiscript::fun(static_cast<bool(FSELightWorld::*)() const>(&FSELightWorld::getBloom)), "getBloom");
@@ -112,6 +127,16 @@ namespace fse
 				chai.add(chaiscript::fun(static_cast<sf::Color(FSELightWorld::*)() const>(&FSELightWorld::getAmbientColor)), "getAmbientColor");
 				chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(const sf::Color color) const>(&FSELightWorld::setAmbientColor)), "setAmbientColor");
 
+			}
+
+		private:
+			template<typename T>
+			static void registerChaiUserTypeFromRTTR(chaiscript::ChaiScript& chai)
+			{
+				std::string typeName = rttr::type::get<T>().get_name().to_string();
+				typeName = std::regex_replace(typeName, std::regex("(fse::)"), "");
+				typeName = std::regex_replace(typeName, std::regex("(::)"), "");
+				chai.add(chaiscript::user_type<T>(), typeName);
 			}
 		};
 	}
