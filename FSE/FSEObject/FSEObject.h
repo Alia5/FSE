@@ -15,7 +15,7 @@
 namespace fse
 {
 	namespace priv {
-		struct FSEChaiRegister;
+		class FSEChaiRegister;
 	}
 
 	/*!
