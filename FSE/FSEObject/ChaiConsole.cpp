@@ -31,7 +31,6 @@ namespace fse
 			win_size_ = scene_->getApplication()->getWindow()->getSize();
 		});
 		addDefaultFuns();
-
 	}
 
 	void ChaiConsole::update(float deltaTime)
@@ -81,6 +80,7 @@ namespace fse
 				| ImGuiInputTextFlags_EnterReturnsTrue))
 			{
 				try {
+					output_data_ << input_data_.data() << '\n';
 					getChai()->eval(input_data_.data());
 				}
 				catch (const chaiscript::exception::eval_error& error) {
@@ -146,6 +146,7 @@ namespace fse
 
 		getChai()->eval("GLOBAL print = fun[print](s) { ig_print(\"${s}\"); }");
 		getChai()->eval("GLOBAL puts = fun[print](s) { ig_puts(\"${s}\"); }");
+
 		return getChai()->get_state();
 	}
 
@@ -180,5 +181,7 @@ namespace fse
 		}), "clear");
 
 
+		getChai()->add(chaiscript::user_type<fse::ChaiConsole>(), "ChaiConsole");
+		getChai()->add(chaiscript::base_class<fse::FSEObject, fse::ChaiConsole>());
 	}
 }
