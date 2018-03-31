@@ -33,6 +33,7 @@ namespace fse
 	 *		YourApplicationClass::~YourApplicationClass() {
 	 *		}
 	 *		void ProjectSidescroller::init() {
+	 *			Application::init();
 	 *			root_scene_.createFSEObject<MainMenu>();
 	 *			input_.init("keybinds.cfg");
 	 *		}
