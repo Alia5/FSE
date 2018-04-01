@@ -114,6 +114,7 @@ namespace fse
 		std::swap(scene_, tmp.scene_);
 		std::swap(light_texture_, tmp.light_texture_);
 
+		scene_->getLightWorld()->unregisterLight(&other);
 		scene_->getLightWorld()->registerLight(this);
 
 		return *this;

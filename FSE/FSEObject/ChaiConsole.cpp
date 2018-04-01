@@ -85,8 +85,11 @@ namespace fse
 				}
 				catch (const chaiscript::exception::eval_error& error) {
 					output_data_ << error.pretty_print();
+				}
+				catch (const std::exception& e) {
+					output_data_ << e.what();
 				} catch(...) {
-					
+					output_data_ << "Error";
 				}
 				input_history_[input_history_.size() - 1] = (input_data_.data());
 				input_history_.reserve(1);

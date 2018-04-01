@@ -3,6 +3,9 @@
 #include "Lights/FSELightWorld.h"
 #include "FSEObject/FPSCounter.h"
 #include "FSEObject/Timer.h"
+#include "Lights/Light.h"
+#include "Lights/PointLight.h"
+#include "Lights/SpotLight.h"
 
 
 namespace fse
@@ -17,6 +20,7 @@ namespace fse
 				chai.add(chaiscript::user_type<sf::Vector2f>(), "Vector2f");
 				chai.add(chaiscript::fun(&sf::Vector2f::x), "x");
 				chai.add(chaiscript::fun(&sf::Vector2f::y), "y");
+				chai.add(chaiscript::constructor<sf::Vector2f()>(), "Vector2f");
 				chai.add(chaiscript::constructor<sf::Vector2f(float, float)>(), "Vector2f");
 				chai.add(chaiscript::constructor<sf::Vector2f(const sf::Vector2f&)>(), "Vector2f");
 				chai.add(chaiscript::fun([](sf::Vector2f& lhs, const sf::Vector2f& rhs) { return lhs = rhs; }), "=");
@@ -31,6 +35,7 @@ namespace fse
 				chai.add(chaiscript::user_type<sf::Vector2i>(), "Vector2i");
 				chai.add(chaiscript::fun(&sf::Vector2i::x), "x");
 				chai.add(chaiscript::fun(&sf::Vector2i::y), "y");
+				chai.add(chaiscript::constructor<sf::Vector2i()>(), "Vector2i");
 				chai.add(chaiscript::constructor<sf::Vector2i(float, float)>(), "Vector2i");
 				chai.add(chaiscript::constructor<sf::Vector2i(const sf::Vector2i&)>(), "Vector2i");
 				chai.add(chaiscript::fun([](sf::Vector2i& lhs, const sf::Vector2i& rhs) { return lhs = rhs; }), "=");
@@ -43,6 +48,7 @@ namespace fse
 				chai.add(chaiscript::fun(&sf::IntRect::left), "left");
 				chai.add(chaiscript::fun(&sf::IntRect::width), "width");
 				chai.add(chaiscript::fun(&sf::IntRect::height), "height");
+				chai.add(chaiscript::constructor<sf::IntRect()>(), "IntRect");
 				chai.add(chaiscript::constructor<sf::IntRect(int, int, int, int)>(), "IntRect");
 				chai.add(chaiscript::constructor<sf::IntRect(const sf::Vector2i&, const sf::Vector2i&)>(), "IntRect");
 				chai.add(chaiscript::constructor<sf::IntRect(const sf::IntRect&)>(), "IntRect");
@@ -55,7 +61,8 @@ namespace fse
 				chai.add(chaiscript::fun(&sf::FloatRect::left), "left");
 				chai.add(chaiscript::fun(&sf::FloatRect::width), "width");
 				chai.add(chaiscript::fun(&sf::FloatRect::height), "height");
-				chai.add(chaiscript::constructor<sf::FloatRect(int, int, int, int)>(), "FloatRect");
+				chai.add(chaiscript::constructor<sf::FloatRect()>(), "FloatRect");
+				chai.add(chaiscript::constructor<sf::FloatRect(float, float, float, float)>(), "FloatRect");
 				chai.add(chaiscript::constructor<sf::FloatRect(const sf::Vector2f&, const sf::Vector2f&)>(), "FloatRect");
 				chai.add(chaiscript::constructor<sf::FloatRect(const sf::FloatRect&)>(), "FloatRect");
 				chai.add(chaiscript::fun([](const sf::FloatRect* rect, float x, float y) {return rect->contains(x, y); }), "contains");
@@ -67,6 +74,7 @@ namespace fse
 				chai.add(chaiscript::fun(&sf::Color::g), "g");
 				chai.add(chaiscript::fun(&sf::Color::b), "b");
 				chai.add(chaiscript::fun(&sf::Color::a), "a");
+				chai.add(chaiscript::constructor<sf::Color()>(), "Color");
 				chai.add(chaiscript::constructor<sf::Color(int, int, int, int)>(), "Color");
 				chai.add(chaiscript::constructor<sf::Color(int, int, int)>(), "Color");
 				chai.add(chaiscript::constructor<sf::Color(const sf::Color&)>(), "Color");
@@ -91,6 +99,7 @@ namespace fse
 
 				RegisterFSEObjects(chai);
 				RegisterObjectCtors(chai);
+				RegisterLights(chai);
 		}
 
 
@@ -126,6 +135,11 @@ namespace fse
 			chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(bool)>(&FSELightWorld::setBloom)), "setBloom");
 			chai.add(chaiscript::fun(static_cast<sf::Color(FSELightWorld::*)() const>(&FSELightWorld::getAmbientColor)), "getAmbientColor");
 			chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(const sf::Color color) const>(&FSELightWorld::setAmbientColor)), "setAmbientColor");
+			chai.add(chaiscript::fun([](const FSELightWorld& lightWorld)
+			{
+				const std::vector<Light*> result = lightWorld.lights_;
+				return result;
+			}), "getLights");
 
 
 			RegisterChaiUserTypeFromRTTR<FPSCounter>(chai);
@@ -320,6 +334,55 @@ namespace fse
 				throw chaiscript::exception::eval_error("No matching chai script constructor for type: \"" + typeName + "\" defined!");
 
 			}), "spawnObject");
+		}
+
+		void FSEChaiLib::RegisterLights(chaiscript::ChaiScript& chai)
+		{
+			chai.add(chaiscript::vector_conversion<std::vector<Light*>>());
+			chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<Light*>>("LightList"));
+
+			RegisterChaiUserTypeFromRTTR<fse::Light>(chai);	
+			chai.add(chaiscript::fun(static_cast<void (Light::*)(const sf::Vector2f) const>(&Light::setPosition)), "setPosition");
+			chai.add(chaiscript::fun(static_cast<sf::Vector2f(Light::*)() const>(&Light::getPosition)), "getPosition");
+			chai.add(chaiscript::fun(static_cast<void (Light::*)(const sf::Vector2f) const>(&Light::setScale)), "setScale");
+			chai.add(chaiscript::fun(static_cast<sf::Vector2f(Light::*)() const>(&Light::getScale)), "getScale");
+			chai.add(chaiscript::fun(static_cast<void (Light::*)(const sf::Color) const>(&Light::setColor)), "setColor");
+			chai.add(chaiscript::fun(static_cast<sf::Color(Light::*)() const>(&Light::getColor)), "getColor");
+
+			chai.add(chaiscript::fun(static_cast<void (Light::*)(float) const>(&Light::setRotation)), "setRotation");
+			chai.add(chaiscript::fun(static_cast<float(Light::*)() const>(&Light::getRotation)), "getRotation");
+			chai.add(chaiscript::fun(static_cast<void(Light::*)(float) const>(&Light::rotate)), "rotate");
+
+			chai.add(chaiscript::fun(static_cast<void (Light::*)(bool) const>(&Light::setTurnedOn)), "setTurnedOn");
+			chai.add(chaiscript::fun(static_cast<bool(Light::*)() const>(&Light::isTurnedOn)), "isTurnedOn");
+			chai.add(chaiscript::fun(static_cast<void(Light::*)() const>(&Light::toggleTurnedOn)), "toggle");
+
+			chai.add(chaiscript::constructor<Light()>(), "Light");
+			chai.add(chaiscript::constructor<Light(const Light&)>(), "Light");
+			chai.add(chaiscript::constructor<Light(Scene*, const sf::Vector2f&, const std::string&, bool)>(), "Light");
+			chai.add(chaiscript::fun(static_cast<Light&(Light::*)(const Light&)>(&Light::operator=)), "=");
+
+
+
+			RegisterChaiUserTypeFromRTTR<PointLight>(chai);
+			chai.add(chaiscript::base_class<fse::Light, PointLight>());
+			chai.add(chaiscript::fun(static_cast<void (PointLight::*)(float) const>(&PointLight::setRadius)), "setRadius");
+			chai.add(chaiscript::fun(static_cast<float(PointLight::*)() const>(&PointLight::getRadius)), "getRadius");
+
+			chai.add(chaiscript::constructor<PointLight()>(), "PointLight");
+			chai.add(chaiscript::constructor<PointLight(Scene*, const sf::Vector2f&)>(), "PointLight");
+
+
+
+			RegisterChaiUserTypeFromRTTR<SpotLight>(chai);
+			chai.add(chaiscript::base_class<fse::Light, SpotLight>());
+			chai.add(chaiscript::fun(static_cast<void (SpotLight::*)(float)>(&SpotLight::setLenght)), "setLenght");
+			chai.add(chaiscript::fun(static_cast<float(SpotLight::*)() const>(&SpotLight::getLenght)), "getLenght");
+			chai.add(chaiscript::fun(static_cast<void (SpotLight::*)(float)>(&SpotLight::setAngle)), "setAngle");
+			chai.add(chaiscript::fun(static_cast<float(SpotLight::*)() const>(&SpotLight::getAngle)), "getAngle");
+
+			chai.add(chaiscript::constructor<SpotLight()>(), "SpotLight");
+			chai.add(chaiscript::constructor<SpotLight(Scene*, const sf::Vector2f&)>(), "SpotLight");
 		}
 	}
 }

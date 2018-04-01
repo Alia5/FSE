@@ -2,6 +2,7 @@
 
 #include "FSELightWorld.h"
 #include "../AssetLoader.h"
+#include "../FSEChaiLib.h"
 
 namespace fse
 {
@@ -63,5 +64,8 @@ namespace fse
 	private:
 		RTTR_ENABLE()
 		RTTR_REGISTRATION_FRIEND
+
+		friend class fse::priv::FSEChaiLib;
+
 	};
 }
