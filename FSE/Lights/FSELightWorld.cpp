@@ -1,5 +1,7 @@
 #include "FSELightWorld.h"
 #include "../Application.h"
+#include "Light.h"
+
 
 #include <rttr/registration>
 
@@ -21,7 +23,7 @@ namespace fse
 		gauss_blur_shader_.loadFromMemory(gauss_blur_shader_str_, sf::Shader::Fragment);
 
 #ifdef ANDROID
-        lighting_ = false;
+		lighting_ = false;
 #endif
 	}
 
@@ -46,7 +48,7 @@ namespace fse
 
 			if (bloom_)
 			{
-				if (sf::RenderTexture* r_texture = dynamic_cast<sf::RenderTexture*>(&target))
+				if (auto* r_texture = dynamic_cast<sf::RenderTexture*>(&target))
 				{
 					//r_texture->display();
 					bloom_texture_.clear();
@@ -105,8 +107,8 @@ namespace fse
 	void FSELightWorld::setLighting(bool lighting)
 	{
 #ifdef ANDROID
-        lighting_ = false;
-        return;
+		lighting_ = false;
+		return;
 #endif
 		lighting_ = lighting;
 	}
@@ -118,7 +120,7 @@ namespace fse
 
 	void FSELightWorld::setBloom(bool bloom)
 	{
-		if (sf::RenderTexture* rTexture = dynamic_cast<sf::RenderTexture*>(scene_->getRenderTarget()))
+		if (auto* rTexture = dynamic_cast<sf::RenderTexture*>(scene_->getRenderTarget()))
 		{
 			bloom_ = bloom;
 		} 
@@ -177,6 +179,16 @@ namespace fse
 	{
 		return &specular_texture_;
 	}
+	void FSELightWorld::registerLight(fse::Light * light)
+	{
+		if (std::find(lights_.begin(), lights_.end(), light) == lights_.end())
+			lights_.push_back(light);
+	}
+	void FSELightWorld::unregisterLight(const fse::Light* light)
+	{
+		lights_.erase(std::remove(lights_.begin(), lights_.end(), light), lights_.end());
+	}
+
 }
 
 RTTR_REGISTRATION
@@ -191,5 +203,6 @@ RTTR_REGISTRATION
 	.property("lighting_", &FSELightWorld::lighting_)
 	.property("bloom_", &FSELightWorld::getBloom, &FSELightWorld::setBloom)
 	.property("ambient_color_", &FSELightWorld::getAmbientColor, &FSELightWorld::setAmbientColor)
+	.property("lights_", &FSELightWorld::lights_)
 	;
 }

@@ -6,6 +6,8 @@
 
 namespace fse
 {
+	class Light;
+
 	/*!
 	 * \brief Class holds and manages LTBL2 Light System \n 
 	 * Default z-order = 255
@@ -77,8 +79,9 @@ namespace fse
 		sf::RenderTarget* getNormalTarget();
 		sf::RenderTarget* getSpecularTarget();
 
+		void registerLight(fse::Light* light);
+		void unregisterLight(const fse::Light* light);
 
-	private:
 
 		sf::RenderTexture normal_texture_;
 		sf::RenderTexture specular_texture_;
@@ -94,6 +97,8 @@ namespace fse
 
 		sf::Shader bloom_shader_;
 		sf::Shader gauss_blur_shader_;
+
+		std::vector<fse::Light*> lights_;
 
 		RTTR_ENABLE(fse::FSEObject)
 		RTTR_REGISTRATION_FRIEND
@@ -119,7 +124,7 @@ namespace fse
 		"		gl_FragColor = vec4(lColor.rgb, lstrength * brightness);" \
 		"	}" \
 		"}";
-        const std::string gauss_blur_shader_str_ = "" \
+		const std::string gauss_blur_shader_str_ = "" \
 		"uniform sampler2D currTex;" \
 		"uniform bool horizontal;" \
 		"uniform vec2 texSize; " \

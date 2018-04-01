@@ -63,6 +63,5 @@ namespace fse
 	private:
 		RTTR_ENABLE()
 		RTTR_REGISTRATION_FRIEND
-
 	};
 }

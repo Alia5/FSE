@@ -8,6 +8,7 @@ namespace fse
 
 	Light::Light()
 	{
+	
 	}
 
 	Light::Light(const Light& other) : scene_(other.scene_), light_texture_(other.light_texture_)
@@ -27,12 +28,20 @@ namespace fse
 		light_->setColor(sf::Color::White);
 		light_->setPosition(spawnPos * FSE_PIXELS_PER_METER);
 
+		scene_->getLightWorld()->registerLight(this);
 	}
 
 	Light::~Light()
 	{
-		if (scene_ != nullptr && light_ != nullptr)
-			scene_->getLightWorld()->getLightSystem()->removeLight(light_);
+		if (scene_ != nullptr)
+		{
+			if (light_ != nullptr)
+			{
+				scene_->getLightWorld()->getLightSystem()->removeLight(light_);
+			}
+			scene_->getLightWorld()->unregisterLight(this);
+		}
+
 	}
 
 	void Light::setPosition(const sf::Vector2f pos) const
@@ -104,6 +113,8 @@ namespace fse
 		std::swap(light_, tmp.light_);
 		std::swap(scene_, tmp.scene_);
 		std::swap(light_texture_, tmp.light_texture_);
+
+		scene_->getLightWorld()->registerLight(this);
 
 		return *this;
 	}
