@@ -26,6 +26,8 @@ namespace fse
 				chai.add(chaiscript::user_type<T>(), typeName);
 			}
 
+			static void RegisterFSEObjects(chaiscript::ChaiScript& chai);
+
 			static void RegisterObjectCtors(chaiscript::ChaiScript& chai);
 
 		};

@@ -42,6 +42,7 @@ namespace fse
 
 		Signal<>::Connection on_resize_connection_;
 
+		friend class fse::priv::FSEChaiLib;
 		RTTR_ENABLE(fse::FSEObject)
 		RTTR_REGISTRATION_FRIEND
 	};

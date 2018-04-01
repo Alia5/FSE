@@ -273,7 +273,7 @@ namespace fse
 		void setRttrComponentsRttr(std::vector<Component*> components);
 
 		RTTR_ENABLE()
-			RTTR_REGISTRATION_FRIEND
+		RTTR_REGISTRATION_FRIEND
 
 		friend class fse::priv::FSEChaiLib;
 

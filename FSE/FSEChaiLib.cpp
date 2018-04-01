@@ -1,6 +1,8 @@
 #include "FSEChaiLib.h"
 #include "FSEObject/KillVolume.h"
 #include "Lights/FSELightWorld.h"
+#include "FSEObject/FPSCounter.h"
+#include "FSEObject/Timer.h"
 
 
 namespace fse
@@ -87,41 +89,65 @@ namespace fse
 					return result;
 				})), "getObjects");
 
-			
-				RegisterChaiUserTypeFromRTTR<FSEObject>(chai);
-				chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
-				chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getZOrder)), "getZOrder");
-				chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(int)>(&FSEObject::setZOrder)), "setZOrder");
-				chai.add(chaiscript::fun(static_cast<sf::Vector2f(FSEObject::*)()>(&FSEObject::getPosition)), "getPosition");
-				chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(sf::Vector2f position)>(&FSEObject::setPosition)),
-					"setPosition");
-				chai.add(chaiscript::fun(static_cast<sf::FloatRect(FSEObject::*)() const>(&FSEObject::GetAABBs)),
-					"getAABBs");
-				chai.add(chaiscript::fun(static_cast<bool(FSEObject::*)()>(&FSEObject::destroy)),
-					"destroy");
-				chai.add(chaiscript::fun(static_cast<Scene*(FSEObject::*)() const>(&FSEObject::getScene)),
-					"getScene");
-				chai.add(chaiscript::fun(([](const FSEObject* object) {
-					return object->get_type().get_name().to_string();
-				})), "getTypeName");
-
-				RegisterChaiUserTypeFromRTTR<KillVolume>(chai);
-				chai.add(chaiscript::base_class<fse::FSEObject, KillVolume>());
-				chai.add(chaiscript::fun(static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize)), "getSize");
-				chai.add(chaiscript::fun(static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize)),
-					"setSize");
-
-				RegisterChaiUserTypeFromRTTR<FSELightWorld>(chai);
-				chai.add(chaiscript::base_class<fse::FSEObject, FSELightWorld>());
-				chai.add(chaiscript::fun((&FSELightWorld::lighting_)), "lighting");
-				chai.add(chaiscript::fun(static_cast<bool(FSELightWorld::*)() const>(&FSELightWorld::getBloom)), "getBloom");
-				chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(bool)>(&FSELightWorld::setBloom)), "setBloom");
-				chai.add(chaiscript::fun(static_cast<sf::Color(FSELightWorld::*)() const>(&FSELightWorld::getAmbientColor)), "getAmbientColor");
-				chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(const sf::Color color) const>(&FSELightWorld::setAmbientColor)), "setAmbientColor");
-
+				RegisterFSEObjects(chai);
 				RegisterObjectCtors(chai);
 		}
 
+
+		void FSEChaiLib::RegisterFSEObjects(chaiscript::ChaiScript& chai)
+		{
+			RegisterChaiUserTypeFromRTTR<FSEObject>(chai);
+			chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
+			chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getZOrder)), "getZOrder");
+			chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(int)>(&FSEObject::setZOrder)), "setZOrder");
+			chai.add(chaiscript::fun(static_cast<sf::Vector2f(FSEObject::*)()>(&FSEObject::getPosition)), "getPosition");
+			chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(sf::Vector2f position)>(&FSEObject::setPosition)),
+				"setPosition");
+			chai.add(chaiscript::fun(static_cast<sf::FloatRect(FSEObject::*)() const>(&FSEObject::GetAABBs)),
+				"getAABBs");
+			chai.add(chaiscript::fun(static_cast<bool(FSEObject::*)()>(&FSEObject::destroy)),
+				"destroy");
+			chai.add(chaiscript::fun(static_cast<Scene*(FSEObject::*)() const>(&FSEObject::getScene)),
+				"getScene");
+			chai.add(chaiscript::fun(([](const FSEObject* object) {
+				return object->get_type().get_name().to_string();
+			})), "getTypeName");
+
+			RegisterChaiUserTypeFromRTTR<KillVolume>(chai);
+			chai.add(chaiscript::base_class<fse::FSEObject, KillVolume>());
+			chai.add(chaiscript::fun(static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize)), "getSize");
+			chai.add(chaiscript::fun(static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize)),
+				"setSize");
+
+			RegisterChaiUserTypeFromRTTR<FSELightWorld>(chai);
+			chai.add(chaiscript::base_class<fse::FSEObject, FSELightWorld>());
+			chai.add(chaiscript::fun((&FSELightWorld::lighting_)), "lighting");
+			chai.add(chaiscript::fun(static_cast<bool(FSELightWorld::*)() const>(&FSELightWorld::getBloom)), "getBloom");
+			chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(bool)>(&FSELightWorld::setBloom)), "setBloom");
+			chai.add(chaiscript::fun(static_cast<sf::Color(FSELightWorld::*)() const>(&FSELightWorld::getAmbientColor)), "getAmbientColor");
+			chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(const sf::Color color) const>(&FSELightWorld::setAmbientColor)), "setAmbientColor");
+
+
+			RegisterChaiUserTypeFromRTTR<FPSCounter>(chai);
+			chai.add(chaiscript::base_class<fse::FSEObject, FPSCounter>());
+			chai.add(chaiscript::fun((&FPSCounter::detailed_view_)), "detailed");
+
+			RegisterChaiUserTypeFromRTTR<Timer>(chai);
+			chai.add(chaiscript::base_class<fse::FSEObject, Timer>());
+			chai.add(chaiscript::fun((&Timer::active_)), "active");
+			chai.add(chaiscript::fun((&Timer::single_shot_)), "singleShot");
+			chai.add(chaiscript::fun((&Timer::interval_)), "interval");
+			chai.add(chaiscript::fun(((&Timer::stop))), "stop");
+			chai.add(chaiscript::fun(([](Timer* timer, std::function<void()> slot) { timer->start(slot); })), "start");
+			chai.add(chaiscript::fun(([](Scene* scene, int msecs, std::function<void()> slot) { Timer::singleShot(scene, msecs, slot); })),
+				"startSingleShotTimer");
+		}
+
+		//////////////////////////////////////////
+		//////////////////////////////////////////
+		//////////////////////////////////////////
+		//////////////////////////////////////////
+		//////////////////////////////////////////
 		void FSEChaiLib::RegisterObjectCtors(chaiscript::ChaiScript& chai)
 		{
 			chai.add(chaiscript::fun([](fse::Scene* scene, const std::string typeName)
@@ -148,7 +174,9 @@ namespace fse
 							}
 							if (ok)
 							{
-								ctor.invoke(scene);
+								auto obj = ctor.invoke(scene);
+								if (!obj.is_valid())
+									throw chaiscript::exception::eval_error("Construction object of type: \"" + typeName + "\" failed!");
 								return;
 							}
 						}
@@ -189,7 +217,9 @@ namespace fse
 							}
 							if (ok)
 							{
-								ctor.invoke(scene, spawnedSlot);
+								auto obj = ctor.invoke(scene, spawnedSlot);
+								if (!obj.is_valid())
+									throw chaiscript::exception::eval_error("Construction object of type: \"" + typeName + "\" failed!");
 								return;
 							}
 						}
@@ -230,7 +260,9 @@ namespace fse
 							}
 							if (ok)
 							{
-								ctor.invoke(scene, spawnPos);
+								auto obj = ctor.invoke(scene, spawnPos);
+								if (!obj.is_valid())
+									throw chaiscript::exception::eval_error("Construction object of type: \"" + typeName + "\" failed!");
 								return;
 							}
 						}
@@ -276,7 +308,9 @@ namespace fse
 							}
 							if (ok)
 							{
-								ctor.invoke(scene, spawnPos, size);
+								auto obj = ctor.invoke(scene, spawnPos, size);
+								if (!obj.is_valid())
+									throw chaiscript::exception::eval_error("Construction object of type: \"" + typeName + "\" failed!");
 								return;
 							}
 						}
