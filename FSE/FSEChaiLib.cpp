@@ -121,6 +121,9 @@ namespace fse
 			chai.add(chaiscript::fun(([](const FSEObject* object) {
 				return object->get_type().get_name().to_string();
 			})), "getTypeName");
+			chai.add(chaiscript::fun(([](const FSEObject* object) {
+				return object->get_type().get_name().to_string();
+			})), "type_name");
 
 			RegisterChaiUserTypeFromRTTR<KillVolume>(chai);
 			chai.add(chaiscript::base_class<fse::FSEObject, KillVolume>());
