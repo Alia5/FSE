@@ -98,7 +98,7 @@ namespace fse
 		RTTR_ENABLE(fse::FSEObject)
 		RTTR_REGISTRATION_FRIEND
 
-		friend class fse::priv::FSEChaiRegister;
+		friend class fse::priv::FSEChaiLib;
 
 
 		const std::string bloom_shader_str_ = "" \

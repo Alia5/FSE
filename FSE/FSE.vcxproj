@@ -186,7 +186,7 @@
     <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep.h" />
     <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep_context.h" />
     <ClInclude Include="AssetLoader.h" />
-    <ClInclude Include="ChaiInitClasses.h" />
+    <ClInclude Include="FSEChaiLib.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\SmoothViewController.h" />
     <ClInclude Include="Component\ViewController.h" />
@@ -238,6 +238,7 @@
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp" />
+    <ClCompile Include="FSEChaiLib.cpp" />
     <ClCompile Include="FSEObject\ChaiConsole.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />
     <ClCompile Include="FSEObject\KillVolume.cpp" />

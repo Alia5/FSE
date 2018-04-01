@@ -24,7 +24,7 @@ namespace fse
 
 	namespace priv
 	{
-		class FSEChaiRegister;
+		class FSEChaiLib;
 	}
 
 	/*!
@@ -232,7 +232,7 @@ namespace fse
 		bool phys_draw_debug_ = false;
 
 		friend class Serializer;
-		friend class fse::priv::FSEChaiRegister;
+		friend class fse::priv::FSEChaiLib;
 
 	};
 }

@@ -110,7 +110,8 @@ RTTR_REGISTRATION
 		return nullptr;
 	})
 	(
-		parameter_names("scene", "spawn position")
+		parameter_names("scene", "spawn position"),
+		metadata("CHAI_CTOR", true)
 	)
 	.constructor<>([](fse::Scene* scene, const sf::Vector2f& spawnPos, const sf::Vector2f& size)
 	{
@@ -119,7 +120,17 @@ RTTR_REGISTRATION
 		return nullptr;
 	})
 	(
-		parameter_names("scene", "spawn position", "size")
+		parameter_names("scene", "spawn position", "size"),
+		metadata("CHAI_CTOR", true)
+	)
+	.constructor<>([](fse::Scene* scene, std::function<void(fse::FSEObject* )> func)
+	{
+		scene->createFSEObject<fse::KillVolume>(func);
+		return nullptr;
+	})
+	(
+		parameter_names("scene", "spawnedSlot"),
+		metadata("CHAI_CTOR", true)
 	)
 	.property("size_", &fse::KillVolume::getSize, &fse::KillVolume::setSize)
 	.method("RTTR_WORKAROUND", &fse::KillVolume::get_type)

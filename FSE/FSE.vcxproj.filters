@@ -240,7 +240,7 @@
     <ClInclude Include="FSEObject\ChaiConsole.h">
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
-    <ClInclude Include="ChaiInitClasses.h">
+    <ClInclude Include="FSEChaiLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -367,6 +367,9 @@
     </ClCompile>
     <ClCompile Include="..\imgui\imgui_demo.cpp">
       <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEChaiLib.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

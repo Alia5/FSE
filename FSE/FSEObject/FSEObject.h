@@ -15,7 +15,7 @@
 namespace fse
 {
 	namespace priv {
-		class FSEChaiRegister;
+		class FSEChaiLib;
 	}
 
 	/*!
@@ -275,7 +275,7 @@ namespace fse
 		RTTR_ENABLE()
 			RTTR_REGISTRATION_FRIEND
 
-		friend class fse::priv::FSEChaiRegister;
+		friend class fse::priv::FSEChaiLib;
 
 	PUBLIC_SIGNALS:
 		/*!

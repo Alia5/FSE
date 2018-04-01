@@ -3,7 +3,7 @@
 #include <imgui.h>
 #include <imgui-SFML.h>
 #include "FSEObject/FSEObject.h"
-#include "ChaiInitClasses.h"
+#include "FSEChaiLib.h"
 
 #ifdef ANDROID
 #include <android/log.h>
@@ -91,7 +91,7 @@ namespace fse
 	void Application::initChai()
 	{
 		chai_.set_state(base_chai_state_);
-		priv::FSEChaiRegister::registerFSETypes(chai_);
+		priv::FSEChaiLib::Init(chai_);
 	}
 
 	void Application::setWindow(sf::RenderWindow * window)
