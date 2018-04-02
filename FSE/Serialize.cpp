@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "Application.h"
 
 namespace fse
 {
@@ -127,7 +128,8 @@ namespace fse
 				extractFromJson(val, json_index_value, scene);
 			}
 		}
-		
+		scene->getApplication()->initChai();
+
 	}
 
 	void Serializer::serializeTypes(rttr::type type, rttr::instance& object, rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer)

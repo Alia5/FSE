@@ -17,6 +17,7 @@ namespace fse
 	{
 		input_.init();
 		base_chai_state_ = chai_.get_state();
+		base_chai_locals_ = chai_.get_locals();
 	}
 
 	Application::~Application()
@@ -90,8 +91,9 @@ namespace fse
 
 	void Application::initChai()
 	{
-		chai_.set_state(base_chai_state_);
+		resetChai();
 		priv::FSEChaiLib::Init(chai_);
+		on_chaiscript_init_(chai_);
 	}
 
 	void Application::setWindow(sf::RenderWindow * window)
@@ -142,4 +144,12 @@ namespace fse
 	{
 		return &chai_;
 	}
+
+	void Application::resetChai()
+	{
+		chai_.set_state(base_chai_state_);
+		chai_.set_locals(base_chai_locals_);
+	}
+
+
 }

@@ -15,7 +15,7 @@ namespace fse
 		void FSEChaiLib::Init(chaiscript::ChaiScript& chai)
 		{
 			
-			chai.add(fse::Random::bootstrap());
+				chai.add(fse::Random::bootstrap());
 			
 
 				chai.add(chaiscript::user_type<sf::Vector2f>(), "Vector2f");
@@ -97,6 +97,15 @@ namespace fse
 						result.push_back(object.get());
 					return result;
 				})), "getObjects");
+				chai.add(chaiscript::fun(([](Scene* scene, int id)
+				{
+					for (auto& object : *scene->getFSEObjects())
+					{
+						if (object->getID() == id)
+							return object.get();
+					}
+					return static_cast<FSEObject*>(nullptr);
+				})), "getObjectWithId");
 
 				RegisterFSEObjects(chai);
 				RegisterObjectCtors(chai);

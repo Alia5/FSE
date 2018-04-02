@@ -43,6 +43,7 @@ namespace fse
 	{
 	PUBLIC_SIGNALS:
 		Signal<> on_window_resized_;
+		Signal<chaiscript::ChaiScript&> on_chaiscript_init_;
 
 	public:
 		Application();
@@ -101,6 +102,9 @@ namespace fse
 		*/
 		chaiscript::ChaiScript* getChai();
 
+		void resetChai();
+
+
 	protected:
 		Input input_;
 		Scene root_scene_;
@@ -108,6 +112,7 @@ namespace fse
 		fse::AssetLoader asset_loader_;
 
 		chaiscript::ChaiScript::State base_chai_state_;
+		std::map<std::string, chaiscript::Boxed_Value> base_chai_locals_;
 		chaiscript::ChaiScript chai_;
 
 #ifdef ANDROID
