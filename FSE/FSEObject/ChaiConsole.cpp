@@ -84,12 +84,12 @@ namespace fse
 					getChai()->eval(input_data_.data());
 				}
 				catch (const chaiscript::exception::eval_error& error) {
-					output_data_ << error.pretty_print();
+					output_data_ << error.pretty_print() << '\n';
 				}
 				catch (const std::exception& e) {
-					output_data_ << e.what();
+					output_data_ << e.what() << '\n';
 				} catch(...) {
-					output_data_ << "Error";
+					output_data_ << "Error" << '\n';
 				}
 				input_history_[input_history_.size() - 1] = (input_data_.data());
 				input_history_.reserve(1);
