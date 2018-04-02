@@ -1,5 +1,8 @@
 #include "Timer.h"
 
+#include "../Application.h"
+#include <regex>
+
 namespace fse
 {
 	Timer::Timer(Scene* scene) : FSEObject(scene)
@@ -20,7 +23,18 @@ namespace fse
 			while (elapsed_time_ * 1000 >= interval_)
 			{
 				elapsed_time_ -= interval_*0.001f;
-				timeout_();
+				//since chaiscript functions can be run, we have to catch chai exceptions
+				try
+				{
+					timeout_();
+				} catch(chaiscript::exception::eval_error& e) {
+					const std::string evalString = "puts(\"" + std::regex_replace(e.pretty_print(), std::regex("(\")"), "\\\"") + "\");";
+					scene_->getApplication()->getChai()->eval(evalString);
+				} catch (std::exception& e) {
+					const std::string evalString = "puts(\"" + std::regex_replace(e.what(), std::regex("(\")"), "\\\"") + "\");";
+				} catch (...) {
+					
+				}
 				if (single_shot_)
 				{
 					active_ = false;
