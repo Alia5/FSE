@@ -6,7 +6,7 @@
 #include "Lights/Light.h"
 #include "Lights/PointLight.h"
 #include "Lights/SpotLight.h"
-
+#include "Random.h"
 
 namespace fse
 {
@@ -14,8 +14,9 @@ namespace fse
 	{
 		void FSEChaiLib::Init(chaiscript::ChaiScript& chai)
 		{
-				chai.add(chaiscript::vector_conversion<std::vector<FSEObject*>>());
-				chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<FSEObject*>>("ObjectList"));
+			
+			chai.add(fse::Random::bootstrap());
+			
 
 				chai.add(chaiscript::user_type<sf::Vector2f>(), "Vector2f");
 				chai.add(chaiscript::fun(&sf::Vector2f::x), "x");
@@ -105,6 +106,9 @@ namespace fse
 
 		void FSEChaiLib::RegisterFSEObjects(chaiscript::ChaiScript& chai)
 		{
+			chai.add(chaiscript::vector_conversion<std::vector<FSEObject*>>());
+			chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<FSEObject*>>("ObjectList"));
+
 			RegisterChaiUserTypeFromRTTR<FSEObject>(chai);
 			chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
 			chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getZOrder)), "getZOrder");

@@ -1,6 +1,7 @@
 #include "EngineCore.h"
 
 #include "Application.h"
+#include "Random.h"
 
 
 namespace fse
@@ -19,7 +20,7 @@ namespace fse
 
 	int EngineCore::exec(Application * application)
 	{
-
+		fse::Random::InitRandom();
 		application_ = application;
 
 		if (show_window_)

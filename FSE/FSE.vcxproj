@@ -210,6 +210,7 @@
     <ClInclude Include="NetworkHandler.h" />
     <ClInclude Include="PhysContactListener.h" />
     <ClInclude Include="PhysDebugDraw.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneDebugger.h" />
@@ -255,6 +256,7 @@
     <ClCompile Include="NetworkHandler.cpp" />
     <ClCompile Include="PhysContactListener.cpp" />
     <ClCompile Include="PhysDebugDraw.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneDebugger.cpp" />
