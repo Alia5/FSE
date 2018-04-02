@@ -32,6 +32,7 @@ namespace fse
 					scene_->getApplication()->getChai()->eval(evalString);
 				} catch (std::exception& e) {
 					const std::string evalString = "puts(\"" + std::regex_replace(e.what(), std::regex("(\")"), "\\\"") + "\");";
+					scene_->getApplication()->getChai()->eval(evalString);
 				} catch (...) {
 					
 				}
