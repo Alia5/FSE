@@ -1,6 +1,7 @@
 #pragma once
 #include <Box2D/Common/b2Math.h>
 #include <SFML/System/Vector2.hpp>
+#include <cmath>
 
 namespace fse
 {
