@@ -29,8 +29,6 @@ private:
 	std::unique_ptr<fse::Scene> sub_scene_ = nullptr;
 	sf::RenderTexture* sub_scene_target_ = nullptr;
 
-
-
 	fse::SceneDebugger scene_debugger_;
 
 };

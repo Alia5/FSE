@@ -8,7 +8,7 @@
 
 GameLevel::GameLevel(fse::Scene* scene) : FSEObject(scene)
 {
-	DemoApp* app = static_cast<DemoApp*>(scene_->getApplication());
+	auto app = dynamic_cast<DemoApp*>(scene_->getApplication());
 	sub_scene_target_ = const_cast<sf::RenderTexture*>(app->getInGameTarget());
 	sub_scene_ = std::make_unique<fse::Scene>(app);
 	sub_scene_->setRenderTarget(sub_scene_target_);
@@ -59,6 +59,7 @@ void GameLevel::draw(sf::RenderTarget& target)
 
 void GameLevel::spawned()
 {
+	spawnLevel();
 }
 
 void GameLevel::handleInputs(float deltaTime) const
@@ -79,7 +80,7 @@ void GameLevel::drawSubScene(sf::RenderTarget& target) const
 
 	// Seems like a bug in SFML to me...
 	// We have to draw something before we actually can draw the subscene...
-	sf::RectangleShape shape;
+	const sf::RectangleShape shape;
 	target.draw(shape);
 	////////////
 
