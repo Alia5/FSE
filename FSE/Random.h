@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <random>
 #include <chaiscript/chaiscript.hpp>
 
@@ -10,19 +10,19 @@ namespace fse
 
 		static int random(int from, int to)
 		{
-			const std::uniform_int_distribution<int> dist(from, to); 
-			return dist(rng);
+            std::uniform_int_distribution<int> dist(from, to);
+            return dist(rng);
 		}
 
 		static float random(float from, float to)
 		{
-			const std::uniform_real_distribution<float> dist(from, to); 
+			std::uniform_real_distribution<float> dist(from, to);
 			return dist(rng);
 		}
 
-		static float random(double from, double to)
+		static double random(double from, double to)
 		{
-			const std::uniform_real_distribution<double> dist(from, to);
+			std::uniform_real_distribution<double> dist(from, to);
 			return dist(rng);
 		}
 
