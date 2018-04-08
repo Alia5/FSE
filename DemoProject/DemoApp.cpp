@@ -3,6 +3,7 @@
 #include <FSE/Lights/FSELightWorld.h>
 #include <FSE/FSEObject/ChaiConsole.h>
 #include <FSE/FSEObject/FPSCounter.h>
+#include "FSEObject/MainMenu.h"
 
 
 void DemoApp::init()
@@ -17,8 +18,8 @@ void DemoApp::init()
 
 	root_scene_.getLightWorld()->setLighting(false);
 
-	//auto intro = std::make_unique<IntroScreen>(&root_scene_);
-	//root_scene_.spawnFSEObject(std::move(intro));
+	auto intro = std::make_unique<MainMenu>(&root_scene_);
+	root_scene_.spawnFSEObject(std::move(intro));
 
 	root_scene_.createFSEObject<fse::ChaiConsole>([this](fse::FSEObject* console)
 	{

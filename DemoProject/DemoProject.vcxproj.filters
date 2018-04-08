@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\FSEObject">
+      <UniqueIdentifier>{0a4ee923-415c-4f95-98c5-84e802a1aa74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSEObject">
+      <UniqueIdentifier>{0120e2c0-e8d9-4c44-b794-3c12c3a032f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component">
+      <UniqueIdentifier>{39dd8257-9e4b-4baf-9214-3238ed150576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component">
+      <UniqueIdentifier>{b46de424-2b56-44fb-bf3d-d9e5ae35eedb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,9 +33,21 @@
     <ClCompile Include="DemoApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FSEObject\MainMenu.cpp">
+      <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEObject\GameLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DemoApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FSEObject\MainMenu.h">
+      <Filter>Header Files\FSEObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FSEObject\GameLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
