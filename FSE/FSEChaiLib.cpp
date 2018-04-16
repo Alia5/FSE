@@ -361,7 +361,7 @@ namespace fse
 			chai.add(chaiscript::fun(static_cast<void (Light::*)(const sf::Vector2f) const>(&Light::setPosition)), "setPosition");
 			chai.add(chaiscript::fun(static_cast<sf::Vector2f(Light::*)() const>(&Light::getPosition)), "getPosition");
 
-			chai.add(chaiscript::fun(static_cast<void (Light::*)(float) const>(&Light::setZPosition)), "setZPosition");
+			chai.add(chaiscript::fun(static_cast<void (Light::*)(const float)>(&Light::setZPosition)), "setZPosition");
 			chai.add(chaiscript::fun(static_cast<float(Light::*)() const>(&Light::getZPosition)), "getZPosition");
 
 			chai.add(chaiscript::fun(static_cast<void (Light::*)(const sf::Vector2f) const>(&Light::setScale)), "setScale");
