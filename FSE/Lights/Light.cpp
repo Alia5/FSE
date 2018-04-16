@@ -104,6 +104,16 @@ namespace fse
 		light_->toggleTurnedOn();
 	}
 
+	float Light::getZPosition() const
+	{
+		return light_->getZPosition();
+	}
+
+	void Light::setZPosition(const float zPos)
+	{
+		light_->setZPosition(zPos);
+	}
+
 	Light& Light::operator=(const Light& other)
 	{
 		if (&other == this)
@@ -128,6 +138,7 @@ using namespace fse;
 
 registration::class_<Light>("fse::Light")
 .property("position_", &Light::getPosition, &Light::setPosition)
+.property("z_position_", &Light::getZPosition, &Light::setZPosition)
 .property("scale_", &Light::getScale, &Light::setScale)
 .property("turned_on_", &Light::isTurnedOn, &Light::setTurnedOn)
 .property("rotation_", &Light::getRotation, &Light::setRotation)

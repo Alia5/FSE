@@ -54,6 +54,9 @@ namespace fse
 		bool isTurnedOn() const;
 		void toggleTurnedOn() const;
 
+		float getZPosition() const;
+		void setZPosition(const float zPos);
+
 		Light& operator=(const Light& other);
 		
 	protected:

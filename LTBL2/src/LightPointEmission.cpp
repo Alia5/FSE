@@ -9,6 +9,7 @@ LightPointEmission::LightPointEmission()
 	, mLocalCastCenter()
 	, mSourceRadius(8.0f)
 	, mShadowOverExtendMultiplier(1.4f)
+	, mZPosition(8.f)
 {
 }
 
@@ -179,7 +180,7 @@ void LightPointEmission::render(const sf::View& view,
 	{
 
 		auto oglLightPosition = lightTempTexture.mapCoordsToPixel(mSprite.getPosition(), view);
-		normalsShader.setUniform("lightPosition", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(static_cast<int>(lightTempTexture.getSize().y) - oglLightPosition.y), 0.15f));
+		normalsShader.setUniform("lightPosition", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(static_cast<int>(lightTempTexture.getSize().y) - oglLightPosition.y), mZPosition / 100.f));
 
 		const auto& lightColor = mSprite.getColor();
 		normalsShader.setUniform("lightColor", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
@@ -191,7 +192,7 @@ void LightPointEmission::render(const sf::View& view,
 		float oglLightHeight = static_cast<float>(std::sqrt(oglLightHeightPos.x * oglLightHeightPos.x + oglLightHeightPos.y * oglLightHeightPos.y));
 		normalsShader.setUniform("lightSize", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
 
-		specularShader.setUniform("lightPos", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(static_cast<int>(lightTempTexture.getSize().y) - oglLightPosition.y), 0.15f));
+		specularShader.setUniform("lightPos", sf::Glsl::Vec3(static_cast<float>(oglLightPosition.x), static_cast<float>(static_cast<int>(lightTempTexture.getSize().y) - oglLightPosition.y), mZPosition / 100.f));
 		specularShader.setUniform("lightSize", sf::Glsl::Vec2(oglLightWidth, oglLightHeight));
 		specularShader.setUniform("lightColorTint", sf::Glsl::Vec3(lightColor.r / 255.f, lightColor.g / 255.f, lightColor.b / 255.f));
 
@@ -390,6 +391,16 @@ sf::FloatRect LightPointEmission::getAABB() const
 {
 	return mSprite.getGlobalBounds();
 }
+
+	float LightPointEmission::getZPosition() const
+	{
+		return mZPosition;
+	}
+
+	void LightPointEmission::setZPosition(const float z_pos)
+	{
+		mZPosition = z_pos;
+	}
 
 sf::Vector2f LightPointEmission::getCastCenter() const
 {

@@ -217,6 +217,10 @@ class LightPointEmission : public priv::QuadtreeOccupant, public priv::BaseLight
 		//////////////////////////////////////////////////////////////////////////
 		sf::FloatRect getAABB() const override;
 
+		float getZPosition() const;
+
+		void setZPosition(const float z_pos);
+
 	private:
 		//////////////////////////////////////////////////////////////////////////
 		/// \brief Get the cast center of the light
@@ -250,6 +254,8 @@ class LightPointEmission : public priv::QuadtreeOccupant, public priv::BaseLight
 		float mSourceRadius; ///< The source radius
 
 		float mShadowOverExtendMultiplier; ///< The shadow over extend multiplier
+
+		float mZPosition;
 
 		sf::ConvexShape mask_shape_;
 		std::vector<bool> facingFrontBothEdges;
