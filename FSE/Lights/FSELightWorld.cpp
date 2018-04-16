@@ -204,5 +204,8 @@ RTTR_REGISTRATION
 	.property("bloom_", &FSELightWorld::getBloom, &FSELightWorld::setBloom)
 	.property("ambient_color_", &FSELightWorld::getAmbientColor, &FSELightWorld::setAmbientColor)
 	.property("lights_", &FSELightWorld::lights_)
+	(
+		metadata("NO_SERIALIZE", true)	
+	)
 	;
 }
