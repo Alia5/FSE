@@ -19,14 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BrickBackground.cpp" />
     <ClCompile Include="DemoApp.cpp" />
     <ClCompile Include="FSEObject\GameLevel.cpp" />
+    <ClCompile Include="FSEObject\ConcreteBlock.cpp" />
     <ClCompile Include="FSEObject\MainMenu.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BrickBackground.h" />
     <ClInclude Include="DemoApp.h" />
     <ClInclude Include="FSEObject\GameLevel.h" />
+    <ClInclude Include="FSEObject\ConcreteBlock.h" />
     <ClInclude Include="FSEObject\MainMenu.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

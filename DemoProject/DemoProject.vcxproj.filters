@@ -37,7 +37,13 @@
       <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
     <ClCompile Include="FSEObject\GameLevel.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEObject\ConcreteBlock.cpp">
+      <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBackground.cpp">
+      <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,7 +54,13 @@
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
     <ClInclude Include="FSEObject\GameLevel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\FSEObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FSEObject\ConcreteBlock.h">
+      <Filter>Header Files\FSEObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBackground.h">
+      <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

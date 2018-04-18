@@ -1,0 +1,93 @@
+{
+    "Objects": [
+        {
+            "type": "BrickBackground",
+            "position_": {
+                "type": "sf::Vector2f",
+                "x": 0.07999999,
+                "y": 0.56
+            },
+            "z_order_": 15,
+            "components_": [],
+            "size_": {
+                "type": "sf::Vector2f",
+                "x": 90.0,
+                "y": 60.0
+            },
+            "rotation_": 0.0
+        },
+        {
+            "type": "ConcreteBlock",
+            "position_": {
+                "type": "sf::Vector2f",
+                "x": -3.0,
+                "y": 21.47999954
+            },
+            "z_order_": 32,
+            "components_": [],
+            "size_": {
+                "type": "sf::Vector2f",
+                "x": 10.0,
+                "y": 30.0
+            },
+            "rotation_": 179.99998474,
+            "light_over_shape_": true,
+            "receive_shadow_": true
+        },
+        {
+            "type": "ConcreteBlock",
+            "position_": {
+                "type": "sf::Vector2f",
+                "x": 85.0,
+                "y": 20.04999923
+            },
+            "z_order_": 32,
+            "components_": [],
+            "size_": {
+                "type": "sf::Vector2f",
+                "x": 20.0,
+                "y": 30.0
+            },
+            "rotation_": 0.0,
+            "light_over_shape_": true,
+            "receive_shadow_": true
+        },
+        {
+            "type": "ConcreteBlock",
+            "position_": {
+                "type": "sf::Vector2f",
+                "x": 37.47999954,
+                "y": 39.39999771
+            },
+            "z_order_": 33,
+            "components_": [],
+            "size_": {
+                "type": "sf::Vector2f",
+                "x": 10.0,
+                "y": 100.0
+            },
+            "rotation_": 89.99997711,
+            "light_over_shape_": true,
+            "receive_shadow_": false
+        },
+        {
+            "type": "fse::FSELightWorld",
+            "position_": {
+                "type": "sf::Vector2f",
+                "x": 36.91999816,
+                "y": 16.15999984
+            },
+            "z_order_": 255,
+            "components_": [],
+            "lighting_": true,
+            "bloom_": true,
+            "ambient_color_": {
+                "type": "sf::Color",
+                "r": 33,
+                "g": 37,
+                "b": 33,
+                "a": 255
+            }
+        }
+    ]
+}

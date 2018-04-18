@@ -35,7 +35,7 @@ namespace fse
 	{
 		if (scene_ != nullptr)
 		{
-			if (light_ != nullptr)
+			if (light_ != nullptr && scene_->getLightWorld() != nullptr)
 			{
 				scene_->getLightWorld()->getLightSystem()->removeLight(light_);
 			}

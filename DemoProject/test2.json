@@ -1,0 +1,41 @@
+{
+    "Objects": [
+        {
+            "type": "BrickBlock",
+            "position_": {
+                "type": "sf::Vector2f",
+                "x": 29.63999938,
+                "y": 21.60000038
+            },
+            "z_order_": 32,
+            "components_": [],
+            "size_": {
+                "type": "sf::Vector2f",
+                "x": 41.0,
+                "y": 20.0
+            },
+            "rotation_": 0.0,
+            "light_over_shape_": true,
+            "receive_shadow_": true
+        },
+        {
+            "type": "fse::FSELightWorld",
+            "position_": {
+                "type": "sf::Vector2f",
+                "x": 0.0,
+                "y": 0.0
+            },
+            "z_order_": 255,
+            "components_": [],
+            "lighting_": true,
+            "bloom_": true,
+            "ambient_color_": {
+                "type": "sf::Color",
+                "r": 109,
+                "g": 109,
+                "b": 109,
+                "a": 255
+            }
+        }
+    ]
+}

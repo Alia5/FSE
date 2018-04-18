@@ -1,0 +1,72 @@
+{
+    "Objects": [
+        {
+            "type": "BrickBlock",
+            "position_": {
+                "type": "sf::Vector2f",
+                "x": 36.47999954,
+                "y": 29.51999855
+            },
+            "z_order_": 32,
+            "components_": [],
+            "size_": {
+                "type": "sf::Vector2f",
+                "x": 20.0,
+                "y": 90.0
+            },
+            "rotation_": 0.0,
+            "light_over_shape_": true,
+            "receive_shadow_": true
+        },
+        {
+            "type": "fse::FSELightWorld",
+            "position_": {
+                "type": "sf::Vector2f",
+                "x": 0.0,
+                "y": 0.0
+            },
+            "z_order_": 255,
+            "components_": [],
+            "lighting_": true,
+            "bloom_": true,
+            "ambient_color_": {
+                "type": "sf::Color",
+                "r": 20,
+                "g": 20,
+                "b": 22,
+                "a": 255
+            },
+            "lights_": [
+                {
+                    "type": ""
+                },
+                {
+                    "type": ""
+                },
+                {
+                    "type": "fse::PointLight",
+                    "position_": {
+                        "type": "sf::Vector2f",
+                        "x": 39.27999496,
+                        "y": 27.35999679
+                    },
+                    "scale_": {
+                        "type": "sf::Vector2f",
+                        "x": 20.0,
+                        "y": 20.0
+                    },
+                    "turned_on_": true,
+                    "rotation_": 0.0,
+                    "color_": {
+                        "type": "sf::Color",
+                        "r": 255,
+                        "g": 255,
+                        "b": 255,
+                        "a": 255
+                    },
+                    "radius_": 51.20000076
+                }
+            ]
+        }
+    ]
+}
