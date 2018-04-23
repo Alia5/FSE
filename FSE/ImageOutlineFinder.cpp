@@ -146,11 +146,8 @@ std::vector<sf::Vector2i> ImageOutlineFinder::getVertices() const
 	return vertices_;
 }
 
-std::vector<sf::Vector2f> ImageOutlineFinder::getSimplifiedVertices(const float limit, int average)
+std::vector<sf::Vector2f> ImageOutlineFinder::getSimplifiedVertices(const float limit, unsigned int average_before, unsigned int average_after)
 {
-	if (average < 1)
-		average = 1;
-
 	std::vector<sf::Vector2f> smoothed_line;
 	std::vector<sf::Vector2f> simplified_line;
 
@@ -159,19 +156,28 @@ std::vector<sf::Vector2f> ImageOutlineFinder::getSimplifiedVertices(const float 
 
 	// Loop over the next [average] vertices and 
 	// add the result to the array of smoothed points
-	for (unsigned int i = 0; i < vertices_.size() - average; i++) {
+	if (average_before > 0 && average_before < vertices_.size())
+	{
+		for (unsigned int i = 0; i < vertices_.size() - average_before; i++) {
 
-		average_vertices.clear();
-		for (int j = 0; j<average; j++) {
-			average_vertices.emplace_back( vertices_[i + j].x, vertices_[i + j].y );
+			average_vertices.clear();
+			for (int j = 0; j < average_before; j++) {
+				average_vertices.emplace_back(vertices_[i + j].x, vertices_[i + j].y);
+			}
+			smoothed_line.push_back(ImageOutlineFinder::average(average_vertices));
 		}
-		smoothed_line.push_back(ImageOutlineFinder::average(average_vertices));
+	} else
+	{
+		for (const auto& vert : vertices_)
+		{
+			smoothed_line.emplace_back(sf::Vector2f(vert.x, vert.y ));
+		}
 	}
 
 	float curvature_total = 0.f;
 	float last_curvature = 0.f;
 
-	for (unsigned int i = 0; i<smoothed_line.size() - 3; i++) {
+	for (unsigned int i = 0; i < smoothed_line.size() - 3; i++) {
 		// Calculate the curvature
 		const float curvature = ImageOutlineFinder::curvature(smoothed_line[i], smoothed_line[i + 1], smoothed_line[i + 2]);
 
@@ -191,14 +197,31 @@ std::vector<sf::Vector2f> ImageOutlineFinder::getSimplifiedVertices(const float 
 		}
 	}
 
+	smoothed_line.clear();
+	smoothed_line.emplace_back(vertices_[0].x, vertices_[0].y);
+	// Loop over the next [average] vertices and 
+	// add the result to the array of smoothed points
+	if (average_after > 0 && average_after < simplified_line.size())
+	{
+		for (unsigned int i = 0; i < simplified_line.size() - average_after; i++) {
+
+			average_vertices.clear();
+			for (int j = 0; j < average_after; j++) {
+				average_vertices.emplace_back(simplified_line[i + j].x, simplified_line[i + j].y);
+			}
+			smoothed_line.push_back(ImageOutlineFinder::average(average_vertices));
+		}
+		return smoothed_line;
+	}
 	return simplified_line;
 }
 
-std::vector<std::vector<sf::Vector2f>> ImageOutlineFinder::getSimplifiedTriangles(const float limit, const int average, const float min_area)
+
+std::vector<std::vector<sf::Vector2f>> ImageOutlineFinder::getSimplifiedTriangles(const float limit, const unsigned int average,const unsigned int average_after, const float min_area)
 {
 	std::vector<std::vector<sf::Vector2f>> result;
 
-	std::vector<sf::Vector2f> simplified_verts = getSimplifiedVertices(limit, average);
+	std::vector<sf::Vector2f> simplified_verts = getSimplifiedVertices(limit, average, average_after);
 
 	if (simplified_verts.size() < 3)
 		return result;

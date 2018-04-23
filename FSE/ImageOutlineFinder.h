@@ -12,9 +12,9 @@ public:
 	void findOutLines(const sf::Image& image, int alpha_threshold);
 
 	std::vector<sf::Vector2i> getVertices() const;
-	std::vector<sf::Vector2f> getSimplifiedVertices(float limit, int average);
+	std::vector<sf::Vector2f> getSimplifiedVertices(const float limit, unsigned int average_before, unsigned int average_after = 0);
 
-	std::vector<std::vector<sf::Vector2f>> getSimplifiedTriangles(float limit, int average, float min_area = 50);
+	std::vector<std::vector<sf::Vector2f>> getSimplifiedTriangles(float limit, unsigned int average, unsigned int average_after = 0, float min_area = 50);
 
 private:
 
