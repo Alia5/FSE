@@ -15,6 +15,7 @@ public:
 	std::vector<sf::Vector2f> getSimplifiedVertices(const float limit, unsigned int average_before, unsigned int average_after = 0);
 
 	std::vector<std::vector<sf::Vector2f>> getSimplifiedTriangles(float limit, unsigned int average, unsigned int average_after = 0, float min_area = 50);
+	std::vector<std::vector<sf::Vector2f>> getSimplifiedPolys(float limit, unsigned int average, unsigned int average_after = 0, unsigned int max_polys = 512);
 
 private:
 

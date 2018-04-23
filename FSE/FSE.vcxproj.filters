@@ -88,6 +88,18 @@
     <Filter Include="Header Files\imgui-sfml-config">
       <UniqueIdentifier>{4f9190db-89f7-4c31-84f3-2ab5241a466c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\liquidfun_contrib">
+      <UniqueIdentifier>{f72c25de-849e-4ef4-95be-37e0ac214366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\liquidfun_contrib\ConvexDecomposition">
+      <UniqueIdentifier>{c8443ec0-974b-4e02-8440-b72b9934f12d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\liquidfun_contrib">
+      <UniqueIdentifier>{c23f208f-e46d-4ba7-bca9-6f56fa1e76d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\liquidfun_contrib\ConvexDecomposition">
+      <UniqueIdentifier>{a5e5ad13-c5ef-4e1f-b289-7d5b011c1ef6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetLoader.h">
@@ -246,6 +258,12 @@
     <ClInclude Include="Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\liquidfun_contrib\ConvexDecomposition\b2Polygon.h">
+      <Filter>Header Files\liquidfun_contrib\ConvexDecomposition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\liquidfun_contrib\ConvexDecomposition\b2Triangle.h">
+      <Filter>Header Files\liquidfun_contrib\ConvexDecomposition</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -376,6 +394,12 @@
     </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liquidfun_contrib\ConvexDecomposition\b2Triangle.cpp">
+      <Filter>Source Files\liquidfun_contrib\ConvexDecomposition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liquidfun_contrib\ConvexDecomposition\b2Polygon.cpp">
+      <Filter>Source Files\liquidfun_contrib\ConvexDecomposition</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

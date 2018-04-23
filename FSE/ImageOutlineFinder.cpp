@@ -4,6 +4,8 @@
 #include <poly2tri.h>
 #include <iostream>
 
+#include "../liquidfun_contrib/ConvexDecomposition/b2Polygon.h"
+
 
 ImageOutlineFinder::ImageOutlineFinder()
 = default;
@@ -265,6 +267,50 @@ std::vector<std::vector<sf::Vector2f>> ImageOutlineFinder::getSimplifiedTriangle
 	}
 	polyline.clear();
 	delete cdt;
+	return result;
+}
+
+std::vector<std::vector<sf::Vector2f>> ImageOutlineFinder::getSimplifiedPolys(float limit, unsigned average,
+	unsigned average_after, unsigned int max_polys)
+{
+	
+	auto simplverts = getSimplifiedVertices(limit, average, average_after);
+	std::vector<b2Vec2> cloud;
+	cloud.reserve(simplverts.size());
+
+	for (const auto & vert : simplverts)
+	{
+		cloud.emplace_back(vert.x, vert.y);
+	}
+
+	b2Polygon polygon = ConvexHull(cloud.data(), cloud.size());
+
+	std::vector<b2Polygon> polys;
+	polys.resize(max_polys);
+	const auto size = DecomposeConvex(&polygon, polys.data(), max_polys);
+
+	std::vector<std::vector<sf::Vector2f>> result;
+
+	if (size == -1)
+		return result;
+
+	result.reserve(size);
+	for (auto i = 0; i < size; i++)
+	{
+		if (polys[i].IsUsable(true) && polys[i].nVertices > 3)
+		{
+			std::vector<sf::Vector2f> poly;
+			poly.reserve(polys[i].nVertices);
+			auto verts = polys[i].GetVertexVecs();
+			for (auto j = 0; j < polys[i].nVertices; j++)
+			{
+				poly.emplace_back(verts->x, verts->y);
+				verts++;
+			}
+			result.push_back(poly);
+		}
+	}
+
 	return result;
 }
 
