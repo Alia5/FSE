@@ -194,7 +194,7 @@ std::vector<sf::Vector2f> ImageOutlineFinder::getSimplifiedVertices(const float 
 	return simplified_line;
 }
 
-std::vector<std::vector<sf::Vector2f>> ImageOutlineFinder::getSimplifiedTriangles(const float limit, const int average)
+std::vector<std::vector<sf::Vector2f>> ImageOutlineFinder::getSimplifiedTriangles(const float limit, const int average, const float min_area)
 {
 	std::vector<std::vector<sf::Vector2f>> result;
 
@@ -226,7 +226,15 @@ std::vector<std::vector<sf::Vector2f>> ImageOutlineFinder::getSimplifiedTriangle
 		sf_tri.emplace_back( p->x, p->y );
 		p = tri->PointCCW(*p);
 		sf_tri.emplace_back( p->x, p->y );
-		result.push_back(sf_tri);
+
+		float area = (sf_tri[0].x*(sf_tri[1].y - sf_tri[2].x)
+			+ sf_tri[1].x*(sf_tri[2].y - sf_tri[0].y)
+			+ sf_tri[2].x*(sf_tri[0].y - sf_tri[1].y)) / 2.f;
+		if (area < 0)
+			area *= -1;
+
+		if (area >= min_area)
+			result.push_back(sf_tri);
 	}
 
 	for (auto & i : polyline) {
