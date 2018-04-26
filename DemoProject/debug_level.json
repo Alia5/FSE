@@ -30,7 +30,7 @@
                 "x": 10.0,
                 "y": 30.0
             },
-            "rotation_": 179.99998474,
+            "rotation_": 179.99981689,
             "light_over_shape_": true,
             "receive_shadow_": true
         },
@@ -66,9 +66,25 @@
                 "x": 10.0,
                 "y": 100.0
             },
-            "rotation_": 89.99997711,
+            "rotation_": 89.99989318,
             "light_over_shape_": true,
             "receive_shadow_": false
+        },
+        {
+            "type": "CeilingLamp",
+            "position_": {
+                "type": "sf::Vector2f",
+                "x": 34.88000106,
+                "y": 0.28
+            },
+            "z_order_": 33,
+            "components_": [],
+            "rotation_": 0.0,
+            "limit_": 0.2,
+            "avg_count_": 0,
+            "alpha_threshold_": 250,
+            "max_polys_": 8,
+            "avg_count_after_": 0
         },
         {
             "type": "fse::FSELightWorld",

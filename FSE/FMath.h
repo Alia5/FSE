@@ -60,6 +60,11 @@ namespace fse
 			return std::atan2(p2.y - p1.y, p2.x - p1.x) * (180 / PI);
 		}
 
+		static float angleDegree(const b2Vec2 p1, const b2Vec2 p2)
+		{
+			return std::atan2(p2.y - p1.y, p2.x - p1.x) * (180 / PI);
+		}
+
 
 	}
 

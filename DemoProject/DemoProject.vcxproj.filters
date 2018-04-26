@@ -45,6 +45,9 @@
     <ClCompile Include="BrickBackground.cpp">
       <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
+    <ClCompile Include="CeilingLamp.cpp">
+      <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DemoApp.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
     <ClInclude Include="BrickBackground.h">
+      <Filter>Header Files\FSEObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CeilingLamp.h">
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
   </ItemGroup>
