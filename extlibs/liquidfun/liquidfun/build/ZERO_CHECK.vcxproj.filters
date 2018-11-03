@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\liquidfun\liquidfun\build\CMakeFiles\4a03a0a43ba38bffff4d4ce166c0e257\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{D64A56D7-517A-346A-85ED-2814B1F52B87}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

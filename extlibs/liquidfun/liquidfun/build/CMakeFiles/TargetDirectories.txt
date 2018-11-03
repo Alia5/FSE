@@ -1,0 +1,3 @@
+C:/liquidfun/liquidfun/build/CMakeFiles/ALL_BUILD.dir
+C:/liquidfun/liquidfun/build/CMakeFiles/ZERO_CHECK.dir
+C:/liquidfun/liquidfun/build/Box2D/CMakeFiles/Box2D.dir

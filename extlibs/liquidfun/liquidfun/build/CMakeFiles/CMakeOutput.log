@@ -1,0 +1,979 @@
+The system is: Windows - 10.0.16299 - AMD64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler:  
+Build flags: 
+Id flags:  
+
+The output was:
+0
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:08 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\3.8.0-rc2\CompilerIdC\CompilerIdC.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "Debug\".
+  Creating directory "Debug\CompilerIdC.tlog\".
+InitializeBuildStatus:
+  Creating "Debug\CompilerIdC.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /nologo /W0 /WX- /diagnostics:classic /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue CMakeCCompilerId.c
+  CMakeCCompilerId.c
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:".\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\CompilerIdC.lib" /MACHINE:X86 /SAFESEH Debug\CMakeCCompilerId.obj
+  CompilerIdC.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\3.8.0-rc2\CompilerIdC\.\CompilerIdC.exe
+PostBuildEvent:
+  for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+  :VCEnd
+  CMAKE_C_COMPILER=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\Hostx86\x86\cl.exe
+FinalizeBuildStatus:
+  Deleting file "Debug\CompilerIdC.tlog\unsuccessfulbuild".
+  Touching "Debug\CompilerIdC.tlog\CompilerIdC.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\3.8.0-rc2\CompilerIdC\CompilerIdC.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.42
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+
+The C compiler identification is MSVC, found in "C:/liquidfun/liquidfun/build/CMakeFiles/3.8.0-rc2/CompilerIdC/CompilerIdC.exe"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler:  
+Build flags: 
+Id flags:  
+
+The output was:
+0
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:09 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\3.8.0-rc2\CompilerIdCXX\CompilerIdCXX.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "Debug\".
+  Creating directory "Debug\CompilerIdCXX.tlog\".
+InitializeBuildStatus:
+  Creating "Debug\CompilerIdCXX.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /nologo /W0 /WX- /diagnostics:classic /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue CMakeCXXCompilerId.cpp
+  CMakeCXXCompilerId.cpp
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:".\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\CompilerIdCXX.lib" /MACHINE:X86 /SAFESEH Debug\CMakeCXXCompilerId.obj
+  CompilerIdCXX.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\3.8.0-rc2\CompilerIdCXX\.\CompilerIdCXX.exe
+PostBuildEvent:
+  for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+  :VCEnd
+  CMAKE_CXX_COMPILER=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\Hostx86\x86\cl.exe
+FinalizeBuildStatus:
+  Deleting file "Debug\CompilerIdCXX.tlog\unsuccessfulbuild".
+  Touching "Debug\CompilerIdCXX.tlog\CompilerIdCXX.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\3.8.0-rc2\CompilerIdCXX\CompilerIdCXX.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.83
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+
+The CXX compiler identification is MSVC, found in "C:/liquidfun/liquidfun/build/CMakeFiles/3.8.0-rc2/CompilerIdCXX/CompilerIdCXX.exe"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_73208.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:10 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_73208.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_73208.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_73208.dir\Debug\cmTC_73208.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_73208.dir\Debug\cmTC_73208.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_73208.dir\Debug\\" /Fd"cmTC_73208.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\testCCompiler.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_73208.dir\Debug\\" /Fd"cmTC_73208.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\testCCompiler.c
+  testCCompiler.c
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_73208.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_73208.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_73208.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_73208.dir\Debug\testCCompiler.obj
+  cmTC_73208.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_73208.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_73208.dir\Debug\cmTC_73208.tlog\unsuccessfulbuild".
+  Touching "cmTC_73208.dir\Debug\cmTC_73208.tlog\cmTC_73208.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_73208.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.91
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_31d7e.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:12 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_31d7e.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_31d7e.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_31d7e.dir\Debug\cmTC_31d7e.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_31d7e.dir\Debug\cmTC_31d7e.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_31d7e.dir\Debug\\" /Fd"cmTC_31d7e.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CMakeCCompilerABI.c"
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_31d7e.dir\Debug\\" /Fd"cmTC_31d7e.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CMakeCCompilerABI.c"
+  CMakeCCompilerABI.c
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_31d7e.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_31d7e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_31d7e.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_31d7e.dir\Debug\CMakeCCompilerABI.obj
+  cmTC_31d7e.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_31d7e.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_31d7e.dir\Debug\cmTC_31d7e.tlog\unsuccessfulbuild".
+  Touching "cmTC_31d7e.dir\Debug\cmTC_31d7e.tlog\cmTC_31d7e.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_31d7e.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.74
+
+
+Determining if the CXX compiler works passed with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_786bb.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:13 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_786bb.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_786bb.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_786bb.dir\Debug\cmTC_786bb.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_786bb.dir\Debug\cmTC_786bb.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_786bb.dir\Debug\\" /Fd"cmTC_786bb.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_786bb.dir\Debug\\" /Fd"cmTC_786bb.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
+  testCXXCompiler.cxx
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_786bb.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_786bb.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_786bb.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_786bb.dir\Debug\testCXXCompiler.obj
+  cmTC_786bb.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_786bb.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_786bb.dir\Debug\cmTC_786bb.tlog\unsuccessfulbuild".
+  Touching "cmTC_786bb.dir\Debug\cmTC_786bb.tlog\cmTC_786bb.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_786bb.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.72
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_33edc.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:13 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_33edc.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_33edc.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_33edc.dir\Debug\cmTC_33edc.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_33edc.dir\Debug\cmTC_33edc.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_33edc.dir\Debug\\" /Fd"cmTC_33edc.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CMakeCXXCompilerABI.cpp"
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_33edc.dir\Debug\\" /Fd"cmTC_33edc.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CMakeCXXCompilerABI.cpp"
+  CMakeCXXCompilerABI.cpp
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_33edc.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_33edc.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_33edc.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_33edc.dir\Debug\CMakeCXXCompilerABI.obj
+  cmTC_33edc.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_33edc.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_33edc.dir\Debug\cmTC_33edc.tlog\unsuccessfulbuild".
+  Touching "cmTC_33edc.dir\Debug\cmTC_33edc.tlog\cmTC_33edc.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_33edc.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.69
+
+
+
+
+Detecting CXX [] compiler features compiled with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_418e7.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:15 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_418e7.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_418e7.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_418e7.dir\Debug\cmTC_418e7.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_418e7.dir\Debug\cmTC_418e7.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_418e7.dir\Debug\\" /Fd"cmTC_418e7.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\feature_tests.cxx
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_418e7.dir\Debug\\" /Fd"cmTC_418e7.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\feature_tests.cxx
+  feature_tests.cxx
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_418e7.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_418e7.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_418e7.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_418e7.dir\Debug\feature_tests.obj
+  cmTC_418e7.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_418e7.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_418e7.dir\Debug\cmTC_418e7.tlog\unsuccessfulbuild".
+  Touching "cmTC_418e7.dir\Debug\cmTC_418e7.tlog\cmTC_418e7.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_418e7.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.75
+
+
+    Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:1cxx_alias_templates
+    Feature record: CXX_FEATURE:1cxx_alignas
+    Feature record: CXX_FEATURE:1cxx_alignof
+    Feature record: CXX_FEATURE:1cxx_attributes
+    Feature record: CXX_FEATURE:1cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:1cxx_auto_type
+    Feature record: CXX_FEATURE:1cxx_binary_literals
+    Feature record: CXX_FEATURE:1cxx_constexpr
+    Feature record: CXX_FEATURE:1cxx_contextual_conversions
+    Feature record: CXX_FEATURE:1cxx_decltype
+    Feature record: CXX_FEATURE:1cxx_decltype_auto
+    Feature record: CXX_FEATURE:1cxx_default_function_template_args
+    Feature record: CXX_FEATURE:1cxx_defaulted_functions
+    Feature record: CXX_FEATURE:1cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:1cxx_delegating_constructors
+    Feature record: CXX_FEATURE:1cxx_deleted_functions
+    Feature record: CXX_FEATURE:1cxx_digit_separators
+    Feature record: CXX_FEATURE:1cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:1cxx_explicit_conversions
+    Feature record: CXX_FEATURE:1cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:1cxx_extern_templates
+    Feature record: CXX_FEATURE:1cxx_final
+    Feature record: CXX_FEATURE:1cxx_func_identifier
+    Feature record: CXX_FEATURE:1cxx_generalized_initializers
+    Feature record: CXX_FEATURE:1cxx_generic_lambdas
+    Feature record: CXX_FEATURE:1cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:1cxx_inline_namespaces
+    Feature record: CXX_FEATURE:1cxx_lambdas
+    Feature record: CXX_FEATURE:1cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:1cxx_local_type_template_args
+    Feature record: CXX_FEATURE:1cxx_long_long_type
+    Feature record: CXX_FEATURE:1cxx_noexcept
+    Feature record: CXX_FEATURE:1cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:1cxx_nullptr
+    Feature record: CXX_FEATURE:1cxx_override
+    Feature record: CXX_FEATURE:1cxx_range_for
+    Feature record: CXX_FEATURE:1cxx_raw_string_literals
+    Feature record: CXX_FEATURE:1cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:1cxx_return_type_deduction
+    Feature record: CXX_FEATURE:1cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:1cxx_rvalue_references
+    Feature record: CXX_FEATURE:1cxx_sizeof_member
+    Feature record: CXX_FEATURE:1cxx_static_assert
+    Feature record: CXX_FEATURE:1cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:1cxx_thread_local
+    Feature record: CXX_FEATURE:1cxx_trailing_return_types
+    Feature record: CXX_FEATURE:1cxx_unicode_literals
+    Feature record: CXX_FEATURE:1cxx_uniform_initialization
+    Feature record: CXX_FEATURE:1cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:1cxx_user_literals
+    Feature record: CXX_FEATURE:1cxx_variable_templates
+    Feature record: CXX_FEATURE:1cxx_variadic_macros
+    Feature record: CXX_FEATURE:1cxx_variadic_templates
+Determining if files sys/types.h exist passed with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_1bf81.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:17 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_1bf81.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_1bf81.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_1bf81.dir\Debug\cmTC_1bf81.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_1bf81.dir\Debug\cmTC_1bf81.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1bf81.dir\Debug\\" /Fd"cmTC_1bf81.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1bf81.dir\Debug\\" /Fd"cmTC_1bf81.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  CheckIncludeFiles.c
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_1bf81.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_1bf81.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_1bf81.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_1bf81.dir\Debug\CheckIncludeFiles.obj
+  cmTC_1bf81.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_1bf81.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_1bf81.dir\Debug\cmTC_1bf81.tlog\unsuccessfulbuild".
+  Touching "cmTC_1bf81.dir\Debug\cmTC_1bf81.tlog\cmTC_1bf81.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_1bf81.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.67
+
+
+Determining if files stdbool.h exist passed with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_8a675.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:19 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_8a675.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_8a675.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_8a675.dir\Debug\cmTC_8a675.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_8a675.dir\Debug\cmTC_8a675.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8a675.dir\Debug\\" /Fd"cmTC_8a675.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8a675.dir\Debug\\" /Fd"cmTC_8a675.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  CheckIncludeFiles.c
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_8a675.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_8a675.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_8a675.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_8a675.dir\Debug\CheckIncludeFiles.obj
+  cmTC_8a675.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_8a675.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_8a675.dir\Debug\cmTC_8a675.tlog\unsuccessfulbuild".
+  Touching "cmTC_8a675.dir\Debug\cmTC_8a675.tlog\cmTC_8a675.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_8a675.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.66
+
+
+Determining if files fcntl.h exist passed with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_eac6e.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:21 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_eac6e.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_eac6e.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_eac6e.dir\Debug\cmTC_eac6e.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_eac6e.dir\Debug\cmTC_eac6e.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_eac6e.dir\Debug\\" /Fd"cmTC_eac6e.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_eac6e.dir\Debug\\" /Fd"cmTC_eac6e.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  CheckIncludeFiles.c
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_eac6e.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_eac6e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_eac6e.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_eac6e.dir\Debug\CheckIncludeFiles.obj
+  cmTC_eac6e.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_eac6e.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_eac6e.dir\Debug\cmTC_eac6e.tlog\unsuccessfulbuild".
+  Touching "cmTC_eac6e.dir\Debug\cmTC_eac6e.tlog\cmTC_eac6e.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_eac6e.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.65
+
+
+Determining if files errno.h exist passed with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_3b33f.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:21 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_3b33f.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_3b33f.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_3b33f.dir\Debug\cmTC_3b33f.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_3b33f.dir\Debug\cmTC_3b33f.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3b33f.dir\Debug\\" /Fd"cmTC_3b33f.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3b33f.dir\Debug\\" /Fd"cmTC_3b33f.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  CheckIncludeFiles.c
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_3b33f.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_3b33f.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_3b33f.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_3b33f.dir\Debug\CheckIncludeFiles.obj
+  cmTC_3b33f.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_3b33f.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_3b33f.dir\Debug\cmTC_3b33f.tlog\unsuccessfulbuild".
+  Touching "cmTC_3b33f.dir\Debug\cmTC_3b33f.tlog\cmTC_3b33f.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_3b33f.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.69
+
+
+Determining if files stdint.h exist passed with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_af1be.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:26 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_af1be.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_af1be.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_af1be.dir\Debug\cmTC_af1be.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_af1be.dir\Debug\cmTC_af1be.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_af1be.dir\Debug\\" /Fd"cmTC_af1be.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_af1be.dir\Debug\\" /Fd"cmTC_af1be.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  CheckIncludeFiles.c
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_af1be.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_af1be.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_af1be.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_af1be.dir\Debug\CheckIncludeFiles.obj
+  cmTC_af1be.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_af1be.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_af1be.dir\Debug\cmTC_af1be.tlog\unsuccessfulbuild".
+  Touching "cmTC_af1be.dir\Debug\cmTC_af1be.tlog\cmTC_af1be.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_af1be.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.68
+
+
+Determining if files inttypes.h exist passed with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_b27db.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 2/20/2018 6:49:27 PM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_b27db.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_b27db.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_b27db.dir\Debug\cmTC_b27db.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_b27db.dir\Debug\cmTC_b27db.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b27db.dir\Debug\\" /Fd"cmTC_b27db.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b27db.dir\Debug\\" /Fd"cmTC_b27db.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
+  CheckIncludeFiles.c
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_b27db.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_b27db.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_b27db.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_b27db.dir\Debug\CheckIncludeFiles.obj
+  cmTC_b27db.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_b27db.exe
+FinalizeBuildStatus:
+  Deleting file "cmTC_b27db.dir\Debug\cmTC_b27db.tlog\unsuccessfulbuild".
+  Touching "cmTC_b27db.dir\Debug\cmTC_b27db.tlog\cmTC_b27db.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_b27db.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.65
+
+
+The system is: Windows - 10.0.17134 - AMD64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler:  
+Build flags: /DWIN32;/D_WINDOWS;/W3
+Id flags:  
+
+The output was:
+0
+Microsoft (R) Build Engine version 15.8.169+g1ccb72aefa for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 11/4/2018 12:08:17 AM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\3.12.4\CompilerIdC\CompilerIdC.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "Debug\".
+  Creating directory "Debug\CompilerIdC.tlog\".
+InitializeBuildStatus:
+  Creating "Debug\CompilerIdC.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+VcpkgTripletSelection:
+  Using triplet "x86-windows" from "C:\vcpkg\installed\x86-windows\"
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\CL.exe /c /I"C:\vcpkg\installed\x86-windows\include" /nologo /W0 /WX- /diagnostics:classic /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc141.pdb" /Gd /TC /analyze- /FC /errorReport:queue CMakeCCompilerId.c
+  CMakeCCompilerId.c
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:".\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib" /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "C:\vcpkg\installed\x86-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\CompilerIdC.lib" /MACHINE:X86 /SAFESEH Debug\CMakeCCompilerId.obj
+  CompilerIdC.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\3.12.4\CompilerIdC\.\CompilerIdC.exe
+AppLocalFromInstalled:
+  C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -noprofile -File "C:\vcpkg\scripts\buildsystems\msbuild\applocal.ps1" "C:\liquidfun\liquidfun\build\CMakeFiles\3.12.4\CompilerIdC\.\CompilerIdC.exe" "C:\vcpkg\installed\x86-windows\debug\bin" "Debug\CompilerIdC.tlog\CompilerIdC.write.1u.tlog" "Debug\vcpkg.applocal.log"
+PostBuildEvent:
+  for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+  :VCEnd
+  CMAKE_C_COMPILER=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\Hostx86\x86\cl.exe
+FinalizeBuildStatus:
+  Deleting file "Debug\CompilerIdC.tlog\unsuccessfulbuild".
+  Touching "Debug\CompilerIdC.tlog\CompilerIdC.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\3.12.4\CompilerIdC\CompilerIdC.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.90
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+
+The C compiler identification is MSVC, found in "C:/liquidfun/liquidfun/build/CMakeFiles/3.12.4/CompilerIdC/CompilerIdC.exe"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler:  
+Build flags: /DWIN32;/D_WINDOWS;/W3;/GR;/EHsc
+Id flags:  
+
+The output was:
+0
+Microsoft (R) Build Engine version 15.8.169+g1ccb72aefa for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 11/4/2018 12:08:21 AM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\3.12.4\CompilerIdCXX\CompilerIdCXX.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "Debug\".
+  Creating directory "Debug\CompilerIdCXX.tlog\".
+InitializeBuildStatus:
+  Creating "Debug\CompilerIdCXX.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+VcpkgTripletSelection:
+  Using triplet "x86-windows" from "C:\vcpkg\installed\x86-windows\"
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\CL.exe /c /I"C:\vcpkg\installed\x86-windows\include" /nologo /W0 /WX- /diagnostics:classic /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc141.pdb" /Gd /TP /analyze- /FC /errorReport:queue CMakeCXXCompilerId.cpp
+  CMakeCXXCompilerId.cpp
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:".\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib" /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "C:\vcpkg\installed\x86-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\CompilerIdCXX.lib" /MACHINE:X86 /SAFESEH Debug\CMakeCXXCompilerId.obj
+  CompilerIdCXX.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\3.12.4\CompilerIdCXX\.\CompilerIdCXX.exe
+AppLocalFromInstalled:
+  C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -noprofile -File "C:\vcpkg\scripts\buildsystems\msbuild\applocal.ps1" "C:\liquidfun\liquidfun\build\CMakeFiles\3.12.4\CompilerIdCXX\.\CompilerIdCXX.exe" "C:\vcpkg\installed\x86-windows\debug\bin" "Debug\CompilerIdCXX.tlog\CompilerIdCXX.write.1u.tlog" "Debug\vcpkg.applocal.log"
+PostBuildEvent:
+  for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+  :VCEnd
+  CMAKE_CXX_COMPILER=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\Hostx86\x86\cl.exe
+FinalizeBuildStatus:
+  Deleting file "Debug\CompilerIdCXX.tlog\unsuccessfulbuild".
+  Touching "Debug\CompilerIdCXX.tlog\CompilerIdCXX.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\3.12.4\CompilerIdCXX\CompilerIdCXX.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.38
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+
+The CXX compiler identification is MSVC, found in "C:/liquidfun/liquidfun/build/CMakeFiles/3.12.4/CompilerIdCXX/CompilerIdCXX.exe"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_40c92.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.8.169+g1ccb72aefa for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 11/4/2018 12:08:24 AM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_40c92.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_40c92.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_40c92.dir\Debug\cmTC_40c92.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_40c92.dir\Debug\cmTC_40c92.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+VcpkgTripletSelection:
+  Using triplet "x86-windows" from "C:\vcpkg\installed\x86-windows\"
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\CL.exe /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_40c92.dir\Debug\\" /Fd"cmTC_40c92.dir\Debug\vc141.pdb" /Gd /TC /analyze- /FC /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\testCCompiler.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.15.26732.1 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  testCCompiler.c
+  cl /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_40c92.dir\Debug\\" /Fd"cmTC_40c92.dir\Debug\vc141.pdb" /Gd /TC /analyze- /FC /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\testCCompiler.c
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_40c92.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib" /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\vcpkg\installed\x86-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_40c92.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_40c92.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_40c92.dir\Debug\testCCompiler.obj
+  cmTC_40c92.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_40c92.exe
+AppLocalFromInstalled:
+  C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -noprofile -File "C:\vcpkg\scripts\buildsystems\msbuild\applocal.ps1" "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_40c92.exe" "C:\vcpkg\installed\x86-windows\debug\bin" "cmTC_40c92.dir\Debug\cmTC_40c92.tlog\cmTC_40c92.write.1u.tlog" "cmTC_40c92.dir\Debug\vcpkg.applocal.log"
+FinalizeBuildStatus:
+  Deleting file "cmTC_40c92.dir\Debug\cmTC_40c92.tlog\unsuccessfulbuild".
+  Touching "cmTC_40c92.dir\Debug\cmTC_40c92.tlog\cmTC_40c92.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_40c92.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.68
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_65630.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.8.169+g1ccb72aefa for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 11/4/2018 12:08:27 AM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_65630.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_65630.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_65630.dir\Debug\cmTC_65630.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_65630.dir\Debug\cmTC_65630.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+VcpkgTripletSelection:
+  Using triplet "x86-windows" from "C:\vcpkg\installed\x86-windows\"
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\CL.exe /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_65630.dir\Debug\\" /Fd"cmTC_65630.dir\Debug\vc141.pdb" /Gd /TC /analyze- /FC /errorReport:queue "C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompilerABI.c"
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.15.26732.1 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  CMakeCCompilerABI.c
+  cl /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_65630.dir\Debug\\" /Fd"cmTC_65630.dir\Debug\vc141.pdb" /Gd /TC /analyze- /FC /errorReport:queue "C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompilerABI.c"
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_65630.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib" /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\vcpkg\installed\x86-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_65630.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_65630.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_65630.dir\Debug\CMakeCCompilerABI.obj
+  cmTC_65630.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_65630.exe
+AppLocalFromInstalled:
+  C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -noprofile -File "C:\vcpkg\scripts\buildsystems\msbuild\applocal.ps1" "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_65630.exe" "C:\vcpkg\installed\x86-windows\debug\bin" "cmTC_65630.dir\Debug\cmTC_65630.tlog\cmTC_65630.write.1u.tlog" "cmTC_65630.dir\Debug\vcpkg.applocal.log"
+FinalizeBuildStatus:
+  Deleting file "cmTC_65630.dir\Debug\cmTC_65630.tlog\unsuccessfulbuild".
+  Touching "cmTC_65630.dir\Debug\cmTC_65630.tlog\cmTC_65630.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_65630.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.69
+
+
+
+
+Detecting C [] compiler features compiled with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_b55b8.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.8.169+g1ccb72aefa for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 11/4/2018 12:08:30 AM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_b55b8.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_b55b8.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_b55b8.dir\Debug\cmTC_b55b8.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_b55b8.dir\Debug\cmTC_b55b8.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+VcpkgTripletSelection:
+  Using triplet "x86-windows" from "C:\vcpkg\installed\x86-windows\"
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\CL.exe /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b55b8.dir\Debug\\" /Fd"cmTC_b55b8.dir\Debug\vc141.pdb" /Gd /TC /analyze- /FC /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\feature_tests.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.15.26732.1 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  feature_tests.c
+  cl /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b55b8.dir\Debug\\" /Fd"cmTC_b55b8.dir\Debug\vc141.pdb" /Gd /TC /analyze- /FC /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\feature_tests.c
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_b55b8.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib" /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\vcpkg\installed\x86-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_b55b8.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_b55b8.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_b55b8.dir\Debug\feature_tests.obj
+  cmTC_b55b8.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_b55b8.exe
+AppLocalFromInstalled:
+  C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -noprofile -File "C:\vcpkg\scripts\buildsystems\msbuild\applocal.ps1" "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_b55b8.exe" "C:\vcpkg\installed\x86-windows\debug\bin" "cmTC_b55b8.dir\Debug\cmTC_b55b8.tlog\cmTC_b55b8.write.1u.tlog" "cmTC_b55b8.dir\Debug\vcpkg.applocal.log"
+FinalizeBuildStatus:
+  Deleting file "cmTC_b55b8.dir\Debug\cmTC_b55b8.tlog\unsuccessfulbuild".
+  Touching "cmTC_b55b8.dir\Debug\cmTC_b55b8.tlog\cmTC_b55b8.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_b55b8.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.56
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:1c_variadic_macros
+Determining if the CXX compiler works passed with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_a0a72.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.8.169+g1ccb72aefa for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 11/4/2018 12:08:33 AM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_a0a72.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_a0a72.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_a0a72.dir\Debug\cmTC_a0a72.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_a0a72.dir\Debug\cmTC_a0a72.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+VcpkgTripletSelection:
+  Using triplet "x86-windows" from "C:\vcpkg\installed\x86-windows\"
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\CL.exe /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_a0a72.dir\Debug\\" /Fd"cmTC_a0a72.dir\Debug\vc141.pdb" /Gd /TP /analyze- /FC /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.15.26732.1 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  testCXXCompiler.cxx
+  cl /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_a0a72.dir\Debug\\" /Fd"cmTC_a0a72.dir\Debug\vc141.pdb" /Gd /TP /analyze- /FC /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_a0a72.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib" /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\vcpkg\installed\x86-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_a0a72.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_a0a72.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_a0a72.dir\Debug\testCXXCompiler.obj
+  cmTC_a0a72.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_a0a72.exe
+AppLocalFromInstalled:
+  C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -noprofile -File "C:\vcpkg\scripts\buildsystems\msbuild\applocal.ps1" "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_a0a72.exe" "C:\vcpkg\installed\x86-windows\debug\bin" "cmTC_a0a72.dir\Debug\cmTC_a0a72.tlog\cmTC_a0a72.write.1u.tlog" "cmTC_a0a72.dir\Debug\vcpkg.applocal.log"
+FinalizeBuildStatus:
+  Deleting file "cmTC_a0a72.dir\Debug\cmTC_a0a72.tlog\unsuccessfulbuild".
+  Touching "cmTC_a0a72.dir\Debug\cmTC_a0a72.tlog\cmTC_a0a72.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_a0a72.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.64
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_40686.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.8.169+g1ccb72aefa for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 11/4/2018 12:08:36 AM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_40686.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_40686.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_40686.dir\Debug\cmTC_40686.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_40686.dir\Debug\cmTC_40686.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+VcpkgTripletSelection:
+  Using triplet "x86-windows" from "C:\vcpkg\installed\x86-windows\"
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\CL.exe /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_40686.dir\Debug\\" /Fd"cmTC_40686.dir\Debug\vc141.pdb" /Gd /TP /analyze- /FC /errorReport:queue "C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompilerABI.cpp"
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.15.26732.1 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  CMakeCXXCompilerABI.cpp
+  cl /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_40686.dir\Debug\\" /Fd"cmTC_40686.dir\Debug\vc141.pdb" /Gd /TP /analyze- /FC /errorReport:queue "C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompilerABI.cpp"
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_40686.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib" /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\vcpkg\installed\x86-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_40686.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_40686.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_40686.dir\Debug\CMakeCXXCompilerABI.obj
+  cmTC_40686.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_40686.exe
+AppLocalFromInstalled:
+  C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -noprofile -File "C:\vcpkg\scripts\buildsystems\msbuild\applocal.ps1" "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_40686.exe" "C:\vcpkg\installed\x86-windows\debug\bin" "cmTC_40686.dir\Debug\cmTC_40686.tlog\cmTC_40686.write.1u.tlog" "cmTC_40686.dir\Debug\vcpkg.applocal.log"
+FinalizeBuildStatus:
+  Deleting file "cmTC_40686.dir\Debug\cmTC_40686.tlog\unsuccessfulbuild".
+  Touching "cmTC_40686.dir\Debug\cmTC_40686.tlog\cmTC_40686.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_40686.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.44
+
+
+
+
+Detecting CXX [] compiler features compiled with the following output:
+Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_918bd.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
+Microsoft (R) Build Engine version 15.8.169+g1ccb72aefa for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 11/4/2018 12:08:39 AM.
+Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_918bd.vcxproj" on node 1 (default targets).
+PrepareForBuild:
+  Creating directory "cmTC_918bd.dir\Debug\".
+  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_918bd.dir\Debug\cmTC_918bd.tlog\".
+InitializeBuildStatus:
+  Creating "cmTC_918bd.dir\Debug\cmTC_918bd.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+VcpkgTripletSelection:
+  Using triplet "x86-windows" from "C:\vcpkg\installed\x86-windows\"
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\CL.exe /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_918bd.dir\Debug\\" /Fd"cmTC_918bd.dir\Debug\vc141.pdb" /Gd /TP /analyze- /FC /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\feature_tests.cxx
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.15.26732.1 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  feature_tests.cxx
+  cl /c /I"C:\vcpkg\installed\x86-windows\include" /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_918bd.dir\Debug\\" /Fd"cmTC_918bd.dir\Debug\vc141.pdb" /Gd /TP /analyze- /FC /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\feature_tests.cxx
+  
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_918bd.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib" /LIBPATH:"C:\vcpkg\installed\x86-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\vcpkg\installed\x86-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_918bd.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_918bd.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_918bd.dir\Debug\feature_tests.obj
+  cmTC_918bd.vcxproj -> C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_918bd.exe
+AppLocalFromInstalled:
+  C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -noprofile -File "C:\vcpkg\scripts\buildsystems\msbuild\applocal.ps1" "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_918bd.exe" "C:\vcpkg\installed\x86-windows\debug\bin" "cmTC_918bd.dir\Debug\cmTC_918bd.tlog\cmTC_918bd.write.1u.tlog" "cmTC_918bd.dir\Debug\vcpkg.applocal.log"
+FinalizeBuildStatus:
+  Deleting file "cmTC_918bd.dir\Debug\cmTC_918bd.tlog\unsuccessfulbuild".
+  Touching "cmTC_918bd.dir\Debug\cmTC_918bd.tlog\cmTC_918bd.lastbuildstate".
+Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_918bd.vcxproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.36
+
+
+    Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:1cxx_alias_templates
+    Feature record: CXX_FEATURE:1cxx_alignas
+    Feature record: CXX_FEATURE:1cxx_alignof
+    Feature record: CXX_FEATURE:1cxx_attributes
+    Feature record: CXX_FEATURE:1cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:1cxx_auto_type
+    Feature record: CXX_FEATURE:1cxx_binary_literals
+    Feature record: CXX_FEATURE:1cxx_constexpr
+    Feature record: CXX_FEATURE:1cxx_contextual_conversions
+    Feature record: CXX_FEATURE:1cxx_decltype
+    Feature record: CXX_FEATURE:1cxx_decltype_auto
+    Feature record: CXX_FEATURE:1cxx_decltype_incomplete_return_types
+    Feature record: CXX_FEATURE:1cxx_default_function_template_args
+    Feature record: CXX_FEATURE:1cxx_defaulted_functions
+    Feature record: CXX_FEATURE:1cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:1cxx_delegating_constructors
+    Feature record: CXX_FEATURE:1cxx_deleted_functions
+    Feature record: CXX_FEATURE:1cxx_digit_separators
+    Feature record: CXX_FEATURE:1cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:1cxx_explicit_conversions
+    Feature record: CXX_FEATURE:1cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:1cxx_extern_templates
+    Feature record: CXX_FEATURE:1cxx_final
+    Feature record: CXX_FEATURE:1cxx_func_identifier
+    Feature record: CXX_FEATURE:1cxx_generalized_initializers
+    Feature record: CXX_FEATURE:1cxx_generic_lambdas
+    Feature record: CXX_FEATURE:1cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:1cxx_inline_namespaces
+    Feature record: CXX_FEATURE:1cxx_lambdas
+    Feature record: CXX_FEATURE:1cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:1cxx_local_type_template_args
+    Feature record: CXX_FEATURE:1cxx_long_long_type
+    Feature record: CXX_FEATURE:1cxx_noexcept
+    Feature record: CXX_FEATURE:1cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:1cxx_nullptr
+    Feature record: CXX_FEATURE:1cxx_override
+    Feature record: CXX_FEATURE:1cxx_range_for
+    Feature record: CXX_FEATURE:1cxx_raw_string_literals
+    Feature record: CXX_FEATURE:1cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:1cxx_return_type_deduction
+    Feature record: CXX_FEATURE:1cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:1cxx_rvalue_references
+    Feature record: CXX_FEATURE:1cxx_sizeof_member
+    Feature record: CXX_FEATURE:1cxx_static_assert
+    Feature record: CXX_FEATURE:1cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:1cxx_thread_local
+    Feature record: CXX_FEATURE:1cxx_trailing_return_types
+    Feature record: CXX_FEATURE:1cxx_unicode_literals
+    Feature record: CXX_FEATURE:1cxx_uniform_initialization
+    Feature record: CXX_FEATURE:1cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:1cxx_user_literals
+    Feature record: CXX_FEATURE:1cxx_variable_templates
+    Feature record: CXX_FEATURE:1cxx_variadic_macros
+    Feature record: CXX_FEATURE:1cxx_variadic_templates

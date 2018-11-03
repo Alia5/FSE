@@ -1,0 +1,72 @@
+﻿  b2DistanceJoint.cpp
+  b2FrictionJoint.cpp
+  b2GearJoint.cpp
+  b2Joint.cpp
+  b2MotorJoint.cpp
+  b2MouseJoint.cpp
+  b2PrismaticJoint.cpp
+  b2PulleyJoint.cpp
+  b2RevoluteJoint.cpp
+  b2RopeJoint.cpp
+  b2WeldJoint.cpp
+  b2WheelJoint.cpp
+c:\liquidfun\liquidfun\box2d\box2d\dynamics\joints\b2wheeljoint.cpp(144): warning C4456: declaration of 'd' hides previous local declaration
+  c:\liquidfun\liquidfun\box2d\box2d\dynamics\joints\b2wheeljoint.cpp(106): note: see declaration of 'd'
+  b2CircleContact.cpp
+  b2Contact.cpp
+  b2ContactSolver.cpp
+  b2PolygonAndCircleContact.cpp
+  b2EdgeAndCircleContact.cpp
+  b2EdgeAndPolygonContact.cpp
+  b2ChainAndCircleContact.cpp
+  b2ChainAndPolygonContact.cpp
+  Generating Code...
+  Compiling...
+  b2PolygonContact.cpp
+  b2Body.cpp
+  b2ContactManager.cpp
+  b2Fixture.cpp
+  b2Island.cpp
+c:\liquidfun\liquidfun\box2d\box2d\dynamics\b2island.cpp(315): warning C4456: declaration of 'i' hides previous local declaration
+  c:\liquidfun\liquidfun\box2d\box2d\dynamics\b2island.cpp(310): note: see declaration of 'i'
+  b2World.cpp
+  b2WorldCallbacks.cpp
+  b2BlockAllocator.cpp
+  b2Draw.cpp
+  b2FreeList.cpp
+  b2Math.cpp
+  b2Settings.cpp
+  b2StackAllocator.cpp
+  b2Stat.cpp
+  b2Timer.cpp
+  b2TrackedBlock.cpp
+  b2CircleShape.cpp
+  b2EdgeShape.cpp
+  b2ChainShape.cpp
+  b2PolygonShape.cpp
+c:\liquidfun\liquidfun\box2d\box2d\collision\shapes\b2polygonshape.cpp(284): warning C4457: declaration of 'distance' hides function parameter
+  c:\liquidfun\liquidfun\box2d\box2d\collision\shapes\b2polygonshape.cpp(260): note: see declaration of 'distance'
+  Generating Code...
+  Compiling...
+  b2BroadPhase.cpp
+  b2CollideCircle.cpp
+c:\liquidfun\liquidfun\box2d\box2d\collision\b2collidecircle.cpp(141): warning C4456: declaration of 'separation' hides previous local declaration
+  c:\liquidfun\liquidfun\box2d\box2d\collision\b2collidecircle.cpp(64): note: see declaration of 'separation'
+  b2CollideEdge.cpp
+  b2CollidePolygon.cpp
+  b2Collision.cpp
+  b2Distance.cpp
+  b2DynamicTree.cpp
+  b2TimeOfImpact.cpp
+  b2Particle.cpp
+  b2ParticleGroup.cpp
+  b2ParticleSystem.cpp
+c:\liquidfun\liquidfun\box2d\box2d\particle\b2particlesystem.cpp(55): warning C4307: '+': integral constant overflow
+c:\liquidfun\liquidfun\box2d\box2d\particle\b2particlesystem.cpp(1736): warning C4456: declaration of 'i' hides previous local declaration
+  c:\liquidfun\liquidfun\box2d\box2d\particle\b2particlesystem.cpp(1733): note: see declaration of 'i'
+c:\liquidfun\liquidfun\box2d\box2d\particle\b2particlesystem.cpp(1778): warning C4456: declaration of 'i' hides previous local declaration
+  c:\liquidfun\liquidfun\box2d\box2d\particle\b2particlesystem.cpp(1775): note: see declaration of 'i'
+  b2VoronoiDiagram.cpp
+  b2Rope.cpp
+  Generating Code...
+  Box2D.vcxproj -> C:\liquidfun\liquidfun\build\Box2D\Debug\liquidfun.lib

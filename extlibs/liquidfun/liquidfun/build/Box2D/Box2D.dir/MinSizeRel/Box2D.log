@@ -1,0 +1,78 @@
+﻿  Building Custom Rule C:/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt
+  CMake does not need to re-run because C:/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp is up-to-date.
+  b2DistanceJoint.cpp
+  b2FrictionJoint.cpp
+  b2GearJoint.cpp
+  b2Joint.cpp
+  b2MotorJoint.cpp
+  b2MouseJoint.cpp
+  b2PrismaticJoint.cpp
+  b2PulleyJoint.cpp
+  b2RevoluteJoint.cpp
+  b2RopeJoint.cpp
+  b2WeldJoint.cpp
+  b2WheelJoint.cpp
+C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WheelJoint.cpp(144): error C2220: warning treated as error - no 'object' file generated
+C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WheelJoint.cpp(144): warning C4456: declaration of 'd' hides previous local declaration
+  C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WheelJoint.cpp(106): note: see declaration of 'd'
+  b2CircleContact.cpp
+  b2Contact.cpp
+  b2ContactSolver.cpp
+  b2PolygonAndCircleContact.cpp
+  b2EdgeAndCircleContact.cpp
+  b2EdgeAndPolygonContact.cpp
+  b2ChainAndCircleContact.cpp
+  b2ChainAndPolygonContact.cpp
+  Generating Code...
+  Compiling...
+  b2PolygonContact.cpp
+  b2Body.cpp
+  b2ContactManager.cpp
+  b2Fixture.cpp
+  b2Island.cpp
+C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Island.cpp(315): error C2220: warning treated as error - no 'object' file generated
+C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Island.cpp(315): warning C4456: declaration of 'i' hides previous local declaration
+  C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Island.cpp(310): note: see declaration of 'i'
+  b2World.cpp
+  b2WorldCallbacks.cpp
+  b2BlockAllocator.cpp
+  b2Draw.cpp
+  b2FreeList.cpp
+  b2Math.cpp
+  b2Settings.cpp
+  b2StackAllocator.cpp
+  b2Stat.cpp
+  b2Timer.cpp
+  b2TrackedBlock.cpp
+  b2CircleShape.cpp
+  b2EdgeShape.cpp
+  b2ChainShape.cpp
+  b2PolygonShape.cpp
+C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2PolygonShape.cpp(284): error C2220: warning treated as error - no 'object' file generated
+C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2PolygonShape.cpp(284): warning C4457: declaration of 'distance' hides function parameter
+  C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2PolygonShape.cpp(260): note: see declaration of 'distance'
+  Generating Code...
+  Compiling...
+  b2BroadPhase.cpp
+  b2CollideCircle.cpp
+C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2CollideCircle.cpp(141): error C2220: warning treated as error - no 'object' file generated
+C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2CollideCircle.cpp(141): warning C4456: declaration of 'separation' hides previous local declaration
+  C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2CollideCircle.cpp(64): note: see declaration of 'separation'
+  b2CollideEdge.cpp
+  b2CollidePolygon.cpp
+  b2Collision.cpp
+  b2Distance.cpp
+  b2DynamicTree.cpp
+  b2TimeOfImpact.cpp
+  b2Particle.cpp
+  b2ParticleGroup.cpp
+  b2ParticleSystem.cpp
+C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleSystem.cpp(55): error C2220: warning treated as error - no 'object' file generated
+C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleSystem.cpp(55): warning C4307: '+': integral constant overflow
+C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleSystem.cpp(1736): warning C4456: declaration of 'i' hides previous local declaration
+  C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleSystem.cpp(1733): note: see declaration of 'i'
+C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleSystem.cpp(1778): warning C4456: declaration of 'i' hides previous local declaration
+  C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleSystem.cpp(1775): note: see declaration of 'i'
+  b2VoronoiDiagram.cpp
+  b2Rope.cpp
+  Generating Code...
