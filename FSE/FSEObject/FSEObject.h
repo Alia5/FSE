@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <rttr/type>
+#include <rttr/registration_friend>
 
 #include <memory>
 #include <iostream>

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <rttr/type>
+#include <rttr/registration_friend>
+
 
 struct b2Manifold;
 class b2Contact;

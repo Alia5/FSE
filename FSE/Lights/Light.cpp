@@ -1,6 +1,6 @@
 #include "Light.h"
 #include "../Application.h"
-#include <rttr/registration.h>
+#include <rttr/registration>
 
 
 namespace fse
