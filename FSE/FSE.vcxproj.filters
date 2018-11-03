@@ -401,5 +401,8 @@
     <ClCompile Include="..\liquidfun_contrib\ConvexDecomposition\b2Polygon.cpp">
       <Filter>Source Files\liquidfun_contrib\ConvexDecomposition</Filter>
     </ClCompile>
+    <ClCompile Include="..\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

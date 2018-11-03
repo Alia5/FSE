@@ -1,5 +1,4 @@
 #include "Application.h"
-#include <../imgui-sfml-config/imconfig.h>
 #include <imgui.h>
 #include <imgui-SFML.h>
 #include "FSEObject/FSEObject.h"
@@ -77,7 +76,7 @@ namespace fse
 
 			root_scene_.draw();
 
-			ImGui::Render();
+			ImGui::SFML::Render(*render_window_);
 
 			render_window_->display();
 

@@ -1,12 +1,12 @@
 #include "SceneDebugger.h"
 #include "FSEObject/FSEObject.h"
 
-#include <imgui.h>
-#include <imgui_internal.h>
 #include "../FSE/Application.h"
 
 #include <sstream>
 #include "Serialize.h"
+#include <imgui.h>
+#include <imgui_internal.h>
 
 
 namespace fse

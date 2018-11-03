@@ -3,7 +3,7 @@
 #include "MainMenu.h"
 
 
-#include <imgui/imgui.h>
+#include <imgui.h>
 
 
 GameLevel::GameLevel(fse::Scene* scene) : FSEObject(scene)
@@ -78,11 +78,7 @@ void GameLevel::handleInputs(float deltaTime) const
 void GameLevel::drawSubScene(sf::RenderTarget& target) const
 {
 
-	// Seems like a bug in SFML to me...
-	// We have to draw something before we actually can draw the subscene...
-	const sf::RectangleShape shape;
-	target.draw(shape);
-	////////////
+
 
 	auto view = target.getView();
 	const auto oldView = view;

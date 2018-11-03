@@ -87,12 +87,12 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\SFML-2.4.2-x86\include;C:\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\imgui;..\imgui-sfml;..\rapidjson\include;..\poly2tri\poly2tri;..\chaiscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SFML_STATIC;IMGUI_USER_CONFIG=&lt;imconfig.h&gt;;IMGUI_DISABLE_INCLUDE_IMCONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\extlibs\SFML-2.5.1-x86\include;C:\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\imgui\;..\imgui-SFML\;..\rapidjson\include;..\poly2tri\poly2tri;..\chaiscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CreateHotpatchableImage>true</CreateHotpatchableImage>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <MinimalRebuild>false</MinimalRebuild>
+      <MinimalRebuild>true</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -102,8 +102,8 @@
       <NoEntryPoint>true</NoEntryPoint>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>C:\liquidfun\liquidfun\build\Box2D\Debug;C:\SFML-2.4.2-x86\lib;..\extlibs\rttr-0.9.6-win32-vs2017\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-system-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;ws2_32.lib;liquidfun.lib;librttr_core_s_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\liquidfun\liquidfun\build\Box2D\Debug;..\extlibs\SFML-2.5.1-x86\lib;..\extlibs\rttr-0.9.6-win32-vs2017\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-system-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;ws2_32.lib;liquidfun.lib;librttr_core_s_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -128,12 +128,13 @@
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\SFML-2.4.2-x86\include;C:\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\imgui;..\imgui-sfml;..\rapidjson\include;..\poly2tri\poly2tri;..\chaiscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\extlibs\SFML-2.5.1-x86\include;C:\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\rapidjson\include;..\poly2tri\poly2tri;..\chaiscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <CallingConvention>
       </CallingConvention>
+      <MinimalRebuild>true</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,8 +143,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>C:\liquidfun\liquidfun\build\Box2D\Release;C:\SFML-2.4.2-x86\lib;..\extlibs\rttr-0.9.6-win32-vs2017\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;ws2_32.lib;liquidfun.lib;librttr_core_s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\liquidfun\liquidfun\build\Box2D\Release;..\extlibs\SFML-2.5.1-x86\lib;..\extlibs\rttr-0.9.6-win32-vs2017\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;ws2_32.lib;liquidfun.lib;librttr_core_s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -224,6 +225,7 @@
     <ClCompile Include="..\imgui\imgui.cpp" />
     <ClCompile Include="..\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\liquidfun_contrib\ConvexDecomposition\b2Polygon.cpp" />
     <ClCompile Include="..\liquidfun_contrib\ConvexDecomposition\b2Triangle.cpp" />
     <ClCompile Include="..\LTBL2\src\LightDirectionEmission.cpp" />

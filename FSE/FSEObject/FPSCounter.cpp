@@ -71,6 +71,7 @@ namespace fse
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
 			ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.f, 0.f, 0.f, 0.5f));
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.f, 0.f, 0.f, 0.0f));
+			ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.f, 0.f, 0.f, 0.0f));
 			ImGui::Begin("##FPSDetailed", nullptr,
 				ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoMove
 			| ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoTitleBar);
@@ -83,7 +84,7 @@ namespace fse
 			ImGui::PlotVar("FPS", fps_, 0, 250, 250);
 			ImGui::PlotVar("Frametime", current_time_, 0, 0.1f, 250);
 			ImGui::End();
-			ImGui::PopStyleColor(2);
+			ImGui::PopStyleColor(3);
 			ImGui::PopStyleVar();
 		}
 	}

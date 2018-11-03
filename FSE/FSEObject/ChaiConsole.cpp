@@ -1,9 +1,9 @@
 #include "ChaiConsole.h"
 
-#include <imgui.h>
 #include <sstream>
-#include "imgui_internal.h"
 #include "../Application.h"
+#include <imgui.h>
+#include <imgui_internal.h>
 
 namespace fse
 {
