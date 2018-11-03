@@ -112,7 +112,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointModel>Fast</FloatingPointModel>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);C:\liquidfun\liquidfun\Box2D;C:\SFML-2.4.2-x86\include;C:\rttr-0.9.6-win32-vs2017\include;$(SolutionDir)\imgui-sfml-config;$(SolutionDir)\rapidjson\include;$(SolutionDir)\imgui;$(SolutionDir)\imgui-sfml;$(SolutionDir)\poly2tri\poly2tri;$(SolutionDir)\chaiscript\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);C:\liquidfun\liquidfun\Box2D;C:\SFML-2.4.2-x86\include;$(SolutionDir)\extlibs\rttr-0.9.6-win32-vs2017\include;$(SolutionDir)\imgui-sfml-config;$(SolutionDir)\rapidjson\include;$(SolutionDir)\imgui;$(SolutionDir)\imgui-sfml;$(SolutionDir)\poly2tri\poly2tri;$(SolutionDir)\chaiscript\include</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
@@ -136,7 +136,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointModel>Fast</FloatingPointModel>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);C:\liquidfun\liquidfun\Box2D;C:\SFML-2.4.2-x86\include;C:\rttr-0.9.6-win32-vs2017\include;$(SolutionDir)\imgui-sfml-config;$(SolutionDir)\rapidjson\include;$(SolutionDir)\imgui;$(SolutionDir)\imgui-sfml;$(SolutionDir)\poly2tri\poly2tri;$(SolutionDir)\chaiscript\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);C:\liquidfun\liquidfun\Box2D;C:\SFML-2.4.2-x86\include;$(SolutionDir)\extlibs\rttr-0.9.6-win32-vs2017\include;$(SolutionDir)\imgui-sfml-config;$(SolutionDir)\rapidjson\include;$(SolutionDir)\imgui;$(SolutionDir)\imgui-sfml;$(SolutionDir)\poly2tri\poly2tri;$(SolutionDir)\chaiscript\include</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>

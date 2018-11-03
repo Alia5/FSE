@@ -390,7 +390,7 @@ namespace fse
 				if (ImGui::TreeNode(propname.data()))
 				{
 					auto val = prop.get_value(*object);
-					rttr::variant_array_view arr = val.create_array_view();
+					rttr::variant_sequential_view arr = val.create_sequential_view();
 					size_t sz = arr.get_size();
 					for (size_t i = 0; i < sz; i++)
 					{

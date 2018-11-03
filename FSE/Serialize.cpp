@@ -115,7 +115,7 @@ namespace fse
 
 
 		rttr::variant var;
-		auto array_view = var.create_array_view();
+		auto array_view = var.create_sequential_view();
 
 		array_view.set_size(jsonVal.Size());
 
@@ -178,7 +178,7 @@ namespace fse
 			else if (prop.get_type().is_array())
 			{
 				auto val = prop.get_value(object);
-				rttr::variant_array_view arr = val.create_array_view();
+				rttr::variant_sequential_view arr = val.create_sequential_view();
 				size_t sz = arr.get_size();
 
 				writer.Key(prop.get_name().data(), prop.get_name().size());
@@ -519,7 +519,7 @@ namespace fse
 
 	void Serializer::arrayFromJson(rttr::variant& val, rapidjson::Value& jsonValue, fse::Scene* scene)
 	{
-		auto array_view = val.create_array_view();
+		auto array_view = val.create_sequential_view();
 		auto size = jsonValue.Size();
 		auto sizeBf = array_view.get_size();
 		array_view.set_size(size);
