@@ -159,8 +159,8 @@ namespace fse
 							while ((pos = nodename.find("class "), pos) != std::string::npos)
 								nodename.erase(pos, 6);
 
-							pos = nodename.find(", ");
-							nodename.erase(0, pos+2);
+							if (nodename == "")
+								nodename = "default";
 							nodename += "##" + std::string(type.get_name().data());
 							if (ImGui::TreeNode(nodename.data()))
 							{
@@ -202,7 +202,14 @@ namespace fse
 									for (auto & arg : args)
 										arguvec.push_back(arg);
 									if (arguvec.size() > 0)
-										ctor.invoke_variadic(arguvec);
+									{
+										auto object = ctor.invoke_variadic(arguvec);
+										scene_->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
+									} else
+									{
+										auto object = ctor.invoke();
+										scene_->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
+									}
 								}
 
 								ImGui::SameLine();
@@ -264,7 +271,15 @@ namespace fse
 													arguvec.push_back(arg);
 											}
 											if (arguvec.size() > 0)
-												ctor.invoke_variadic(arguvec);
+											{
+												auto object = ctor.invoke_variadic(arguvec);
+												scene_->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
+											}
+											else
+											{
+												auto object = ctor.invoke();
+												scene_->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
+											}
 
 											if (mouse_spawn_until_right)
 												mouse_spawn_timeout_ = true;

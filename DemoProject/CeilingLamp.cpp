@@ -286,23 +286,15 @@ RTTR_REGISTRATION
 	using namespace rttr;
 
 	registration::class_<CeilingLamp>("CeilingLamp")
-	/*.constructor<>([](fse::Scene* scene)
-	{
-		scene->createFSEObject<CeilingLamp>();
-		return nullptr;
-	})
-	(
-		parameter_names("scene")
-		)
-		.constructor([](fse::Scene* scene, const sf::Vector2f& spawnPos)
-	{
-		auto box = std::make_unique<CeilingLamp>(scene, spawnPos);
-		scene->spawnFSEObject(std::move(box));
-		return nullptr;
-	})
-	(
-	parameter_names("scene", "spawn position")
-	)*/
+		.constructor<>()
+		(
+			policy::ctor::as_std_shared_ptr
+			)
+		.constructor<const sf::Vector2f&>()
+		(
+			policy::ctor::as_std_shared_ptr,
+			parameter_names("spawn position")
+			)
 	.property("rotation_", &CeilingLamp::getRotation, &CeilingLamp::setRotation)
 	.property("limit_", &CeilingLamp::getLimit, &CeilingLamp::setLimit)
 	.property("avg_count_", &CeilingLamp::getAverageCount, &CeilingLamp::setAverageCount)

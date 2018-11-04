@@ -122,27 +122,24 @@ RTTR_REGISTRATION
 	using namespace rttr;
 
 	registration::class_<BrickBackground>("BrickBackground")
-	/*.constructor<>([](fse::Scene* scene)
-	{
-		scene->createFSEObject<BrickBackground>();
-		return nullptr;
-	})
+	.constructor<>()
 	(
-		parameter_names("scene")
-		)
-		.constructor([](fse::Scene* scene, const sf::Vector2f& spawnPos, const sf::Vector2f& size)
-	{
-		auto box = std::make_unique<BrickBackground>(scene, spawnPos, size);
-		scene->spawnFSEObject(std::move(box));
-		return nullptr;
-	})
+		policy::ctor::as_std_shared_ptr
+	)
+	.constructor<const sf::Vector2f&>()
 	(
-		parameter_names("scene", "spawn position", "size")
-	)*/
+		policy::ctor::as_std_shared_ptr,
+		parameter_names("spawn position")
+	)
+	.constructor<const sf::Vector2f&, const sf::Vector2f&>()
+	(
+		policy::ctor::as_std_shared_ptr,
+		parameter_names("spawn position", "size")
+	)
 	.property("size_", &BrickBackground::getSize, &BrickBackground::setSize)
 	(
 		metadata("CTOR_ARG", "size")
-		)
+	)
 	.property("rotation_", &BrickBackground::getRotation, &BrickBackground::setRotation)
 	;
 }

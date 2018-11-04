@@ -114,16 +114,10 @@ RTTR_REGISTRATION
 	using namespace fse;
 
 	registration::class_<FPSCounter>("fse::FPSCounter")
-	/*.constructor<>([](fse::Scene* scene)
-	{
-		scene->createFSEObject<fse::FPSCounter>();
-		return nullptr;
-	})
+	.constructor<>()
 	(
-		parameter_names("scene"),
-		metadata("CHAI_CTOR", true)
-	)*/
+		policy::ctor::as_std_shared_ptr
+	)
 	.property("detailed_view_", &FPSCounter::detailed_view_)
 	;
 }
-

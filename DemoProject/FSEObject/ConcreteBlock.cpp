@@ -164,11 +164,15 @@ void ConcreteBlock::setSize(const sf::Vector2f& size)
 
 float ConcreteBlock::getRotation() const
 {
+	if (phys_body_ == nullptr)
+		return 0;
 	return phys_body_->GetAngle() * FSE_RADTODEG;
 }
 
 void ConcreteBlock::setRotation(float rot)
 {
+	if (phys_body_ == nullptr)
+		return;
 	phys_body_->SetTransform(fse::FMath::sfVec2fTob2Vec2(position_), rot * FSE_DEGTORAD);
 	sprite_.setRotation(rot);
 	light_shape_->setRotation(rot);
@@ -202,23 +206,20 @@ RTTR_REGISTRATION
 	using namespace rttr;
 
 	registration::class_<ConcreteBlock>("ConcreteBlock")
-	/*.constructor<>([](fse::Scene* scene)
-	{
-		scene->createFSEObject<ConcreteBlock>();
-		return nullptr;
-	})
-	(
-		parameter_names("scene")
-	)
-	.constructor([](fse::Scene* scene, const sf::Vector2f& spawnPos, const sf::Vector2f& size)
-	{
-		auto box = std::make_unique<ConcreteBlock>(scene, spawnPos, size);
-		scene->spawnFSEObject(std::move(box));
-		return nullptr;
-	})
-	(
-		parameter_names("scene", "spawn position", "size")
-	)*/
+		.constructor<>()
+		(
+			policy::ctor::as_std_shared_ptr
+			)
+		.constructor<const sf::Vector2f&>()
+		(
+			policy::ctor::as_std_shared_ptr,
+			parameter_names("spawn position")
+			)
+		.constructor<const sf::Vector2f&, const sf::Vector2f&>()
+		(
+			policy::ctor::as_std_shared_ptr,
+			parameter_names("spawn position", "size")
+			)
 	.property("size_", &ConcreteBlock::getSize, &ConcreteBlock::setSize)
 	(
 		metadata("CTOR_ARG", "size")

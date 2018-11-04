@@ -117,7 +117,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ShowProgress>NotSet</ShowProgress>
@@ -146,8 +147,9 @@
       </ShowProgress>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>FSE.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
     </Link>
   </ItemDefinitionGroup>

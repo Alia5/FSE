@@ -421,14 +421,14 @@ namespace fse
 
 				for (auto& info : infos)
 				{
-					if (info.get_index() == 0)
+					/*if (info.get_index() == 0)
 					{
 						auto val = rttr::variant(scene);
 						spawn_args.push_back(val);
 						continue;
-					}
+					}*/
 
-					if (info.get_index() == 1)
+					if (info.get_index() == 0)
 					{
 						auto& tval = jsonValue.FindMember("position_")->value;
 						rttr::variant var(sf::Vector2f(0.f, 0.f));
@@ -476,7 +476,15 @@ namespace fse
 				for (auto & arg : spawn_args)
 					arguvec.push_back(arg);
 				if (arguvec.size() > 0)
-					ctor_it->invoke_variadic(arguvec);
+				{
+					auto object = ctor.invoke_variadic(arguvec);
+					scene->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
+				}
+				else
+				{
+					auto object = ctor.invoke();
+					scene->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
+				}
 
 				if (scene->pending_object_spawns_.size() == (sz + 1))
 				{
