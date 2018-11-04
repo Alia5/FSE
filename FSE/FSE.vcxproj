@@ -93,6 +93,7 @@
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>true</MinimalRebuild>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -131,7 +132,7 @@
       <AdditionalIncludeDirectories>..\extlibs\SFML-2.5.1-x86\include;..\extlibs\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\rapidjson\include;..\poly2tri\poly2tri;..\chaiscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <CallingConvention>
       </CallingConvention>
       <MinimalRebuild>true</MinimalRebuild>

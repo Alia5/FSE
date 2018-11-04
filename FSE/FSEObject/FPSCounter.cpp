@@ -100,8 +100,6 @@ namespace fse
 #else
 		detailed_view_ = detailed;
 #endif
-
-		detailed_view_ = detailed;
 	}
 
 	bool FPSCounter::isDetailed() const

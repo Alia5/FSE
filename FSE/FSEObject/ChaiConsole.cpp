@@ -147,8 +147,8 @@ namespace fse
 
 		addDefaultFuns();
 
-		getChai()->eval("GLOBAL print = fun[print](s) { ig_print(\"${s}\"); }");
-		getChai()->eval("GLOBAL puts = fun[print](s) { ig_puts(\"${s}\"); }");
+		getChai()->eval("global print = fun[print](s) { ig_print(\"${s}\"); }");
+		getChai()->eval("global puts = fun[print](s) { ig_puts(\"${s}\"); }");
 
 		return getChai()->get_state();
 	}

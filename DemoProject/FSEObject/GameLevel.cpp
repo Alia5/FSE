@@ -19,7 +19,7 @@ GameLevel::GameLevel(fse::Scene* scene) : FSEObject(scene)
 		if (!isPendingKill())
 		{
 			chai.set_global(chaiscript::var(std::ref(*sub_scene_)), "gameScene");
-			chai.eval("GLOBAL objectMap = Map();");
+			chai.eval("global objectMap = Map();");
 		}
 	});
 	scene_->getApplication()->initChai();
