@@ -25,24 +25,24 @@ namespace fse
 	}
 
 
-	void Renderer::render(const std::vector<std::unique_ptr<FSEObject> > &objects) const
+	void Renderer::render(const std::vector<std::shared_ptr<FSEObject> > &objects) const
 	{
 		sf::View view = render_target_->getView();
 		sf::FloatRect viewRect(view.getCenter() - view.getSize() / 2.f, view.getSize());
 		//it's actually faster to iterate over all objects 3 times instead of doing a lot of target switching...
 		for (const auto & object : objects)
 		{
-			if (viewRect.intersects(object->GetAABBs()))
+			if (object->isActive() && viewRect.intersects(object->GetAABBs()))
 				object->drawNormals(*normal_target_);
 		}
 		for (const auto & object : objects)
 		{
-			if (viewRect.intersects(object->GetAABBs()))
+			if (object->isActive() && viewRect.intersects(object->GetAABBs()))
 				object->drawSpecular(*specular_target_);
 		}
 		for (const auto & object : objects)
 		{
-			if (viewRect.intersects(object->GetAABBs()))
+			if (object->isActive() && viewRect.intersects(object->GetAABBs()))
 				object->draw(*render_target_);
 		}
 	}

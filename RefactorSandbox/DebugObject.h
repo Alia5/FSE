@@ -3,7 +3,7 @@
 class DebugObject : public fse::FSEObject
 {
 public:
-	explicit DebugObject(fse::Scene* scene);
+	 DebugObject();
 	~DebugObject();
 
 

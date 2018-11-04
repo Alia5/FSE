@@ -11,10 +11,7 @@ namespace fse
 		phys_world_.SetContactListener(&phys_contact_listener_);
 		win_resize_signal_connection_ = application_->on_window_resized_.connect(this, &Scene::notifyResize);
 
-		createFSEObject<FSELightWorld>([this](FSEObject* lightWorld)
-		{
-			light_world_ = dynamic_cast<FSELightWorld*>(lightWorld);
-		});
+		light_world_ = createFSEObject<FSELightWorld>().lock().get();
 		processPendingSpawns();
 	}
 
@@ -53,6 +50,8 @@ namespace fse
 
 	void Scene::update(float deltaTime)
 	{
+		processPendingSpawns();
+
 		if (is_paused_)
 			deltaTime = 0.0f;
 
@@ -66,10 +65,10 @@ namespace fse
 
 		for (auto it = fse_objects_.rbegin(); it != fse_objects_.rend(); ++it)
 		{
-			it->get()->update(deltaTime);
+			if (it->get()->isActive())
+				it->get()->update(deltaTime);
 		}
 
-		processPendingSpawns();
 		processPendingRemovals();
 	}
 
@@ -78,7 +77,7 @@ namespace fse
 		if (z_order_changed_)
 		{
 			std::sort(fse_objects_.begin(), fse_objects_.end(),
-				[](const std::unique_ptr<FSEObject>& a, const std::unique_ptr<FSEObject>& b) {
+				[](const std::shared_ptr<FSEObject>& a, const std::shared_ptr<FSEObject>& b) {
 
 				return a->getZOrder() < b->getZOrder();
 
@@ -97,7 +96,7 @@ namespace fse
 		}
 	}
 
-	const std::vector<std::unique_ptr<FSEObject> >* Scene::getFSEObjects() const
+	const std::vector<std::shared_ptr<FSEObject> >* Scene::getFSEObjects() const
 	{
 		return &fse_objects_;
 	}
@@ -109,9 +108,10 @@ namespace fse
 
 
 
-	void Scene::spawnFSEObject(std::unique_ptr<FSEObject> object)
+	void Scene::spawnFSEObject(std::shared_ptr<FSEObject> object)
 	{
-		pending_object_spawns_.push_back(std::move(object));
+		fse_objects_.push_back(object);
+		pending_object_spawns_.push_back(object);
 	}
 
 	void Scene::destroyFSEObject(FSEObject* object)
@@ -168,15 +168,7 @@ namespace fse
 		return &phys_world_;
 	}
 
-
-	void Scene::addFSEObject(std::unique_ptr<FSEObject> object)
-	{
-		fse_objects_.push_back(std::move(object));
-		fse_objects_.rbegin()->get()->spawn(spawn_count_++);
-		z_order_changed_ = true;
-	}
-
-	void Scene::removeFSEObject(std::unique_ptr<FSEObject> const& object)
+	void Scene::removeFSEObject(std::shared_ptr<FSEObject> const& object)
 	{
 		auto it = std::find(fse_objects_.begin(), fse_objects_.end(), object);
 		if (it != fse_objects_.end())
@@ -187,7 +179,7 @@ namespace fse
 
 	void Scene::removeFSEObject(FSEObject * object)
 	{
-		auto it = std::find_if(fse_objects_.begin(), fse_objects_.end(), [&](const std::unique_ptr<FSEObject> & obj) {
+		auto it = std::find_if(fse_objects_.begin(), fse_objects_.end(), [&](const std::shared_ptr<FSEObject> & obj) {
 			return obj.get() == object;
 		});
 		if (it != fse_objects_.end())
@@ -198,7 +190,7 @@ namespace fse
 
 	void Scene::processPendingRemovals()
 	{
-		if (pending_object_removals_.size() > 0)
+		if (!pending_object_removals_.empty())
 		{
 			for (auto & object : pending_object_removals_)
 			{
@@ -211,11 +203,12 @@ namespace fse
 
 	void Scene::processPendingSpawns()
 	{
-		if (pending_object_spawns_.size() > 0)
+		if (!pending_object_spawns_.empty())
 		{
 			for (auto & object : pending_object_spawns_)
 			{
-				addFSEObject(std::move(object));
+				object.lock()->spawn(spawn_count_++, this);
+				z_order_changed_ = true;
 			}
 			pending_object_spawns_.clear();
 		}

@@ -7,18 +7,19 @@
 
 namespace fse
 {
-	ChaiConsole::ChaiConsole(Scene* scene) : ChaiConsole(scene, { 0.f, 0.f })
+	ChaiConsole::ChaiConsole() : ChaiConsole({ 0.f, 0.f })
 	{
 	}
 
-	ChaiConsole::ChaiConsole(Scene* scene, const sf::Vector2f& spawnPos) : fse::FSEObject(scene, spawnPos)
+	ChaiConsole::ChaiConsole(const sf::Vector2f& spawnPos) : fse::FSEObject(spawnPos)
 	{
 		input_history_.emplace_back("");
 	}
 
 	ChaiConsole::~ChaiConsole()
 	{
-		scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
+		if (scene_ != nullptr)
+			scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
 	}
 
 	void ChaiConsole::spawned()

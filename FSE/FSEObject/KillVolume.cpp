@@ -4,18 +4,18 @@
 
 namespace fse
 {
-	KillVolume::KillVolume(fse::Scene* scene) : KillVolume(scene, { 0.f, 0.f })
+	KillVolume::KillVolume() : KillVolume({ 0.f, 0.f })
 	{
 	}
 
 
-	KillVolume::KillVolume(fse::Scene* scene, const sf::Vector2f& spawnPos) : KillVolume(scene, spawnPos, { 1.f, 1.f })
+	KillVolume::KillVolume(const sf::Vector2f& spawnPos) : KillVolume(spawnPos, { 1.f, 1.f })
 	{
 	}
 
 
-	KillVolume::KillVolume(fse::Scene* scene, const sf::Vector2f& spawnPos, const sf::Vector2f& size) 
-	: FSEObject(scene, spawnPos), size_(size)
+	KillVolume::KillVolume(const sf::Vector2f& spawnPos, const sf::Vector2f& size)
+		: FSEObject(spawnPos), size_(size), phys_body_(nullptr), sensor_ficture_(nullptr)
 	{
 		if (size_.x == 0.f)
 			size_.x = 1.f;
@@ -23,28 +23,14 @@ namespace fse
 		if (size_.y == 0.f)
 			size_.y = 1.f;
 
-		b2BodyDef physBodyDef;
-
-		physBodyDef.type = b2_staticBody;
-		physBodyDef.position.Set(spawnPos.x, spawnPos.y);
-
-		phys_body_ = getScene()->getPhysWorld()->CreateBody(&physBodyDef);
-		phys_body_->SetUserData(this);
-
-		b2PolygonShape box;
-		box.SetAsBox(size_.x / 2.f, size_.y / 2.f);
-
-		b2FixtureDef sensorDef;
-		sensorDef.shape = &box;
-		sensorDef.isSensor = true;
-
-		sensor_ficture_ = phys_body_->CreateFixture(&sensorDef);
+		position_ = spawnPos;
 	}
 
 
 	KillVolume::~KillVolume()
 	{
-		scene_->getPhysWorld()->DestroyBody(phys_body_);
+		if (scene_ != nullptr && phys_body_ != nullptr)
+			scene_->getPhysWorld()->DestroyBody(phys_body_);
 	}
 
 
@@ -67,6 +53,22 @@ namespace fse
 
 	void KillVolume::spawned()
 	{
+		b2BodyDef physBodyDef;
+
+		physBodyDef.type = b2_staticBody;
+		physBodyDef.position.Set(position_.x, position_.y);
+
+		phys_body_ = getScene()->getPhysWorld()->CreateBody(&physBodyDef);
+		phys_body_->SetUserData(this);
+
+		b2PolygonShape box;
+		box.SetAsBox(size_.x / 2.f, size_.y / 2.f);
+
+		b2FixtureDef sensorDef;
+		sensorDef.shape = &box;
+		sensorDef.isSensor = true;
+
+		sensor_ficture_ = phys_body_->CreateFixture(&sensorDef);
 	}
 
 

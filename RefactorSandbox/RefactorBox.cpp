@@ -21,8 +21,8 @@ void RefactorBox::init()
 
 	root_scene_.getLightWorld()->setLighting(false);
 
-	auto debug = std::make_unique<DebugObject>(&root_scene_);
-	root_scene_.spawnFSEObject(std::move(debug));
+	const auto debug = std::make_shared<DebugObject>();
+	root_scene_.spawnFSEObject(debug);
 
 	root_scene_.createFSEObject<fse::ChaiConsole>([this](fse::FSEObject* console)
 	{
@@ -52,7 +52,10 @@ void RefactorBox::initGlobalSettings()
 	window->create(sf::VideoMode(1920, 1080), "RefactorBox");
 	window->setFramerateLimit(144);
 
-	root_scene_.createFSEObject<fse::FPSCounter>([](fse::FSEObject* fpscounter) {
-		(dynamic_cast<fse::FPSCounter*>(fpscounter))->setShowDetailed(true);
+	
+	auto fpsCounter = root_scene_.createFSEObject<fse::FPSCounter>([](fse::FSEObject* fpscounter) {
+		//Do whatever after spawn
+		//(dynamic_cast<fse::FPSCounter*>(fpscounter))->setShowDetailed(true);
 	});
+	fpsCounter.lock()->setShowDetailed(true);
 }

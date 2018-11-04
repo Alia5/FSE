@@ -15,7 +15,7 @@ namespace fse
 	class Timer : public FSEObject
 	{
 	public:
-		Timer(Scene* scene);
+		Timer();
 		~Timer();
 
 		void update(float deltaTime) override;
@@ -63,15 +63,14 @@ namespace fse
 		 * \param slot Slot  
 		 */
 		template <typename Slot>
-		static void singleShot(Scene* scene,int msecs, Slot&& slot)
+		static std::shared_ptr<Timer> singleShot(Scene * scene, const int msecs, Slot&& slot)
 		{
-			auto timer = std::make_unique<Timer>(scene);
+			auto timer = std::shared_ptr<Timer>();
 			timer->setInterval(msecs);
 			timer->setSingleShot(true);
-
 			timer->start(slot);
-
-			scene->spawnFSEObject(std::move(timer));
+			scene->spawnFSEObject(timer);
+			return timer;
 		}
 
 	private:	

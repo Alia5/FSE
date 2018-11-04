@@ -11,8 +11,8 @@ namespace fse
 	class LoadingScreen : public FSEObject
 	{
 	public:
-		LoadingScreen(Scene* scene);
-		LoadingScreen(Scene* scene, const sf::Vector2f& spawnPos);
+		LoadingScreen();
+		explicit LoadingScreen(const sf::Vector2f& spawnPos);
 		~LoadingScreen();
 
 		void update(float deltaTime) override;

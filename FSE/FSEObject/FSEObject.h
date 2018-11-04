@@ -38,9 +38,9 @@ namespace fse
 		*/
 		using SpawnedSignal = Signal<FSEObject*>;
 
-		FSEObject(Scene *scene);
-		FSEObject(Scene *scene, const sf::Vector2f spawnPos);
-		virtual ~FSEObject();
+		FSEObject();
+		explicit FSEObject(const sf::Vector2f spawnPos);
+		virtual ~FSEObject() = default;
 
 		/*!
 		 * Called once per frame \n 
@@ -73,6 +73,11 @@ namespace fse
 		 * Before spawnsignal is emitted
 		 */
 		virtual void spawned() = 0;
+
+		/*!
+		 * returns if the Object is active (updated and rendered)
+		 */
+		bool isActive() const;
 
 		/*!
 		 * Sets the object postion (in meters)
@@ -137,8 +142,9 @@ namespace fse
 		/*!
 		 * Called before object spawn
 		 * \param id object creation ID
+		 * \param scene this object belongs to
 		 */
-		void spawn(int id);
+		void spawn(int id, Scene* scene);
 		/*!
 		 * \brief Marks the object for destruction
 		 * The Object will get destroyed after the current frame \n 
@@ -201,7 +207,7 @@ namespace fse
 		 * \brief Returns Ptr to scene's vector of currently active FSEObjects \n 
 		 * Use when you for some odd reason need to query ALL objects, otherwise don't
 		 */
-		const std::vector<std::unique_ptr<FSEObject> >* getSceneFSEObjects() const;
+		const std::vector<std::shared_ptr<FSEObject> >* getSceneFSEObjects() const;
 
 		/*!
 		 * \brief update all currently attached components
@@ -267,6 +273,7 @@ namespace fse
 	private:
 		int id_ = -1;
 		int z_order_ = 0;
+		bool is_active_ = false;
 		bool is_pending_kill_ = false;
 		bool pending_timed_kill_ = false;
 

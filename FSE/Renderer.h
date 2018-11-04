@@ -18,7 +18,7 @@ namespace fse
 		void setNormalTarget(sf::RenderTarget* normalTarget);
 		void setSpecularTarget(sf::RenderTarget* specularTarget);
 
-		void render(const std::vector<std::unique_ptr<FSEObject> > &objects) const;
+		void render(const std::vector<std::shared_ptr<FSEObject> > &objects) const;
 
 	private:
 		sf::RenderTarget* render_target_;

@@ -7,22 +7,16 @@
 namespace fse
 {
 
-	FSEObject::FSEObject(Scene *scene) : position_(sf::Vector2f(0,0))
+	FSEObject::FSEObject() : FSEObject(sf::Vector2f(0, 0))
 	{
-		scene_ = scene;
-		input_ = scene->getApplication()->getInput();
 	}
 
-	FSEObject::FSEObject(Scene* scene, const sf::Vector2f spawnPos) : FSEObject(scene)
+
+	FSEObject::FSEObject(const sf::Vector2f spawnPos): scene_(nullptr), input_(nullptr)
 	{
 		position_ = spawnPos;
 	}
 
-
-	FSEObject::~FSEObject()
-	{
-		
-	}
 
 	void FSEObject::update(float deltaTime)
 	{
@@ -39,6 +33,11 @@ namespace fse
 
 	void FSEObject::drawSpecular(sf::RenderTarget& target)
 	{
+	}
+
+	bool FSEObject::isActive() const
+	{
+		return is_active_;
 	}
 
 	void FSEObject::setPosition(const sf::Vector2f position)
@@ -108,9 +107,13 @@ namespace fse
 		return scene_;
 	}
 
-	void FSEObject::spawn(int id)
+	void FSEObject::spawn(int id, Scene* scene)
 	{
+		scene_ = scene;
+		input_ = scene->getApplication()->getInput();
 		id_ = id;
+		is_active_ = true;
+		scene_->notifyZOrderChanged();
 		spawned();
 		spawned_signal_(this);
 		spawned_signal_.disconnectAll();
@@ -120,6 +123,7 @@ namespace fse
 	{
 		if (!is_pending_kill_)
 		{
+			is_active_ = false;
 			is_pending_kill_ = true;
 
 			scene_->destroyFSEObject(this);
@@ -137,10 +141,11 @@ namespace fse
 	void FSEObject::setZOrder(int ZOrder)
 	{
 		z_order_ = ZOrder;
-		scene_->notifyZOrderChanged();
+		if (scene_ != nullptr)
+			scene_->notifyZOrderChanged();
 	}
 
-	const std::vector<std::unique_ptr<FSEObject>>* FSEObject::getSceneFSEObjects() const
+	const std::vector<std::shared_ptr<FSEObject>>* FSEObject::getSceneFSEObjects() const
 	{
 		return scene_->getFSEObjects();
 	}

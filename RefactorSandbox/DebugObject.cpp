@@ -2,7 +2,7 @@
 
 
 
-DebugObject::DebugObject(fse::Scene* scene) : fse::FSEObject(scene)
+DebugObject::DebugObject() : fse::FSEObject()
 {
 }
 

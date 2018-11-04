@@ -33,7 +33,7 @@ namespace fse
 	class Scene 
 	{
 	public:
-		Scene(Application *application);
+		explicit Scene(Application *application);
 		~Scene();
 
 		/*!
@@ -60,7 +60,7 @@ namespace fse
 		 * don't do it if you don't need to 
 		 * \return Ptr to vector of currently active objects
 		 */
-		const std::vector<std::unique_ptr<FSEObject>>* getFSEObjects() const;
+		const std::vector<std::shared_ptr<FSEObject>>* getFSEObjects() const;
 
 		/*!
 		 * \brief Notify of changed z-orders
@@ -75,13 +75,13 @@ namespace fse
 		 * 
 		 * Usage: \n 
 		 *		\code
-		 *		auto obj = std::make_unique<YourObject>(scene);
-		 *		scene->spawnFSEObject(std::move(obj));
+		 *		auto obj = std::make_shared<YourObject>();
+		 *		scene->spawnFSEObject(obj);
 		 *		\endcode
 		 * 
-		 * \param object unique_ptr to object
+		 * \param object shared_ptr to object
 		 */
-		void spawnFSEObject(std::unique_ptr<FSEObject> object);
+		void spawnFSEObject(std::shared_ptr<FSEObject> object);
 
 		/*!
 		 * \brief Create and spawn FSEObject
@@ -91,10 +91,12 @@ namespace fse
 		 *	\endcode
 		 */
 		template<typename T>
-		void createFSEObject()
+		std::weak_ptr<T> createFSEObject()
 		{
-			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this));
-			pending_object_spawns_.push_back(std::move(object));
+			std::shared_ptr<T> object = std::make_shared<T>();
+			fse_objects_.push_back(object);
+			pending_object_spawns_.push_back(object);
+			return  object;
 		}
 
 		/*!
@@ -110,11 +112,13 @@ namespace fse
 		* \param slot Slot to call after object spawn
 		*/
 		template<typename T, typename SpawnedSlot>
-		void createFSEObject(SpawnedSlot&& slot)
+		std::weak_ptr<T> createFSEObject(SpawnedSlot&& slot)
 		{
-			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this));
+			std::shared_ptr<T> object = std::make_shared<T>();
+			fse_objects_.push_back(object);
 			object->spawned_signal_.connect(slot);
-			pending_object_spawns_.push_back(std::move(object));
+			pending_object_spawns_.push_back(object);
+			return  object;
 		}
 
 		/*!
@@ -127,10 +131,12 @@ namespace fse
 		* \param spawnPos spawn position in meters
 		*/
 		template<typename T>
-		void createFSEObject(const sf::Vector2f spawnPos)
+		std::weak_ptr<T> createFSEObject(const sf::Vector2f spawnPos)
 		{
-			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this, spawnPos));
-			pending_object_spawns_.push_back(std::move(object));
+			std::shared_ptr<T> object = std::make_shared<T>(spawnPos);
+			fse_objects_.push_back(object);
+			pending_object_spawns_.push_back(object);
+			return  object;
 		}
 
 		/*!
@@ -147,11 +153,13 @@ namespace fse
 		* \param slot Slot to call after object spawn
 		*/
 		template<typename T, typename SpawnedSlot>
-		void createFSEObject(const sf::Vector2f spawnPos, SpawnedSlot&& slot)
+		std::weak_ptr<T> createFSEObject(const sf::Vector2f spawnPos, SpawnedSlot&& slot)
 		{
-			std::unique_ptr<T> object = std::unique_ptr<T>(new T(this, spawnPos));
+			std::shared_ptr<T> object = std::make_shared<T>(spawnPos);
+			fse_objects_.push_back(object);
 			object->spawned_signal_.connect(slot);
-			pending_object_spawns_.push_back(std::move(object));
+			pending_object_spawns_.push_back(object);
+			return  object;
 		}
 
 		void destroyFSEObject(FSEObject* FSEObject);
@@ -186,10 +194,9 @@ namespace fse
 
 
 	protected:
-		void addFSEObject(std::unique_ptr<FSEObject> object);
-		void removeFSEObject(std::unique_ptr<FSEObject> const & object);
+		void removeFSEObject(std::shared_ptr<FSEObject> const & object);
 
-		void removeFSEObject(FSEObject* FSEObject);
+		void removeFSEObject(FSEObject* object);
 
 		void processPendingRemovals();
 		void processPendingSpawns();
@@ -197,9 +204,9 @@ namespace fse
 
 		sf::RenderTarget* render_target_;
 
-		std::vector<std::unique_ptr<FSEObject> > fse_objects_; 
+		std::vector<std::shared_ptr<FSEObject> > fse_objects_; 
 
-		std::list<std::unique_ptr<FSEObject> > pending_object_spawns_;
+		std::list<std::weak_ptr<FSEObject> > pending_object_spawns_;
 		std::list<FSEObject*> pending_object_removals_;
 
 

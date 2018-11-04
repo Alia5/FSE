@@ -12,9 +12,9 @@ namespace fse
 	{
 	public:
 
-		KillVolume(fse::Scene* scene);
-		KillVolume(fse::Scene* scene, const sf::Vector2f& spawnPos);
-		KillVolume(fse::Scene* scene, const sf::Vector2f& spawnPos, const sf::Vector2f& size);
+		KillVolume();
+		explicit KillVolume(const sf::Vector2f& spawnPos);
+		explicit KillVolume(const sf::Vector2f& spawnPos, const sf::Vector2f& size);
 
 		~KillVolume();
 

@@ -481,7 +481,7 @@ namespace fse
 				if (scene->pending_object_spawns_.size() == (sz + 1))
 				{
 					auto it = scene->pending_object_spawns_.rbegin();
-					FSEObject* ptr = (*it).get();
+					FSEObject* ptr = (*it).lock().get();
 
 					auto t = rttr::type::get(*ptr);
 					if (t != type)
@@ -621,25 +621,15 @@ namespace fse
 			} 
 			else
 			{
-				ctor = type.get_constructor({ rttr::type::get<fse::Scene*>() });
+				ctor = type.get_constructor({ rttr::type::get<FSEObject*>() });
 				if (ctor.is_valid())
 				{
-					val = ctor.invoke(scene);
-				} else {
-					
-					ctor = type.get_constructor({ rttr::type::get<FSEObject*>() });
-					if (ctor.is_valid())
+					if (scene->pending_object_spawns_.size() > 0)
 					{
-						if (scene->pending_object_spawns_.size() > 0)
-						{
-							auto it = scene->pending_object_spawns_.rbegin();
-							FSEObject* ptr = (*it).get();
-
-							val = ctor.invoke(ptr);
-
-						}
+						auto it = scene->pending_object_spawns_.rbegin();
+						FSEObject* ptr = (*it).lock().get();
+						val = ctor.invoke(ptr);
 					}
-
 				}
 			}
 		}

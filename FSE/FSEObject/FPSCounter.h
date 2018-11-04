@@ -12,8 +12,8 @@ namespace fse
 	class FPSCounter : public FSEObject
 	{
 	public:
-		FPSCounter(Scene* scene);
-		FPSCounter(Scene* scene, const sf::Vector2f& spawnPos);
+		FPSCounter();
+		explicit FPSCounter(const sf::Vector2f& spawnPos);
 		~FPSCounter();
 
 		void update(float deltaTime) override;

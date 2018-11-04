@@ -15,8 +15,8 @@ namespace fse
 	class FSELightWorld : public FSEObject
 	{
 	public:
-		FSELightWorld(Scene* scene);
-		FSELightWorld(Scene* scene, const sf::Vector2f& spawnPos);
+		FSELightWorld();
+		explicit FSELightWorld(const sf::Vector2f& spawnPos);
 		~FSELightWorld();
 
 		void update(float deltaTime) override;

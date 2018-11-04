@@ -9,12 +9,12 @@
 
 namespace fse
 {
-	FSELightWorld::FSELightWorld(Scene* scene) : FSELightWorld(scene, sf::Vector2f(0, 0))
+	FSELightWorld::FSELightWorld() : FSELightWorld(sf::Vector2f(0, 0))
 	{
 
 	}
 
-	FSELightWorld::FSELightWorld(Scene* scene, const sf::Vector2f& spawnPos) : FSEObject(scene, spawnPos)
+	FSELightWorld::FSELightWorld(const sf::Vector2f& spawnPos) : FSEObject(spawnPos)
 	{
 		setZOrder(255);
 		light_system_ = std::make_unique<ltbl::LightSystem>(normal_texture_, specular_texture_, true);

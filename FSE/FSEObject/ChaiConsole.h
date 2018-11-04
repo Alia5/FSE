@@ -7,8 +7,8 @@ namespace fse
 	{
 	public:
 
-		explicit ChaiConsole(Scene* scene);
-		ChaiConsole(Scene* scene, const sf::Vector2f& spawnPos);
+		ChaiConsole();
+		explicit ChaiConsole(const sf::Vector2f& spawnPos);
 		~ChaiConsole() override;
 
 		void spawned() override;

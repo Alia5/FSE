@@ -2,12 +2,12 @@
 namespace fse
 {
 
-	LoadingScreen::LoadingScreen(Scene* scene) : LoadingScreen(scene, sf::Vector2f(0,0))
+	LoadingScreen::LoadingScreen() : LoadingScreen(sf::Vector2f(0,0))
 	{
 	}
 
 
-	LoadingScreen::LoadingScreen(Scene* scene, const sf::Vector2f& spawnPos) : FSEObject(scene, spawnPos)
+	LoadingScreen::LoadingScreen(const sf::Vector2f& spawnPos) : FSEObject(spawnPos)
 	{
 		shape_.setSize(sf::Vector2f(1,1));
 		shape_.setFillColor(sf::Color(32, 32, 32));

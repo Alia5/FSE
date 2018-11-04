@@ -5,7 +5,7 @@
 
 namespace fse
 {
-	Timer::Timer(Scene* scene) : FSEObject(scene)
+	Timer::Timer() : FSEObject()
 	{
 
 	}
@@ -84,7 +84,7 @@ RTTR_REGISTRATION
 	using namespace rttr;
 
 	registration::class_<fse::Timer>("fse::Timer")
-	.constructor<>([](fse::Scene* scene)
+	/*.constructor<>([](fse::Scene* scene)
 	{
 		scene->createFSEObject<fse::Timer>();
 		return nullptr;
@@ -101,7 +101,7 @@ RTTR_REGISTRATION
 	(
 		parameter_names("scene", "spawnedSlot"),
 		metadata("CHAI_CTOR", true)
-	)
+	)*/
 	.property_readonly("active_", &fse::Timer::active_)
 	.property("single_shot_", &fse::Timer::single_shot_)
 	.property("interval_", &fse::Timer::interval_)

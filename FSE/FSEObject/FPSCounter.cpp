@@ -5,11 +5,11 @@
 
 namespace fse
 {
-	FPSCounter::FPSCounter(Scene* scene) : FPSCounter(scene, sf::Vector2f(0, 0))
+	FPSCounter::FPSCounter() : FPSCounter(sf::Vector2f(0, 0))
 	{
 	}
 
-	FPSCounter::FPSCounter(Scene* scene, const sf::Vector2f& spawnPos) : FSEObject(scene, spawnPos)
+	FPSCounter::FPSCounter(const sf::Vector2f& spawnPos) : FSEObject(spawnPos)
 	{
 		font_.loadFromFile("data/fonts/bitstream-vera/VeraMoBd.ttf");
 
@@ -25,19 +25,12 @@ namespace fse
 		background_.setFillColor(sf::Color(0, 0, 0, 128));
 
 		setZOrder(257);
-
-		counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(scene_->getApplication()->getWindow()->getSize().x),
-			static_cast<float>(scene_->getApplication()->getWindow()->getSize().y)));
-		on_resize_connection_ = scene_->getApplication()->on_window_resized_.connect([this]()
-		{
-			counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(scene_->getApplication()->getWindow()->getSize().x),
-				static_cast<float>(scene_->getApplication()->getWindow()->getSize().y)));
-		});
 	}
 
 	FPSCounter::~FPSCounter()
 	{
-		scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
+		if (scene_ != nullptr)
+			scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
 	}
 
 	void FPSCounter::update(float deltaTime)
@@ -91,6 +84,13 @@ namespace fse
 
 	void FPSCounter::spawned()
 	{
+		counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(scene_->getApplication()->getWindow()->getSize().x),
+			static_cast<float>(scene_->getApplication()->getWindow()->getSize().y)));
+		on_resize_connection_ = scene_->getApplication()->on_window_resized_.connect([this]()
+		{
+			counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(scene_->getApplication()->getWindow()->getSize().x),
+				static_cast<float>(scene_->getApplication()->getWindow()->getSize().y)));
+		});
 	}
 
 	void FPSCounter::setShowDetailed(bool detailed)
@@ -114,7 +114,7 @@ RTTR_REGISTRATION
 	using namespace fse;
 
 	registration::class_<FPSCounter>("fse::FPSCounter")
-	.constructor<>([](fse::Scene* scene)
+	/*.constructor<>([](fse::Scene* scene)
 	{
 		scene->createFSEObject<fse::FPSCounter>();
 		return nullptr;
@@ -122,7 +122,7 @@ RTTR_REGISTRATION
 	(
 		parameter_names("scene"),
 		metadata("CHAI_CTOR", true)
-	)
+	)*/
 	.property("detailed_view_", &FPSCounter::detailed_view_)
 	;
 }
