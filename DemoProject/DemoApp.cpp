@@ -18,11 +18,12 @@ void DemoApp::init()
 
 	root_scene_.getLightWorld()->setLighting(false);
 
-	auto intro = std::make_unique<MainMenu>(&root_scene_);
+	auto intro = std::make_shared<MainMenu>();
 	root_scene_.spawnFSEObject(std::move(intro));
 
 	root_scene_.createFSEObject<fse::ChaiConsole>([this](fse::FSEObject* console)
 	{
+		//Chaiscript is only accessible after object has spawned
 		base_chai_state_ = (dynamic_cast<fse::ChaiConsole*>(console))->replaceDefaultPrints(base_chai_state_);
 	});
 
@@ -49,7 +50,5 @@ void DemoApp::initGlobalSettings()
 	window->create(sf::VideoMode(1920, 1080), "DemoApp");
 	window->setFramerateLimit(144);
 
-	root_scene_.createFSEObject<fse::FPSCounter>([](fse::FSEObject* fpscounter) {
-		(dynamic_cast<fse::FPSCounter*>(fpscounter))->setShowDetailed(true);
-	});
+	root_scene_.createFSEObject<fse::FPSCounter>().lock()->setShowDetailed(true);
 }

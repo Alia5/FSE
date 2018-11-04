@@ -481,7 +481,7 @@ namespace fse
 				if (scene->pending_object_spawns_.size() == (sz + 1))
 				{
 					auto it = scene->pending_object_spawns_.rbegin();
-					FSEObject* ptr = (*it).lock().get();
+					FSEObject* ptr = (*it).get();
 
 					auto t = rttr::type::get(*ptr);
 					if (t != type)
@@ -627,7 +627,7 @@ namespace fse
 					if (scene->pending_object_spawns_.size() > 0)
 					{
 						auto it = scene->pending_object_spawns_.rbegin();
-						FSEObject* ptr = (*it).lock().get();
+						FSEObject* ptr = (*it).get();
 						val = ctor.invoke(ptr);
 					}
 				}

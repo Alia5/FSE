@@ -65,8 +65,7 @@ namespace fse
 
 		for (auto it = fse_objects_.rbegin(); it != fse_objects_.rend(); ++it)
 		{
-			if (it->get()->isActive())
-				it->get()->update(deltaTime);
+			it->get()->update(deltaTime);
 		}
 
 		processPendingRemovals();
@@ -110,7 +109,6 @@ namespace fse
 
 	void Scene::spawnFSEObject(std::shared_ptr<FSEObject> object)
 	{
-		fse_objects_.push_back(object);
 		pending_object_spawns_.push_back(object);
 	}
 
@@ -207,7 +205,8 @@ namespace fse
 		{
 			for (auto & object : pending_object_spawns_)
 			{
-				object.lock()->spawn(spawn_count_++, this);
+				fse_objects_.push_back(object);
+				fse_objects_.rbegin()->get()->spawn(spawn_count_++, this);
 				z_order_changed_ = true;
 			}
 			pending_object_spawns_.clear();

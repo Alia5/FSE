@@ -75,11 +75,6 @@ namespace fse
 		virtual void spawned() = 0;
 
 		/*!
-		 * returns if the Object is active (updated and rendered)
-		 */
-		bool isActive() const;
-
-		/*!
 		 * Sets the object postion (in meters)
 		 * \param position New Position 
 		 */
@@ -273,7 +268,6 @@ namespace fse
 	private:
 		int id_ = -1;
 		int z_order_ = 0;
-		bool is_active_ = false;
 		bool is_pending_kill_ = false;
 		bool pending_timed_kill_ = false;
 

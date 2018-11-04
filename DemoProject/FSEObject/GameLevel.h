@@ -6,7 +6,7 @@
 class GameLevel : public fse::FSEObject
 {
 public:
-	explicit GameLevel(fse::Scene* scene);
+	GameLevel();
 
 
 	void update(float deltaTime) override;

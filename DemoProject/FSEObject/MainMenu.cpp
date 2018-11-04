@@ -5,7 +5,7 @@
 #include <imgui/imgui.h>
 #include "GameLevel.h"
 
-MainMenu::MainMenu(fse::Scene* scene) : FSEObject(scene)
+MainMenu::MainMenu()
 {
 }
 
@@ -36,7 +36,7 @@ void MainMenu::update(float deltaTime)
 
 void MainMenu::startGame()
 {
-	auto gh = std::make_unique<GameLevel>(scene_);
-	scene_->spawnFSEObject(std::move(gh));
+	auto gh = std::make_shared<GameLevel>();
+	scene_->spawnFSEObject(gh);
 	destroy();
 }

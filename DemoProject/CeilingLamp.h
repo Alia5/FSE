@@ -8,8 +8,8 @@
 class CeilingLamp : public fse::FSEObject
 {
 public:
-	explicit CeilingLamp(fse::Scene* scene);
-	CeilingLamp(fse::Scene* scene, const sf::Vector2f& spawnPos);
+	CeilingLamp();
+	explicit CeilingLamp(const sf::Vector2f& spawnPos);
 	~CeilingLamp() override;
 
 

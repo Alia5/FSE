@@ -7,9 +7,9 @@
 class ConcreteBlock : public fse::FSEObject
 {
 public:
-	explicit ConcreteBlock(fse::Scene* scene);
-	ConcreteBlock(fse::Scene* scene, const sf::Vector2f& spawnPos);
-	ConcreteBlock(fse::Scene* scene, const sf::Vector2f& spawnPos, const sf::Vector2f& size);
+	ConcreteBlock();
+	explicit ConcreteBlock(const sf::Vector2f& spawnPos);
+	explicit ConcreteBlock(const sf::Vector2f& spawnPos, const sf::Vector2f& size);
 	~ConcreteBlock() override;
 
 	void update(float deltaTime) override;

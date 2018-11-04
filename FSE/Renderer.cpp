@@ -32,17 +32,17 @@ namespace fse
 		//it's actually faster to iterate over all objects 3 times instead of doing a lot of target switching...
 		for (const auto & object : objects)
 		{
-			if (object->isActive() && viewRect.intersects(object->GetAABBs()))
+			if (viewRect.intersects(object->GetAABBs()))
 				object->drawNormals(*normal_target_);
 		}
 		for (const auto & object : objects)
 		{
-			if (object->isActive() && viewRect.intersects(object->GetAABBs()))
+			if (viewRect.intersects(object->GetAABBs()))
 				object->drawSpecular(*specular_target_);
 		}
 		for (const auto & object : objects)
 		{
-			if (object->isActive() && viewRect.intersects(object->GetAABBs()))
+			if (viewRect.intersects(object->GetAABBs()))
 				object->draw(*render_target_);
 		}
 	}

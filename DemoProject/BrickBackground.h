@@ -8,9 +8,9 @@ class BrickBackground : public fse::FSEObject
 {
 public:
 
-	explicit BrickBackground(fse::Scene* scene);
-	BrickBackground(fse::Scene* scene, const sf::Vector2f& spawnPos);
-	BrickBackground(fse::Scene* scene, const sf::Vector2f& spawnPos, const sf::Vector2f& size);
+	BrickBackground();
+	explicit BrickBackground(const sf::Vector2f& spawnPos);
+	explicit BrickBackground(const sf::Vector2f& spawnPos, const sf::Vector2f& size);
 	~BrickBackground() = default;
 
 	void draw(sf::RenderTarget& target) override;

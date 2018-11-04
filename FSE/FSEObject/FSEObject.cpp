@@ -35,11 +35,6 @@ namespace fse
 	{
 	}
 
-	bool FSEObject::isActive() const
-	{
-		return is_active_;
-	}
-
 	void FSEObject::setPosition(const sf::Vector2f position)
 	{
 		position_ = position;
@@ -112,8 +107,6 @@ namespace fse
 		scene_ = scene;
 		input_ = scene->getApplication()->getInput();
 		id_ = id;
-		is_active_ = true;
-		scene_->notifyZOrderChanged();
 		spawned();
 		spawned_signal_(this);
 		spawned_signal_.disconnectAll();
@@ -123,7 +116,6 @@ namespace fse
 	{
 		if (!is_pending_kill_)
 		{
-			is_active_ = false;
 			is_pending_kill_ = true;
 
 			scene_->destroyFSEObject(this);

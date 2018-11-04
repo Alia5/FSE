@@ -4,7 +4,7 @@
 class MainMenu : public fse::FSEObject
 {
 public:
-	explicit MainMenu(fse::Scene* scene);
+	MainMenu();
 
 
 	void spawned() override;

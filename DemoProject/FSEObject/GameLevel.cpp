@@ -6,23 +6,9 @@
 #include <imgui.h>
 
 
-GameLevel::GameLevel(fse::Scene* scene) : FSEObject(scene)
+GameLevel::GameLevel()
 {
-	auto app = dynamic_cast<DemoApp*>(scene_->getApplication());
-	sub_scene_target_ = const_cast<sf::RenderTexture*>(app->getInGameTarget());
-	sub_scene_ = std::make_unique<fse::Scene>(app);
-	sub_scene_->setRenderTarget(sub_scene_target_);
-	sub_scene_->setPaused(true);
 
-	on_chai_init_connection_ = app->on_chaiscript_init_.connect([this](chaiscript::ChaiScript& chai)
-	{
-		if (!isPendingKill())
-		{
-			chai.set_global(chaiscript::var(std::ref(*sub_scene_)), "gameScene");
-			chai.eval("global objectMap = Map();");
-		}
-	});
-	scene_->getApplication()->initChai();
 }
 
 void GameLevel::update(float deltaTime)
@@ -41,8 +27,7 @@ void GameLevel::update(float deltaTime)
 
 	if (ImGui::Button(" Back ##SettingsMenu"))
 	{
-		auto mm = std::make_unique<MainMenu>(scene_);
-		scene_->spawnFSEObject(std::move(mm));
+		scene_->createFSEObject<MainMenu>();
 		destroy();
 	}
 
@@ -59,6 +44,21 @@ void GameLevel::draw(sf::RenderTarget& target)
 
 void GameLevel::spawned()
 {
+	auto app = dynamic_cast<DemoApp*>(scene_->getApplication());
+	sub_scene_target_ = const_cast<sf::RenderTexture*>(app->getInGameTarget());
+	sub_scene_ = std::make_unique<fse::Scene>(app);
+	sub_scene_->setRenderTarget(sub_scene_target_);
+	sub_scene_->setPaused(true);
+
+	on_chai_init_connection_ = app->on_chaiscript_init_.connect([this](chaiscript::ChaiScript& chai)
+	{
+		if (!isPendingKill())
+		{
+			chai.set_global(chaiscript::var(std::ref(*sub_scene_)), "gameScene");
+			chai.eval("global objectMap = Map();");
+		}
+	});
+	scene_->getApplication()->initChai();
 	spawnLevel();
 }
 
@@ -77,9 +77,6 @@ void GameLevel::handleInputs(float deltaTime) const
 
 void GameLevel::drawSubScene(sf::RenderTarget& target) const
 {
-
-
-
 	auto view = target.getView();
 	const auto oldView = view;
 	view.setCenter(sf::Vector2f(target.getSize().x, target.getSize().y) / 2.f);

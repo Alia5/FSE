@@ -4,59 +4,22 @@
 #include <FSE/ImageOutlineFinder.h>
 #include <FSE/FMath.h>
 
-CeilingLamp::CeilingLamp(fse::Scene* scene) : CeilingLamp(scene, {0.f,0.f})
+CeilingLamp::CeilingLamp() : CeilingLamp({0.f,0.f})
 {
 }
 
-CeilingLamp::CeilingLamp(fse::Scene* scene, const sf::Vector2f& spawnPos) : fse::FSEObject(scene, spawnPos)
+CeilingLamp::CeilingLamp(const sf::Vector2f& spawnPos) : fse::FSEObject(spawnPos)
 {
-	texture_ = scene_->getApplication()->getAssetLoader().getTexture("Lamp/lamp.png");
-	normal_texture_ = scene_->getApplication()->getAssetLoader().getTexture("Lamp/lamp_normal.png");
-	specular_texture = scene_->getApplication()->getAssetLoader().getTexture("Lamp/lamp_spec.png");
-
-	texture_->setSmooth(true);
-	normal_texture_->setSmooth(true);
-	specular_texture->setSmooth(true);
-
 	setZOrder(33);
-	position_ = spawnPos;
-
-	sprite_ = ltbl::Sprite(scene_->getLightWorld()->getLightSystem());
-	sprite_.setTexture(*texture_);
-	sprite_.setNormalsTexture(*normal_texture_);
-	sprite_.setSpecularTexture(*specular_texture);
-
-	sprite_.setOrigin(75 / 2.f, 50 / 2.f);
-	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
-
-	b2BodyDef physBodyDef;
-
-	physBodyDef.type = b2_staticBody;
-	physBodyDef.position.Set(position_.x, position_.y);
-
-	anchor_body_ = getScene()->getPhysWorld()->CreateBody(&physBodyDef);
-	anchor_body_->SetUserData(this);
-	b2PolygonShape box;
-	box.SetAsBox(0.5f, 0.5f);
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &box;
-	fixtureDef.friction = 1.f;
-	fixtureDef.restitution = 0.001f;
-	anchor_body_->CreateFixture(&fixtureDef);
-
-	shapeFromSprite();
-
-
-	spot_light_ = fse::SpotLight(scene_, sprite_.getPosition());
-	spot_light_.setLenght(30);
-	spot_light_.setAngle(45);
-
 }
 
 CeilingLamp::~CeilingLamp()
 {
-	scene_->getPhysWorld()->DestroyBody(phys_body_);
-	scene_->getPhysWorld()->DestroyBody(anchor_body_);
+	if (scene_ != nullptr)
+	{
+		scene_->getPhysWorld()->DestroyBody(phys_body_);
+		scene_->getPhysWorld()->DestroyBody(anchor_body_);
+	}
 	if (!light_shapes_.empty())
 	{
 		for (auto& lshape : light_shapes_)
@@ -138,6 +101,44 @@ void CeilingLamp::drawSpecular(sf::RenderTarget& target)
 
 void CeilingLamp::spawned()
 {
+	texture_ = scene_->getApplication()->getAssetLoader().getTexture("Lamp/lamp.png");
+	normal_texture_ = scene_->getApplication()->getAssetLoader().getTexture("Lamp/lamp_normal.png");
+	specular_texture = scene_->getApplication()->getAssetLoader().getTexture("Lamp/lamp_spec.png");
+
+	texture_->setSmooth(true);
+	normal_texture_->setSmooth(true);
+	specular_texture->setSmooth(true);
+
+	sprite_ = ltbl::Sprite(scene_->getLightWorld()->getLightSystem());
+	sprite_.setTexture(*texture_);
+	sprite_.setNormalsTexture(*normal_texture_);
+	sprite_.setSpecularTexture(*specular_texture);
+
+	sprite_.setOrigin(75 / 2.f, 50 / 2.f);
+	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
+
+	b2BodyDef physBodyDef;
+
+	physBodyDef.type = b2_staticBody;
+	physBodyDef.position.Set(position_.x, position_.y);
+
+	anchor_body_ = getScene()->getPhysWorld()->CreateBody(&physBodyDef);
+	anchor_body_->SetUserData(this);
+	b2PolygonShape box;
+	box.SetAsBox(0.5f, 0.5f);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &box;
+	fixtureDef.friction = 1.f;
+	fixtureDef.restitution = 0.001f;
+	anchor_body_->CreateFixture(&fixtureDef);
+
+	shapeFromSprite();
+
+
+	spot_light_ = fse::SpotLight(scene_, sprite_.getPosition());
+	spot_light_.setLenght(30);
+	spot_light_.setAngle(45);
+
 }
 
 void CeilingLamp::setPosition(const sf::Vector2f position)
@@ -284,24 +285,24 @@ RTTR_REGISTRATION
 {
 	using namespace rttr;
 
-registration::class_<CeilingLamp>("CeilingLamp")
-.constructor<>([](fse::Scene* scene)
-{
-	scene->createFSEObject<CeilingLamp>();
-	return nullptr;
-})
-(
-	parameter_names("scene")
-	)
-	.constructor([](fse::Scene* scene, const sf::Vector2f& spawnPos)
-{
-	auto box = std::make_unique<CeilingLamp>(scene, spawnPos);
-	scene->spawnFSEObject(std::move(box));
-	return nullptr;
-})
-(
+	registration::class_<CeilingLamp>("CeilingLamp")
+	/*.constructor<>([](fse::Scene* scene)
+	{
+		scene->createFSEObject<CeilingLamp>();
+		return nullptr;
+	})
+	(
+		parameter_names("scene")
+		)
+		.constructor([](fse::Scene* scene, const sf::Vector2f& spawnPos)
+	{
+		auto box = std::make_unique<CeilingLamp>(scene, spawnPos);
+		scene->spawnFSEObject(std::move(box));
+		return nullptr;
+	})
+	(
 	parameter_names("scene", "spawn position")
-	)
+	)*/
 	.property("rotation_", &CeilingLamp::getRotation, &CeilingLamp::setRotation)
 	.property("limit_", &CeilingLamp::getLimit, &CeilingLamp::setLimit)
 	.property("avg_count_", &CeilingLamp::getAverageCount, &CeilingLamp::setAverageCount)

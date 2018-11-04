@@ -5,18 +5,17 @@
 #include <FSE/FMath.h>
 #include <random>
 
-BrickBackground::BrickBackground(fse::Scene* scene) : BrickBackground(scene, { 0.f, 0.f })
+BrickBackground::BrickBackground() : BrickBackground({ 0.f, 0.f })
 {
 
 }
 
-BrickBackground::BrickBackground(fse::Scene* scene, const sf::Vector2f& spawnPos) : BrickBackground(scene, spawnPos, { 1.f, 1.f })
+BrickBackground::BrickBackground(const sf::Vector2f& spawnPos) : BrickBackground( spawnPos, { 1.f, 1.f })
 {
 }
 
-BrickBackground::BrickBackground(fse::Scene* scene, const sf::Vector2f& spawnPos, const sf::Vector2f& size) : FSEObject(scene, spawnPos)
+BrickBackground::BrickBackground(const sf::Vector2f& spawnPos, const sf::Vector2f& size) : FSEObject(spawnPos)
 {
-
 	//truncate size to whole meters
 	size_.x = std::trunc(size.x);
 	size_.y = std::trunc(size.y);
@@ -25,36 +24,7 @@ BrickBackground::BrickBackground(fse::Scene* scene, const sf::Vector2f& spawnPos
 	if (size_.y < 1.f)
 		size_.y = 1.f;
 
-
-	texture_ = scene_->getApplication()->getAssetLoader().getTexture("Brickwall/BrickSmallPatternsDarkTex.png");
-	normal_texture_ = scene_->getApplication()->getAssetLoader().getTexture("Brickwall/BrickSmallPatterns_normal.png");
-	specular_texture = scene_->getApplication()->getAssetLoader().getTexture("Brickwall/BrickSmallPatterns_specular.png");
-
-
-	texture_->setRepeated(true);
-	normal_texture_->setRepeated(true);
-	specular_texture->setRepeated(true);
-
-	texture_->setSmooth(true);
-	normal_texture_->setSmooth(true);
-	specular_texture->setSmooth(true);
-
 	setZOrder(15);
-
-	position_ = spawnPos;
-
-	sprite_ = ltbl::Sprite(scene_->getLightWorld()->getLightSystem());
-	sprite_.setTexture(*texture_);
-	sprite_.setNormalsTexture(*normal_texture_);
-	sprite_.setSpecularTexture(*specular_texture);
-
-	sprite_.setTextureRect(sf::IntRect(0, 0,
-		static_cast<int>(size_.x * FSE_PIXELS_PER_METER),
-		static_cast<int>(size_.y * FSE_PIXELS_PER_METER)));
-
-	sprite_.setOrigin(size_ / 2.f);
-	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
-
 }
 
 
@@ -75,6 +45,29 @@ void BrickBackground::drawSpecular(sf::RenderTarget& target)
 
 void BrickBackground::spawned()
 {
+	texture_ = scene_->getApplication()->getAssetLoader().getTexture("Brickwall/BrickSmallPatternsDarkTex.png");
+	normal_texture_ = scene_->getApplication()->getAssetLoader().getTexture("Brickwall/BrickSmallPatterns_normal.png");
+	specular_texture = scene_->getApplication()->getAssetLoader().getTexture("Brickwall/BrickSmallPatterns_specular.png");
+
+	texture_->setRepeated(true);
+	normal_texture_->setRepeated(true);
+	specular_texture->setRepeated(true);
+
+	texture_->setSmooth(true);
+	normal_texture_->setSmooth(true);
+	specular_texture->setSmooth(true);
+
+	sprite_ = ltbl::Sprite(scene_->getLightWorld()->getLightSystem());
+	sprite_.setTexture(*texture_);
+	sprite_.setNormalsTexture(*normal_texture_);
+	sprite_.setSpecularTexture(*specular_texture);
+
+	sprite_.setTextureRect(sf::IntRect(0, 0,
+		static_cast<int>(size_.x * FSE_PIXELS_PER_METER),
+		static_cast<int>(size_.y * FSE_PIXELS_PER_METER)));
+
+	sprite_.setOrigin(size_ / 2.f);
+	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
 }
 
 void BrickBackground::setPosition(const sf::Vector2f position)
@@ -128,24 +121,24 @@ RTTR_REGISTRATION
 {
 	using namespace rttr;
 
-registration::class_<BrickBackground>("BrickBackground")
-.constructor<>([](fse::Scene* scene)
-{
-	scene->createFSEObject<BrickBackground>();
-	return nullptr;
-})
-(
-	parameter_names("scene")
-	)
-	.constructor([](fse::Scene* scene, const sf::Vector2f& spawnPos, const sf::Vector2f& size)
-{
-	auto box = std::make_unique<BrickBackground>(scene, spawnPos, size);
-	scene->spawnFSEObject(std::move(box));
-	return nullptr;
-})
-(
-	parameter_names("scene", "spawn position", "size")
-	)
+	registration::class_<BrickBackground>("BrickBackground")
+	/*.constructor<>([](fse::Scene* scene)
+	{
+		scene->createFSEObject<BrickBackground>();
+		return nullptr;
+	})
+	(
+		parameter_names("scene")
+		)
+		.constructor([](fse::Scene* scene, const sf::Vector2f& spawnPos, const sf::Vector2f& size)
+	{
+		auto box = std::make_unique<BrickBackground>(scene, spawnPos, size);
+		scene->spawnFSEObject(std::move(box));
+		return nullptr;
+	})
+	(
+		parameter_names("scene", "spawn position", "size")
+	)*/
 	.property("size_", &BrickBackground::getSize, &BrickBackground::setSize)
 	(
 		metadata("CTOR_ARG", "size")

@@ -94,7 +94,6 @@ namespace fse
 		std::weak_ptr<T> createFSEObject()
 		{
 			std::shared_ptr<T> object = std::make_shared<T>();
-			fse_objects_.push_back(object);
 			pending_object_spawns_.push_back(object);
 			return  object;
 		}
@@ -115,7 +114,6 @@ namespace fse
 		std::weak_ptr<T> createFSEObject(SpawnedSlot&& slot)
 		{
 			std::shared_ptr<T> object = std::make_shared<T>();
-			fse_objects_.push_back(object);
 			object->spawned_signal_.connect(slot);
 			pending_object_spawns_.push_back(object);
 			return  object;
@@ -134,7 +132,6 @@ namespace fse
 		std::weak_ptr<T> createFSEObject(const sf::Vector2f spawnPos)
 		{
 			std::shared_ptr<T> object = std::make_shared<T>(spawnPos);
-			fse_objects_.push_back(object);
 			pending_object_spawns_.push_back(object);
 			return  object;
 		}
@@ -156,7 +153,6 @@ namespace fse
 		std::weak_ptr<T> createFSEObject(const sf::Vector2f spawnPos, SpawnedSlot&& slot)
 		{
 			std::shared_ptr<T> object = std::make_shared<T>(spawnPos);
-			fse_objects_.push_back(object);
 			object->spawned_signal_.connect(slot);
 			pending_object_spawns_.push_back(object);
 			return  object;
@@ -206,7 +202,7 @@ namespace fse
 
 		std::vector<std::shared_ptr<FSEObject> > fse_objects_; 
 
-		std::list<std::weak_ptr<FSEObject> > pending_object_spawns_;
+		std::list<std::shared_ptr<FSEObject> > pending_object_spawns_;
 		std::list<FSEObject*> pending_object_removals_;
 
 
