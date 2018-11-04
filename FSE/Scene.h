@@ -84,6 +84,25 @@ namespace fse
 		void spawnFSEObject(std::shared_ptr<FSEObject> object);
 
 		/*!
+		 * \brief Spawn FSEObject into the scene \n
+		 *
+		 * Usage: \n
+		 *		\code
+		 *		auto obj = std::make_shared<YourObject>();
+		 *		scene->spawnFSEObject(obj, [](FSEObject* object){//doStuff});
+		 *		\endcode
+		 *
+		 * \param object shared_ptr to object
+		 * \param slot callback when object is spawned
+		 */
+		template<typename SpawnedSlot>
+		void spawnFSEObject(std::shared_ptr<FSEObject> object, SpawnedSlot&& slot)
+		{
+			object->spawned_signal_.connect(slot);
+			pending_object_spawns_.push_back(object);
+		}
+
+		/*!
 		 * \brief Create and spawn FSEObject
 		 * Usage: \n
 		 *  \code

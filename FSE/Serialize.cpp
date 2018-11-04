@@ -469,26 +469,23 @@ namespace fse
 					}
 				}
 
-				size_t sz = scene->pending_object_spawns_.size();
-
+				size_t sz = scene->fse_objects_.size();
 				//somehow has to be this way, if pushed back directly in an argument vector some values are wrong... o.O
 				std::vector<rttr::argument> arguvec;
 				for (auto & arg : spawn_args)
 					arguvec.push_back(arg);
+				rttr::variant object;
 				if (arguvec.size() > 0)
-				{
-					auto object = ctor.invoke_variadic(arguvec);
-					scene->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
-				}
+					object = ctor.invoke_variadic(arguvec);
 				else
-				{
-					auto object = ctor.invoke();
-					scene->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
-				}
+					object = ctor.invoke();
 
-				if (scene->pending_object_spawns_.size() == (sz + 1))
+				scene->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
+				scene->processPendingSpawns();
+
+				if (scene->fse_objects_.size() == (sz + 1))
 				{
-					auto it = scene->pending_object_spawns_.rbegin();
+					auto it = scene->fse_objects_.rbegin();
 					FSEObject* ptr = (*it).get();
 
 					auto t = rttr::type::get(*ptr);
@@ -518,6 +515,7 @@ namespace fse
 
 						if (val != prop.get_value(ptr))
 							prop.set_value(ptr, val);
+
 					}
 				}
 				break;

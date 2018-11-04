@@ -164,15 +164,11 @@ void ConcreteBlock::setSize(const sf::Vector2f& size)
 
 float ConcreteBlock::getRotation() const
 {
-	if (phys_body_ == nullptr)
-		return 0;
 	return phys_body_->GetAngle() * FSE_RADTODEG;
 }
 
 void ConcreteBlock::setRotation(float rot)
 {
-	if (phys_body_ == nullptr)
-		return;
 	phys_body_->SetTransform(fse::FMath::sfVec2fTob2Vec2(position_), rot * FSE_DEGTORAD);
 	sprite_.setRotation(rot);
 	light_shape_->setRotation(rot);
