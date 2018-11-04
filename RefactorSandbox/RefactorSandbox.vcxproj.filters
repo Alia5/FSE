@@ -13,10 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\FSObject">
+      <UniqueIdentifier>{2bbdc7b6-3ad4-4fea-8e17-e1cefaaa68e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSEObject">
+      <UniqueIdentifier>{6a066969-582c-46b3-914b-3677416d17f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RefactorBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugObject.cpp">
+      <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RefactorBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugObject.h">
+      <Filter>Header Files\FSObject</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

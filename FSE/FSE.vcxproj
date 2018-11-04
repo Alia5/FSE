@@ -88,7 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SFML_STATIC;IMGUI_USER_CONFIG=&lt;imconfig.h&gt;;IMGUI_DISABLE_INCLUDE_IMCONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\extlibs\SFML-2.5.1-x86\include;..\extlibs\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\imgui\;..\imgui-SFML\;..\rapidjson\include;..\poly2tri\poly2tri;..\chaiscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\extlibs\SFML-2.5.1-x86\include;..\extlibs\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\chaiscript\include\;..\imgui\;..\imgui-SFML\;..\rapidjson\include;..\poly2tri\poly2tri;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CreateHotpatchableImage>true</CreateHotpatchableImage>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -129,7 +129,7 @@
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\extlibs\SFML-2.5.1-x86\include;..\extlibs\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\rapidjson\include;..\poly2tri\poly2tri;..\chaiscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\extlibs\SFML-2.5.1-x86\include;..\extlibs\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-win32-vs2017\include;..\imgui-sfml-config\;..\chaiscript\include\;..\rapidjson\include;..\poly2tri\poly2tri;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpp17</LanguageStandard>
