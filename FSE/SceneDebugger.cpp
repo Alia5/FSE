@@ -330,7 +330,7 @@ namespace fse
 				ImGui::Separator();
 				if (ImGui::Button(" DESTROY ##SceneDebugger"))
 				{
-					type.invoke("destroy", *it, {}); //with fire
+					type.invoke("destroy", *it, {/*with fire*/});
 				}
 				ImGui::Separator();
 			}
@@ -366,6 +366,22 @@ namespace fse
 			return;
 		}
 
+		if (type.is_wrapper())
+		{
+			auto inst = object->get_wrapped_instance();
+			auto t = object->get_derived_type();
+			ImGui::Text(t.get_name().data());
+			if (inst.is_valid())
+			{
+				ShowObjectEditorItems(t, &inst);
+			} 
+			else
+			{
+				ShowObjectEditorItems(t, object);
+			}
+			return;
+		}
+
 		for (auto& prop : type.get_properties())
 		{
 			if (item_edit_funcs_.count(prop.get_type()))
@@ -396,7 +412,7 @@ namespace fse
 					ImGui::TreePop();
 				}
 
-			} else if (prop.get_type().is_array())	{
+			} else if (prop.get_type().is_array() || prop.get_type().is_sequential_container())	{
 						
 				std::string propname(std::string(prop.get_name().data()) + "[]");
 				if (prop.is_readonly())
@@ -418,6 +434,11 @@ namespace fse
 							auto v = arr.get_value(i);
 							auto bkup = v;
 							auto t = v.get_type();
+							if (t.is_wrapper())
+							{
+								t = t.get_wrapped_type();
+								v = v.extract_wrapped_value();
+							}
 							auto inst = rttr::instance(v);
 							ShowObjectEditorItems(t, &inst);
 							if (bkup != val)

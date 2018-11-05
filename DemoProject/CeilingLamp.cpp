@@ -3,6 +3,8 @@
 #include <FSE/Lights/FSELightWorld.h>
 #include <FSE/ImageOutlineFinder.h>
 #include <FSE/FMath.h>
+#include "FSE/Component/SmoothViewController.h"
+#include "FSE/FSEObject/Timer.h"
 
 CeilingLamp::CeilingLamp() : CeilingLamp({0.f,0.f})
 {
@@ -30,6 +32,7 @@ CeilingLamp::~CeilingLamp()
 
 void CeilingLamp::update(float deltaTime)
 {
+	fse::FSEObject::update(deltaTime);
 	auto transform = phys_body_->GetTransform();
 	position_ = fse::FMath::b2Vec2ToSfVec2f(anchor_body_->GetTransform().p);
 	sprite_.setRotation(transform.q.GetAngle() * FSE_RADTODEG);
@@ -139,6 +142,11 @@ void CeilingLamp::spawned()
 	spot_light_.setLenght(30);
 	spot_light_.setAngle(45);
 
+	fse::Timer::singleShot(scene_, 0 /*next Frame after spawn*/, [this]
+	{
+		auto viewController = attachComponent(std::make_shared<fse::SmoothViewController>(scene_->getRenderTarget()));
+		dynamic_cast<fse::SmoothViewController*>(viewController.lock().get())->setZoomLevel(0.5);
+	});
 }
 
 void CeilingLamp::setPosition(const sf::Vector2f position)

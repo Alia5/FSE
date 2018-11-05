@@ -173,15 +173,15 @@ namespace fse
 		/*!
 		* \brief attach a component to this object.
 		*
-		* \returns ptr to component, nullptr on failure
+		* \returns weak_ptr to component, default weak_ptr on failure
 		*/
-		Component* attachComponent(std::unique_ptr<Component>  component);
+		std::weak_ptr<Component> attachComponent(std::shared_ptr<Component>  component);
 
 		/*!
 		* \brief detach a component from this object.
-		* \returns uninqie ptr w/ detached component. nullptr on failure
+		* \returns shared_ptr w/ detached component. nullptr on failure
 		*/
-		std::unique_ptr<Component> detachComponent(Component*  component);
+		std::shared_ptr<Component> detachComponent(Component*  component);
 
 
 		/*!
@@ -189,7 +189,7 @@ namespace fse
 		*
 		* \return Ptr to vector of currently attached components
 		*/
-		const std::vector<std::unique_ptr<Component>>* getComponents() const;
+		const std::vector<std::shared_ptr<Component>>* getComponents() const;
 
 		/*!
 		* Set z-order of object
@@ -248,7 +248,7 @@ namespace fse
 		/*!
 		 * \brief Vector of attached components.
 		 */
-		std::vector<std::unique_ptr<Component> > components_;
+		std::vector<std::shared_ptr<Component> > components_;
 
 		/*!
 		 * Ptr to scene the object lives in.
@@ -270,9 +270,6 @@ namespace fse
 		int z_order_ = 0;
 		bool is_pending_kill_ = false;
 		bool pending_timed_kill_ = false;
-
-		std::vector<Component*> getComponentsRttr();
-		void setRttrComponentsRttr(std::vector<Component*> components);
 
 		RTTR_ENABLE()
 		RTTR_REGISTRATION_FRIEND

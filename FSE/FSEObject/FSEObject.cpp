@@ -91,7 +91,7 @@ namespace fse
 	}
 
 
-	const std::vector<std::unique_ptr<Component>>* FSEObject::getComponents() const
+	const std::vector<std::shared_ptr<Component>>* FSEObject::getComponents() const
 	{
 		return &components_;
 	}
@@ -177,23 +177,23 @@ namespace fse
 		return scene_->getApplication()->getChai();
 	}
 
-	Component* FSEObject::attachComponent(std::unique_ptr<Component> component)
+	std::weak_ptr<Component> FSEObject::attachComponent(std::shared_ptr<Component> component)
 	{
-		auto it = std::find_if(components_.begin(), components_.end(), [&](const std::unique_ptr<Component> & obj) {
+		auto it = std::find_if(components_.begin(), components_.end(), [&](const std::shared_ptr<Component> & obj) {
 			return obj.get() == component.get();
 		});
 		if (it != components_.end())
 		{
-			return nullptr;
+			return std::weak_ptr<Component>();
 		}
-		components_.push_back(std::move(component));
+		components_.push_back(component);
 		(*components_.rbegin())->attachToObject(this);
-		return (*components_.rbegin()).get();
+		return (*components_.rbegin());
 	}
 
-	std::unique_ptr<Component> FSEObject::detachComponent(Component*  component)
+	std::shared_ptr<Component> FSEObject::detachComponent(Component*  component)
 	{
-		auto it = std::find_if(components_.begin(), components_.end(), [&](const std::unique_ptr<Component> & obj) {
+		auto it = std::find_if(components_.begin(), components_.end(), [&](const std::shared_ptr<Component> & obj) {
 			return obj.get() == component;
 		});
 		if (it == components_.end())
@@ -206,38 +206,6 @@ namespace fse
 		return res;
 	}
 
-	std::vector<Component*> FSEObject::getComponentsRttr()
-	{
-		std::vector<Component*> res;
-
-		for (auto& comp : components_)
-			res.push_back(comp.get());
-
-		return res;
-	}
-
-	void FSEObject::setRttrComponentsRttr(std::vector<Component*> components)
-	{
-		for (auto& component : components)
-		{
-			auto it = std::find_if(components_.begin(), components_.end(), [&](const std::unique_ptr<Component> & obj) {
-				return obj.get() == component;
-			});
-			if (it == components_.end())
-				continue;
-
-			rttr::type type = rttr::type::get(*component);
-			rttr::instance instA = rttr::instance(component);
-
-			rttr::instance instB = rttr::instance(*it);
-
-			for (auto& prop : type.get_properties())
-			{
-				prop.set_value(instA, prop.get_value(instB));
-			}
-
-		}
-	}
 }
 
 RTTR_REGISTRATION
@@ -250,7 +218,7 @@ RTTR_REGISTRATION
 		.property("position_", &FSEObject::getPosition, &FSEObject::setPosition)
 		.property("z_order_", &FSEObject::getZOrder, &FSEObject::setZOrder)
 		.property_readonly("aabbs_", &FSEObject::GetAABBs)
-		.property("components_", &FSEObject::getComponentsRttr, &FSEObject::setRttrComponentsRttr)
+		.property("components_", &FSEObject::components_)
 		.method("destroy", &FSEObject::destroy)
 		;
 

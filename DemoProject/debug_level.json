@@ -8,7 +8,6 @@
                 "y": 0.56
             },
             "z_order_": 15,
-            "components_": [],
             "size_": {
                 "type": "sf::Vector2f",
                 "x": 90.0,
@@ -24,13 +23,12 @@
                 "y": 21.47999954
             },
             "z_order_": 32,
-            "components_": [],
             "size_": {
                 "type": "sf::Vector2f",
                 "x": 10.0,
                 "y": 30.0
             },
-            "rotation_": 179.99981689,
+            "rotation_": 179.99980163,
             "light_over_shape_": true,
             "receive_shadow_": true
         },
@@ -42,7 +40,6 @@
                 "y": 20.04999923
             },
             "z_order_": 32,
-            "components_": [],
             "size_": {
                 "type": "sf::Vector2f",
                 "x": 20.0,
@@ -60,13 +57,12 @@
                 "y": 39.39999771
             },
             "z_order_": 33,
-            "components_": [],
             "size_": {
                 "type": "sf::Vector2f",
                 "x": 10.0,
                 "y": 100.0
             },
-            "rotation_": 89.99989318,
+            "rotation_": 89.99987792,
             "light_over_shape_": true,
             "receive_shadow_": false
         },
@@ -74,16 +70,15 @@
             "type": "CeilingLamp",
             "position_": {
                 "type": "sf::Vector2f",
-                "x": 34.88000106,
-                "y": 0.28
+                "x": 41.36128997,
+                "y": 4.06254863
             },
             "z_order_": 33,
-            "components_": [],
             "rotation_": 0.0,
-            "limit_": 0.2,
-            "avg_count_": 0,
-            "alpha_threshold_": 250,
-            "max_polys_": 8,
+            "limit_": 0.186,
+            "avg_count_": 1,
+            "alpha_threshold_": 29,
+            "max_polys_": 5,
             "avg_count_after_": 0
         },
         {
@@ -94,7 +89,6 @@
                 "y": 16.15999984
             },
             "z_order_": 255,
-            "components_": [],
             "lighting_": true,
             "bloom_": true,
             "ambient_color_": {
