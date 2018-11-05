@@ -12,7 +12,7 @@ namespace fse
 		ViewController();
 		/*!
 		 * \brief instantiate ViewController for Rendertarget
-		 * \param render_target Ptr to sf::RenderTarget which's view to controll
+		 * \param render_target Ptr to sf::RenderTarget which's view to control
 		 */
 		explicit ViewController(sf::RenderTarget* const render_target);
 		virtual ~ViewController() = default;
@@ -27,6 +27,11 @@ namespace fse
 		 * \brief Set if the ViewControllerComponent should follow the attached object
 		 */
 		void setFollowObject(bool follow);
+
+		/*!
+		 * \brief Ptr to sf::RenderTarget which's view to control
+		 */
+		void setRenderTarget(sf::RenderTarget* const render_target);
 
 		/*!
 		 * Update View position

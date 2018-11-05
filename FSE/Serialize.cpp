@@ -141,6 +141,21 @@ namespace fse
 			return;
 		}
 
+		if (type.is_wrapper())
+		{
+			auto inst = object.get_wrapped_instance();
+			auto t = object.get_derived_type();
+			if (inst.is_valid())
+			{
+				serializeTypes(t, inst, writer);
+			}
+			else
+			{
+				serializeTypes(t, object, writer);
+			}
+			return;
+		}
+
 		writer.StartObject();
 
 		writer.Key("type");
@@ -188,12 +203,42 @@ namespace fse
 				{
 					auto v = arr.get_value(i);
 					auto t = v.get_type();
+					if (t.is_wrapper())
+					{
+						t = t.get_wrapped_type();
+						v = v.extract_wrapped_value();
+					}
 					auto inst = rttr::instance(v);
 					serializeTypes(t, inst, writer);
 				}
 
 				writer.EndArray();
-			} 
+			}
+
+			else if (prop.get_type().is_sequential_container())
+			{
+				auto val = prop.get_value(object);
+				rttr::variant_sequential_view arr = val.create_sequential_view();
+				size_t sz = arr.get_size();
+
+				writer.Key(prop.get_name().data(), prop.get_name().size());
+				writer.StartArray();
+
+				for (size_t i = 0; i < sz; i++)
+				{
+					auto v = arr.get_value(i);
+					auto t = v.get_type();
+					if (t.is_wrapper())
+					{
+						t = t.get_wrapped_type();
+						v = v.extract_wrapped_value();
+					}
+					auto inst = rttr::instance(v);
+					serializeTypes(t, inst, writer);
+				}
+
+				writer.EndArray();
+			}
 
 
 

@@ -144,8 +144,14 @@ void CeilingLamp::spawned()
 
 	fse::Timer::singleShot(scene_, 0 /*next Frame after spawn*/, [this]
 	{
-		auto viewController = attachComponent(std::make_shared<fse::SmoothViewController>(scene_->getRenderTarget()));
-		dynamic_cast<fse::SmoothViewController*>(viewController.lock().get())->setZoomLevel(0.5);
+		for (auto& component : components_)
+		{
+			if (auto viewController = dynamic_cast<fse::ViewController*>(component.get()))
+				viewController->setRenderTarget(scene_->getRenderTarget());
+		}
+		/*dynamic_cast<fse::SmoothViewController*>
+			(attachComponent(std::make_shared<fse::SmoothViewController>(scene_->getRenderTarget())).lock().get())
+				->setZoomLevel(0.3f);*/
 	});
 }
 

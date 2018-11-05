@@ -32,6 +32,11 @@ namespace fse
 		follow_object_ = follow;
 	}
 
+	void ViewController::setRenderTarget(sf::RenderTarget* const render_target)
+	{
+		render_target_ = render_target;
+	}
+
 	void ViewController::moveView(sf::Vector2f objectPos, float deltaTime)
 	{
 		if (render_target_ == nullptr)
@@ -75,6 +80,10 @@ RTTR_REGISTRATION
 	using namespace fse;
 
 registration::class_<ViewController>("fse::ViewController")
+.constructor<>()
+	(
+		policy::ctor::as_std_shared_ptr
+	)
 .property("follow_object_", &ViewController::isFollowingObject, &ViewController::setFollowObject)
 .property("zoom_level_", &ViewController::getZoomLevel, &ViewController::setZoomLevel )
 ;
