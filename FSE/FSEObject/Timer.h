@@ -65,7 +65,7 @@ namespace fse
 		template <typename Slot>
 		static std::shared_ptr<Timer> singleShot(Scene * scene, const int msecs, Slot&& slot)
 		{
-			auto timer = std::shared_ptr<Timer>();
+			auto timer = std::make_shared<Timer>();
 			timer->setInterval(msecs);
 			timer->setSingleShot(true);
 			timer->start(slot);
