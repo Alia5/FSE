@@ -16,6 +16,13 @@ namespace fse
 
 	}
 
+	void ViewController::onAttach()
+	{
+		Component::onAttach();
+		if (render_target_ == nullptr)
+			setRenderTarget(getAttachedObject()->getScene()->getRenderTarget());
+	}
+
 	void ViewController::update(float deltaTime)
 	{
 		if (follow_object_)
@@ -35,6 +42,8 @@ namespace fse
 	void ViewController::setRenderTarget(sf::RenderTarget* const render_target)
 	{
 		render_target_ = render_target;
+		if (zoom_level_ != 1.f)
+			setZoomLevel(zoom_level_);
 	}
 
 	void ViewController::moveView(sf::Vector2f objectPos, float deltaTime)
@@ -58,11 +67,13 @@ namespace fse
 
 	void ViewController::setZoomLevel(float zoom)
 	{
+		if (zoom <= 0.0f)
+			zoom = 0.0000001f;
+		zoom_level_ = zoom;
+
+
 		if (render_target_ == nullptr)
 			return;
-
-		if (zoom <= 0.0f)
-			zoom = 0.01f;
 
 		auto size = render_target_->getSize();
 		auto view = render_target_->getView();
@@ -70,7 +81,6 @@ namespace fse
 		view.setSize(size.x / zoom, size.y / zoom);
 		view.setCenter(center);
 		render_target_->setView(view);
-		zoom_level_ = zoom;
 	}
 }
 

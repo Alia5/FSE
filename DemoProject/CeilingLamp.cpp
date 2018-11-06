@@ -142,17 +142,17 @@ void CeilingLamp::spawned()
 	spot_light_.setLenght(30);
 	spot_light_.setAngle(45);
 
-	fse::Timer::singleShot(scene_, 0 /*next Frame after spawn*/, [this]
-	{
-		for (auto& component : components_)
-		{
-			if (auto viewController = dynamic_cast<fse::ViewController*>(component.get()))
-				viewController->setRenderTarget(scene_->getRenderTarget());
-		}
-		/*dynamic_cast<fse::SmoothViewController*>
-			(attachComponent(std::make_shared<fse::SmoothViewController>(scene_->getRenderTarget())).lock().get())
-				->setZoomLevel(0.3f);*/
-	});
+	//fse::Timer::singleShot(scene_, 0 /*next Frame after spawn*/, [this]
+	//{
+	//	for (auto& component : components_)
+	//	{
+	//		if (auto viewController = dynamic_cast<fse::ViewController*>(component.get()))
+	//			viewController->setRenderTarget(scene_->getRenderTarget());
+	//	}
+	//	/*dynamic_cast<fse::SmoothViewController*>
+	//		(attachComponent(std::make_shared<fse::SmoothViewController>(scene_->getRenderTarget())).lock().get())
+	//			->setZoomLevel(0.3f);*/
+	//});
 }
 
 void CeilingLamp::setPosition(const sf::Vector2f position)

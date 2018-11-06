@@ -17,6 +17,9 @@ namespace fse
 		explicit ViewController(sf::RenderTarget* const render_target);
 		virtual ~ViewController() = default;
 
+
+		void onAttach() override;
+
 		void update(float deltaTime) override;
 
 		/*!

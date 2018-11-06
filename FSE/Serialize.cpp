@@ -553,7 +553,7 @@ namespace fse
 						auto& tval = json_memb->value;
 						if (key == "components_")
 						{
-							auto size = tval.Size();
+							const auto size = tval.Size();
 							for (size_t i = 0; i < size; i++)
 							{
 								auto& json_index_value = tval[i];
