@@ -29,15 +29,14 @@ namespace fse
 
 	KillVolume::~KillVolume()
 	{
-		if (scene_ != nullptr && phys_body_ != nullptr)
-			scene_->getPhysWorld()->DestroyBody(phys_body_);
 	}
 
 
 	void KillVolume::setPosition(const sf::Vector2f position)
 	{
 		position_ = position;
-		phys_body_->SetTransform(fse::FMath::sfVec2fTob2Vec2(position), phys_body_->GetAngle());
+		if (phys_body_ != nullptr)
+			phys_body_->SetTransform(fse::FMath::sfVec2fTob2Vec2(position), phys_body_->GetAngle());
 	}
 
 
@@ -71,6 +70,11 @@ namespace fse
 		sensor_ficture_ = phys_body_->CreateFixture(&sensorDef);
 	}
 
+	void KillVolume::onDespawn()
+	{
+		scene_->getPhysWorld()->DestroyBody(phys_body_);
+	}
+
 
 	void KillVolume::BeginContact(FSEObject * otherObject, b2Contact * contact)
 	{
@@ -90,8 +94,11 @@ namespace fse
 	void KillVolume::setSize(const sf::Vector2f& size)
 	{
 		size_ = size;
-		b2PolygonShape* shape = static_cast<b2PolygonShape*>(sensor_ficture_->GetShape());
-		shape->SetAsBox(size_.x / 2.f, size_.y / 2.f);
+		if (sensor_ficture_ != nullptr)
+		{
+			b2PolygonShape* shape = static_cast<b2PolygonShape*>(sensor_ficture_->GetShape());
+			shape->SetAsBox(size_.x / 2.f, size_.y / 2.f);
+		}
 	}
 
 	const sf::Vector2f& KillVolume::getSize() const

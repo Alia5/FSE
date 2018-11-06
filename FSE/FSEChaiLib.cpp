@@ -17,7 +17,6 @@ namespace fse
 			
 				chai.add(fse::Random::bootstrap());
 			
-
 				chai.add(chaiscript::user_type<sf::Vector2f>(), "Vector2f");
 				chai.add(chaiscript::fun(&sf::Vector2f::x), "x");
 				chai.add(chaiscript::fun(&sf::Vector2f::y), "y");
@@ -32,6 +31,7 @@ namespace fse
 				chai.add(chaiscript::fun([](sf::Vector2f& lhs, const float f) { return sf::Vector2f(lhs.x * f, lhs.y * f); }), "*");
 				chai.add(chaiscript::fun([](sf::Vector2f& lhs, const float f) { return sf::Vector2f(lhs.x / f, lhs.y / f); }), "/");
 				chai.add(chaiscript::fun([](const sf::Vector2f& lhs, const sf::Vector2f& rhs) { return lhs == rhs; }), "==");
+				chai.add(chaiscript::fun([](const sf::Vector2f& vec) { return "{ x: " + std::to_string(vec.x) + ", y: " + std::to_string(vec.y) + " }"; }), "to_string");
 
 				chai.add(chaiscript::user_type<sf::Vector2i>(), "Vector2i");
 				chai.add(chaiscript::fun(&sf::Vector2i::x), "x");
@@ -43,6 +43,8 @@ namespace fse
 				chai.add(chaiscript::fun([](sf::Vector2i& lhs, const sf::Vector2i& rhs) { return lhs + rhs; }), "+");
 				chai.add(chaiscript::fun([](sf::Vector2i& lhs, const sf::Vector2i& rhs) { return lhs - rhs; }), "-");
 				chai.add(chaiscript::fun([](const sf::Vector2i& lhs, const sf::Vector2i& rhs) { return lhs == rhs; }), "==");
+				chai.add(chaiscript::fun([](const sf::Vector2i& vec) { return "{ x: " + std::to_string(vec.x) + ", y: " + std::to_string(vec.y) + " }"; }), "to_string");
+
 
 				chai.add(chaiscript::user_type<sf::IntRect>(), "IntRect");
 				chai.add(chaiscript::fun(&sf::IntRect::top), "top");
@@ -57,6 +59,7 @@ namespace fse
 				chai.add(chaiscript::fun([](const sf::IntRect* rect, const sf::Vector2i& vec) {return rect->contains(vec); }), "contains");
 				chai.add(chaiscript::fun([](const sf::IntRect* rect, const sf::IntRect& other) {return rect->intersects(other); }), "intersects");
 
+
 				chai.add(chaiscript::user_type<sf::FloatRect>(), "FloatRect");
 				chai.add(chaiscript::fun(&sf::FloatRect::top), "top");
 				chai.add(chaiscript::fun(&sf::FloatRect::left), "left");
@@ -69,6 +72,7 @@ namespace fse
 				chai.add(chaiscript::fun([](const sf::FloatRect* rect, float x, float y) {return rect->contains(x, y); }), "contains");
 				chai.add(chaiscript::fun([](const sf::FloatRect* rect, const sf::Vector2f& vec) {return rect->contains(vec); }), "contains");
 				chai.add(chaiscript::fun([](const sf::FloatRect* rect, const sf::FloatRect& other) {return rect->intersects(other); }), "intersects");
+
 
 				chai.add(chaiscript::user_type<sf::Color>(), "Color");
 				chai.add(chaiscript::fun(&sf::Color::r), "r");
@@ -89,34 +93,30 @@ namespace fse
 				chai.add(chaiscript::fun(static_cast<void(Scene::*)(bool)>(&Scene::setPhysDrawDebug)), "setPhysDrawDebug");
 				chai.add(chaiscript::fun(static_cast<FSELightWorld*(Scene::*)() const>(&Scene::getLightWorld)), "getLightWorld");
 				chai.add(chaiscript::fun(static_cast<b2World*(Scene::*)()>(&Scene::getPhysWorld)), "getPhysWorld");
+				chai.add(chaiscript::fun(static_cast<void(Scene::*)(std::shared_ptr<FSEObject>)>(&Scene::spawnFSEObject)), "spawnObject");
 				chai.add(chaiscript::fun(([](Scene* scene)
-				{
-					std::vector<FSEObject*> result;
-					result.reserve(scene->getFSEObjects()->size());
-					for (auto& object : *scene->getFSEObjects())
-						result.push_back(object.get());
-					return result;
+				{			
+					return scene->getFSEObjects();
 				})), "getObjects");
 				chai.add(chaiscript::fun(([](Scene* scene, int id)
 				{
 					for (auto& object : *scene->getFSEObjects())
 					{
 						if (object->getID() == id)
-							return object.get();
+							return object;
 					}
-					return static_cast<FSEObject*>(nullptr);
+					return static_cast<std::shared_ptr<FSEObject>>(nullptr);
 				})), "getObjectWithId");
 
 				RegisterFSEObjects(chai);
-				RegisterObjectCtors(chai);
 				RegisterLights(chai);
 		}
 
 
 		void FSEChaiLib::RegisterFSEObjects(chaiscript::ChaiScript& chai)
 		{
-			chai.add(chaiscript::vector_conversion<std::vector<FSEObject*>>());
-			chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<FSEObject*>>("ObjectList"));
+			chai.add(chaiscript::vector_conversion<std::vector<std::shared_ptr<FSEObject>>>());
+			chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::shared_ptr<FSEObject>>>("ObjectList"));
 
 			RegisterChaiUserTypeFromRTTR<FSEObject>(chai);
 			chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
@@ -125,6 +125,10 @@ namespace fse
 			chai.add(chaiscript::fun(static_cast<sf::Vector2f(FSEObject::*)()>(&FSEObject::getPosition)), "getPosition");
 			chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(sf::Vector2f position)>(&FSEObject::setPosition)),
 				"setPosition");
+			chai.add(chaiscript::fun([](FSEObject* object, float x, float y)
+			{
+				object->setPosition({ x, y });
+			}), "setPosition");
 			chai.add(chaiscript::fun(static_cast<sf::FloatRect(FSEObject::*)() const>(&FSEObject::GetAABBs)),
 				"getAABBs");
 			chai.add(chaiscript::fun(static_cast<bool(FSEObject::*)()>(&FSEObject::destroy)),
@@ -140,6 +144,7 @@ namespace fse
 
 			RegisterChaiUserTypeFromRTTR<KillVolume>(chai);
 			chai.add(chaiscript::base_class<fse::FSEObject, KillVolume>());
+			chai.add(chaiscript::constructor<KillVolume()>(), "KillVolume");
 			chai.add(chaiscript::fun(static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize)), "getSize");
 			chai.add(chaiscript::fun(static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize)),
 				"setSize");
@@ -171,185 +176,6 @@ namespace fse
 			chai.add(chaiscript::fun(([](Timer* timer, std::function<void()> slot) { timer->start(slot); })), "start");
 			chai.add(chaiscript::fun(([](Scene* scene, int msecs, std::function<void()> slot) { Timer::singleShot(scene, msecs, slot); })),
 				"startSingleShotTimer");
-		}
-
-		//////////////////////////////////////////
-		//////////////////////////////////////////
-		//////////////////////////////////////////
-		//////////////////////////////////////////
-		//////////////////////////////////////////
-		void FSEChaiLib::RegisterObjectCtors(chaiscript::ChaiScript& chai)
-		{
-			chai.add(chaiscript::fun([](fse::Scene* scene, const std::string typeName)
-			{
-
-				rttr::type type = rttr::type::get_by_name(typeName);
-				auto ctors = type.get_constructors();
-				for (auto& ctor : ctors)
-				{
-					if (ctor.get_metadata("CHAI_CTOR"))
-					{
-						auto p_infos = ctor.get_parameter_infos();
-						if (p_infos.size() == 1)
-						{
-							bool ok = true;
-							for (auto& p_info : p_infos)
-							{
-								if (p_info.get_index() == 0 && p_info.get_type() != rttr::type::get(scene))
-								{
-									ok = false;
-									break;
-								}
-
-							}
-							if (ok)
-							{
-								auto obj = ctor.invoke(scene);
-								if (!obj.is_valid())
-									throw chaiscript::exception::eval_error("Construction object of type: \"" + typeName + "\" failed!");
-								return;
-							}
-						}
-					}
-				}
-
-				throw chaiscript::exception::eval_error("No matching chai script constructor for type: \"" + typeName + "\" defined!");
-
-			}), "spawnObject");
-
-			chai.add(chaiscript::fun([](fse::Scene* scene, const std::string typeName,
-				std::function<void(FSEObject*)> spawnedSlot)
-			{
-
-				rttr::type type = rttr::type::get_by_name(typeName);
-				auto ctors = type.get_constructors();
-				for (auto& ctor : ctors)
-				{
-					if (ctor.get_metadata("CHAI_CTOR"))
-					{
-						auto p_infos = ctor.get_parameter_infos();
-						if (p_infos.size() == 2)
-						{
-							bool ok = true;
-							for (auto& p_info : p_infos)
-							{
-								if (p_info.get_index() == 0 && p_info.get_type() != rttr::type::get(scene))
-								{
-									ok = false;
-									break;
-								}
-								if (p_info.get_index() == 1 && p_info.get_type() != rttr::type::get(spawnedSlot))
-								{
-									ok = false;
-									break;
-								}
-
-							}
-							if (ok)
-							{
-								auto obj = ctor.invoke(scene, spawnedSlot);
-								if (!obj.is_valid())
-									throw chaiscript::exception::eval_error("Construction object of type: \"" + typeName + "\" failed!");
-								return;
-							}
-						}
-					}
-				}
-
-				throw chaiscript::exception::eval_error("No matching chai script constructor for type: \"" + typeName + "\" defined!");
-
-			}), "spawnObject");
-
-			chai.add(chaiscript::fun([](fse::Scene* scene, const std::string typeName,
-				const sf::Vector2f& spawnPos)
-			{
-
-				rttr::type type = rttr::type::get_by_name(typeName);
-				auto ctors = type.get_constructors();
-				for (auto& ctor : ctors)
-				{
-					if (ctor.get_metadata("CHAI_CTOR"))
-					{
-						auto p_infos = ctor.get_parameter_infos();
-						if (p_infos.size() == 2)
-						{
-							bool ok = true;
-							for (auto& p_info : p_infos)
-							{
-								if (p_info.get_index() == 0 && p_info.get_type() != rttr::type::get(scene))
-								{
-									ok = false;
-									break;
-								}
-								if (p_info.get_index() == 1 && p_info.get_type() != rttr::type::get(spawnPos))
-								{
-									ok = false;
-									break;
-								}
-
-							}
-							if (ok)
-							{
-								auto obj = ctor.invoke(scene, spawnPos);
-								if (!obj.is_valid())
-									throw chaiscript::exception::eval_error("Construction object of type: \"" + typeName + "\" failed!");
-								return;
-							}
-						}
-					}
-				}
-
-				throw chaiscript::exception::eval_error("No matching chai script constructor for type: \"" + typeName + "\" defined!");
-
-			}), "spawnObject");
-
-			chai.add(chaiscript::fun([](fse::Scene* scene, const std::string typeName,
-				const sf::Vector2f& spawnPos, const sf::Vector2f& size)
-			{
-
-				rttr::type type = rttr::type::get_by_name(typeName);
-				auto ctors = type.get_constructors();
-				for (auto& ctor : ctors)
-				{
-					if (ctor.get_metadata("CHAI_CTOR"))
-					{
-						auto p_infos = ctor.get_parameter_infos();
-						if (p_infos.size() == 3)
-						{
-							bool ok = true;
-							for (auto& p_info : p_infos)
-							{
-								if (p_info.get_index() == 0 && p_info.get_type() != rttr::type::get(scene))
-								{
-									ok = false;
-									break;
-								}
-								if (p_info.get_index() == 1 && p_info.get_type() != rttr::type::get(spawnPos))
-								{
-									ok = false;
-									break;
-								}
-								if (p_info.get_index() == 2 && p_info.get_type() != rttr::type::get(size))
-								{
-									ok = false;
-									break;
-								}
-
-							}
-							if (ok)
-							{
-								auto obj = ctor.invoke(scene, spawnPos, size);
-								if (!obj.is_valid())
-									throw chaiscript::exception::eval_error("Construction object of type: \"" + typeName + "\" failed!");
-								return;
-							}
-						}
-					}
-				}
-
-				throw chaiscript::exception::eval_error("No matching chai script constructor for type: \"" + typeName + "\" defined!");
-
-			}), "spawnObject");
 		}
 
 		void FSEChaiLib::RegisterLights(chaiscript::ChaiScript& chai)

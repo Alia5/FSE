@@ -17,17 +17,7 @@ CeilingLamp::CeilingLamp(const sf::Vector2f& spawnPos) : fse::FSEObject(spawnPos
 
 CeilingLamp::~CeilingLamp()
 {
-	if (scene_ != nullptr)
-	{
-		scene_->getPhysWorld()->DestroyBody(phys_body_);
-		scene_->getPhysWorld()->DestroyBody(anchor_body_);
-	}
-	if (!light_shapes_.empty())
-	{
-		for (auto& lshape : light_shapes_)
-			getScene()->getLightWorld()->getLightSystem()->removeShape(lshape);
-		light_shapes_.clear();
-	}
+
 }
 
 void CeilingLamp::update(float deltaTime)
@@ -153,6 +143,20 @@ void CeilingLamp::spawned()
 	//		(attachComponent(std::make_shared<fse::SmoothViewController>(scene_->getRenderTarget())).lock().get())
 	//			->setZoomLevel(0.3f);*/
 	//});
+}
+
+void CeilingLamp::onDespawn()
+{
+
+	scene_->getPhysWorld()->DestroyBody(phys_body_);
+	scene_->getPhysWorld()->DestroyBody(anchor_body_);
+
+	if (!light_shapes_.empty())
+	{
+		for (auto& lshape : light_shapes_)
+			getScene()->getLightWorld()->getLightSystem()->removeShape(lshape);
+		light_shapes_.clear();
+	}
 }
 
 void CeilingLamp::setPosition(const sf::Vector2f position)

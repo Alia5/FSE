@@ -23,6 +23,8 @@ namespace fse
 		void draw(sf::RenderTarget& target) override;
 		void spawned() override;
 
+
+		void onDespawn() override;
 		bool destroy() override;
 
 		/*!

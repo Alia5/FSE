@@ -12,6 +12,7 @@ namespace fse
 		~ChaiConsole() override;
 
 		void spawned() override;
+		void onDespawn() override;
 
 
 		void update(float deltaTime) override;

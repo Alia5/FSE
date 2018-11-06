@@ -70,6 +70,10 @@ void BrickBackground::spawned()
 	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
 }
 
+void BrickBackground::onDespawn()
+{
+}
+
 void BrickBackground::setPosition(const sf::Vector2f position)
 {
 	position_ = position;

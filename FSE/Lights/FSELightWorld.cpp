@@ -87,6 +87,10 @@ namespace fse
 	{
 	}
 
+	void FSELightWorld::onDespawn()
+	{
+	}
+
 	bool FSELightWorld::destroy()
 	{
 		return false;

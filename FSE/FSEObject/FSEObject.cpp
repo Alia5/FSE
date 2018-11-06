@@ -119,7 +119,7 @@ namespace fse
 			is_pending_kill_ = true;
 
 			scene_->destroyFSEObject(this);
-
+			scene_ = nullptr;
 			return true;
 		}
 		return false;

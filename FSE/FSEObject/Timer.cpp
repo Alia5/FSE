@@ -56,6 +56,10 @@ namespace fse
 	{
 	}
 
+	void Timer::onDespawn()
+	{
+	}
+
 	void Timer::stop()
 	{
 		active_ = false;

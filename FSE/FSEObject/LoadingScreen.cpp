@@ -35,4 +35,8 @@ namespace fse
 	void LoadingScreen::spawned()
 	{
 	}
+
+	void LoadingScreen::onDespawn()
+	{
+	}
 }

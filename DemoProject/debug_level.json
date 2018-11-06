@@ -30,7 +30,7 @@
                 "x": 10.0,
                 "y": 30.0
             },
-            "rotation_": 179.99972534,
+            "rotation_": 179.99967956,
             "light_over_shape_": true,
             "receive_shadow_": true
         },
@@ -66,7 +66,7 @@
                 "x": 10.0,
                 "y": 100.0
             },
-            "rotation_": 89.99984741,
+            "rotation_": 89.99982452,
             "light_over_shape_": true,
             "receive_shadow_": false
         },
@@ -82,9 +82,9 @@
                 {
                     "type": "fse::SmoothViewController",
                     "follow_object_": true,
-                    "zoom_level_": 0.30000001,
+                    "zoom_level_": 1.0,
                     "size_percentage_": 0.75,
-                    "vertical_offset_": 0.1
+                    "vertical_offset_": -0.4
                 }
             ],
             "rotation_": 0.0,

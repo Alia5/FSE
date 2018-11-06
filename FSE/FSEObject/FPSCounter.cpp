@@ -29,8 +29,7 @@ namespace fse
 
 	FPSCounter::~FPSCounter()
 	{
-		if (scene_ != nullptr)
-			scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
+
 	}
 
 	void FPSCounter::update(float deltaTime)
@@ -91,6 +90,11 @@ namespace fse
 			counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(scene_->getApplication()->getWindow()->getSize().x),
 				static_cast<float>(scene_->getApplication()->getWindow()->getSize().y)));
 		});
+	}
+
+	void FPSCounter::onDespawn()
+	{
+		scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
 	}
 
 	void FPSCounter::setShowDetailed(bool detailed)

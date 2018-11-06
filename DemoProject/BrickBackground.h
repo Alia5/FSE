@@ -17,6 +17,7 @@ public:
 	void drawNormals(sf::RenderTarget& target) override;
 	void drawSpecular(sf::RenderTarget& target) override;
 	void spawned() override;
+	void onDespawn() override;
 
 	void setPosition(const sf::Vector2f position) override;
 	sf::FloatRect GetAABBs() const override;

@@ -182,6 +182,7 @@ namespace fse
 		});
 		if (it != fse_objects_.end())
 		{
+			it->get()->onDespawn();
 			fse_objects_.erase(it);
 		}
 	}

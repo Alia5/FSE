@@ -19,6 +19,7 @@ namespace fse
 		void update(float deltaTime) override;
 		void draw(sf::RenderTarget& target) override;
 		void spawned() override;
+		void onDespawn() override;
 
 		void setShowDetailed(bool detailed);
 		bool isDetailed() const;

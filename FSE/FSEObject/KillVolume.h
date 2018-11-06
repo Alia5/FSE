@@ -22,6 +22,8 @@ namespace fse
 		void update(float deltaTime) override;
 		void draw(sf::RenderTarget& target) override;
 		void spawned() override;
+		void onDespawn() override;
+
 
 		void BeginContact(FSEObject* otherObject, b2Contact* contact) override;
 

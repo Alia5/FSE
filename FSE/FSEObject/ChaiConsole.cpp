@@ -18,8 +18,7 @@ namespace fse
 
 	ChaiConsole::~ChaiConsole()
 	{
-		if (scene_ != nullptr)
-			scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
+		scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
 	}
 
 	void ChaiConsole::spawned()
@@ -32,6 +31,11 @@ namespace fse
 			win_size_ = scene_->getApplication()->getWindow()->getSize();
 		});
 		addDefaultFuns();
+	}
+
+	void ChaiConsole::onDespawn()
+	{
+		scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
 	}
 
 	void ChaiConsole::update(float deltaTime)

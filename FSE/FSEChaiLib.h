@@ -27,7 +27,6 @@ namespace fse
 			}
 
 			static void RegisterFSEObjects(chaiscript::ChaiScript& chai);
-			static void RegisterObjectCtors(chaiscript::ChaiScript& chai);
 			static void RegisterLights(chaiscript::ChaiScript& chai);
 
 		};

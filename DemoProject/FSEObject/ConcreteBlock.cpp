@@ -29,11 +29,7 @@ ConcreteBlock::ConcreteBlock(const sf::Vector2f& spawnPos, const sf::Vector2f& s
 
 ConcreteBlock::~ConcreteBlock()
 {
-	if (scene_ != nullptr)
-	{
-		scene_->getLightWorld()->getLightSystem()->removeShape(light_shape_);
-		scene_->getPhysWorld()->DestroyBody(phys_body_);
-	}
+
 }
 
 void ConcreteBlock::update(float deltaTime)
@@ -107,6 +103,12 @@ void ConcreteBlock::spawned()
 	sprite_.setTextureRect(sf::IntRect(0, 0, size_.x * FSE_PIXELS_PER_METER + 25, size_.y * FSE_PIXELS_PER_METER));
 	sprite_.setOrigin({ (shape.getSize().x + 25) / 2.f, shape.getSize().y / 2.f });
 	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
+}
+
+void ConcreteBlock::onDespawn()
+{
+	scene_->getLightWorld()->getLightSystem()->removeShape(light_shape_);
+	scene_->getPhysWorld()->DestroyBody(phys_body_);
 }
 
 void ConcreteBlock::setPosition(const sf::Vector2f position)

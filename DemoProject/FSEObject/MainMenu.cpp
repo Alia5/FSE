@@ -15,6 +15,10 @@ void MainMenu::spawned()
 {
 }
 
+void MainMenu::onDespawn()
+{
+}
+
 void MainMenu::update(float deltaTime)
 {
 	////////// DEBUG BUTTONS //////////

@@ -70,9 +70,18 @@ namespace fse
 
 		/*!
 		 * Called upon object spawn \n 
+		 * scene_ is set and you can then create objects that require a scene
 		 * Before spawnsignal is emitted
 		 */
 		virtual void spawned() = 0;
+
+		/*!
+		 * Called upon object despawn \n
+		 * This is counterpart of spawned \n
+		 * If you've allocated any objects in "spawned", *delete them here* \n
+		 * Scene is not available afterwards
+		 */
+		virtual void onDespawn() = 0;
 
 		/*!
 		 * Sets the object postion (in meters)

@@ -23,6 +23,7 @@ namespace fse
 		void draw(sf::RenderTarget& target) override;
 
 		void spawned() override;
+		void onDespawn() override;
 
 		/*!
 		 * Connects a slot to the timer and starts it

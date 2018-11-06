@@ -62,6 +62,10 @@ void GameLevel::spawned()
 	spawnLevel();
 }
 
+void GameLevel::onDespawn()
+{
+}
+
 void GameLevel::handleInputs(float deltaTime) const
 {
 	if (input_->wasKeyPressed(L"TogglePhysDebug"))

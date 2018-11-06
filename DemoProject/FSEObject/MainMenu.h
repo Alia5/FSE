@@ -8,6 +8,7 @@ public:
 
 
 	void spawned() override;
+	void onDespawn() override;
 	void update(float deltaTime) override;
 	void startGame();
 
