@@ -139,6 +139,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\extlibs\liquidfun\liquidfun\Box2D;$(SolutionDir)\extlibs\SFML-2.5.1-x86\include;$(SolutionDir)\extlibs\rttr-0.9.6-win32-vs2017\include;$(SolutionDir)\rapidjson\include;$(SolutionDir)\imgui-sfml-config;$(SolutionDir)\imgui;$(SolutionDir)\imgui-sfml;$(SolutionDir)\poly2tri\poly2tri;$(SolutionDir)\chaiscript\include</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <RemoveUnreferencedCodeData>false</RemoveUnreferencedCodeData>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

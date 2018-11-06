@@ -441,11 +441,11 @@ namespace fse
 			auto infos = ctor_it->get_parameter_infos();
 
 			bool ok = true;
-			if (infos.size() > 2)
+			if (infos.size() > 1)
 			{
 				for (auto it = infos.rbegin(); it != infos.rend(); ++it)
 				{
-					if (it->get_index() < 2)
+					if (it->get_index() < 1)
 						break;
 
 					std::string paramName(it->get_name().data());
@@ -528,10 +528,9 @@ namespace fse
 				scene->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
 				scene->processPendingSpawns();
 
-				if (scene->fse_objects_.size() == (sz + 1))
+				if (scene->fse_objects_.size() >= (sz + 1))
 				{
-					auto it = scene->fse_objects_.rbegin();
-					FSEObject* ptr = (*it).get();
+					FSEObject* ptr = scene->fse_objects_[sz].get();
 
 					auto t = rttr::type::get(*ptr);
 					if (t != type)
@@ -541,8 +540,9 @@ namespace fse
 					{
 						if (prop.is_readonly())
 							continue;
-						if (std::find(used_json_vals.begin(), used_json_vals.end(), std::string(prop.get_name().data()))
-							!= used_json_vals.end())
+						if (std::find(used_json_vals.begin(), used_json_vals.end(),
+								std::string(prop.get_name().data()))
+									!= used_json_vals.end())
 							continue;
 
 						std::string key(prop.get_name().data());
@@ -551,16 +551,30 @@ namespace fse
 							continue;
 
 						auto& tval = json_memb->value;
-						auto val = prop.get_value(ptr);
-						extractFromJson(val, tval, scene);
-						if (val.get_type() != prop.get_type())
+						if (key == "components_")
 						{
-							val.convert(prop.get_type());
+							auto size = tval.Size();
+							for (size_t i = 0; i < size; i++)
+							{
+								auto& json_index_value = tval[i];
+								rttr::variant component;
+								extractFromJson(component, json_index_value, scene);
+								const auto comp = component.get_value<std::shared_ptr<fse::Component>>();
+								ptr->attachComponent(comp);
+							}
 						}
+						else
+						{
+							auto val = prop.get_value(ptr);
+							extractFromJson(val, tval, scene);
+							if (val.get_type() != prop.get_type())
+							{
+								val.convert(prop.get_type());
+							}
 
-						if (val != prop.get_value(ptr))
-							prop.set_value(ptr, val);
-
+							if (val != prop.get_value(ptr))
+								prop.set_value(ptr, val);
+						}
 					}
 				}
 				break;

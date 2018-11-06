@@ -77,14 +77,14 @@
                 "x": 41.36128997,
                 "y": 4.06254863
             },
-            "z_order_": 33,
+            "z_order_": 38,
             "components_": [
                 {
                     "type": "fse::SmoothViewController",
                     "follow_object_": true,
                     "zoom_level_": 0.30000001,
                     "size_percentage_": 0.75,
-                    "vertical_offset_": 0.0
+                    "vertical_offset_": 0.1
                 }
             ],
             "rotation_": 0.0,

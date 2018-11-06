@@ -4,6 +4,7 @@
 #include <FSE/FSEObject/ChaiConsole.h>
 #include <FSE/FSEObject/FPSCounter.h>
 #include "FSEObject/MainMenu.h"
+#include "FSE/Component/SmoothViewController.h"
 
 
 void DemoApp::init()
@@ -26,6 +27,8 @@ void DemoApp::init()
 		//Chaiscript is only accessible after object has spawned
 		base_chai_state_ = (dynamic_cast<fse::ChaiConsole*>(console))->replaceDefaultPrints(base_chai_state_);
 	});
+
+	auto fuckThisShit = std::make_shared<fse::SmoothViewController>();
 
 }
 

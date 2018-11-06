@@ -108,6 +108,7 @@ RTTR_REGISTRATION
 	using namespace fse;
 
 registration::class_<SmoothViewController>("fse::SmoothViewController")
+	.constructor<>()
 	(
 		policy::ctor::as_std_shared_ptr
 	)

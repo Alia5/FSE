@@ -28,7 +28,6 @@ namespace fse
 
 
 		static void FSEObjectFromJson(rapidjson::Value& jsonValue, fse::Scene* scene);
-
 		static void arrayFromJson(rttr::variant& val, rapidjson::Value& jsonValue, fse::Scene* scene);
 		static void extractFromJson(rttr::variant& val, rapidjson::Value& jsonValue, fse::Scene* scene);
 		static rttr::variant extractBasicTypes(rapidjson::Value& jsonValue);
