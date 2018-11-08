@@ -9,6 +9,7 @@
 #include "PhysContactListener.h"
 #include "PhysDebugDraw.h"
 #include "NetworkHandler.h"
+#include "FSEChaiLib.h"
 
 #define FSE_RADTODEG 57.2957795f
 #define FSE_DEGTORAD 0.01745329f
@@ -21,11 +22,6 @@ namespace fse
 	class Application;
 	class FSEObject;
 	class FSELightWorld;
-
-	namespace priv
-	{
-		class FSEChaiLib;
-	}
 
 	/*!
 	 * \brief Scene where objects live in, get updated and rendered
@@ -254,7 +250,9 @@ namespace fse
 		bool phys_draw_debug_ = false;
 
 		friend class Serializer;
-		friend class fse::priv::FSEChaiLib;
+
+		FSE_CHAI_ENABLE(Scene);
+		FSE_CHAI_REGISTRATION_FRIEND
 
 	};
 }

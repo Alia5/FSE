@@ -206,6 +206,34 @@ namespace fse
 		return res;
 	}
 
+
+	FSE_CHAI_REGISTER(FSEObject)
+	{
+		RegisterChaiUserTypeFromRTTR<FSEObject>(chai);
+		chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
+		chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getZOrder)), "getZOrder");
+		chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(int)>(&FSEObject::setZOrder)), "setZOrder");
+		chai.add(chaiscript::fun(static_cast<sf::Vector2f(FSEObject::*)()>(&FSEObject::getPosition)), "getPosition");
+		chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(sf::Vector2f position)>(&FSEObject::setPosition)),
+			"setPosition");
+		chai.add(chaiscript::fun([](FSEObject* object, float x, float y)
+		{
+			object->setPosition({ x, y });
+		}), "setPosition");
+		chai.add(chaiscript::fun(static_cast<sf::FloatRect(FSEObject::*)() const>(&FSEObject::GetAABBs)),
+			"getAABBs");
+		chai.add(chaiscript::fun(static_cast<bool(FSEObject::*)()>(&FSEObject::destroy)),
+			"destroy");
+		chai.add(chaiscript::fun(static_cast<Scene*(FSEObject::*)() const>(&FSEObject::getScene)),
+			"getScene");
+		chai.add(chaiscript::fun(([](const FSEObject* object) {
+			return object->get_type().get_name().to_string();
+		})), "getTypeName");
+		chai.add(chaiscript::fun(([](const FSEObject* object) {
+			return object->get_type().get_name().to_string();
+		})), "type_name");
+	}
+
 }
 
 RTTR_REGISTRATION

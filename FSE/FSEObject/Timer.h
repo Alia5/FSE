@@ -82,9 +82,11 @@ namespace fse
 		float elapsed_time_ = 0.f;
 	
 
-		friend class fse::priv::FSEChaiLib;
 		RTTR_ENABLE(fse::FSEObject)
 		RTTR_REGISTRATION_FRIEND
+
+		FSE_CHAI_ENABLE(Timer);
+		FSE_CHAI_REGISTRATION_FRIEND
 
 	PUBLIC_SIGNALS:
 		Signal<> timeout_;

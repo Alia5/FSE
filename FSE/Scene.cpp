@@ -214,4 +214,30 @@ namespace fse
 		}
 	}
 
+
+	FSE_CHAI_REGISTER(Scene)
+	{
+		chai.add(chaiscript::user_type<Scene>(), "FSEScene");
+		chai.add(chaiscript::fun(static_cast<bool(Scene::*)() const>(&Scene::isPaused)), "isPaused");
+		chai.add(chaiscript::fun(static_cast<void(Scene::*)(bool)>(&Scene::setPaused)), "setPaused");
+		chai.add(chaiscript::fun(static_cast<bool(Scene::*)() const>(&Scene::getPhysDrawDebug)), "getPhysDrawDebug");
+		chai.add(chaiscript::fun(static_cast<void(Scene::*)(bool)>(&Scene::setPhysDrawDebug)), "setPhysDrawDebug");
+		chai.add(chaiscript::fun(static_cast<FSELightWorld*(Scene::*)() const>(&Scene::getLightWorld)), "getLightWorld");
+		chai.add(chaiscript::fun(static_cast<b2World*(Scene::*)()>(&Scene::getPhysWorld)), "getPhysWorld");
+		chai.add(chaiscript::fun(static_cast<void(Scene::*)(std::shared_ptr<FSEObject>)>(&Scene::spawnFSEObject)), "spawnObject");
+		chai.add(chaiscript::fun(([](Scene* scene)
+		{
+			return scene->getFSEObjects();
+		})), "getObjects");
+		chai.add(chaiscript::fun(([](Scene* scene, int id)
+		{
+			for (auto& object : *scene->getFSEObjects())
+			{
+				if (object->getID() == id)
+					return object;
+			}
+			return static_cast<std::shared_ptr<FSEObject>>(nullptr);
+		})), "getObjectWithId");
+	}
+
 }

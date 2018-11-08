@@ -15,10 +15,6 @@
 
 namespace fse
 {
-	namespace priv {
-		class FSEChaiLib;
-	}
-
 	/*!
 	 * \brief Base Class for every Object that can live in a Scene
 	 */
@@ -283,7 +279,9 @@ namespace fse
 		RTTR_ENABLE()
 		RTTR_REGISTRATION_FRIEND
 
-		friend class fse::priv::FSEChaiLib;
+		FSE_CHAI_ENABLE(FSEObject);
+		FSE_CHAI_REGISTRATION_FRIEND
+
 
 	PUBLIC_SIGNALS:
 		/*!

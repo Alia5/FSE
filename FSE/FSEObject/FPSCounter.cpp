@@ -110,6 +110,14 @@ namespace fse
 	{
 		return detailed_view_;
 	}
+
+	FSE_CHAI_REGISTER(FPSCounter)
+	{
+		RegisterChaiUserTypeFromRTTR<FPSCounter>(chai);
+		chai.add(chaiscript::base_class<fse::FSEObject, FPSCounter>());
+		chai.add(chaiscript::fun((&FPSCounter::detailed_view_)), "detailed");
+	}
+
 }
 
 RTTR_REGISTRATION

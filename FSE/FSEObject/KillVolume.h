@@ -48,5 +48,9 @@ namespace fse
 
 		RTTR_ENABLE(fse::FSEObject)
 		RTTR_REGISTRATION_FRIEND
+
+		FSE_CHAI_ENABLE(KillVolume);
+		FSE_CHAI_REGISTRATION_FRIEND
+
 	};
 }

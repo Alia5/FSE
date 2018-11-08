@@ -42,6 +42,20 @@ namespace fse
 	{
 		return angle_;
 	}
+
+	FSE_CHAI_REGISTER(SpotLight)
+	{
+		RegisterChaiUserTypeFromRTTR<SpotLight>(chai);
+		chai.add(chaiscript::base_class<fse::Light, SpotLight>());
+		chai.add(chaiscript::fun(static_cast<void (SpotLight::*)(float)>(&SpotLight::setLenght)), "setLenght");
+		chai.add(chaiscript::fun(static_cast<float(SpotLight::*)() const>(&SpotLight::getLenght)), "getLenght");
+		chai.add(chaiscript::fun(static_cast<void (SpotLight::*)(float)>(&SpotLight::setAngle)), "setAngle");
+		chai.add(chaiscript::fun(static_cast<float(SpotLight::*)() const>(&SpotLight::getAngle)), "getAngle");
+
+		chai.add(chaiscript::constructor<SpotLight()>(), "SpotLight");
+		chai.add(chaiscript::constructor<SpotLight(Scene*, const sf::Vector2f&)>(), "SpotLight");
+	}
+
 }
 
 RTTR_REGISTRATION

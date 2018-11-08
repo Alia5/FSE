@@ -105,8 +105,8 @@ namespace fse
 		RTTR_ENABLE(fse::FSEObject)
 		RTTR_REGISTRATION_FRIEND
 
-		friend class fse::priv::FSEChaiLib;
-
+		FSE_CHAI_ENABLE(FSELightWorld);
+		FSE_CHAI_REGISTRATION_FRIEND
 
 		const std::string bloom_shader_str_ = "" \
 		"uniform sampler2D currTex;" \

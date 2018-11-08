@@ -5,6 +5,7 @@
 #include <FSE/FSEObject/FPSCounter.h>
 #include "FSEObject/MainMenu.h"
 #include "FSE/Component/SmoothViewController.h"
+#include "FSE/Lights/PointLight.h"
 
 
 void DemoApp::init()
@@ -29,6 +30,7 @@ void DemoApp::init()
 	});
 
 	auto fuckThisShit = std::make_shared<fse::SmoothViewController>();
+	auto fuckThisShit2 = std::make_shared<fse::PointLight>();
 
 }
 

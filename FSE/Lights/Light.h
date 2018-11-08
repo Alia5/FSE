@@ -68,7 +68,7 @@ namespace fse
 		RTTR_ENABLE()
 		RTTR_REGISTRATION_FRIEND
 
-		friend class fse::priv::FSEChaiLib;
-
+		FSE_CHAI_ENABLE(Light);
+		FSE_CHAI_REGISTRATION_FRIEND
 	};
 }
