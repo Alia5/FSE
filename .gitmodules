@@ -9,7 +9,7 @@
 	url = https://github.com/ocornut/imgui.git
 [submodule "imgui-sfml"]
 	path = imgui-sfml
-	url = https://github.com/eliasdaler/imgui-sfml
+	url = https://github.com/Alia5/imgui-sfml
 [submodule "chaiscript"]
 	path = chaiscript
 	url = https://github.com/ChaiScript/ChaiScript
