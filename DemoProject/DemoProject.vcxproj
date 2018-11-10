@@ -40,7 +40,7 @@
     <ProjectGuid>{A2B8A8AC-ECCE-4505-B656-314115FDA997}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>DemoProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -48,6 +48,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -140,6 +141,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\extlibs\liquidfun\liquidfun\Box2D;$(SolutionDir)\extlibs\SFML-2.5.1-x86\include;$(SolutionDir)\extlibs\rttr-0.9.6-win32-vs2017\include;$(SolutionDir)\rapidjson\include;$(SolutionDir)\imgui-sfml-config;$(SolutionDir)\imgui;$(SolutionDir)\imgui-sfml;$(SolutionDir)\poly2tri\poly2tri;$(SolutionDir)\chaiscript\include</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RemoveUnreferencedCodeData>false</RemoveUnreferencedCodeData>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +154,7 @@
       <EnableCOMDATFolding>
       </EnableCOMDATFolding>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
