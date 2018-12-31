@@ -256,3 +256,5 @@ ModelManifest.xml
 **/captures
 **/.externalNativeBuild
 DemoProject/imgui\.ini
+
+\.vscode/
