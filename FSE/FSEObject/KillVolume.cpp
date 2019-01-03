@@ -85,10 +85,10 @@ namespace fse
 	sf::FloatRect KillVolume::GetAABBs() const
 	{
 		return sf::FloatRect(
-			(phys_body_->GetPosition().x - size_.x / 2.f) * FSE_PIXELS_PER_METER,
-			(phys_body_->GetPosition().y - size_.y / 2.f) * FSE_PIXELS_PER_METER,
-			size_.x * FSE_PIXELS_PER_METER,
-			size_.y * FSE_PIXELS_PER_METER );
+			(phys_body_->GetPosition().x - size_.x / 2.f) * scene_->getPixelsPerMeter(),
+			(phys_body_->GetPosition().y - size_.y / 2.f) * scene_->getPixelsPerMeter(),
+			size_.x * scene_->getPixelsPerMeter(),
+			size_.y * scene_->getPixelsPerMeter());
 	}
 
 	void KillVolume::setSize(const sf::Vector2f& size)

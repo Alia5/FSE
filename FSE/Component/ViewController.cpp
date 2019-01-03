@@ -53,7 +53,7 @@ namespace fse
 
 		sf::View view = render_target_->getView();
 
-		view.move((objectPos - oldPosition) * FSE_PIXELS_PER_METER);
+		view.move((objectPos - oldPosition) * object_->getScene()->getPixelsPerMeter());
 
 		oldPosition = objectPos;
 

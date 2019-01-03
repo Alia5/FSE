@@ -12,7 +12,7 @@ namespace fse
 	SpotLight::SpotLight(Scene* scene, const sf::Vector2f& spawnPos) : Light(scene, spawnPos, "lights/spotLightTexture.png", true)
 	{
 		light_->setOrigin(sf::Vector2f(light_texture_->getSize().x / 2.f, 0.f));
-		lenght_ = light_texture_->getSize().y * FSE_METERS_PER_PIXEL;
+		lenght_ = light_texture_->getSize().y * scene_->getMetersPerPixel();
 	}
 
 
@@ -23,7 +23,7 @@ namespace fse
 	void SpotLight::setLenght(float lenght)
 	{
 		lenght_ = lenght;
-		light_->setScale(light_->getScale().x * lenght * 5.12f * FSE_METERS_PER_PIXEL, lenght * 5.12f * FSE_METERS_PER_PIXEL);
+		light_->setScale(light_->getScale().x * lenght * 5.12f * scene_->getMetersPerPixel(), lenght * 5.12f * scene_->getMetersPerPixel());
 	}
 
 	float SpotLight::getLenght() const

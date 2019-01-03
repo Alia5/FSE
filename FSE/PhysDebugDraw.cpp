@@ -5,7 +5,7 @@ PhysDebugDraw::PhysDebugDraw()
 	
 }
 
-PhysDebugDraw::PhysDebugDraw(sf::RenderTarget &window)
+PhysDebugDraw::PhysDebugDraw(sf::RenderTarget &window) : PhysDebugDraw()
 {
 	this->window = &window;
 
@@ -25,6 +25,12 @@ PhysDebugDraw::PhysDebugDraw(sf::RenderTarget &window)
 
 }
 
+PhysDebugDraw::PhysDebugDraw(sf::RenderTarget& window, float pixel_meter_ratio) : PhysDebugDraw(window)
+{
+		pixels_per_meter_ = pixel_meter_ratio;
+		meters_per_pixel_ = 1.f / pixel_meter_ratio;
+}
+
 PhysDebugDraw::~PhysDebugDraw()
 {
 
@@ -40,10 +46,10 @@ sf::Color PhysDebugDraw::B2SFColor(const b2Color &color, int alpha = 255)
 void PhysDebugDraw::DrawParticles(const b2Vec2* centers, float32 radius, const b2ParticleColor* colors, int32 count)
 {
 	sf::CircleShape shape;
-	shape.setRadius(radius * RATIO);
+	shape.setRadius(radius * pixels_per_meter_);
 	for (int i = 0; i < count; i++)
 	{
-		shape.setPosition(centers[i].x*RATIO - radius*RATIO, centers[i].y*RATIO - radius*RATIO);
+		shape.setPosition(centers[i].x*pixels_per_meter_ - radius* pixels_per_meter_, centers[i].y*pixels_per_meter_ - radius* pixels_per_meter_);
 		shape.setFillColor(this->B2SFColor(colors[i].GetColor(), 64));
 		this->window->draw(shape);
 	}
@@ -70,10 +76,10 @@ void PhysDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
 {
 	sf::ConvexShape polygon(4);
 
-	polygon.setPoint(0, sf::Vector2f(aabb->lowerBound.x*RATIO, aabb->lowerBound.y*RATIO));
-	polygon.setPoint(1, sf::Vector2f(aabb->upperBound.x*RATIO, aabb->lowerBound.y*RATIO));
-	polygon.setPoint(2, sf::Vector2f(aabb->upperBound.x*RATIO, aabb->upperBound.y*RATIO));
-	polygon.setPoint(3, sf::Vector2f(aabb->lowerBound.x*RATIO, aabb->upperBound.y*RATIO));
+	polygon.setPoint(0, sf::Vector2f(aabb->lowerBound.x*pixels_per_meter_, aabb->lowerBound.y*pixels_per_meter_));
+	polygon.setPoint(1, sf::Vector2f(aabb->upperBound.x*pixels_per_meter_, aabb->lowerBound.y*pixels_per_meter_));
+	polygon.setPoint(2, sf::Vector2f(aabb->upperBound.x*pixels_per_meter_, aabb->upperBound.y*pixels_per_meter_));
+	polygon.setPoint(3, sf::Vector2f(aabb->lowerBound.x*pixels_per_meter_, aabb->upperBound.y*pixels_per_meter_));
 
 	polygon.setFillColor(this->B2SFColor(color, 50));
 	polygon.setOutlineColor(this->B2SFColor(color, 64));
@@ -108,8 +114,8 @@ void PhysDebugDraw::DrawString(const b2Vec2& p, const char* string, ...)
 void PhysDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
 	sf::VertexArray line;
-	line.append(sf::Vertex(sf::Vector2f(p1.x*RATIO, p1.y*RATIO), this->B2SFColor(color)));
-	line.append(sf::Vertex(sf::Vector2f(p2.x*RATIO, p2.y*RATIO), this->B2SFColor(color)));
+	line.append(sf::Vertex(sf::Vector2f(p1.x*pixels_per_meter_, p1.y*pixels_per_meter_), this->B2SFColor(color)));
+	line.append(sf::Vertex(sf::Vector2f(p2.x*pixels_per_meter_, p2.y*pixels_per_meter_), this->B2SFColor(color)));
 	line.setPrimitiveType(sf::Lines);
 
 	this->window->draw(line);
@@ -118,8 +124,8 @@ void PhysDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
 void PhysDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 {
 	//no converion in cordinates of center and upper left corner, Circle in sfml is managed by default with the center
-	sf::CircleShape circle(radius*RATIO);
-	circle.setPosition(center.x*RATIO - radius*RATIO, center.y*RATIO - radius*RATIO);
+	sf::CircleShape circle(radius*pixels_per_meter_);
+	circle.setPosition(center.x*pixels_per_meter_ - radius* pixels_per_meter_, center.y*pixels_per_meter_ - radius* pixels_per_meter_);
 	circle.setFillColor(this->B2SFColor(color, 32));
 	circle.setOutlineColor(this->B2SFColor(color));
 	circle.setOutlineThickness(1.f);
@@ -133,8 +139,8 @@ void PhysDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 
 void PhysDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 {
-	sf::CircleShape circle((radius*RATIO));
-	circle.setPosition(center.x*RATIO - radius*RATIO, center.y*RATIO - radius*RATIO);
+	sf::CircleShape circle((radius*pixels_per_meter_));
+	circle.setPosition(center.x*pixels_per_meter_ - radius* pixels_per_meter_, center.y*pixels_per_meter_ - radius* pixels_per_meter_);
 	circle.setFillColor(sf::Color::Transparent);
 	circle.setOutlineColor(this->B2SFColor(color));
 	circle.setOutlineThickness(1.f);
@@ -147,7 +153,7 @@ void PhysDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, 
 	for (int32 i = 0; i<vertexCount; i++)
 	{
 		b2Vec2 vertex = vertices[i];
-		polygon.setPoint(i, sf::Vector2f(vertex.x*RATIO, vertex.y*RATIO));
+		polygon.setPoint(i, sf::Vector2f(vertex.x*pixels_per_meter_, vertex.y*pixels_per_meter_));
 	}
 	polygon.setFillColor(this->B2SFColor(color, 32));
 	polygon.setOutlineColor(this->B2SFColor(color));
@@ -161,7 +167,7 @@ void PhysDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const
 	for (int32 i = 0; i<vertexCount; i++)
 	{
 		b2Vec2 vertex = vertices[i];
-		polygon.setPoint(i, sf::Vector2f(vertex.x*RATIO, vertex.y*RATIO));
+		polygon.setPoint(i, sf::Vector2f(vertex.x*pixels_per_meter_, vertex.y*pixels_per_meter_));
 	}
 	polygon.setFillColor(sf::Color::Transparent);
 	polygon.setOutlineColor(this->B2SFColor(color));

@@ -12,7 +12,7 @@ namespace fse
 
 	PointLight::PointLight(Scene* scene, const sf::Vector2f& spawnPos) : Light(scene, spawnPos, "lights/pointLightTexture.png", true)
 	{
-		light_->setScale((FSE_PIXELS_PER_METER / light_texture_->getSize().x), (FSE_PIXELS_PER_METER / light_texture_->getSize().x));
+		light_->setScale((scene_->getPixelsPerMeter() / light_texture_->getSize().x), (scene_->getPixelsPerMeter() / light_texture_->getSize().x));
 	}
 
 	PointLight::~PointLight()
@@ -22,12 +22,12 @@ namespace fse
 
 	void PointLight::setRadius(float radius) const
 	{
-		light_->setScale(sf::Vector2f(radius,radius) * (FSE_PIXELS_PER_METER / light_texture_->getSize().x));
+		light_->setScale(sf::Vector2f(radius,radius) * (scene_->getPixelsPerMeter() / light_texture_->getSize().x));
 	}
 
 	float PointLight::getRadius() const
 	{
-		return light_->getScale().x / (FSE_PIXELS_PER_METER / light_texture_->getSize().x);
+		return light_->getScale().x / (scene_->getPixelsPerMeter() / light_texture_->getSize().x);
 	}
 
 	FSE_CHAI_REGISTER(PointLight)

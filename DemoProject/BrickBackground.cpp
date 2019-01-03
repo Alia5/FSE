@@ -63,11 +63,11 @@ void BrickBackground::spawned()
 	sprite_.setSpecularTexture(*specular_texture);
 
 	sprite_.setTextureRect(sf::IntRect(0, 0,
-		static_cast<int>(size_.x * FSE_PIXELS_PER_METER),
-		static_cast<int>(size_.y * FSE_PIXELS_PER_METER)));
+		static_cast<int>(size_.x * scene_->getPixelsPerMeter()),
+		static_cast<int>(size_.y * scene_->getPixelsPerMeter())));
 
 	sprite_.setOrigin(size_ / 2.f);
-	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
+	sprite_.setPosition(position_ * scene_->getPixelsPerMeter());
 }
 
 void BrickBackground::onDespawn()
@@ -77,7 +77,7 @@ void BrickBackground::onDespawn()
 void BrickBackground::setPosition(const sf::Vector2f position)
 {
 	position_ = position;
-	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
+	sprite_.setPosition(position_ * scene_->getPixelsPerMeter());
 }
 
 sf::FloatRect BrickBackground::GetAABBs() const
@@ -104,9 +104,9 @@ void BrickBackground::setSize(const sf::Vector2f& size)
 		size_.y = 1.f;
 
 	//reset sprites texture rect
-	sprite_.setTextureRect(sf::IntRect(0, 0, size_.x * FSE_PIXELS_PER_METER, size_.y * FSE_PIXELS_PER_METER));
+	sprite_.setTextureRect(sf::IntRect(0, 0, size_.x * scene_->getPixelsPerMeter(), size_.y * scene_->getPixelsPerMeter()));
 	sprite_.setOrigin(size_ / 2.f);
-	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
+	sprite_.setPosition(position_ * scene_->getPixelsPerMeter());
 }
 
 float BrickBackground::getRotation() const

@@ -247,7 +247,7 @@ namespace fse
 
 									sf::RenderTarget* target = scene_->getRenderTarget();
 									sf::RenderWindow* window = scene_->getApplication()->getWindow();
-									auto mousePos = target->mapPixelToCoords(sf::Mouse::getPosition(*window)) * FSE_METERS_PER_PIXEL;
+									auto mousePos = target->mapPixelToCoords(sf::Mouse::getPosition(*window)) * scene_->getMetersPerPixel();
 
 									ImGui::Text(std::string("SPAWNPOS: X=" + std::to_string(mousePos.x) + ", Y=" + std::to_string(mousePos.y)).data());
 
@@ -642,7 +642,7 @@ namespace fse
 
 				sf::RenderTarget* target = scene_->getRenderTarget();
 				sf::RenderWindow* window = scene_->getApplication()->getWindow();
-				val = target->mapPixelToCoords(sf::Mouse::getPosition(*window)) * FSE_METERS_PER_PIXEL;
+				val = target->mapPixelToCoords(sf::Mouse::getPosition(*window)) * scene_->getMetersPerPixel();
 				variant = rttr::variant(val);
 			}
 		};

@@ -4,15 +4,15 @@
 #include <SFML/Graphics.hpp>
 
 // 1 meter (box2d) is more or less 64 pixels (sfml) //changed the ratio...
-#define RATIO 25.0f
-#define PIXELS_PER_METER RATIO
+//#define RATIO 25.0f
+//#define PIXELS_PER_METER RATIO
 
 // 64 pixels (sfml) are more or less 1 meter (box2d)
-#define UNRATIO (1.0F/RATIO)
-#define METERS_PER_PIXEL UNRATIO
+//#define UNRATIO (1.0F/RATIO)
+//#define METERS_PER_PIXEL UNRATIO
 
 //formula to convert radians to degrees = (radians * (pi/180))
-#define RADTODEG (b2_pi / 180.0)
+constexpr auto RADTODEG = (b2_pi / 180.0);
 
 struct b2AABB;
 struct GLRenderPoints;
@@ -23,7 +23,8 @@ class PhysDebugDraw : public b2Draw
 {
 public:
 	PhysDebugDraw();
-	PhysDebugDraw(sf::RenderTarget &window);
+	explicit PhysDebugDraw(sf::RenderTarget &window);
+	explicit PhysDebugDraw(sf::RenderTarget &window, float pixel_meter_ratio);
 	virtual ~PhysDebugDraw();
 
 	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) override;
@@ -44,4 +45,6 @@ public:
 private:
 	sf::RenderTarget *window;
 	bool aabbs_ = false;
+	float pixels_per_meter_ = 25.f;
+	float meters_per_pixel_ = 1.f / 25.f;
 };

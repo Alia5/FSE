@@ -11,11 +11,11 @@
 #include "NetworkHandler.h"
 #include "FSEChaiLib.h"
 
-#define FSE_RADTODEG 57.2957795f
-#define FSE_DEGTORAD 0.01745329f
-#define FSE_PXMRATIO = 25.f
-#define FSE_PIXELS_PER_METER 25.f
-#define FSE_METERS_PER_PIXEL (1.f/25.f)
+constexpr auto FSE_RADTODEG = 57.2957795f;
+constexpr auto FSE_DEGTORAD = 0.01745329f;
+//#define FSE_PXMRATIO = 25.f
+//#define FSE_PIXELS_PER_METER 25.f
+//#define FSE_METERS_PER_PIXEL (1.f/25.f)
 
 namespace fse
 {
@@ -30,6 +30,7 @@ namespace fse
 	{
 	public:
 		explicit Scene(Application *application);
+		explicit Scene(Application *application, float pixel_meter_ratio);
 		~Scene();
 
 		/*!
@@ -203,6 +204,8 @@ namespace fse
 		 */
 		b2World *getPhysWorld();
 
+		float getPixelsPerMeter() const;
+		float getMetersPerPixel() const;
 
 	protected:
 		void removeFSEObject(std::shared_ptr<FSEObject> const & object);
@@ -222,6 +225,15 @@ namespace fse
 
 
 		std::unique_ptr<Renderer> renderer_;
+
+		/*!
+		*	The ratio how many pixels occupy a meter in game coordinates
+		*/
+		float pixels_per_meter_ = 25.f;
+		/*!
+		*	The ratio how many meters in game coordinates occupy a meter in pixels
+		*/
+		float meters_per_pixel_ = (1.f / 25.f);
 
 	private:
 		bool z_order_changed_ = false;

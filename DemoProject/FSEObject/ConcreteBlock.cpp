@@ -86,11 +86,11 @@ void ConcreteBlock::spawned()
 
 	//create light shape
 	sf::RectangleShape shape;
-	shape.setSize(sf::Vector2f(size_.x * FSE_PIXELS_PER_METER, size_.y * FSE_PIXELS_PER_METER));
+	shape.setSize(sf::Vector2f(size_.x * scene_->getPixelsPerMeter(), size_.y * scene_->getPixelsPerMeter()));
 
 	light_shape_ = getScene()->getLightWorld()->getLightSystem()->createLightShape(shape);
 	light_shape_->setOrigin(shape.getSize() / 2.f);
-	light_shape_->setPosition(position_ * FSE_PIXELS_PER_METER);
+	light_shape_->setPosition(position_ * scene_->getPixelsPerMeter());
 	light_shape_->setRenderLightOver(true);
 
 
@@ -100,9 +100,9 @@ void ConcreteBlock::spawned()
 	sprite_.setNormalsTexture(*normal_texture_);
 	sprite_.setSpecularTexture(*specular_texture);
 
-	sprite_.setTextureRect(sf::IntRect(0, 0, size_.x * FSE_PIXELS_PER_METER + 25, size_.y * FSE_PIXELS_PER_METER));
+	sprite_.setTextureRect(sf::IntRect(0, 0, size_.x * scene_->getPixelsPerMeter() + 25, size_.y * scene_->getPixelsPerMeter()));
 	sprite_.setOrigin({ (shape.getSize().x + 25) / 2.f, shape.getSize().y / 2.f });
-	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
+	sprite_.setPosition(position_ * scene_->getPixelsPerMeter());
 }
 
 void ConcreteBlock::onDespawn()
@@ -114,8 +114,8 @@ void ConcreteBlock::onDespawn()
 void ConcreteBlock::setPosition(const sf::Vector2f position)
 {
 	position_ = position;
-	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
-	light_shape_->setPosition(position_ * FSE_PIXELS_PER_METER);
+	sprite_.setPosition(position_ * scene_->getPixelsPerMeter());
+	light_shape_->setPosition(position_ * scene_->getPixelsPerMeter());
 	phys_body_->SetTransform(fse::FMath::sfVec2fTob2Vec2(position), phys_body_->GetAngle());
 }
 
@@ -143,20 +143,20 @@ void ConcreteBlock::setSize(const sf::Vector2f& size)
 		size_.y = 1.f;
 
 	sf::RectangleShape shape;
-	shape.setSize(sf::Vector2f(size_.x * FSE_PIXELS_PER_METER, size_.y * FSE_PIXELS_PER_METER));
+	shape.setSize(sf::Vector2f(size_.x * scene_->getPixelsPerMeter(), size_.y * scene_->getPixelsPerMeter()));
 
 	scene_->getLightWorld()->getLightSystem()->removeShape(light_shape_);
 	light_shape_ = getScene()->getLightWorld()->getLightSystem()->createLightShape(shape);
 	light_shape_->setOrigin(shape.getSize() / 2.f);
-	light_shape_->setPosition(position_ * FSE_PIXELS_PER_METER);
+	light_shape_->setPosition(position_ * scene_->getPixelsPerMeter());
 	light_shape_->setRotation(sprite_.getRotation());
 	light_shape_->setRenderLightOver(renderLightOver);
 	light_shape_->setRenderLightOver(true);
 
 	//reset sprites texture rect
-	sprite_.setTextureRect(sf::IntRect(0, 0, size_.x * FSE_PIXELS_PER_METER + 25, size_.y * FSE_PIXELS_PER_METER ));
+	sprite_.setTextureRect(sf::IntRect(0, 0, size_.x * scene_->getPixelsPerMeter() + 25, size_.y * scene_->getPixelsPerMeter()));
 	sprite_.setOrigin({(shape.getSize().x + 25 ) / 2.f, shape.getSize().y / 2.f});
-	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
+	sprite_.setPosition(position_ * scene_->getPixelsPerMeter());
 
 	//resize phys_shape
 	auto* phys_shape = dynamic_cast<b2PolygonShape*>(fixture_->GetShape());

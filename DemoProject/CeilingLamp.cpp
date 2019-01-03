@@ -26,13 +26,13 @@ void CeilingLamp::update(float deltaTime)
 	auto transform = phys_body_->GetTransform();
 	position_ = fse::FMath::b2Vec2ToSfVec2f(anchor_body_->GetTransform().p);
 	sprite_.setRotation(transform.q.GetAngle() * FSE_RADTODEG);
-	sprite_.setPosition(fse::FMath::b2Vec2ToSfVec2f(transform.p)  * FSE_PIXELS_PER_METER);
+	sprite_.setPosition(fse::FMath::b2Vec2ToSfVec2f(transform.p)  * scene_->getPixelsPerMeter());
 	for (auto light_shape : light_shapes_)
 	{
-		light_shape->setPosition(fse::FMath::b2Vec2ToSfVec2f(phys_body_->GetTransform().p) * FSE_PIXELS_PER_METER);
+		light_shape->setPosition(fse::FMath::b2Vec2ToSfVec2f(phys_body_->GetTransform().p) * scene_->getPixelsPerMeter());
 		light_shape->setRotation(phys_body_->GetTransform().q.GetAngle() * FSE_RADTODEG);
 	}
-	spot_light_.setPosition((sprite_.getPosition() + sf::Vector2f(0.f, 25.f)) * FSE_METERS_PER_PIXEL);
+	spot_light_.setPosition((sprite_.getPosition() + sf::Vector2f(0.f, 25.f)) * scene_->getMetersPerPixel());
 	spot_light_.setRotation(sprite_.getRotation());
 }
 
@@ -42,10 +42,10 @@ void CeilingLamp::draw(sf::RenderTarget& target)
 			fse::FMath::sqrtVec(
 				dynamic_cast<b2RopeJoint*>(phys_body_->GetJointList()[0].joint)->GetAnchorA()
 				- dynamic_cast<b2RopeJoint*>(phys_body_->GetJointList()[0].joint)->GetAnchorB()
-			) * FSE_PIXELS_PER_METER));
+			) *  scene_->getPixelsPerMeter()));
 	debugRope.setOrigin(1.25f, 0.f);
 	debugRope.setFillColor(sf::Color(196, 183, 121));
-	debugRope.setPosition(position_ * FSE_PIXELS_PER_METER);
+	debugRope.setPosition(position_ *  scene_->getPixelsPerMeter());
 	
 
 	debugRope.setRotation(fse::FMath::angleDegree(
@@ -62,10 +62,10 @@ void CeilingLamp::drawNormals(sf::RenderTarget& target)
 		fse::FMath::sqrtVec(
 			dynamic_cast<b2RopeJoint*>(phys_body_->GetJointList()[0].joint)->GetAnchorA()
 			- dynamic_cast<b2RopeJoint*>(phys_body_->GetJointList()[0].joint)->GetAnchorB()
-		) * FSE_PIXELS_PER_METER));
+		) *  scene_->getPixelsPerMeter()));
 	debugRope.setOrigin(1.25f, 0.f);
 	debugRope.setFillColor(sf::Color(0, 255, 255));
-	debugRope.setPosition(position_ * FSE_PIXELS_PER_METER);
+	debugRope.setPosition(position_ *  scene_->getPixelsPerMeter());
 
 	debugRope.setRotation(fse::FMath::angleDegree(
 		dynamic_cast<b2RopeJoint*>(phys_body_->GetJointList()[0].joint)->GetAnchorA(),
@@ -80,10 +80,10 @@ void CeilingLamp::drawSpecular(sf::RenderTarget& target)
 		fse::FMath::sqrtVec(
 			dynamic_cast<b2RopeJoint*>(phys_body_->GetJointList()[0].joint)->GetAnchorA()
 			- dynamic_cast<b2RopeJoint*>(phys_body_->GetJointList()[0].joint)->GetAnchorB()
-		) * FSE_PIXELS_PER_METER));
+		) *  scene_->getPixelsPerMeter()));
 	debugRope.setOrigin(1.25f, 0.f);
 	debugRope.setFillColor(sf::Color(0, 0, 0));
-	debugRope.setPosition(position_ * FSE_PIXELS_PER_METER);
+	debugRope.setPosition(position_ *  scene_->getPixelsPerMeter());
 
 	debugRope.setRotation(fse::FMath::angleDegree(
 		dynamic_cast<b2RopeJoint*>(phys_body_->GetJointList()[0].joint)->GetAnchorA(),
@@ -108,7 +108,7 @@ void CeilingLamp::spawned()
 	sprite_.setSpecularTexture(*specular_texture);
 
 	sprite_.setOrigin(75 / 2.f, 50 / 2.f);
-	sprite_.setPosition(position_ * FSE_PIXELS_PER_METER);
+	sprite_.setPosition(position_ *  scene_->getPixelsPerMeter());
 
 	b2BodyDef physBodyDef;
 
@@ -224,7 +224,7 @@ void CeilingLamp::shapeFromSprite()
 
 		for (auto & point : poly)
 		{
-			verts.emplace_back(point.x * FSE_METERS_PER_PIXEL, point.y * FSE_METERS_PER_PIXEL);
+			verts.emplace_back(point.x * scene_->getMetersPerPixel(), point.y * scene_->getMetersPerPixel());
 		}
 		b2PolygonShape poly_shape;
 		poly_shape.Set(verts.data(), verts.size());
@@ -240,7 +240,7 @@ void CeilingLamp::shapeFromSprite()
 			j++;
 		}
 		ltbl::LightShape* light_shape = getScene()->getLightWorld()->getLightSystem()->createLightShape(shape);
-		light_shape->setPosition(fse::FMath::b2Vec2ToSfVec2f(phys_body_->GetTransform().p) * FSE_PIXELS_PER_METER);
+		light_shape->setPosition(fse::FMath::b2Vec2ToSfVec2f(phys_body_->GetTransform().p) * scene_->getPixelsPerMeter());
 		light_shape->setRenderLightOver(true);
 		light_shape->setReceiveShadow(false);
 		light_shapes_.push_back(light_shape);

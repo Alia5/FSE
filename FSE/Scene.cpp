@@ -15,6 +15,12 @@ namespace fse
 		processPendingSpawns();
 	}
 
+	Scene::Scene(Application* application, float pixel_meter_ratio) : Scene(application)
+	{
+		pixels_per_meter_ = pixel_meter_ratio;
+		meters_per_pixel_ = 1.f / pixel_meter_ratio;
+	}
+
 	Scene::~Scene()
 	{
 		application_->on_window_resized_.disconnect(win_resize_signal_connection_);
@@ -31,7 +37,7 @@ namespace fse
 		render_target_ = renderTarget;
 		renderer_ = std::make_unique<Renderer>(render_target_);
 
-		phys_debug_draw_ = PhysDebugDraw(*render_target_);
+		phys_debug_draw_ = PhysDebugDraw(*render_target_, pixels_per_meter_);
 		phys_world_.SetDebugDraw(&phys_debug_draw_);
 
 
@@ -164,6 +170,16 @@ namespace fse
 	b2World *Scene::getPhysWorld()
 	{
 		return &phys_world_;
+	}
+
+	float Scene::getPixelsPerMeter() const
+	{
+		return pixels_per_meter_;
+	}
+
+	float Scene::getMetersPerPixel() const
+	{
+		return meters_per_pixel_;
 	}
 
 	void Scene::removeFSEObject(std::shared_ptr<FSEObject> const& object)

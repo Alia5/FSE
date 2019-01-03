@@ -26,7 +26,7 @@ namespace fse
 		light_->setOrigin(sf::Vector2f(light_texture_->getSize().x * 0.5f, light_texture_->getSize().y * 0.5f));
 		light_->setTexture(*light_texture_);
 		light_->setColor(sf::Color::White);
-		light_->setPosition(spawnPos * FSE_PIXELS_PER_METER);
+		light_->setPosition(spawnPos * scene_->getPixelsPerMeter());
 
 		scene_->getLightWorld()->registerLight(this);
 	}
@@ -46,7 +46,7 @@ namespace fse
 
 	void Light::setPosition(const sf::Vector2f pos) const
 	{
-		light_->setPosition(pos * FSE_PIXELS_PER_METER);
+		light_->setPosition(pos * scene_->getPixelsPerMeter());
 	}
 
 	void Light::setColor(const sf::Color color) const
@@ -61,7 +61,7 @@ namespace fse
 
 	sf::Vector2f Light::getPosition() const
 	{
-		return light_->getPosition() * FSE_METERS_PER_PIXEL;
+		return light_->getPosition() * scene_->getMetersPerPixel();
 	}
 
 	sf::Color Light::getColor() const
