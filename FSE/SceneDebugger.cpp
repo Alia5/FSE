@@ -654,6 +654,8 @@ namespace fse
 		stream << "Scene: 0x" << std::hex << static_cast<void*>(scene_);
 		ImGui::Text(stream.str().data());
 
+		ImGui::Text(std::string("Pixel Ratio: " + std::to_string(scene_->getPixelsPerMeter()) + " pixels per meter").data());
+
 		ImGui::Text(std::string("Object count: " + std::to_string(objects_.size())).data());
 		bool b = scene_->isPaused();
 		if (ImGui::Checkbox("Paused##SceneDebugger", &b))
