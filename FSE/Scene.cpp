@@ -199,6 +199,7 @@ namespace fse
 		if (it != fse_objects_.end())
 		{
 			it->get()->onDespawn();
+			it->get()->despawn();
 			fse_objects_.erase(it);
 		}
 	}

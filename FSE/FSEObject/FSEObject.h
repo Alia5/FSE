@@ -145,6 +145,13 @@ namespace fse
 		 * \param scene this object belongs to
 		 */
 		void spawn(int id, Scene* scene);
+
+		/*!
+		 * Called before object despawn
+		 * Nulls scene, input, id = -1
+		 */
+		void despawn();
+
 		/*!
 		 * \brief Marks the object for destruction
 		 * The Object will get destroyed after the current frame \n 

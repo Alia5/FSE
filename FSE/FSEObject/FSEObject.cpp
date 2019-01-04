@@ -112,6 +112,13 @@ namespace fse
 		spawned_signal_.disconnectAll();
 	}
 
+	void FSEObject::despawn()
+	{
+		scene_ = nullptr;
+		input_ = nullptr;
+		id_ = -1;
+	}
+
 	bool FSEObject::destroy()
 	{
 		if (!is_pending_kill_)
@@ -119,7 +126,6 @@ namespace fse
 			is_pending_kill_ = true;
 
 			scene_->destroyFSEObject(this);
-			scene_ = nullptr;
 			return true;
 		}
 		return false;
