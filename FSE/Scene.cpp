@@ -111,11 +111,10 @@ namespace fse
 		z_order_changed_ = true;
 	}
 
-
-
-	void Scene::spawnFSEObject(std::shared_ptr<FSEObject> object)
+	std::weak_ptr<FSEObject> Scene::spawnFSEObject(std::shared_ptr<FSEObject> object)
 	{
 		pending_object_spawns_.push_back(object);
+		return object;
 	}
 
 	void Scene::destroyFSEObject(FSEObject* object)
@@ -241,7 +240,7 @@ namespace fse
 		chai.add(chaiscript::fun(static_cast<void(Scene::*)(bool)>(&Scene::setPhysDrawDebug)), "setPhysDrawDebug");
 		chai.add(chaiscript::fun(static_cast<FSELightWorld*(Scene::*)() const>(&Scene::getLightWorld)), "getLightWorld");
 		chai.add(chaiscript::fun(static_cast<b2World*(Scene::*)()>(&Scene::getPhysWorld)), "getPhysWorld");
-		chai.add(chaiscript::fun(static_cast<void(Scene::*)(std::shared_ptr<FSEObject>)>(&Scene::spawnFSEObject)), "spawnObject");
+		chai.add(chaiscript::fun(static_cast<std::weak_ptr<FSEObject> (Scene::*)(std::shared_ptr<FSEObject>) > (&Scene::spawnFSEObject)), "spawnObject");
 		chai.add(chaiscript::fun(([](Scene* scene)
 		{
 			return scene->getFSEObjects();

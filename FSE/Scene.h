@@ -78,7 +78,7 @@ namespace fse
 		 * 
 		 * \param object shared_ptr to object
 		 */
-		void spawnFSEObject(std::shared_ptr<FSEObject> object);
+		std::weak_ptr<FSEObject> spawnFSEObject(std::shared_ptr<FSEObject> object);
 
 		/*!
 		 * \brief Spawn FSEObject into the scene \n

@@ -6,6 +6,8 @@
 #include "FSEObject/MainMenu.h"
 #include "FSE/Component/SmoothViewController.h"
 #include "FSE/Lights/PointLight.h"
+#include "FSE/Lights/SpotLight.h"
+#include "FSE/FSEObject/KillVolume.h"
 
 
 void DemoApp::init()
@@ -31,6 +33,8 @@ void DemoApp::init()
 
 	auto fuckThisShit = std::make_shared<fse::SmoothViewController>();
 	auto fuckThisShit2 = std::make_shared<fse::PointLight>();
+	auto fuckThisShit3 = std::make_shared<fse::SpotLight>();
+	auto fuckThisShit4 = std::make_shared<fse::KillVolume>();
 
 }
 

@@ -84,6 +84,8 @@ namespace fse
 
 	sf::FloatRect KillVolume::GetAABBs() const
 	{
+		if (scene_ == nullptr)
+			return sf::FloatRect();
 		return sf::FloatRect(
 			(phys_body_->GetPosition().x - size_.x / 2.f) * scene_->getPixelsPerMeter(),
 			(phys_body_->GetPosition().y - size_.y / 2.f) * scene_->getPixelsPerMeter(),

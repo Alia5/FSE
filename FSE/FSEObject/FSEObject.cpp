@@ -233,11 +233,28 @@ namespace fse
 		chai.add(chaiscript::fun(static_cast<Scene*(FSEObject::*)() const>(&FSEObject::getScene)),
 			"getScene");
 		chai.add(chaiscript::fun(([](const FSEObject* object) {
+			if (object == nullptr)
+				return std::string("null");
 			return object->get_type().get_name().to_string();
 		})), "getTypeName");
 		chai.add(chaiscript::fun(([](const FSEObject* object) {
+			if (object == nullptr)
+				return std::string("null");
 			return object->get_type().get_name().to_string();
 		})), "type_name");
+
+
+		chai.add(chaiscript::user_type<std::weak_ptr<FSEObject>>(), "WeakFSEObject");
+		chai.add(chaiscript::fun([](const std::weak_ptr<FSEObject> & weak_obj)
+		{
+			return weak_obj.lock();
+		}), "lock");
+
+		chai.add(chaiscript::fun([](const std::weak_ptr<FSEObject> & weak_obj)
+		{
+			return !weak_obj.expired();
+		}), "valid");
+
 	}
 
 }
