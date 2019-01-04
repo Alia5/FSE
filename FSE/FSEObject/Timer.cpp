@@ -84,6 +84,7 @@ namespace fse
 	{
 		RegisterChaiUserTypeFromRTTR<Timer>(chai);
 		chai.add(chaiscript::base_class<fse::FSEObject, Timer>());
+		chai.add(chaiscript::constructor<Timer()>(), "Timer");
 		chai.add(chaiscript::fun((&Timer::active_)), "active");
 		chai.add(chaiscript::fun((&Timer::single_shot_)), "singleShot");
 		chai.add(chaiscript::fun((&Timer::interval_)), "interval");
