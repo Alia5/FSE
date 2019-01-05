@@ -55,7 +55,6 @@ void GameLevel::spawned()
 		if (!isPendingKill())
 		{
 			chai.set_global(chaiscript::var(std::ref(*sub_scene_)), "gameScene");
-			chai.eval("global objectMap = Map();");
 		}
 	});
 	scene_->getApplication()->initChai();

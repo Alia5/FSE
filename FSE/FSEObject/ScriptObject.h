@@ -75,8 +75,8 @@ namespace fse
 		FSE_CHAI_ENABLE(ScriptObject);
 		FSE_CHAI_REGISTRATION_FRIEND
 
-		/*RTTR_ENABLE(fse::ScriptObject)
-		RTTR_REGISTRATION_FRIEND*/
+		RTTR_ENABLE(fse::FSEObject)
+		RTTR_REGISTRATION_FRIEND
 
 	};
 
