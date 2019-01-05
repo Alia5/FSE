@@ -8,11 +8,11 @@
 #include "FSE/Lights/PointLight.h"
 #include "FSE/Lights/SpotLight.h"
 #include "FSE/FSEObject/KillVolume.h"
+#include "FSE/FSEObject/ScriptObject.h"
 
 
 void DemoApp::init()
 {
-
 	fse::Application::init();
 	initGlobalSettings(); //TODO: create neatly wrapped settings class
 
@@ -35,6 +35,7 @@ void DemoApp::init()
 	auto fuckThisShit2 = std::make_shared<fse::PointLight>();
 	auto fuckThisShit3 = std::make_shared<fse::SpotLight>();
 	auto fuckThisShit4 = std::make_shared<fse::KillVolume>();
+	auto fuckThisShit5 = std::make_shared<fse::ScriptObject>("");
 
 }
 

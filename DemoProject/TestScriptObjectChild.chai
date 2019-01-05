@@ -1,0 +1,29 @@
+class TestScriptObjectChild
+{
+    auto _parent;
+    auto timeAkku;
+    def TestScriptObjectChild(parent)
+    {
+        this._parent = parent;
+        this.timeAkku = 0.0;
+
+        this._parent.spawnedFun = fun(this){ this.spawnedFunction(); };
+        this._parent.updateFun = fun(this, deltaTime){ this.updateFunction(deltaTime); };
+    }
+
+    def spawnedFunction()
+    {
+        print("TestScriptObjectChild spawned!");
+    }
+
+    def updateFunction(float deltaTime)
+    {
+        this.timeAkku += deltaTime;
+        //print(this.timeAkku);
+    }
+    
+
+
+
+
+}
