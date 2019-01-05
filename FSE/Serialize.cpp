@@ -106,11 +106,13 @@ namespace fse
 
 		if (clear)
 		{
-			auto objs = scene->getFSEObjects();
+			scene->processPendingSpawns();
+			const auto objs = scene->getFSEObjects();
 			for (auto& obj : *objs)
 			{
 				static_cast<FSEObject*>(obj.get())->destroy();
 			}
+			scene->processPendingRemovals();
 		}
 
 

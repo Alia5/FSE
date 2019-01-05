@@ -71,10 +71,9 @@ namespace fse
 		if (ImGui::CollapsingHeader("Subscene Objects##SceneDebugger"))
 		{
 			ImGui::BeginChild("##Objects##SceneDebugger", ImVec2(0, 250), true);
-			int id;
 			for (const auto& object : objects_)
 			{
-				id = object->getID();
+				const int id = object->getID();
 				rttr::type type = rttr::type::get(*object);
 				std::string nodename = std::string(type.get_name().data()) + "##SceneDebugger" + std::to_string(id);
 				int pos;
@@ -692,6 +691,7 @@ namespace fse
 		ImGui::SameLine();
 		if (ImGui::Button("Load Scene##SceneDebugger"))
 		{
+			objects_.clear();
 			Serializer serializer;
 			serializer.loadScene(scene_, serialize_file_name_);
 		}
