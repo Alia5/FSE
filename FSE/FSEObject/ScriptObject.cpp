@@ -18,7 +18,7 @@ namespace fse
 	void ScriptObject::spawned()
 	{
 		try {
-			auto chai = scene_->getApplication()->getChai();
+			auto chai = getChai();
 			chai->use(script_name_);
 
 			std::smatch match;
