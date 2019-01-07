@@ -250,9 +250,9 @@ namespace fse
 			for (auto& object : *scene->getFSEObjects())
 			{
 				if (object->getID() == id)
-					return object;
+					return std::weak_ptr<FSEObject>(object);
 			}
-			return static_cast<std::shared_ptr<FSEObject>>(nullptr);
+			return std::weak_ptr<FSEObject>();
 		})), "getObjectWithId");
 	}
 
