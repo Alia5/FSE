@@ -2,6 +2,7 @@
 
 #include <rttr/type>
 #include <rttr/registration_friend>
+#include "../FSEChaiLib.h"
 
 
 struct b2Manifold;
@@ -75,6 +76,10 @@ namespace fse
 		FSEObject* object_ = nullptr;
 
 	private:
+
+		FSE_CHAI_ENABLE(Component);
+		FSE_CHAI_REGISTRATION_FRIEND
+
 		RTTR_ENABLE()
 		RTTR_REGISTRATION_FRIEND
 	};

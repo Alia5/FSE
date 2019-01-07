@@ -56,6 +56,9 @@ namespace fse
 
 	private:
 
+		FSE_CHAI_ENABLE(ViewController);
+		FSE_CHAI_REGISTRATION_FRIEND
+
 		RTTR_ENABLE(fse::Component)
 		RTTR_REGISTRATION_FRIEND
 
