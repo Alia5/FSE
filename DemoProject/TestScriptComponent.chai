@@ -1,0 +1,26 @@
+class TestScriptComponent
+{
+    auto _parent;
+    auto attachedObject;
+    def TestScriptComponent(parent)
+    {
+        this._parent = parent;
+        this.attachedObject = this._parent.getAttachedObject();
+
+        this._parent.onAttachCallback = fun(this){ this.onAttach(); };
+        this._parent.updateCallback = fun(this, deltaTime){ this.update(deltaTime); };
+    }
+
+    def onAttach()
+    {
+        print("TestScriptComponent attached to object:"
+                + this.attachedObject.getID().to_string() + "!");
+    }
+
+    def update(float deltaTime)
+    {
+        //print(this.attachedObject.getAABBs().top);
+    }
+    
+}
+

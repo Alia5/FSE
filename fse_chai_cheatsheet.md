@@ -15,6 +15,34 @@ This cheatsheet is FSEs addition to the regular Chaiscript cheatsheet
     
 ## TYPES
 
+#### Section: Component
+
+#### Component
+
+##### Funcs
+- FSEObject **getAttachedObject**()
+- void **attachToObject**(FSEObject)
+- bool **isAttached**()
+- ? **lock**()
+- ? **valid**()
+#### ScriptComponent
+
+##### Parent: [Component](#component)  
+
+##### CTORS
+- **ScriptComponent**(string)
+
+##### Funcs
+- ? **isInitialized**()
+- ? **getScriptName**()
+- ? **_child**()
+- :attr: **updateCallback**
+- :attr: **onAttachCallback**
+- :attr: **onDetachCallback**
+- :attr: **beginContactCallback**
+- :attr: **endContactCallback**
+- :attr: **preSolveCallback**
+- :attr: **postSolveCallback**
 #### Section: BaseLib
 
 #### Vector2f
@@ -112,14 +140,22 @@ This cheatsheet is FSEs addition to the regular Chaiscript cheatsheet
 - int **getID**()
 - int **getZOrder**()
 - void **setZOrder**(int)
+- bool **isPendingKill**()
+- void **setTimedKill**()
 - Vector2f **getPosition**()
 - void **setPosition**(Vector2f position)
 - ? **setPosition**(float x, float y)
 - FloatRect **getAABBs**()
 - bool **destroy**()
 - Scene **getScene**()
+- ? **getInput**()
+- weak_ptr<Component> **attachComponent**(shared_ptr<Component>)
+- shared_ptr<Component> **detachComponent**(Component)
+- vector<shared_ptr<Component>> **getComponents**()
 - ? **getTypeName**()
 - ? **type_name**()
+- ? **lock**()
+- ? **valid**()
 #### KillVolume
 
 ##### Parent: [FSEObject](#fseobject)  
@@ -130,9 +166,41 @@ This cheatsheet is FSEs addition to the regular Chaiscript cheatsheet
 ##### Funcs
 - Vector2f **getSize**()
 - void **setSize**(Vector2f size)
+#### ScriptObject
+
+##### Parent: [FSEObject](#fseobject)  
+
+##### CTORS
+- **ScriptObject**(string)
+
+##### Funcs
+- ? **isInitialized**()
+- ? **getScriptName**()
+- ? **_child**()
+- :attr: **spawnedCallback**
+- :attr: **onDespawnCallback**
+- :attr: **updateCallback**
+- :attr: **drawCallback**
+- :attr: **drawNormalsCallback**
+- :attr: **drawSpecularCallback**
+- :attr: **setPositionCallback**
+- :attr: **getPositionCallback**
+- :attr: **getAABBsCallback**
+- :attr: **beginContactCallback**
+- :attr: **endContactCallback**
+- :attr: **preSolveCallback**
+- :attr: **postSolveCallback**
+- :attr: **destroyCallback**
+- :attr: **beginContactComponentsCallback**
+- :attr: **endContactComponentsCallback**
+- :attr: **preSolveComponentsCallback**
+- :attr: **postSolveComponentsCallback**
 #### Timer
 
 ##### Parent: [FSEObject](#fseobject)  
+
+##### CTORS
+- **Timer**()
 
 ##### Funcs
 - :attr: **active**
@@ -212,6 +280,6 @@ This cheatsheet is FSEs addition to the regular Chaiscript cheatsheet
 - void **setPhysDrawDebug**(bool)
 - FSELightWorld **getLightWorld**()
 - b2World **getPhysWorld**()
-- void **spawnObject**(shared_ptr<FSEObject>)
+- weak_ptr<FSEObject> **spawnObject**(shared_ptr<FSEObject>)
 - ? **getObjects**()
 - shared_ptr<FSEObject>> **getObjectWithId**()

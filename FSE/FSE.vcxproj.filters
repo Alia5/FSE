@@ -267,6 +267,9 @@
     <ClInclude Include="FSEObject\ScriptObject.h">
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
+    <ClInclude Include="Component\ScriptComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -409,6 +412,9 @@
     </ClCompile>
     <ClCompile Include="FSEObject\ScriptObject.cpp">
       <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\ScriptComponent.cpp">
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

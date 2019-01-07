@@ -9,6 +9,7 @@
 #include "FSE/Lights/SpotLight.h"
 #include "FSE/FSEObject/KillVolume.h"
 #include "FSE/FSEObject/ScriptObject.h"
+#include "FSE/Component/ScriptComponent.h"
 
 
 void DemoApp::init()
@@ -36,6 +37,7 @@ void DemoApp::init()
 	auto fuckThisShit3 = std::make_shared<fse::SpotLight>();
 	auto fuckThisShit4 = std::make_shared<fse::KillVolume>();
 	auto fuckThisShit5 = std::make_shared<fse::ScriptObject>("");
+	auto fuckThisShit6 = std::make_shared<fse::ScriptComponent>("");
 
 }
 

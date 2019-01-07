@@ -237,6 +237,11 @@ def fill_ctors(cheatsheet_class, file_contents)
     argindex = file_contents.index(argindex_search_string, startindex)
 
     if argindex.nil?
+      argindex_search_string = "<#{name}>("
+      argindex = file_contents.index(argindex_search_string, startindex)
+    end
+
+    if argindex.nil?
       argindex_search_string = "<sf::#{name}("
       argindex = file_contents.index(argindex_search_string, startindex)
     end

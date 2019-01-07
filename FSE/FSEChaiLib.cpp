@@ -89,6 +89,10 @@ namespace fse
 				chai.add(chaiscript::vector_conversion<std::vector<std::shared_ptr<FSEObject>>>());
 				chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::shared_ptr<FSEObject>>>("ObjectList"));
 
+
+				chai.add(chaiscript::vector_conversion<std::vector<std::weak_ptr<FSEObject>>>());
+				chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::weak_ptr<FSEObject>>>("WeakObjectList"));
+
 				chai.add(chaiscript::vector_conversion<std::vector<Light*>>());
 				chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<Light*>>("LightList"));
 

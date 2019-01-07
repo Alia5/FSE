@@ -223,6 +223,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneDebugger.h" />
     <ClInclude Include="FSEObject\ScriptObject.h" />
+    <ClInclude Include="Component\ScriptComponent.h" />
     <ClInclude Include="Serialize.h" />
     <ClInclude Include="Signals.h" />
   </ItemGroup>
@@ -273,6 +274,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneDebugger.cpp" />
     <ClCompile Include="FSEObject\ScriptObject.cpp" />
+    <ClCompile Include="Component\ScriptComponent.cpp" />
     <ClCompile Include="Serialize.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
