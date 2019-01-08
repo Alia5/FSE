@@ -13,3 +13,6 @@
 [submodule "chaiscript"]
 	path = chaiscript
 	url = https://github.com/ChaiScript/ChaiScript
+[submodule "ChaiScript_Extras"]
+	path = ChaiScript_Extras
+	url = git@github.com:ChaiScript/ChaiScript_Extras.git

@@ -8,6 +8,10 @@
 #include "Lights/SpotLight.h"
 #include "Random.h"
 
+#include <chaiscript/extras/math.hpp>
+#include <chaiscript/extras/string_methods.hpp>
+
+
 namespace fse
 {
 	namespace priv
@@ -15,8 +19,13 @@ namespace fse
 		void FSEChaiLib::Init(chaiscript::ChaiScript& chai)
 		{
 			
+				chai.add(chaiscript::extras::math::bootstrap());
+				chai.add(chaiscript::extras::string_methods::bootstrap());
+
 				chai.add(fse::Random::bootstrap());
-			
+
+
+
 				chai.add(chaiscript::user_type<sf::Vector2f>(), "Vector2f");
 				chai.add(chaiscript::fun(&sf::Vector2f::x), "x");
 				chai.add(chaiscript::fun(&sf::Vector2f::y), "y");
