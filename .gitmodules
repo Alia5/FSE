@@ -16,3 +16,6 @@
 [submodule "ChaiScript_Extras"]
 	path = ChaiScript_Extras
 	url = git@github.com:ChaiScript/ChaiScript_Extras.git
+[submodule "ChaiScript_Extras_Liquidfun"]
+	path = ChaiScript_Extras_Liquidfun
+	url = https://github.com/Alia5/ChaiScript_Extras_Liquidfun

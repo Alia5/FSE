@@ -270,6 +270,9 @@
     <ClInclude Include="Component\ScriptComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
+    <ClInclude Include="..\ChaiScript_Extras_Liquidfun\include\chaiscript\extras\box2d.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">

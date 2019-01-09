@@ -19,7 +19,7 @@ class TestScriptComponent
 
     def update(float deltaTime)
     {
-        //print(this.attachedObject.getAABBs().top);
+        print(this.attachedObject.getAABBs().top);
     }
     
 }

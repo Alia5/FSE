@@ -204,7 +204,6 @@ void CeilingLamp::shapeFromSprite()
 
 	phys_body_ = scene_->getPhysWorld()->CreateBody(&testbdef);
 
-
 	if (!light_shapes_.empty())
 	{
 		for (auto& lshape : light_shapes_)
