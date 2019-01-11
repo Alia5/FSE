@@ -2,13 +2,23 @@ class TestScriptObjectChild
 {
     auto _parent;
     auto timeAkku;
+    auto rectangleShape;
     def TestScriptObjectChild(parent)
     {
         this._parent = parent;
         this.timeAkku = 0.0;
 
+        this.rectangleShape = RectangleShape(Vector2f(50,50));
+        this.rectangleShape.setFillColor(Red);
+
         this._parent.spawnedCallback = fun(this){ this.spawned(); };
         this._parent.updateCallback = fun(this, deltaTime){ this.update(deltaTime); };
+        this._parent.drawCallback = fun(this, renderTarget){ this.draw(renderTarget); };
+        this._parent.getPositionCallback = fun(this){ return this.getPosition(); };
+        this._parent.setPositionCallback = fun(this, position){
+             this.setPosition(position); 
+        };
+        this._parent.setZOrder(200);
     }
 
     def spawned()
@@ -20,12 +30,24 @@ class TestScriptObjectChild
     {
         this.timeAkku += deltaTime;
         //print(this.timeAkku);
-        //print(this will break);
+    }
+
+    def getPosition()
+    {
+        return this._parent.position; //optional, 
+    }
+
+    def setPosition(position)
+    {
+        this._parent.position = position; //update parents position
+        this.rectangleShape.setPosition(position * 25.0); 
+        // ^ position in meters, value hardcoded since methods are missing
+    }
+
+    def draw(renderTarget)
+    {
+        renderTarget.draw(this.rectangleShape);
     }
     
-
-
-
-
 }
 

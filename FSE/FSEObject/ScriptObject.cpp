@@ -28,7 +28,7 @@ namespace fse
 
 			chai->set_global(chaiscript::var(std::ref(*scene_)), "scriptObjectScene");
 			script_child_ = chai->eval(std::string(
-				classname + "(scriptObjectScene.getObjectWithId("+  std::to_string(getID()) + "));"));
+				classname + "(scriptObjectScene.getObjectWithId("+  std::to_string(getID()) + ").lock());"));
 
 			initialized_ = true;
 
@@ -109,6 +109,9 @@ namespace fse
 			if (setPositionFun != nullptr)
 				setPositionFun(script_child_, position);
 		}
+		catch (const chaiscript::exception::eval_error& error) {
+			std::cerr << error.pretty_print() << '\n';
+		}
 		catch (const std::exception& e)
 		{
 			std::cerr << e.what() << "\n";
@@ -120,6 +123,9 @@ namespace fse
 		try {
 			if (getPositionFun != nullptr)
 				return getPositionFun(script_child_);
+		}
+		catch (const chaiscript::exception::eval_error& error) {
+			std::cerr << error.pretty_print() << '\n';
 		}
 		catch (const std::exception& e)
 		{
@@ -271,6 +277,8 @@ namespace fse
 		{
 			return object->script_child_;
 		}), "_child");
+
+		chai.add(chaiscript::fun(&ScriptObject::position_), "position");
 
 		chai.add(chaiscript::fun(&ScriptObject::spawnedFun), "spawnedCallback");
 		chai.add(chaiscript::fun(&ScriptObject::onDespawnFun), "onDespawnCallback");
