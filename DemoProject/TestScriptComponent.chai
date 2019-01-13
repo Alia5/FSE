@@ -13,8 +13,7 @@ class TestScriptComponent
 
     def onAttach()
     {
-        print("TestScriptComponent attached to object:"
-                + this.attachedObject.getID().to_string() + "!");
+        print("TestScriptComponent attached to object:" + this.attachedObject.getID().to_string() + "!");
     }
 
     def update(float deltaTime)
