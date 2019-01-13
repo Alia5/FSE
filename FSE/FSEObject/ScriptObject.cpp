@@ -56,6 +56,7 @@ namespace fse
 
 	void ScriptObject::update(float deltaTime)
 	{
+		FSEObject::update(deltaTime);
 		try {
 			if (updateFun != nullptr)
 				updateFun(script_child_, deltaTime);
