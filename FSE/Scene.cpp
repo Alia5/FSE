@@ -117,6 +117,13 @@ namespace fse
 		return object;
 	}
 
+	template<typename SpawnedSlot>
+	void Scene::spawnFSEObject(std::shared_ptr<FSEObject> object, SpawnedSlot&& slot)
+	{
+		object->spawned_signal_.connect(slot);
+		pending_object_spawns_.push_back(object);
+	}
+
 	void Scene::destroyFSEObject(FSEObject* object)
 	{
 		pending_object_removals_.push_back(object);

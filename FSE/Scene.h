@@ -93,11 +93,7 @@ namespace fse
 		 * \param slot callback when object is spawned
 		 */
 		template<typename SpawnedSlot>
-		void spawnFSEObject(std::shared_ptr<FSEObject> object, SpawnedSlot&& slot)
-		{
-			object->spawned_signal_.connect(slot);
-			pending_object_spawns_.push_back(object);
-		}
+		void spawnFSEObject(std::shared_ptr<FSEObject> object, SpawnedSlot&& slot);
 
 		/*!
 		 * \brief Create and spawn FSEObject
