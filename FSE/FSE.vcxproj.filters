@@ -270,6 +270,9 @@
     <ClInclude Include="Component\ScriptComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
+    <ClInclude Include="FSEObject\TileMap.h">
+      <Filter>Header Files\FSEObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -415,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="Component\ScriptComponent.cpp">
       <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEObject\TileMap.cpp">
+      <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
