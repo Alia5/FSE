@@ -585,7 +585,7 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 					secondEdgeRay = point - (sourceCenter - perpendicularOffset);
 					outerBoundaryVector = secondEdgeRay;
 
-					if (!outerBoundaryVectors.empty()) 
+					if (!outerBoundaryVectors.empty() && !outerBoundaryIndices.empty())
 					{
 						outerBoundaryVectors[0] = penumbra._darkEdge;
 						outerBoundaryIndices[0] = penumbraIndex;
@@ -603,7 +603,7 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 
 					hasPrevPenumbra = false;
 
-					if (!outerBoundaryVectors.empty()) 
+					if (!outerBoundaryVectors.empty() && !outerBoundaryIndices.empty())
 					{
 						outerBoundaryVectors[0] = penumbra._darkEdge;
 						outerBoundaryIndices[0] = penumbraIndex;
@@ -646,7 +646,7 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 					secondEdgeRay = point - (sourceCenter - perpendicularOffset);
 					outerBoundaryVector = firstEdgeRay;
 
-					if (!outerBoundaryVectors.empty()) 
+					if (!outerBoundaryVectors.empty() && !outerBoundaryIndices.empty())
 					{
 						outerBoundaryVectors[1] = penumbra._darkEdge;
 						outerBoundaryIndices[1] = penumbraIndex;
@@ -664,7 +664,7 @@ void LightPointEmission::getPenumbrasPoint(std::vector<priv::Penumbra>& penumbra
 
 					hasPrevPenumbra = false;
 
-					if (!outerBoundaryVectors.empty()) 
+					if (!outerBoundaryVectors.empty() && !outerBoundaryIndices.empty())
 					{
 						outerBoundaryVectors[1] = penumbra._darkEdge;
 						outerBoundaryIndices[1] = penumbraIndex;
