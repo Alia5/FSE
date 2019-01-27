@@ -27,8 +27,8 @@ void ImageOutlineFinder::findOutLines(const sf::Image& image, const int alpha_th
 sf::Vector2i ImageOutlineFinder::findStartingPoint() const
 {
 
-	for (unsigned int cx = 0; cx < image_.getSize().x; cx++) {
-		for (unsigned int cy = 0; cy < image_.getSize().y; cy++) {
+	for (unsigned int cx = 1; cx < image_.getSize().x; cx++) {
+		for (unsigned int cy = 1; cy < image_.getSize().y; cy++) {
 			if (isBoundary({ static_cast<int>(cx), static_cast<int>(cy) })) {
 				return { static_cast<int>(cx), static_cast<int>(cy) };
 			}
@@ -153,6 +153,9 @@ std::vector<sf::Vector2f> ImageOutlineFinder::getSimplifiedVertices(const float 
 	std::vector<sf::Vector2f> smoothed_line;
 	std::vector<sf::Vector2f> simplified_line;
 
+	if (vertices_.size() == 0)
+		return std::vector<sf::Vector2f>();
+
 	smoothed_line.emplace_back(vertices_[0].x, vertices_[0].y);
 	std::vector<sf::Vector2f>  average_vertices;
 
@@ -276,12 +279,28 @@ std::vector<std::vector<sf::Vector2f>> ImageOutlineFinder::getSimplifiedPolys(fl
 	
 	auto simplverts = getSimplifiedVertices(limit, average, average_after);
 	std::vector<b2Vec2> cloud;
-	cloud.reserve(simplverts.size());
 
-	for (const auto & vert : simplverts)
+	if (limit < 0)
 	{
-		cloud.emplace_back(vert.x, vert.y);
+		cloud.reserve(simplverts.size());
+
+		for (const auto & vert : simplverts)
+		{
+			cloud.emplace_back(vert.x, vert.y);
+		}
+	} 
+	else
+	{
+		cloud.reserve(vertices_.size());
+
+		for (const auto & vert : vertices_)
+		{
+			cloud.emplace_back(vert.x, vert.y);
+		}		
 	}
+
+	if (cloud.size() < 3)
+		return std::vector<std::vector<sf::Vector2f>>();
 
 	b2Polygon polygon = ConvexHull(cloud.data(), cloud.size());
 
