@@ -438,8 +438,18 @@ namespace fse
 								t = t.get_wrapped_type();
 								v = v.extract_wrapped_value();
 							}
+
 							auto inst = rttr::instance(v);
-							ShowObjectEditorItems(t, &inst);
+							if (item_edit_funcs_.count(t))
+							{
+								std::string vname(std::string(prop.get_name().data()) + "[" + std::to_string(i) + "]");
+								vname += "##" + std::to_string(reinterpret_cast<size_t>(&inst));
+								item_edit_funcs_[t](v, vname, &inst);
+							}
+							else
+							{
+								ShowObjectEditorItems(t, &inst);
+							}
 							if (bkup != val)
 								arr.set_value(i, v);
 

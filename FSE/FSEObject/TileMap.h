@@ -34,9 +34,15 @@ namespace fse
 		void setTileIndices(const std::vector<std::vector<int>>& tile_indices);
 		void setTileIndices(const std::string& csv);
 
+		std::vector<int> getTileIndices1D() const;
+		void setTileIndices1D(std::vector<int> indices);
 
+
+		bool hasCollision() const;
+		void setHasCollision(bool has_collision);
+		bool blocksLight() const;
+		void setBlocksLight(bool blocks_light);
 	private:
-
 		std::string texture_path_;
 		sf::Vector2i tile_size_;
 		sf::Vector2i map_size_;
@@ -50,6 +56,9 @@ namespace fse
 
 		std::vector<b2Body*> tile_bodies_;
 		std::vector<ltbl::LightShape*> light_shapes_;
+
+		bool has_collision_ = true;
+		bool blocks_light_ = true;
 
 		FSE_CHAI_ENABLE(TileMap);
 		FSE_CHAI_REGISTRATION_FRIEND

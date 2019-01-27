@@ -236,7 +236,14 @@ namespace fse
 						v = v.extract_wrapped_value();
 					}
 					auto inst = rttr::instance(v);
-					serializeTypes(t, inst, writer);
+					if (serialize_type_funs_.count(t))
+					{
+						serialize_type_funs_[t](v, inst, writer);
+					}
+					else
+					{
+						serializeTypes(t, inst, writer);
+					}
 				}
 
 				writer.EndArray();
@@ -527,6 +534,42 @@ namespace fse
 				else
 					object = ctor.invoke();
 
+				FSEObject* ptr = object.get_value<std::shared_ptr<fse::FSEObject>>().get();
+				auto t = rttr::type::get(*ptr);
+				if (t != type)
+					break;
+
+				for (auto& prop : type.get_properties())
+				{
+					if (prop.is_readonly())
+						continue;
+					if (prop.get_metadata("BEFORE_SPAWN"))
+					{
+						if (std::find(used_json_vals.begin(), used_json_vals.end(),
+							std::string(prop.get_name().data()))
+							!= used_json_vals.end())
+							continue;
+
+						std::string key(prop.get_name().data());
+						auto json_memb = jsonValue.FindMember(key.data());
+						if (json_memb == jsonValue.MemberEnd())
+							continue;
+
+						auto& tval = json_memb->value;
+						{
+							auto val = prop.get_value(ptr);
+							extractFromJson(val, tval, scene);
+							if (val.get_type() != prop.get_type())
+							{
+								val.convert(prop.get_type());
+							}
+
+							if (val != prop.get_value(ptr))
+								prop.set_value(ptr, val);
+						}
+					}
+				}
+
 				scene->spawnFSEObject(object.get_value<std::shared_ptr<fse::FSEObject>>());
 				scene->processPendingSpawns();
 
@@ -541,6 +584,8 @@ namespace fse
 					for (auto& prop : type.get_properties())
 					{
 						if (prop.is_readonly())
+							continue;
+						if (prop.get_metadata("BEFORE_SPAWN"))
 							continue;
 						if (std::find(used_json_vals.begin(), used_json_vals.end(),
 								std::string(prop.get_name().data()))

@@ -3,7 +3,6 @@
 #include "../Lights/FSELightWorld.h"
 #include "../ImageOutlineFinder.h"
 #include "../FMath.h"
-#include "KillVolume.h"
 
 namespace fse
 {
@@ -13,11 +12,11 @@ namespace fse
 
 	TileMap::TileMap(const sf::Vector2f& spawnPos) : FSEObject(spawnPos)
 	{
-		tile_size_ = sf::Vector2i(128, 128);
+		/*tile_size_ = sf::Vector2i(128, 128);
 		map_size_ = sf::Vector2i(10, 10);
 		texture_path_ = "spritesheet_ground.png";
 		setTileIndices("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,57,49,41,0,0,25,33,0,0,0,0,0,0,0,0,0,0,0,0,0,113,105,0,97,9,89,0,65,0,0,0,0,121,0,0,0,121,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
-
+*/
 	}
 
 	TileMap::~TileMap()
@@ -86,61 +85,75 @@ namespace fse
 					temp_texture.draw(temp_sprite);
 					temp_texture.display();
 
-					ImageOutlineFinder finder;
-					finder.findOutLines(temp_texture.getTexture().copyToImage(),25);
-					auto polys = finder.getSimplifiedPolys(0.0018f, 1);
-					if (polys.empty())
+					if (has_collision_ || blocks_light_)
 					{
-						polys = finder.getSimplifiedPolys(-1.f, 1);
-					}
-
-					b2BodyDef testbdef;
-
-					testbdef.type = b2_staticBody;
-					testbdef.position.Set(position_.x, position_.y);
-					testbdef.userData = this;
-
-					b2Body* body = scene_->getPhysWorld()->CreateBody(&testbdef);
-					body->SetTransform(b2Vec2(
-						x * tile_size_.x + tile_size_.x / 2.f - (map_size_.x * tile_size_.x / 2.f),
-						y * tile_size_.y + tile_size_.y / 2.f - (map_size_.y * tile_size_.y / 2.f)
-					) * scene_->getMetersPerPixel() + fse::FMath::sfVec2fTob2Vec2(position_), body->GetAngle());
-					ltbl::LightShape* light_shape = nullptr;
-					for (auto& poly : polys)
-					{
-						b2FixtureDef fdef;
-						fdef.friction = 0.5f;
-						fdef.restitution = 0.001f;
-						std::vector<b2Vec2> verts;
-
-						for (auto & point : poly)
+						ImageOutlineFinder finder;
+						finder.findOutLines(temp_texture.getTexture().copyToImage(), 25);
+						auto polys = finder.getSimplifiedPolys(0.0018f, 1);
+						if (polys.empty())
 						{
-							verts.emplace_back(point.x * scene_->getMetersPerPixel(), point.y * scene_->getMetersPerPixel());
+							polys = finder.getSimplifiedPolys(-1.f, 1);
 						}
-						b2PolygonShape poly_shape;
-						poly_shape.Set(verts.data(), verts.size());
-						fdef.shape = &poly_shape;
-						auto fixture = body->CreateFixture(&fdef);
 
-						sf::ConvexShape shape;
-						shape.setPointCount(poly.size());
-						int j = 0;
-						for (auto & point : poly)
+						b2Body* body = nullptr;
+						if (has_collision_)
 						{
-							shape.setPoint(j, point);
-							j++;
+							b2BodyDef testbdef;
+
+							testbdef.type = b2_staticBody;
+							testbdef.position.Set(position_.x, position_.y);
+							testbdef.userData = this;
+
+							body = scene_->getPhysWorld()->CreateBody(&testbdef);
+							body->SetTransform(b2Vec2(
+								x * tile_size_.x + tile_size_.x / 2.f - (map_size_.x * tile_size_.x / 2.f),
+								y * tile_size_.y + tile_size_.y / 2.f - (map_size_.y * tile_size_.y / 2.f)
+							) * scene_->getMetersPerPixel() + fse::FMath::sfVec2fTob2Vec2(position_), body->GetAngle());
 						}
-						light_shape = getScene()->getLightWorld()->getLightSystem()->createLightShape(shape);
-						light_shape->setPosition(fse::FMath::b2Vec2ToSfVec2f(body->GetTransform().p) * scene_->getPixelsPerMeter());
-						light_shape->setRenderLightOver(true);
-						light_shape->setReceiveShadow(false);
-						light_shapes_.push_back(light_shape);
 
+						ltbl::LightShape* light_shape = nullptr;
+						for (auto& poly : polys)
+						{
+							b2FixtureDef fdef;
+							fdef.friction = 0.5f;
+							fdef.restitution = 0.001f;
+							std::vector<b2Vec2> verts;
+
+							for (auto & point : poly)
+							{
+								verts.emplace_back(point.x * scene_->getMetersPerPixel(), point.y * scene_->getMetersPerPixel());
+							}
+							if (has_collision_)
+							{
+								b2PolygonShape poly_shape;
+								poly_shape.Set(verts.data(), verts.size());
+								fdef.shape = &poly_shape;
+								auto fixture = body->CreateFixture(&fdef);
+							}
+
+							if (blocks_light_)
+							{
+								sf::ConvexShape shape;
+								shape.setPointCount(poly.size());
+								int j = 0;
+								for (auto & point : poly)
+								{
+									shape.setPoint(j, point);
+									j++;
+								}
+								light_shape = getScene()->getLightWorld()->getLightSystem()->createLightShape(shape);
+								light_shape->setPosition(fse::FMath::b2Vec2ToSfVec2f(body->GetTransform().p) * scene_->getPixelsPerMeter());
+								light_shape->setRenderLightOver(true);
+								light_shape->setReceiveShadow(false);
+								light_shapes_.push_back(light_shape);
+							}
+
+						}
+						if (has_collision_)
+						{
+							tile_bodies_.push_back(body);
+						}
 					}
-					tile_bodies_.push_back(body);
-
-
-
 				}
 
 			}
@@ -273,6 +286,56 @@ namespace fse
 		}
 	}
 
+	std::vector<int> TileMap::getTileIndices1D() const
+	{
+		std::vector<int> result;
+		result.reserve(map_size_.x * map_size_.y);
+		for (auto & x_vec : tile_indices_)
+		{
+			for (auto & val : x_vec)
+			{
+				result.push_back(val);
+			}
+		}
+		return result;
+	}
+
+	void TileMap::setTileIndices1D(std::vector<int> indices)
+	{
+		tile_indices_.clear();
+		for (int k = 0, i = 0; i < map_size_.y; i++)
+		{
+			std::vector<int> x_vector;
+			x_vector.reserve(map_size_.x);
+			for (int j = 0; j < map_size_.x; j++)
+			{
+				x_vector.push_back(indices[k]);
+				k++;
+			}
+			tile_indices_.push_back(x_vector);
+		}
+	}
+
+	bool TileMap::hasCollision() const
+	{
+		return has_collision_;
+	}
+
+	void TileMap::setHasCollision(bool has_collision)
+	{
+		has_collision_ = has_collision;
+	}
+
+	bool TileMap::blocksLight() const
+	{
+		return blocks_light_;
+	}
+
+	void TileMap::setBlocksLight(bool blocks_light)
+	{
+		blocks_light_ = blocks_light;
+	}
+
 
 	FSE_CHAI_REGISTER(TileMap)
 	{
@@ -288,6 +351,12 @@ namespace fse
 		chai.add(chaiscript::fun(&TileMap::getTileIndices), "getTileIndices");
 		chai.add(chaiscript::fun(static_cast<void(TileMap::*)(const std::vector<std::vector<int>>&)>(&TileMap::setTileIndices)), "setTileIndices");
 		chai.add(chaiscript::fun(static_cast<void(TileMap::*)(const std::string&)>(&TileMap::setTileIndices)), "setTileIndices");
+		chai.add(chaiscript::fun(&TileMap::getTileIndices1D), "getTileIndices1D");
+		chai.add(chaiscript::fun(&TileMap::setTileIndices1D), "setTileIndices1D");
+		chai.add(chaiscript::fun(&TileMap::hasCollision), "hasCollision");
+		chai.add(chaiscript::fun(&TileMap::setHasCollision), "setHasCollision");
+		chai.add(chaiscript::fun(&TileMap::blocksLight), "blocksLight");
+		chai.add(chaiscript::fun(&TileMap::setBlocksLight), "setBlocksLight");
 	}
 
 }
@@ -308,9 +377,29 @@ RTTR_REGISTRATION
 			parameter_names("spawn position")
 		)
 		.property("texture_path_", &TileMap::texture_path_)
+		(
+			metadata("BEFORE_SPAWN", true)
+		)
 		.property("tile_size_", &TileMap::tile_size_)
+		(
+			metadata("BEFORE_SPAWN", true)
+		)
 		.property("map_size_", &TileMap::map_size_)
-		.property("tile_indices_", &TileMap::tile_indices_)
+		(
+			metadata("BEFORE_SPAWN", true)
+		)
+		.property("tile_indices_", &TileMap::getTileIndices1D, &TileMap::setTileIndices1D)
+		(
+			metadata("BEFORE_SPAWN", true)
+		)
+		.property("has_collision_", &TileMap::has_collision_)
+		(
+			metadata("BEFORE_SPAWN", true)
+		)
+		.property("blocks_light_", &TileMap::blocks_light_)
+		(
+			metadata("BEFORE_SPAWN", true)
+		)
 		.property("tile_bodies_", &TileMap::tile_bodies_)
 		(
 			metadata("NO_SERIALIZE", true)
