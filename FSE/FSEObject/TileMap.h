@@ -23,6 +23,7 @@ namespace fse
 		void setPosition(const sf::Vector2f position) override;
 		sf::FloatRect GetAABBs() const override;
 
+		void generate();
 
 		std::string getTexturePath() const;
 		void setTexturePath(const std::string& texture_path);
@@ -42,6 +43,7 @@ namespace fse
 		void setHasCollision(bool has_collision);
 		bool blocksLight() const;
 		void setBlocksLight(bool blocks_light);
+
 	private:
 		std::string texture_path_;
 		sf::Vector2i tile_size_;
@@ -59,6 +61,8 @@ namespace fse
 
 		bool has_collision_ = true;
 		bool blocks_light_ = true;
+
+		bool has_spawned_ = false;
 
 		FSE_CHAI_ENABLE(TileMap);
 		FSE_CHAI_REGISTRATION_FRIEND

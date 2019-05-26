@@ -12,11 +12,7 @@ namespace fse
 
 	TileMap::TileMap(const sf::Vector2f& spawnPos) : FSEObject(spawnPos)
 	{
-		/*tile_size_ = sf::Vector2i(128, 128);
-		map_size_ = sf::Vector2i(10, 10);
-		texture_path_ = "spritesheet_ground.png";
-		setTileIndices("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,57,49,41,0,0,25,33,0,0,0,0,0,0,0,0,0,0,0,0,0,113,105,0,97,9,89,0,65,0,0,0,0,121,0,0,0,121,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
-*/
+
 	}
 
 	TileMap::~TileMap()
@@ -42,122 +38,8 @@ namespace fse
 
 		sprite_.setPosition(position_ * scene_->getPixelsPerMeter());
 
-		vertices_.setPrimitiveType(sf::Quads);
-		vertices_.resize(static_cast<size_t>(map_size_.x * map_size_.y * 4));
-
-		sf::RenderTexture temp_texture;
-		temp_texture.create(tile_size_.x+2, tile_size_.y+2);
-		sf::Sprite temp_sprite;
-
-		for (int x = 0; x < map_size_.x; x++)
-		{
-			for (int y = 0; y < map_size_.y; y++)
-			{
-				sf::Vertex* quad = &vertices_[static_cast<size_t>((x + y * map_size_.x) * 4)];
-				quad[0].position = sf::Vector2f(x * tile_size_.x, y * tile_size_.y);
-				quad[1].position = sf::Vector2f((x + 1) * tile_size_.x, y * tile_size_.y);
-				quad[2].position = sf::Vector2f((x + 1) * tile_size_.x, (y + 1) * tile_size_.y);
-				quad[3].position = sf::Vector2f(x * tile_size_.x, (y + 1) * tile_size_.y);
-				const int tiles_on_x = ground_sheet_texture_->getSize().x / tile_size_.x;
-				const int tile_index = tile_indices_[y][x];
-				if (tile_index == 0)
-				{
-					quad[0].texCoords = sf::Vector2f(ground_sheet_texture_->getSize().x, ground_sheet_texture_->getSize().y);
-					quad[1].texCoords = sf::Vector2f(ground_sheet_texture_->getSize().x, ground_sheet_texture_->getSize().y);
-					quad[2].texCoords = sf::Vector2f(ground_sheet_texture_->getSize().x, ground_sheet_texture_->getSize().y);
-					quad[3].texCoords = sf::Vector2f(ground_sheet_texture_->getSize().x, ground_sheet_texture_->getSize().y);
-				}
-				else
-				{
-					int tu = (tile_index % tiles_on_x) - 1;
-					int tv = std::floor(tile_index / tiles_on_x);
-
-					quad[0].texCoords = sf::Vector2f(tu * tile_size_.x, tv * tile_size_.y);
-					quad[1].texCoords = sf::Vector2f((tu + 1) * tile_size_.x, tv * tile_size_.y);
-					quad[2].texCoords = sf::Vector2f((tu + 1) * tile_size_.x, (tv + 1) * tile_size_.y);
-					quad[3].texCoords = sf::Vector2f(tu * tile_size_.x, (tv + 1) * tile_size_.y);
-
-
-					temp_texture.clear(sf::Color::Transparent);
-					temp_sprite.setTexture(*ground_sheet_texture_);
-					temp_sprite.setTextureRect(sf::IntRect(tu * tile_size_.x, tv * tile_size_.y, tile_size_.x, tile_size_.y));
-					temp_sprite.setPosition({ 1,1 });
-					temp_texture.draw(temp_sprite);
-					temp_texture.display();
-
-					if (has_collision_ || blocks_light_)
-					{
-						ImageOutlineFinder finder;
-						finder.findOutLines(temp_texture.getTexture().copyToImage(), 25);
-						auto polys = finder.getSimplifiedPolys(0.0018f, 1);
-						if (polys.empty())
-						{
-							polys = finder.getSimplifiedPolys(-1.f, 1);
-						}
-
-						b2Body* body = nullptr;
-						if (has_collision_)
-						{
-							b2BodyDef testbdef;
-
-							testbdef.type = b2_staticBody;
-							testbdef.position.Set(position_.x, position_.y);
-							testbdef.userData = this;
-
-							body = scene_->getPhysWorld()->CreateBody(&testbdef);
-							body->SetTransform(b2Vec2(
-								x * tile_size_.x + tile_size_.x / 2.f - (map_size_.x * tile_size_.x / 2.f),
-								y * tile_size_.y + tile_size_.y / 2.f - (map_size_.y * tile_size_.y / 2.f)
-							) * scene_->getMetersPerPixel() + fse::FMath::sfVec2fTob2Vec2(position_), body->GetAngle());
-						}
-
-						ltbl::LightShape* light_shape = nullptr;
-						for (auto& poly : polys)
-						{
-							b2FixtureDef fdef;
-							fdef.friction = 0.5f;
-							fdef.restitution = 0.001f;
-							std::vector<b2Vec2> verts;
-
-							for (auto & point : poly)
-							{
-								verts.emplace_back(point.x * scene_->getMetersPerPixel(), point.y * scene_->getMetersPerPixel());
-							}
-							if (has_collision_)
-							{
-								b2PolygonShape poly_shape;
-								poly_shape.Set(verts.data(), verts.size());
-								fdef.shape = &poly_shape;
-								auto fixture = body->CreateFixture(&fdef);
-							}
-
-							if (blocks_light_)
-							{
-								sf::ConvexShape shape;
-								shape.setPointCount(poly.size());
-								int j = 0;
-								for (auto & point : poly)
-								{
-									shape.setPoint(j, point);
-									j++;
-								}
-								light_shape = getScene()->getLightWorld()->getLightSystem()->createLightShape(shape);
-								light_shape->setPosition(fse::FMath::b2Vec2ToSfVec2f(body->GetTransform().p) * scene_->getPixelsPerMeter());
-								light_shape->setRenderLightOver(true);
-								light_shape->setReceiveShadow(false);
-								light_shapes_.push_back(light_shape);
-							}
-
-						}
-						if (has_collision_)
-						{
-							tile_bodies_.push_back(body);
-						}
-					}
-				}
-
-			}
-		}
+		generate();
+		has_spawned_ = true;
 
 	}
 
@@ -165,10 +47,15 @@ namespace fse
 	{
 		for (const auto& body : tile_bodies_)
 			scene_->getPhysWorld()->DestroyBody(body);
+		tile_bodies_.clear();
+
 
 		for (const auto& shape : light_shapes_)
 			scene_->getLightWorld()->getLightSystem()->removeShape(shape);
+		light_shapes_.clear();
 	}
+
+	
 
 	void TileMap::update(float deltaTime)
 	{
@@ -217,6 +104,138 @@ namespace fse
 	sf::FloatRect TileMap::GetAABBs() const
 	{
 		return sprite_.getGlobalBounds();
+	}
+
+	void TileMap::generate()
+	{
+		 // TODO: Clean up/split up, regenerate only what is neccessary in 3 or more funs
+		vertices_.setPrimitiveType(sf::Quads);
+		vertices_.resize(static_cast<size_t>(map_size_.x * map_size_.y * 4));
+
+		for (const auto& body : tile_bodies_)
+			scene_->getPhysWorld()->DestroyBody(body);
+		tile_bodies_.clear();
+
+
+		for (const auto& shape : light_shapes_)
+			scene_->getLightWorld()->getLightSystem()->removeShape(shape);
+		light_shapes_.clear();
+
+		sf::RenderTexture temp_texture;
+		temp_texture.create(tile_size_.x + 2, tile_size_.y + 2);
+		sf::Sprite temp_sprite;
+
+		for (int x = 0; x < map_size_.x; x++)
+		{
+			for (int y = 0; y < map_size_.y; y++)
+			{
+				sf::Vertex* quad = &vertices_[static_cast<size_t>((x + y * map_size_.x) * 4)];
+				quad[0].position = sf::Vector2f(x * tile_size_.x, y * tile_size_.y);
+				quad[1].position = sf::Vector2f((x + 1) * tile_size_.x, y * tile_size_.y);
+				quad[2].position = sf::Vector2f((x + 1) * tile_size_.x, (y + 1) * tile_size_.y);
+				quad[3].position = sf::Vector2f(x * tile_size_.x, (y + 1) * tile_size_.y);
+				const int tiles_on_x = ground_sheet_texture_->getSize().x / tile_size_.x;
+				const int tile_index = tile_indices_[y][x];
+				if (tile_index == 0)
+				{
+					quad[0].texCoords = sf::Vector2f(ground_sheet_texture_->getSize().x, ground_sheet_texture_->getSize().y);
+					quad[1].texCoords = sf::Vector2f(ground_sheet_texture_->getSize().x, ground_sheet_texture_->getSize().y);
+					quad[2].texCoords = sf::Vector2f(ground_sheet_texture_->getSize().x, ground_sheet_texture_->getSize().y);
+					quad[3].texCoords = sf::Vector2f(ground_sheet_texture_->getSize().x, ground_sheet_texture_->getSize().y);
+				}
+				else
+				{
+					int tu = (tile_index % tiles_on_x) - 1;
+					int tv = std::floor(tile_index / tiles_on_x);
+
+					quad[0].texCoords = sf::Vector2f(tu * tile_size_.x, tv * tile_size_.y);
+					quad[1].texCoords = sf::Vector2f((tu + 1) * tile_size_.x, tv * tile_size_.y);
+					quad[2].texCoords = sf::Vector2f((tu + 1) * tile_size_.x, (tv + 1) * tile_size_.y);
+					quad[3].texCoords = sf::Vector2f(tu * tile_size_.x, (tv + 1) * tile_size_.y);
+
+
+					temp_texture.clear(sf::Color::Transparent);
+					temp_sprite.setTexture(*ground_sheet_texture_);
+					temp_sprite.setTextureRect(sf::IntRect(tu * tile_size_.x, tv * tile_size_.y, tile_size_.x, tile_size_.y));
+					temp_sprite.setPosition({ 1,1 });
+					temp_texture.draw(temp_sprite);
+					temp_texture.display();
+
+					if (has_collision_ || blocks_light_)
+					{
+						ImageOutlineFinder finder;
+						finder.findOutLines(temp_texture.getTexture().copyToImage(), 18);
+						auto polys = finder.getSimplifiedPolys(0.0018f, 1);
+						if (polys.empty())
+						{
+							polys = finder.getSimplifiedPolys(-1.f, 1);
+						}
+
+						b2Body* body = nullptr;
+						if (has_collision_)
+						{
+							b2BodyDef testbdef;
+
+							testbdef.type = b2_staticBody;
+							testbdef.position.Set(position_.x, position_.y);
+							testbdef.userData = this;
+
+							body = scene_->getPhysWorld()->CreateBody(&testbdef);
+							body->SetTransform(b2Vec2(
+								x * tile_size_.x + tile_size_.x / 2.f - (map_size_.x * tile_size_.x / 2.f),
+								y * tile_size_.y + tile_size_.y / 2.f - (map_size_.y * tile_size_.y / 2.f)
+							) * scene_->getMetersPerPixel() + fse::FMath::sfVec2fTob2Vec2(position_), body->GetAngle());
+						}
+
+						ltbl::LightShape * light_shape = nullptr;
+						for (auto& poly : polys)
+						{
+							b2FixtureDef fdef;
+							fdef.friction = 0.5f;
+							fdef.restitution = 0.001f;
+							std::vector<b2Vec2> verts;
+
+							for (auto& point : poly)
+							{
+								verts.emplace_back(point.x * scene_->getMetersPerPixel(), point.y * scene_->getMetersPerPixel());
+							}
+							if (has_collision_)
+							{
+								b2PolygonShape poly_shape;
+								poly_shape.Set(verts.data(), verts.size());
+								fdef.shape = &poly_shape;
+								auto fixture = body->CreateFixture(&fdef);
+							}
+
+							if (blocks_light_)
+							{
+								sf::ConvexShape shape;
+								shape.setPointCount(poly.size());
+								int j = 0;
+								for (auto& point : poly)
+								{
+									shape.setPoint(j, point);
+									j++;
+								}
+								light_shape = getScene()->getLightWorld()->getLightSystem()->createLightShape(shape);
+								light_shape->setPosition(fse::FMath::b2Vec2ToSfVec2f(b2Vec2(
+									x* tile_size_.x + tile_size_.x / 2.f - (map_size_.x * tile_size_.x / 2.f),
+									y * tile_size_.y + tile_size_.y / 2.f - (map_size_.y * tile_size_.y / 2.f)
+								) * scene_->getMetersPerPixel() + fse::FMath::sfVec2fTob2Vec2(position_)) * scene_->getPixelsPerMeter());
+								light_shape->setRenderLightOver(true);
+								light_shape->setReceiveShadow(false);
+								light_shapes_.push_back(light_shape);
+							}
+
+						}
+						if (has_collision_)
+						{
+							tile_bodies_.push_back(body);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	std::string TileMap::getTexturePath() const
@@ -314,6 +333,8 @@ namespace fse
 			}
 			tile_indices_.push_back(x_vector);
 		}
+		if (has_spawned_)
+			generate();
 	}
 
 	bool TileMap::hasCollision() const
@@ -324,6 +345,8 @@ namespace fse
 	void TileMap::setHasCollision(bool has_collision)
 	{
 		has_collision_ = has_collision;
+		if (has_spawned_)
+			generate();
 	}
 
 	bool TileMap::blocksLight() const
@@ -334,6 +357,8 @@ namespace fse
 	void TileMap::setBlocksLight(bool blocks_light)
 	{
 		blocks_light_ = blocks_light;
+		if (has_spawned_)
+			generate();
 	}
 
 
@@ -357,6 +382,7 @@ namespace fse
 		chai.add(chaiscript::fun(&TileMap::setHasCollision), "setHasCollision");
 		chai.add(chaiscript::fun(&TileMap::blocksLight), "blocksLight");
 		chai.add(chaiscript::fun(&TileMap::setBlocksLight), "setBlocksLight");
+		chai.add(chaiscript::fun(&TileMap::generate), "generate");
 	}
 
 }
@@ -392,11 +418,19 @@ RTTR_REGISTRATION
 		(
 			metadata("BEFORE_SPAWN", true)
 		)
-		.property("has_collision_", &TileMap::has_collision_)
+		/*.property("has_collision_", &TileMap::has_collision_)
 		(
 			metadata("BEFORE_SPAWN", true)
 		)
 		.property("blocks_light_", &TileMap::blocks_light_)
+		(
+			metadata("BEFORE_SPAWN", true)
+		)*/
+		.property("has_collision_", &TileMap::hasCollision, &TileMap::setHasCollision)
+		(
+			metadata("BEFORE_SPAWN", true)
+		)
+		.property("blocks_light_", &TileMap::blocksLight, &TileMap::setBlocksLight)
 		(
 			metadata("BEFORE_SPAWN", true)
 		)
@@ -407,7 +441,7 @@ RTTR_REGISTRATION
 		.property("light_shapes_", &TileMap::light_shapes_)
 		(
 			metadata("NO_SERIALIZE", true)
-		)
+		).method("generate", &TileMap::generate)
 
 	//TODO:
 	;
