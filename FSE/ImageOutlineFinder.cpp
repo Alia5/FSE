@@ -20,13 +20,12 @@ void ImageOutlineFinder::findOutLines(const sf::Image& image, const int alpha_th
 	const sf::Vector2i starting_point = findStartingPoint();
 	if (starting_point.x > -1)
 	{
-		traverseBoundary(starting_point);
+		traverseBoundary({ starting_point.x + 1, starting_point.y + 1 });
 	}
 }
 
 sf::Vector2i ImageOutlineFinder::findStartingPoint() const
 {
-
 	for (unsigned int cx = 1; cx < image_.getSize().x; cx++) {
 		for (unsigned int cy = 1; cy < image_.getSize().y; cy++) {
 			if (isBoundary({ static_cast<int>(cx), static_cast<int>(cy) })) {
