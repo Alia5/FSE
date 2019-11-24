@@ -286,14 +286,14 @@ namespace fse
 		std::string::const_iterator searchStart(csv.cbegin());
 		std::smatch match;
 
-		for (int i = 0; i < map_size_.y; i++)
+		for (auto i = 0; i < map_size_.y; i++)
 		{
 			std::vector<int> x_vector;
 			x_vector.reserve(map_size_.x);
-			for (int j = 0; j < map_size_.x; j++)
+			for (auto j = 0; j < map_size_.x; j++)
 			{
 				std::regex_search(searchStart, csv.cend(), match, std::regex(R"([0-9]*)"));
-				x_vector.push_back(std::atoi(match.str().c_str()));
+				x_vector.push_back(std::stol(match.str().c_str()));
 				if (!match.suffix().str().empty())
 					searchStart = match.suffix().first + 1;
 				else

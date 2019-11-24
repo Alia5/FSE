@@ -247,6 +247,9 @@ namespace fse
 		chai.add(chaiscript::fun(static_cast<void(Scene::*)(bool)>(&Scene::setPhysDrawDebug)), "setPhysDrawDebug");
 		chai.add(chaiscript::fun(static_cast<FSELightWorld*(Scene::*)() const>(&Scene::getLightWorld)), "getLightWorld");
 		chai.add(chaiscript::fun(static_cast<b2World*(Scene::*)()>(&Scene::getPhysWorld)), "getPhysWorld");
+		chai.add(chaiscript::fun(static_cast<float(Scene::*)() const>(&Scene::getPixelsPerMeter)), "getPixelsPerMeter");
+		chai.add(chaiscript::fun(static_cast<float(Scene::*)() const>(&Scene::getMetersPerPixel)), "getMetersPerPixel");
+		chai.add(chaiscript::fun(static_cast<sf::RenderTarget*(Scene::*)() const>(&Scene::getRenderTarget)), "getRenderTarget");
 		chai.add(chaiscript::fun(static_cast<std::weak_ptr<FSEObject> (Scene::*)(std::shared_ptr<FSEObject>) > (&Scene::spawnFSEObject)), "spawnObject");
 		chai.add(chaiscript::fun(([](Scene* scene)
 		{

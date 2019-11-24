@@ -28,7 +28,7 @@ namespace fse
 		sf::Vector2f sz = view.getSize() * size_percentage_;
 		sf::Vector2f ct = view.getCenter();
 
-		sf::FloatRect viewRekt(ct.x - (sz.x * 0.5f), ct.y - (sz.y * 0.5f) - view.getSize().y*vertical_offset_, sz.x, sz.y);
+		const sf::FloatRect viewRekt(ct.x - (sz.x * 0.5f), ct.y - (sz.y * 0.5f) - view.getSize().y*vertical_offset_, sz.x, sz.y);
 		
 		objectPos = sf::Vector2f(objectPos.x, objectPos.y - (view.getSize().y * object_->getScene()->getMetersPerPixel() * vertical_offset_));
 
@@ -83,11 +83,11 @@ namespace fse
 		if (render_target_ == nullptr)
 			return;
 
-		auto size = render_target_->getSize();
+		const auto size = render_target_->getSize();
 		auto view = render_target_->getView();
 		view.setSize(size.x / zoom, size.y / zoom);
 		render_target_->setView(view);
-		auto objectPos = sf::Vector2f(oldPosition.x, oldPosition.y + (view.getSize().y * object_->getScene()->getMetersPerPixel() * vertical_offset_));
+		const auto objectPos = sf::Vector2f(oldPosition.x, oldPosition.y + (view.getSize().y * object_->getScene()->getMetersPerPixel() * vertical_offset_));
 		setView(objectPos);
 	}
 
@@ -101,6 +101,14 @@ namespace fse
 		return vertical_offset_;
 	}
 
+	FSE_CHAI_REGISTER(SmoothViewController)
+	{
+		RegisterChaiUserTypeFromRTTR<SmoothViewController>(chai);
+		chai.add(chaiscript::base_class<fse::Component, SmoothViewController>());
+		chai.add(chaiscript::base_class<fse::ViewController, SmoothViewController>());
+		chai.add(chaiscript::constructor<SmoothViewController()>(), "SmoothViewController");
+		chai.add(chaiscript::constructor<SmoothViewController(sf::RenderTarget* const)>(), "SmoothViewController");
+	}
 }
 
 RTTR_REGISTRATION
