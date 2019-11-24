@@ -19,9 +19,9 @@ namespace fse
 		public:
 			Texture();
 			Texture(const Texture &texture);
-			Texture(AssetLoader* loader, std::string path, sf::Texture* tex);
+			Texture(AssetLoader* loader, const std::string& path, sf::Texture* tex);
 			~Texture();
-			sf::Texture& get() const;
+			[[nodiscard]] sf::Texture& get() const;
 
 			Texture& operator=(const Texture& texture);
 			sf::Texture* operator->() const;
@@ -29,6 +29,7 @@ namespace fse
 			{
 				return *tex_;
 			}
+
 		private:
 			AssetLoader* loader_;
 			std::string path_;
@@ -38,13 +39,13 @@ namespace fse
 		AssetLoader();
 		~AssetLoader();
 
-		sf::Texture& getSFTexture(std::string path);
-		AssetLoader::Texture getTexture(std::string path);
-		void releaseSFTexture(std::string path);
+		sf::Texture& getSFTexture(const std::string& path);
+		AssetLoader::Texture getTexture(const std::string& path);
+		void releaseSFTexture(const std::string& path);
 
 	private:
 
-		void loadTexture(std::string path);
+		void loadTexture(const std::string& path);
 
 		std::map<std::string, sf::Texture> texture_map_;
 		std::map<std::string, unsigned int> texture_counter_;

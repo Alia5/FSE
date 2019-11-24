@@ -1,5 +1,6 @@
 #include "AssetLoader.h"
 #include <iostream>
+#include <utility>
 
 namespace fse
 {
@@ -9,9 +10,11 @@ namespace fse
 
 	AssetLoader::~AssetLoader()
 	{
+		texture_counter_.clear();
+		texture_map_.clear();
 	}
 
-	sf::Texture& AssetLoader::getSFTexture(std::string path)
+	sf::Texture& AssetLoader::getSFTexture(const std::string& path)
 	{
 		if (texture_map_.count(path)) //Texture is already loaded
 		{
@@ -24,14 +27,14 @@ namespace fse
 		return texture_map_[path];
 	}
 
-	AssetLoader::Texture AssetLoader::getTexture(std::string path)
+	AssetLoader::Texture AssetLoader::getTexture(const std::string& path)
 	{
 		return Texture(this, path, &getSFTexture(path));
 	}
 
-	void AssetLoader::releaseSFTexture(std::string path)
+	void AssetLoader::releaseSFTexture(const std::string& path)
 	{
-		if (texture_counter_.size() == 0)
+		if (texture_counter_.empty())
 			return;
 		if (!texture_counter_.count(path)) //Texture is not in memory
 			return;
@@ -48,10 +51,10 @@ namespace fse
 		texture_counter_[path]--;
 	}
 
-	void AssetLoader::loadTexture(std::string path)
+	void AssetLoader::loadTexture(const std::string& path)
 	{
-		std::string realPath = "data/" + path;
-		texture_map_[path].loadFromFile(realPath.c_str());
+		const auto realPath = "data/" + path;
+		texture_map_[path].loadFromFile(realPath);
 		texture_counter_[path] = 1;
 	}
 
@@ -66,13 +69,13 @@ namespace fse
 			loader_->texture_counter_[path_]++;
 	}
 
-	AssetLoader::Texture::Texture(AssetLoader* loader, std::string path, sf::Texture* tex) : loader_(loader), path_(path), tex_(tex)
+	AssetLoader::Texture::Texture(AssetLoader* loader, const std::string& path, sf::Texture* tex) : loader_(loader), path_(std::move(path)), tex_(tex)
 	{
 	}
 
 	AssetLoader::Texture::~Texture()
 	{
-		if (path_ != "")
+		if (!path_.empty())
 			loader_->releaseSFTexture(path_);
 	}
 
