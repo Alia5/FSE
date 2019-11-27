@@ -18,8 +18,7 @@ namespace fse
 
 	void Serializer::saveScene(Scene* scene, const std::string& filename)
 	{
-
-		auto objects = scene->getFSEObjects();
+		const auto objects = scene->getFSEObjects();
 
 		rapidjson::StringBuffer sb;
 		rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(sb);
@@ -115,6 +114,7 @@ namespace fse
 			scene->processPendingRemovals();
 		}
 
+		scene->getApplication()->initChai();
 
 		rttr::variant var;
 		auto array_view = var.create_sequential_view();
@@ -130,8 +130,6 @@ namespace fse
 				extractFromJson(val, json_index_value, scene);
 			}
 		}
-		scene->getApplication()->initChai();
-
 	}
 
 	void Serializer::serializeTypes(rttr::type type, rttr::instance& object, rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer)
@@ -606,8 +604,11 @@ namespace fse
 								auto& json_index_value = tval[i];
 								rttr::variant component;
 								extractFromJson(component, json_index_value, scene);
-								const auto comp = component.get_value<std::shared_ptr<fse::Component>>();
-								ptr->attachComponent(comp);
+								if (component.is_valid())
+								{
+									const auto comp = component.get_value<std::shared_ptr<fse::Component>>();
+									ptr->attachComponent(comp);
+								}
 							}
 						}
 						else
@@ -698,16 +699,16 @@ namespace fse
 		return rttr::variant();
 	}
 
-	void Serializer::extractObjectFromJson(rttr::variant& val, rapidjson::Value& jsonValue, fse::Scene* scene)
+	bool Serializer::extractObjectFromJson(rttr::variant& val, rapidjson::Value& jsonValue, fse::Scene* scene)
 	{
 		auto tmemb = jsonValue.FindMember("type");
 		if (tmemb == jsonValue.MemberEnd())
-			return;
+			return false;
 
 		auto& tval = tmemb->value;
 
 		if (tval.GetType() != rapidjson::kStringType)
-			return;
+			return false;
 
 		std::string typestr(tval.GetString());
 
@@ -718,7 +719,7 @@ namespace fse
 			if (base == rttr::type::get<fse::FSEObject>())
 			{
 				FSEObjectFromJson(jsonValue, scene);
-				return;
+				return true;
 			}
 		}
 
@@ -756,7 +757,7 @@ namespace fse
 
 			val = vec;
 
-			return;
+			return true;
 		}
 
 		if (typestr == std::string(rttr::type::get<sf::Color>().get_name().data()))
@@ -770,7 +771,7 @@ namespace fse
 
 			val = col;
 
-			return;
+			return true;
 		}
 
 		if (typestr == std::string(rttr::type::get<sf::FloatRect>().get_name().data()))
@@ -783,7 +784,7 @@ namespace fse
 			rekt.height = jsonValue.FindMember("height")->value.GetFloat();
 
 			val = rekt;
-			return;
+			return true;
 		}
 
 		if (typestr == std::string(rttr::type::get<sf::IntRect>().get_name().data()))
@@ -796,7 +797,7 @@ namespace fse
 			rekt.height = jsonValue.FindMember("height")->value.GetInt();
 
 			val = rekt;
-			return;
+			return true;
 		}
 
 		if (val.is_valid())
@@ -822,9 +823,9 @@ namespace fse
 					prop.set_value(val, var);
 
 			}
-
+			return true;
 		}
 		
-		return;
+		return false;
 	}
 }

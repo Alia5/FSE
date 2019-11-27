@@ -66,7 +66,6 @@ namespace fse
 			if (!isActive_)
 				return;
 #endif
-
 			sf::Time time = application_clock_.restart();
 			ImGui::SFML::Update(*render_window_, time);
 

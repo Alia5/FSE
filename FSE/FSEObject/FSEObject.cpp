@@ -48,7 +48,7 @@ namespace fse
 	sf::FloatRect FSEObject::GetAABBs() const
 	{
 		//Always draw if not overridden...
-		sf::View v = scene_->getRenderTarget()->getView();
+		const sf::View v = scene_->getRenderTarget()->getView();
 		return sf::FloatRect(std::trunc(v.getCenter().x), std::trunc(v.getCenter().y), 1, 1);
 	}
 

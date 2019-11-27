@@ -11,7 +11,7 @@ namespace fse
 		
 	}
 
-	ScriptObject::ScriptObject(const std::string& scriptName, const sf::Vector2f& spawnPos) : FSEObject(spawnPos), script_name_(scriptName)
+	ScriptObject::ScriptObject(const sf::Vector2f& spawnPos, const std::string& scriptName) : FSEObject(spawnPos), script_name_(scriptName)
 	{
 	}
 
@@ -264,6 +264,7 @@ namespace fse
 		RegisterChaiUserTypeFromRTTR<ScriptObject>(chai);
 		chai.add(chaiscript::base_class<fse::FSEObject, ScriptObject>());
 		chai.add(chaiscript::constructor<ScriptObject(const std::string&)>(), "ScriptObject");
+		chai.add(chaiscript::constructor<ScriptObject(const sf::Vector2f&, const std::string&)>(), "ScriptObject");
 		chai.add(chaiscript::fun([](const ScriptObject* object)
 		{
 			return object->initialized_;
@@ -322,12 +323,15 @@ RTTR_REGISTRATION
 			policy::ctor::as_std_shared_ptr,
 			parameter_names("script name")
 			)
-		.constructor<const std::string&, const sf::Vector2f&>()
+		.constructor<const sf::Vector2f&, const std::string&>()
 		(
 			policy::ctor::as_std_shared_ptr,
-			parameter_names("script name", "spawn position")
+			parameter_names("spawn position", "script name")
 			)
 		.property_readonly("script_name_", &ScriptObject::script_name_)
+		(
+			metadata("CTOR_ARG", "script name")
+		)
 		.property_readonly("initialized_", &ScriptObject::initialized_)
 		.property_readonly("script_child_", &ScriptObject::script_child_)
 		;

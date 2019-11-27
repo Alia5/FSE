@@ -7,7 +7,7 @@ namespace fse
 	{
 	public:
 		explicit ScriptObject(const std::string& scriptName);
-		explicit ScriptObject(const std::string& scriptName ,const sf::Vector2f& spawnPos);
+		explicit ScriptObject(const sf::Vector2f& spawnPos, const std::string& scriptName);
 		~ScriptObject() = default;
 
 		void spawned() override;

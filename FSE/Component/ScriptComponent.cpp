@@ -160,6 +160,9 @@ RTTR_REGISTRATION
 			parameter_names("script name")
 			)
 		.property_readonly("script_name_", &ScriptComponent::script_name_)
+		(
+			metadata("CTOR_ARG", "script name")
+		)
 		.property_readonly("initialized_", &ScriptComponent::initialized_)
 		.property_readonly("script_child_", &ScriptComponent::script_child_)
 ;
