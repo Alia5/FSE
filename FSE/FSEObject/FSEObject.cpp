@@ -179,10 +179,10 @@ namespace fse
 			component->PostSolve(otherObject, contact, impulse);
 	}
 
-	chaiscript::ChaiScript* FSEObject::getChai() const
-	{
-		return scene_->getApplication()->getChai();
-	}
+	//chaiscript::ChaiScript* FSEObject::getChai() const
+	//{
+	//	return scene_->getApplication()->getChai();
+	//}
 
 	std::weak_ptr<Component> FSEObject::attachComponent(std::shared_ptr<Component> component)
 	{

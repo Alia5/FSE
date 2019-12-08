@@ -249,9 +249,6 @@
     <ClInclude Include="..\imgui-sfml-config\imconfig.h">
       <Filter>Header Files\imgui-sfml-config</Filter>
     </ClInclude>
-    <ClInclude Include="FSEObject\ChaiConsole.h">
-      <Filter>Header Files\FSEObject</Filter>
-    </ClInclude>
     <ClInclude Include="FSEChaiLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -271,6 +268,12 @@
       <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="FSEObject\TileMap.h">
+      <Filter>Header Files\FSEObject</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-colorText.h">
+      <Filter>Header Files\FSE-ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="FSEObject\JSConsole.h">
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
   </ItemGroup>
@@ -392,9 +395,6 @@
     <ClCompile Include="..\poly2tri\poly2tri\sweep\sweep_context.cc">
       <Filter>Source Files\poly2tri\sweep</Filter>
     </ClCompile>
-    <ClCompile Include="FSEObject\ChaiConsole.cpp">
-      <Filter>Source Files\FSEObject</Filter>
-    </ClCompile>
     <ClCompile Include="..\imgui\imgui_demo.cpp">
       <Filter>Source Files\imgui</Filter>
     </ClCompile>
@@ -420,6 +420,9 @@
       <Filter>Source Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="FSEObject\TileMap.cpp">
+      <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEObject\JSConsole.cpp">
       <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
   </ItemGroup>

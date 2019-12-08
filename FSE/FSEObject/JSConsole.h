@@ -1,15 +1,19 @@
 #pragma once
 #include "FSEObject.h"
 
+namespace v8 {
+	class TryCatch;
+}
+
 namespace fse
 {
-	class ChaiConsole : public FSEObject
+	class JSConsole : public FSEObject
 	{
 	public:
 
-		ChaiConsole();
-		explicit ChaiConsole(const sf::Vector2f& spawnPos);
-		~ChaiConsole() override;
+		JSConsole();
+		explicit JSConsole(const sf::Vector2f& spawnPos);
+		~JSConsole() override;
 
 		void spawned() override;
 		void onDespawn() override;
@@ -18,18 +22,19 @@ namespace fse
 		void update(float deltaTime) override;
 		void draw(sf::RenderTarget& target) override;
 
-		int setHistoryString(bool up);
-
-		chaiscript::ChaiScript::State replaceDefaultPrints(const chaiscript::ChaiScript::State& state);
-
 	private:
 
 		void addDefaultFuns();
+
+		void consoleEval(const std::string& js);
+		void v8EvalCatch(v8::TryCatch& try_catch);
 
 		bool shown_ = false;
 		bool input_should_gain_focus_ = true;
 
 		bool output_to_bottom_ = true;
+		bool copy_mode_ = false;
+		bool copy_mode_from_ctrl_ = false;
 
 		std::array<char, 4096> input_data_;
 		std::stringstream output_data_;
@@ -41,6 +46,8 @@ namespace fse
 		sf::Vector2u win_size_;
 
 		std::streambuf* old_;
+
+		Signal<>::Connection on_v8_ctx_init_connection_;
 
 	};
 }

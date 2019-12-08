@@ -255,7 +255,7 @@ namespace fse
 		*/
 		virtual void PostSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
 
-		chaiscript::ChaiScript* getChai() const;
+		//chaiscript::ChaiScript* getChai() const;
 
 		/*!
 		 * \brief Vector of attached components.

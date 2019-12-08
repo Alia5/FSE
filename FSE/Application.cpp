@@ -4,6 +4,8 @@
 #include "FSEObject/FSEObject.h"
 #include "FSEChaiLib.h"
 
+
+
 #ifdef ANDROID
 #include <android/log.h>
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
@@ -15,14 +17,27 @@ namespace fse
 	Application::Application() : root_scene_(this)
 	{
 		input_.init();
-		base_chai_state_ = chai_.get_state();
-		base_chai_locals_ = chai_.get_locals();
+		
+		// Initialize V8.
+		v8::V8::Initialize();
+		create_params_.array_buffer_allocator =
+			v8::ArrayBuffer::Allocator::NewDefaultAllocator();
+		platform_ = v8::platform::NewDefaultPlatform();
+		v8::V8::InitializePlatform(platform_.get());
+		isolate_ = v8::Isolate::New(create_params_);
+		isolate_->Enter();
 	}
 
 	Application::~Application()
 	{
 		if (render_window_ != nullptr)
 			ImGui::SFML::Shutdown();
+
+		isolate_->Exit();
+		isolate_->Dispose();
+		v8::V8::Dispose();
+		v8::V8::ShutdownPlatform();
+		delete create_params_.array_buffer_allocator;
 	}
 
 	void Application::update()
@@ -87,11 +102,13 @@ namespace fse
 
 	}
 
-	void Application::initChai()
+	void Application::initV8Ctx()
 	{
-		resetChai();
-		priv::FSEChaiLib::Init(chai_);
-		on_chaiscript_init_(chai_);
+		v8::HandleScope handle_scope(isolate_);
+		v8_context_ = v8::Context::New(isolate_);
+		v8_context_->Enter();
+		//priv::FSEChaiLib::Init(chai_);
+		on_v8_ctx_init_();
 	}
 
 	void Application::setWindow(sf::RenderWindow * window)
@@ -110,7 +127,7 @@ namespace fse
 
 	void Application::init()
 	{
-		initChai();
+		initV8Ctx();
 	}
 
 	bool Application::isServer() const
@@ -136,17 +153,6 @@ namespace fse
 	fse::AssetLoader& Application::getAssetLoader()
 	{
 		return asset_loader_;
-	}
-
-	chaiscript::ChaiScript* Application::getChai() 
-	{
-		return &chai_;
-	}
-
-	void Application::resetChai()
-	{
-		chai_.set_state(base_chai_state_);
-		chai_.set_locals(base_chai_locals_);
 	}
 
 

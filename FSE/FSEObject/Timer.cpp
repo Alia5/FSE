@@ -23,19 +23,19 @@ namespace fse
 			while (elapsed_time_ * 1000 >= interval_)
 			{
 				elapsed_time_ -= interval_*0.001f;
-				//since chaiscript functions can be run, we have to catch chai exceptions
-				try
-				{
-					timeout_();
-				} catch(chaiscript::exception::eval_error& e) {
-					const std::string evalString = "puts(\"" + std::regex_replace(e.pretty_print(), std::regex("(\")"), "\\\"") + "\");";
-					scene_->getApplication()->getChai()->eval(evalString);
-				} catch (std::exception& e) {
-					const std::string evalString = "puts(\"" + std::regex_replace(e.what(), std::regex("(\")"), "\\\"") + "\");";
-					scene_->getApplication()->getChai()->eval(evalString);
-				} catch (...) {
-					
-				}
+				////since chaiscript functions can be run, we have to catch chai exceptions
+				//try
+				//{
+				//	timeout_();
+				//} catch(chaiscript::exception::eval_error& e) {
+				//	const std::string evalString = "puts(\"" + std::regex_replace(e.pretty_print(), std::regex("(\")"), "\\\"") + "\");";
+				//	scene_->getApplication()->getChai()->eval(evalString);
+				//} catch (std::exception& e) {
+				//	const std::string evalString = "puts(\"" + std::regex_replace(e.what(), std::regex("(\")"), "\\\"") + "\");";
+				//	scene_->getApplication()->getChai()->eval(evalString);
+				//} catch (...) {
+				//	
+				//}
 				if (single_shot_)
 				{
 					active_ = false;

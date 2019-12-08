@@ -114,7 +114,7 @@ namespace fse
 			scene->processPendingRemovals();
 		}
 
-		scene->getApplication()->initChai();
+		scene->getApplication()->initV8Ctx();
 
 		rttr::variant var;
 		auto array_view = var.create_sequential_view();

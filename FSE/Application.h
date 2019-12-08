@@ -9,7 +9,9 @@
 #include "Input.h"
 #include "AssetLoader.h"
 
-#include <chaiscript/chaiscript.hpp>
+#include <libplatform/libplatform.h>
+#include <v8.h>
+
 
 namespace fse
 {
@@ -43,7 +45,7 @@ namespace fse
 	{
 	PUBLIC_SIGNALS:
 		Signal<> on_window_resized_;
-		Signal<chaiscript::ChaiScript&> on_chaiscript_init_;
+		Signal<> on_v8_ctx_init_;
 
 	public:
 		Application();
@@ -54,8 +56,6 @@ namespace fse
 		 * Handles windoe events, updates and renders rootscene / ImGui
 		 */
 		virtual void update();
-
-		virtual void initChai();
 
 		/*!
 		 * Set window to handle. \n 
@@ -97,23 +97,14 @@ namespace fse
 		 */
 		fse::AssetLoader& getAssetLoader();
 
-		/*!
-		* \return  ptr to chaiscript engine
-		*/
-		chaiscript::ChaiScript* getChai();
-
-		void resetChai();
-
+		virtual void initV8Ctx();
+		
 
 	protected:
 		Input input_;
 		Scene root_scene_;
 		NetworkHandler network_handler_;
 		fse::AssetLoader asset_loader_;
-
-		chaiscript::ChaiScript::State base_chai_state_;
-		std::map<std::string, chaiscript::Boxed_Value> base_chai_locals_;
-		chaiscript::ChaiScript chai_;
 
 #ifdef ANDROID
 		bool isActive_ = false;
@@ -125,5 +116,11 @@ namespace fse
 		sf::Clock application_clock_;
 
 		sf::RenderWindow *render_window_ = nullptr;
+
+		v8::Isolate::CreateParams create_params_;
+		std::unique_ptr<v8::Platform> platform_;
+		v8::Isolate* isolate_;
+		v8::Local<v8::Context> v8_context_;
+
 	};
 }

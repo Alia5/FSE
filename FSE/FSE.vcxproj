@@ -125,7 +125,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;SFML_STATIC;IMGUI_USER_CONFIG=&lt;imconfig.h&gt;;IMGUI_DISABLE_INCLUDE_IMCONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\extlibs\SFML-2.5.1-x64\include;$(ProjectDir)..\extlibs\liquidfun\liquidfun\Box2D;$(ProjectDir)..\extlibs\rttr-0.9.6-x64\include;$(ProjectDir)..\imgui-sfml-config\;$(ProjectDir)..\chaiscript\include\;$(ProjectDir)..\ChaiScript_Extras\include\;$(ProjectDir)..\ChaiScript_Extras_Liquidfun\include\;$(ProjectDir)..\ChaiScript_Extras_SFML\include\;$(ProjectDir)..\imgui\;$(ProjectDir)..\imgui-SFML\;$(ProjectDir)..\rapidjson\include\;$(ProjectDir)..\poly2tri\poly2tri\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\extlibs\SFML-2.5.1-x64\include;$(ProjectDir)..\extlibs\liquidfun\liquidfun\Box2D;$(ProjectDir)..\extlibs\rttr-0.9.6-x64\include;$(ProjectDir)..\imgui-sfml-config\;$(ProjectDir)..\chaiscript\include\;$(ProjectDir)..\ChaiScript_Extras\include\;$(ProjectDir)..\ChaiScript_Extras_Liquidfun\include\;$(ProjectDir)..\ChaiScript_Extras_SFML\include\;$(ProjectDir)..\imgui\;$(ProjectDir)..\imgui-SFML\;$(ProjectDir)..\rapidjson\include\;$(ProjectDir)..\poly2tri\poly2tri\;$(ProjectDir)..\extlibs\v8_monolith\include;$(ProjectDir)..\v8pp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <OmitFramePointers>false</OmitFramePointers>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -233,10 +233,11 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="FMath.h" />
     <ClInclude Include="FSE-ImGui\imgui-plotvar.h" />
-    <ClInclude Include="FSEObject\ChaiConsole.h" />
+    <ClInclude Include="FSEObject\JSConsole.h" />
     <ClInclude Include="FSEObject\FPSCounter.h" />
     <ClInclude Include="FSEObject\KillVolume.h" />
     <ClInclude Include="ImageOutlineFinder.h" />
+    <ClInclude Include="imgui-colorText.h" />
     <ClInclude Include="Network\NetworkedObject.h" />
     <ClInclude Include="Lights\Light.h" />
     <ClInclude Include="Lights\FSELightWorld.h" />
@@ -285,7 +286,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp" />
     <ClCompile Include="FSEChaiLib.cpp" />
-    <ClCompile Include="FSEObject\ChaiConsole.cpp" />
+    <ClCompile Include="FSEObject\JSConsole.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />
     <ClCompile Include="FSEObject\KillVolume.cpp" />
     <ClCompile Include="ImageOutlineFinder.cpp" />
