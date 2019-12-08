@@ -22,3 +22,6 @@
 [submodule "ChaiScript_Extras_SFML"]
 	path = ChaiScript_Extras_SFML
 	url = git@github.com:Alia5/ChaiScript_Extras_SFML.git
+[submodule "v8pp"]
+	path = v8pp
+	url = git@github.com:pmed/v8pp.git
