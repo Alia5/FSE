@@ -6,6 +6,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Event.hpp>
+#include "FSEChaiLib.h"
 
 
 namespace fse
@@ -73,6 +74,9 @@ namespace fse
 		bool single_line_text_ = false;
 		std::wstring entered_text_;
 
+		FSE_CHAI_ENABLE(Input);
+		FSE_CHAI_REGISTRATION_FRIEND
+		
 		//TODO: Proper GamepadInput
 		//TODO: XINPUT!
 		//TODO: SCAPI!

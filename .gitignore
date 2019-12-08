@@ -258,3 +258,4 @@ ModelManifest.xml
 DemoProject/imgui\.ini
 
 \.vscode/
+FSE/.clangd

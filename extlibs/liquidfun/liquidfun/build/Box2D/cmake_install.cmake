@@ -1,4 +1,4 @@
-# Install script for directory: C:/liquidfun/liquidfun/Box2D/Box2D
+# Install script for directory: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D/Box2D
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

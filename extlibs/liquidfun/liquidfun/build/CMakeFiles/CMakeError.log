@@ -1,77 +1,29 @@
 Determining if the include file pthread.h exists failed with the following output:
-Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+Change Dir: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_35277.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
-Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_6378b.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.3.2+e481bbf88 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 2/20/2018 6:49:16 PM.
-Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_35277.vcxproj" on node 1 (default targets).
-PrepareForBuild:
-  Creating directory "cmTC_35277.dir\Debug\".
-  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_35277.dir\Debug\cmTC_35277.tlog\".
-InitializeBuildStatus:
-  Creating "cmTC_35277.dir\Debug\cmTC_35277.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_35277.dir\Debug\\" /Fd"cmTC_35277.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
-  Copyright (C) Microsoft Corporation.  All rights reserved.
-  
-  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_35277.dir\Debug\\" /Fd"cmTC_35277.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.23.28107 for x64
   CheckIncludeFile.c
-  
-C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c(1): fatal error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_35277.vcxproj]
-Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_35277.vcxproj" (default targets) -- FAILED.
-
-Build FAILED.
-
-"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_35277.vcxproj" (default target) (1) ->
-(ClCompile target) -> 
-  C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c(1): fatal error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_35277.vcxproj]
-
-    0 Warning(s)
-    1 Error(s)
-
-Time Elapsed 00:00:00.48
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_6378b.dir\Debug\\" /Fd"cmTC_6378b.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c
+D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFile.c(1,10): fatal error C1083: Cannot open include file: 'pthread.h': No such file or directory [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_6378b.vcxproj]
+
 
 
 Determining if files unistd.h exist failed with the following output:
-Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+Change Dir: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_6a41d.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
-Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_7105a.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.3.2+e481bbf88 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 2/20/2018 6:49:17 PM.
-Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_6a41d.vcxproj" on node 1 (default targets).
-PrepareForBuild:
-  Creating directory "cmTC_6a41d.dir\Debug\".
-  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_6a41d.dir\Debug\cmTC_6a41d.tlog\".
-InitializeBuildStatus:
-  Creating "cmTC_6a41d.dir\Debug\cmTC_6a41d.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_6a41d.dir\Debug\\" /Fd"cmTC_6a41d.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.23.28107 for x64
+  HAVE_UNISTD_H.c
   Copyright (C) Microsoft Corporation.  All rights reserved.
-  
-  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_6a41d.dir\Debug\\" /Fd"cmTC_6a41d.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
-  CheckIncludeFiles.c
-  
-C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c(2): fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_6a41d.vcxproj]
-Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_6a41d.vcxproj" (default targets) -- FAILED.
-
-Build FAILED.
-
-"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_6a41d.vcxproj" (default target) (1) ->
-(ClCompile target) -> 
-  C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c(2): fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_6a41d.vcxproj]
-
-    0 Warning(s)
-    1 Error(s)
-
-Time Elapsed 00:00:00.37
+  cl /c /Zi /W4 /WX /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_7105a.dir\Debug\\" /Fd"cmTC_7105a.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CheckIncludeFiles\HAVE_UNISTD_H.c
+D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CheckIncludeFiles\HAVE_UNISTD_H.c(2,10): fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7105a.vcxproj]
+
 
 Source:
 /* */
@@ -81,41 +33,17 @@ Source:
 int main(void){return 0;}
 
 Determining if files sys/time.h exist failed with the following output:
-Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+Change Dir: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_5d1fe.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
-Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_3f8bf.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.3.2+e481bbf88 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 2/20/2018 6:49:18 PM.
-Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_5d1fe.vcxproj" on node 1 (default targets).
-PrepareForBuild:
-  Creating directory "cmTC_5d1fe.dir\Debug\".
-  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_5d1fe.dir\Debug\cmTC_5d1fe.tlog\".
-InitializeBuildStatus:
-  Creating "cmTC_5d1fe.dir\Debug\cmTC_5d1fe.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_5d1fe.dir\Debug\\" /Fd"cmTC_5d1fe.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.23.28107 for x64
+  HAVE_SYS_TIME_H.c
   Copyright (C) Microsoft Corporation.  All rights reserved.
-  
-  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_5d1fe.dir\Debug\\" /Fd"cmTC_5d1fe.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
-  CheckIncludeFiles.c
-  
-C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c(2): fatal error C1083: Cannot open include file: 'sys/time.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_5d1fe.vcxproj]
-Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_5d1fe.vcxproj" (default targets) -- FAILED.
-
-Build FAILED.
-
-"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_5d1fe.vcxproj" (default target) (1) ->
-(ClCompile target) -> 
-  C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c(2): fatal error C1083: Cannot open include file: 'sys/time.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_5d1fe.vcxproj]
-
-    0 Warning(s)
-    1 Error(s)
-
-Time Elapsed 00:00:00.58
+  cl /c /Zi /W4 /WX /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3f8bf.dir\Debug\\" /Fd"cmTC_3f8bf.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CheckIncludeFiles\HAVE_SYS_TIME_H.c
+D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CheckIncludeFiles\HAVE_SYS_TIME_H.c(2,10): fatal error C1083: Cannot open include file: 'sys/time.h': No such file or directory [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_3f8bf.vcxproj]
+
 
 Source:
 /* */
@@ -125,41 +53,17 @@ Source:
 int main(void){return 0;}
 
 Determining if files sys/param.h exist failed with the following output:
-Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+Change Dir: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_89fb7.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
-Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_a2179.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.3.2+e481bbf88 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 2/20/2018 6:49:20 PM.
-Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_89fb7.vcxproj" on node 1 (default targets).
-PrepareForBuild:
-  Creating directory "cmTC_89fb7.dir\Debug\".
-  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_89fb7.dir\Debug\cmTC_89fb7.tlog\".
-InitializeBuildStatus:
-  Creating "cmTC_89fb7.dir\Debug\cmTC_89fb7.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_89fb7.dir\Debug\\" /Fd"cmTC_89fb7.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.23.28107 for x64
+  HAVE_SYS_PARAM_H.c
   Copyright (C) Microsoft Corporation.  All rights reserved.
-  
-  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_89fb7.dir\Debug\\" /Fd"cmTC_89fb7.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
-  CheckIncludeFiles.c
-  
-C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c(2): fatal error C1083: Cannot open include file: 'sys/param.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_89fb7.vcxproj]
-Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_89fb7.vcxproj" (default targets) -- FAILED.
-
-Build FAILED.
-
-"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_89fb7.vcxproj" (default target) (1) ->
-(ClCompile target) -> 
-  C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c(2): fatal error C1083: Cannot open include file: 'sys/param.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_89fb7.vcxproj]
-
-    0 Warning(s)
-    1 Error(s)
-
-Time Elapsed 00:00:00.36
+  cl /c /Zi /W4 /WX /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a2179.dir\Debug\\" /Fd"cmTC_a2179.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CheckIncludeFiles\HAVE_SYS_PARAM_H.c
+D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CheckIncludeFiles\HAVE_SYS_PARAM_H.c(2,10): fatal error C1083: Cannot open include file: 'sys/param.h': No such file or directory [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_a2179.vcxproj]
+
 
 Source:
 /* */
@@ -169,41 +73,17 @@ Source:
 int main(void){return 0;}
 
 Determining if files sys/ioctl.h exist failed with the following output:
-Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+Change Dir: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_fc117.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
-Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_56009.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.3.2+e481bbf88 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 2/20/2018 6:49:20 PM.
-Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_fc117.vcxproj" on node 1 (default targets).
-PrepareForBuild:
-  Creating directory "cmTC_fc117.dir\Debug\".
-  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_fc117.dir\Debug\cmTC_fc117.tlog\".
-InitializeBuildStatus:
-  Creating "cmTC_fc117.dir\Debug\cmTC_fc117.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fc117.dir\Debug\\" /Fd"cmTC_fc117.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.23.28107 for x64
+  HAVE_SYS_IOCTL_H.c
   Copyright (C) Microsoft Corporation.  All rights reserved.
-  
-  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fc117.dir\Debug\\" /Fd"cmTC_fc117.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
-  CheckIncludeFiles.c
-  
-C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c(2): fatal error C1083: Cannot open include file: 'sys/ioctl.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_fc117.vcxproj]
-Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_fc117.vcxproj" (default targets) -- FAILED.
-
-Build FAILED.
-
-"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_fc117.vcxproj" (default target) (1) ->
-(ClCompile target) -> 
-  C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c(2): fatal error C1083: Cannot open include file: 'sys/ioctl.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_fc117.vcxproj]
-
-    0 Warning(s)
-    1 Error(s)
-
-Time Elapsed 00:00:00.34
+  cl /c /Zi /W4 /WX /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_56009.dir\Debug\\" /Fd"cmTC_56009.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CheckIncludeFiles\HAVE_SYS_IOCTL_H.c
+D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CheckIncludeFiles\HAVE_SYS_IOCTL_H.c(2,10): fatal error C1083: Cannot open include file: 'sys/ioctl.h': No such file or directory [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_56009.vcxproj]
+
 
 Source:
 /* */
@@ -213,41 +93,17 @@ Source:
 int main(void){return 0;}
 
 Determining if files usbhid.h exist failed with the following output:
-Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+Change Dir: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_c891a.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
-Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_a15ac.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.3.2+e481bbf88 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 2/20/2018 6:49:22 PM.
-Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_c891a.vcxproj" on node 1 (default targets).
-PrepareForBuild:
-  Creating directory "cmTC_c891a.dir\Debug\".
-  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_c891a.dir\Debug\cmTC_c891a.tlog\".
-InitializeBuildStatus:
-  Creating "cmTC_c891a.dir\Debug\cmTC_c891a.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c891a.dir\Debug\\" /Fd"cmTC_c891a.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.23.28107 for x64
+  HAVE_USBHID_H.c
   Copyright (C) Microsoft Corporation.  All rights reserved.
-  
-  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c891a.dir\Debug\\" /Fd"cmTC_c891a.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c
-  CheckIncludeFiles.c
-  
-C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c(2): fatal error C1083: Cannot open include file: 'usbhid.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_c891a.vcxproj]
-Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_c891a.vcxproj" (default targets) -- FAILED.
-
-Build FAILED.
-
-"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_c891a.vcxproj" (default target) (1) ->
-(ClCompile target) -> 
-  C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\CheckIncludeFiles.c(2): fatal error C1083: Cannot open include file: 'usbhid.h': No such file or directory [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_c891a.vcxproj]
-
-    0 Warning(s)
-    1 Error(s)
-
-Time Elapsed 00:00:00.36
+  cl /c /Zi /W4 /WX /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a15ac.dir\Debug\\" /Fd"cmTC_a15ac.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CheckIncludeFiles\HAVE_USBHID_H.c
+D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CheckIncludeFiles\HAVE_USBHID_H.c(2,10): fatal error C1083: Cannot open include file: 'usbhid.h': No such file or directory [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_a15ac.vcxproj]
+
 
 Source:
 /* */
@@ -257,170 +113,62 @@ Source:
 int main(void){return 0;}
 
 Determining if the function gettimeofday exists failed with the following output:
-Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+Change Dir: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_7fe3a.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
-Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_83948.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.3.2+e481bbf88 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 2/20/2018 6:49:23 PM.
-Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7fe3a.vcxproj" on node 1 (default targets).
-PrepareForBuild:
-  Creating directory "cmTC_7fe3a.dir\Debug\".
-  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_7fe3a.dir\Debug\cmTC_7fe3a.tlog\".
-InitializeBuildStatus:
-  Creating "cmTC_7fe3a.dir\Debug\cmTC_7fe3a.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=gettimeofday /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_7fe3a.dir\Debug\\" /Fd"cmTC_7fe3a.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CheckFunctionExists.c"
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
-  Copyright (C) Microsoft Corporation.  All rights reserved.
-  
-  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=gettimeofday /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_7fe3a.dir\Debug\\" /Fd"cmTC_7fe3a.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CheckFunctionExists.c"
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.23.28107 for x64
   CheckFunctionExists.c
-  
-Link:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_7fe3a.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_7fe3a.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_7fe3a.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_7fe3a.dir\Debug\CheckFunctionExists.obj
-CheckFunctionExists.obj : error LNK2019: unresolved external symbol _gettimeofday referenced in function _main [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7fe3a.vcxproj]
-C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_7fe3a.exe : fatal error LNK1120: 1 unresolved externals [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7fe3a.vcxproj]
-Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7fe3a.vcxproj" (default targets) -- FAILED.
-
-Build FAILED.
-
-"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7fe3a.vcxproj" (default target) (1) ->
-(Link target) -> 
-  CheckFunctionExists.obj : error LNK2019: unresolved external symbol _gettimeofday referenced in function _main [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7fe3a.vcxproj]
-  C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_7fe3a.exe : fatal error LNK1120: 1 unresolved externals [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7fe3a.vcxproj]
-
-    0 Warning(s)
-    2 Error(s)
-
-Time Elapsed 00:00:00.57
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W4 /WX /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=gettimeofday /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_83948.dir\Debug\\" /Fd"cmTC_83948.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue "C:\Program Files\CMake\share\cmake-3.16\Modules\CheckFunctionExists.c"
+CheckFunctionExists.obj : error LNK2019: unresolved external symbol gettimeofday referenced in function main [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_83948.vcxproj]
+D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_83948.exe : fatal error LNK1120: 1 unresolved externals [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_83948.vcxproj]
+
 
 
 Determining if the function vfprintf exists failed with the following output:
-Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+Change Dir: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_7b3d1.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
-Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_b86b6.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.3.2+e481bbf88 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 2/20/2018 6:49:24 PM.
-Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7b3d1.vcxproj" on node 1 (default targets).
-PrepareForBuild:
-  Creating directory "cmTC_7b3d1.dir\Debug\".
-  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_7b3d1.dir\Debug\cmTC_7b3d1.tlog\".
-InitializeBuildStatus:
-  Creating "cmTC_7b3d1.dir\Debug\cmTC_7b3d1.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=vfprintf /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_7b3d1.dir\Debug\\" /Fd"cmTC_7b3d1.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CheckFunctionExists.c"
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
-  Copyright (C) Microsoft Corporation.  All rights reserved.
-  
-  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=vfprintf /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_7b3d1.dir\Debug\\" /Fd"cmTC_7b3d1.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CheckFunctionExists.c"
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.23.28107 for x64
   CheckFunctionExists.c
-  
-Link:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_7b3d1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_7b3d1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_7b3d1.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_7b3d1.dir\Debug\CheckFunctionExists.obj
-CheckFunctionExists.obj : error LNK2019: unresolved external symbol _vfprintf referenced in function _main [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7b3d1.vcxproj]
-C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_7b3d1.exe : fatal error LNK1120: 1 unresolved externals [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7b3d1.vcxproj]
-Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7b3d1.vcxproj" (default targets) -- FAILED.
-
-Build FAILED.
-
-"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7b3d1.vcxproj" (default target) (1) ->
-(Link target) -> 
-  CheckFunctionExists.obj : error LNK2019: unresolved external symbol _vfprintf referenced in function _main [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7b3d1.vcxproj]
-  C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_7b3d1.exe : fatal error LNK1120: 1 unresolved externals [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_7b3d1.vcxproj]
-
-    0 Warning(s)
-    2 Error(s)
-
-Time Elapsed 00:00:00.56
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W4 /WX /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=vfprintf /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b86b6.dir\Debug\\" /Fd"cmTC_b86b6.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue "C:\Program Files\CMake\share\cmake-3.16\Modules\CheckFunctionExists.c"
+CheckFunctionExists.obj : error LNK2019: unresolved external symbol vfprintf referenced in function main [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_b86b6.vcxproj]
+D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_b86b6.exe : fatal error LNK1120: 1 unresolved externals [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_b86b6.vcxproj]
+
 
 
 Determining if the function _doprnt exists failed with the following output:
-Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+Change Dir: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_334ed.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
-Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_62767.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.3.2+e481bbf88 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 2/20/2018 6:49:24 PM.
-Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_334ed.vcxproj" on node 1 (default targets).
-PrepareForBuild:
-  Creating directory "cmTC_334ed.dir\Debug\".
-  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_334ed.dir\Debug\cmTC_334ed.tlog\".
-InitializeBuildStatus:
-  Creating "cmTC_334ed.dir\Debug\cmTC_334ed.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=_doprnt /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_334ed.dir\Debug\\" /Fd"cmTC_334ed.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CheckFunctionExists.c"
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
-  Copyright (C) Microsoft Corporation.  All rights reserved.
-  
-  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=_doprnt /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_334ed.dir\Debug\\" /Fd"cmTC_334ed.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CheckFunctionExists.c"
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.23.28107 for x64
   CheckFunctionExists.c
-  
-Link:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_334ed.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_334ed.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_334ed.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_334ed.dir\Debug\CheckFunctionExists.obj
-CheckFunctionExists.obj : error LNK2019: unresolved external symbol __doprnt referenced in function _main [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_334ed.vcxproj]
-C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_334ed.exe : fatal error LNK1120: 1 unresolved externals [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_334ed.vcxproj]
-Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_334ed.vcxproj" (default targets) -- FAILED.
-
-Build FAILED.
-
-"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_334ed.vcxproj" (default target) (1) ->
-(Link target) -> 
-  CheckFunctionExists.obj : error LNK2019: unresolved external symbol __doprnt referenced in function _main [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_334ed.vcxproj]
-  C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_334ed.exe : fatal error LNK1120: 1 unresolved externals [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_334ed.vcxproj]
-
-    0 Warning(s)
-    2 Error(s)
-
-Time Elapsed 00:00:00.56
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W4 /WX /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=_doprnt /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_62767.dir\Debug\\" /Fd"cmTC_62767.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue "C:\Program Files\CMake\share\cmake-3.16\Modules\CheckFunctionExists.c"
+CheckFunctionExists.obj : error LNK2019: unresolved external symbol _doprnt referenced in function main [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_62767.vcxproj]
+D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_62767.exe : fatal error LNK1120: 1 unresolved externals [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_62767.vcxproj]
+
 
 
 Determining if the function XParseGeometry exists failed with the following output:
-Change Dir: C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
+Change Dir: D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_010a6.vcxproj" "/p:Configuration=Debug" "/p:VisualStudioVersion=15.0"
-Microsoft (R) Build Engine version 15.4.8.50001 for .NET Framework
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe cmTC_3aa83.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft (R) Build Engine version 16.3.2+e481bbf88 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 2/20/2018 6:49:25 PM.
-Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_010a6.vcxproj" on node 1 (default targets).
-PrepareForBuild:
-  Creating directory "cmTC_010a6.dir\Debug\".
-  Creating directory "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_010a6.dir\Debug\cmTC_010a6.tlog\".
-InitializeBuildStatus:
-  Creating "cmTC_010a6.dir\Debug\cmTC_010a6.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=XParseGeometry /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_010a6.dir\Debug\\" /Fd"cmTC_010a6.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CheckFunctionExists.c"
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.11.25547 for x86
-  Copyright (C) Microsoft Corporation.  All rights reserved.
-  
-  cl /c /Zi /W4 /WX /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=XParseGeometry /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_010a6.dir\Debug\\" /Fd"cmTC_010a6.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.8\Modules\CheckFunctionExists.c"
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.23.28107 for x64
   CheckFunctionExists.c
-  
-Link:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_010a6.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_010a6.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/liquidfun/liquidfun/build/CMakeFiles/CMakeTmp/Debug/cmTC_010a6.lib" /MACHINE:X86 /SAFESEH   /machine:X86 cmTC_010a6.dir\Debug\CheckFunctionExists.obj
-CheckFunctionExists.obj : error LNK2019: unresolved external symbol _XParseGeometry referenced in function _main [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_010a6.vcxproj]
-C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_010a6.exe : fatal error LNK1120: 1 unresolved externals [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_010a6.vcxproj]
-Done Building Project "C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_010a6.vcxproj" (default targets) -- FAILED.
-
-Build FAILED.
-
-"C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_010a6.vcxproj" (default target) (1) ->
-(Link target) -> 
-  CheckFunctionExists.obj : error LNK2019: unresolved external symbol _XParseGeometry referenced in function _main [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_010a6.vcxproj]
-  C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_010a6.exe : fatal error LNK1120: 1 unresolved externals [C:\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_010a6.vcxproj]
-
-    0 Warning(s)
-    2 Error(s)
-
-Time Elapsed 00:00:00.58
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  cl /c /Zi /W4 /WX /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=XParseGeometry /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3aa83.dir\Debug\\" /Fd"cmTC_3aa83.dir\Debug\vc142.pdb" /Gd /TC /errorReport:queue "C:\Program Files\CMake\share\cmake-3.16\Modules\CheckFunctionExists.c"
+CheckFunctionExists.obj : error LNK2019: unresolved external symbol XParseGeometry referenced in function main [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_3aa83.vcxproj]
+D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\Debug\cmTC_3aa83.exe : fatal error LNK1120: 1 unresolved externals [D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\CMakeFiles\CMakeTmp\cmTC_3aa83.vcxproj]
+
 
 

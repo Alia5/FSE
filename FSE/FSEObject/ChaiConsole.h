@@ -40,6 +40,7 @@ namespace fse
 		Signal<>::Connection on_resize_connection_;
 		sf::Vector2u win_size_;
 
+		std::streambuf* old_;
 
 	};
 }

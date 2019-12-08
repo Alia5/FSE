@@ -31,10 +31,12 @@ namespace fse
 			win_size_ = scene_->getApplication()->getWindow()->getSize();
 		});
 		addDefaultFuns();
+		old_ = std::cerr.rdbuf(output_data_.rdbuf());
 	}
 
 	void ChaiConsole::onDespawn()
 	{
+		std::cerr.rdbuf(old_);
 		scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
 	}
 

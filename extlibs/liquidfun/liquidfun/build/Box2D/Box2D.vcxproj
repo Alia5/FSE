@@ -1,51 +1,90 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="MinSizeRel|Win32">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
       <Configuration>MinSizeRel</Configuration>
-      <Platform>Win32</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="RelWithDebInfo|Win32">
       <Configuration>RelWithDebInfo</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F0F99620-9547-3B84-8B15-B8745A0A2B38}</ProjectGuid>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{4BD9F1E4-6A8B-3FE3-8872-A50471EED87B}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
-    <Platform>Win32</Platform>
+    <Platform>x64</Platform>
     <ProjectName>Box2D</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -56,27 +95,35 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\liquidfun\liquidfun\build\Box2D\Debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Box2D.dir\Debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Box2D.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">liquidfun</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">liquidfun</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\liquidfun\liquidfun\build\Box2D\Release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Box2D.dir\Release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Box2D.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">liquidfun</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">liquidfun</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\liquidfun\liquidfun\build\Box2D\MinSizeRel\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Box2D.dir\MinSizeRel\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Box2D.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">liquidfun</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">liquidfun</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\liquidfun\liquidfun\build\Box2D\RelWithDebInfo\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Box2D.dir\RelWithDebInfo\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Box2D.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">liquidfun</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">liquidfun</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.lib</TargetExt>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -84,19 +131,20 @@
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <TreatWarningAsError>false</TreatWarningAsError>
-      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;DEBUG=1;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;DEBUG=1;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -104,22 +152,58 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Lib>
-      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;DEBUG=1;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;DEBUG=1;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <TreatWarningAsError>false</TreatWarningAsError>
-      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
@@ -127,10 +211,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -138,13 +222,48 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Lib>
-      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -152,7 +271,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -161,10 +281,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -172,13 +292,48 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Lib>
-      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -187,17 +342,18 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -205,14 +361,58 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Lib>
-      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DEBUG=0;LIQUIDFUN_EXTERNAL_LANGUAGE_API=1;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\liquidfun\liquidfun\Box2D\Box2D\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+    <CustomBuild Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D -BD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build --check-stamp-file D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HC:/liquidfun/liquidfun/Box2D -BC:/liquidfun/liquidfun/build --check-stamp-file C:/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D -BD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build --check-stamp-file D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -220,12 +420,25 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt;C:\liquidfun\liquidfun\Box2D\Box2D\CMakeLists.txt;C:\liquidfun\liquidfun\Box2D\Box2D\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D -BD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build --check-stamp-file D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HC:/liquidfun/liquidfun/Box2D -BC:/liquidfun/liquidfun/build --check-stamp-file C:/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D -BD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build --check-stamp-file D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -233,12 +446,25 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt;C:\liquidfun\liquidfun\Box2D\Box2D\CMakeLists.txt;C:\liquidfun\liquidfun\Box2D\Box2D\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D -BD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build --check-stamp-file D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HC:/liquidfun/liquidfun/Box2D -BC:/liquidfun/liquidfun/build --check-stamp-file C:/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D -BD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build --check-stamp-file D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -246,12 +472,16 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt;C:\liquidfun\liquidfun\Box2D\Box2D\CMakeLists.txt;C:\liquidfun\liquidfun\Box2D\Box2D\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HC:/liquidfun/liquidfun/Box2D -BC:/liquidfun/liquidfun/build --check-stamp-file C:/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D -BD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build --check-stamp-file D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -259,128 +489,142 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:/liquidfun/liquidfun/Box2D/Box2D/CMakeLists.txt;C:\liquidfun\liquidfun\Box2D\Box2D\CMakeLists.txt;C:\liquidfun\liquidfun\Box2D\Box2D\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D -BD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build --check-stamp-file D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/Box2D/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\Box2D\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Box2D.h" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2DistanceJoint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2FrictionJoint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2GearJoint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2Joint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2MotorJoint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2MouseJoint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2PrismaticJoint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2PulleyJoint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2RevoluteJoint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2RopeJoint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2DistanceJoint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2FrictionJoint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2GearJoint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2Joint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2MotorJoint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2MouseJoint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2PrismaticJoint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2PulleyJoint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2RevoluteJoint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2RopeJoint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WeldJoint.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WheelJoint.h" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2CircleContact.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2Contact.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ContactSolver.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2PolygonContact.cpp" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2CircleContact.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2Contact.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ContactSolver.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2PolygonContact.h" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Body.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2ContactManager.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Fixture.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Island.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2World.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2WorldCallbacks.cpp" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Body.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2ContactManager.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Fixture.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Island.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2TimeStep.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2World.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2WorldCallbacks.h" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2BlockAllocator.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2Draw.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2FreeList.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2Math.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2Settings.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2StackAllocator.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2Stat.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2Timer.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2TrackedBlock.cpp" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2BlockAllocator.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2Draw.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2FreeList.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2GrowableStack.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2GrowableBuffer.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2IntrusiveList.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2Math.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2Settings.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2SlabAllocator.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2StackAllocator.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2Stat.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2Timer.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Common\b2TrackedBlock.h" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2CircleShape.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2EdgeShape.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2ChainShape.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2PolygonShape.cpp" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2CircleShape.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2EdgeShape.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2ChainShape.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2PolygonShape.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2Shape.h" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2BroadPhase.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2CollideCircle.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2CollideEdge.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2CollidePolygon.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2Collision.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2Distance.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2DynamicTree.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2TimeOfImpact.cpp" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2BroadPhase.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2Collision.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2Distance.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2DynamicTree.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Collision\b2TimeOfImpact.h" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2Particle.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleGroup.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleSystem.cpp" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2VoronoiDiagram.cpp" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2Particle.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleGroup.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleSystem.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2StackQueue.h" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Particle\b2VoronoiDiagram.h" />
-    <ClCompile Include="C:\liquidfun\liquidfun\Box2D\Box2D\Rope\b2Rope.cpp" />
-    <ClInclude Include="C:\liquidfun\liquidfun\Box2D\Box2D\Rope\b2Rope.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Box2D.h" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2DistanceJoint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2FrictionJoint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2GearJoint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2Joint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2MotorJoint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2MouseJoint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2PrismaticJoint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2PulleyJoint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2RevoluteJoint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2RopeJoint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2DistanceJoint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2FrictionJoint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2GearJoint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2Joint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2MotorJoint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2MouseJoint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2PrismaticJoint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2PulleyJoint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2RevoluteJoint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2RopeJoint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WeldJoint.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Joints\b2WheelJoint.h" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2CircleContact.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2Contact.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ContactSolver.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2PolygonContact.cpp" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2CircleContact.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2Contact.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ContactSolver.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\Contacts\b2PolygonContact.h" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Body.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2ContactManager.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Fixture.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Island.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2World.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2WorldCallbacks.cpp" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Body.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2ContactManager.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Fixture.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2Island.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2TimeStep.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2World.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Dynamics\b2WorldCallbacks.h" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2BlockAllocator.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2Draw.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2FreeList.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2Math.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2Settings.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2StackAllocator.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2Stat.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2Timer.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2TrackedBlock.cpp" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2BlockAllocator.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2Draw.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2FreeList.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2GrowableStack.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2GrowableBuffer.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2IntrusiveList.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2Math.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2Settings.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2SlabAllocator.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2StackAllocator.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2Stat.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2Timer.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Common\b2TrackedBlock.h" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2CircleShape.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2EdgeShape.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2ChainShape.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2PolygonShape.cpp" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2CircleShape.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2EdgeShape.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2ChainShape.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2PolygonShape.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\Shapes\b2Shape.h" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2BroadPhase.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2CollideCircle.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2CollideEdge.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2CollidePolygon.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2Collision.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2Distance.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2DynamicTree.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2TimeOfImpact.cpp" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2BroadPhase.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2Collision.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2Distance.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2DynamicTree.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Collision\b2TimeOfImpact.h" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Particle\b2Particle.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleGroup.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleSystem.cpp" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Particle\b2VoronoiDiagram.cpp" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Particle\b2Particle.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleGroup.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Particle\b2ParticleSystem.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Particle\b2StackQueue.h" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Particle\b2VoronoiDiagram.h" />
+    <ClCompile Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Rope\b2Rope.cpp" />
+    <ClInclude Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\Box2D\Box2D\Rope\b2Rope.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\liquidfun\liquidfun\build\ZERO_CHECK.vcxproj">
-      <Project>{7F60CCEE-EBC4-3219-AE6B-E8160F83E583}</Project>
+    <ProjectReference Include="D:\Alia5\Documents\Visual_Studio_Projects\FSE\extlibs\liquidfun\liquidfun\build\ZERO_CHECK.vcxproj">
+      <Project>{236A81D4-E1BC-386F-8A94-EE622589E41D}</Project>
       <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

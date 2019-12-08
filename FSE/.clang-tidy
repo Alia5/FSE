@@ -1,0 +1,6 @@
+---
+Checks:            '*'     
+WarningsAsErrors:  ''
+HeaderFilterRegex: 'FSE/*.*'
+FormatStyle:       'file'
+User:              alia5

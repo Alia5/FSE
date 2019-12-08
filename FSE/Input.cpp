@@ -4,6 +4,10 @@
 #include <fstream>
 #include <codecvt>
 #include <imgui.h>
+#include "Scene.h"
+#include "Application.h"
+#include "FSEObject/FSEObject.h"
+#include "Component/Component.h"
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -42,6 +46,7 @@ namespace fse
 			{ L"Shoot", sf::Mouse::Button::Left },
 			{ L"Select", sf::Mouse::Button::Left },
 			{ L"RightClick", sf::Mouse::Button::Right },
+			{ L"DebugCameraMove", sf::Mouse::Button::Left },
 		};
 		mouse_button_map_ = mm;
 
@@ -271,4 +276,32 @@ namespace fse
 	{
 		entered_text_ = str;
 	}
+
+	FSE_CHAI_REGISTER(Input)
+	{
+		chai.add(chaiscript::user_type<Input>(), "Input");
+		chai.add(chaiscript::fun([](Scene* scene)
+		{
+				return scene->getApplication()->getInput();
+		}), "Input");
+		chai.add(chaiscript::fun([](std::shared_ptr<FSEObject> object)
+		{
+				return object->getScene()->getApplication()->getInput();
+		}), "Input");
+		chai.add(chaiscript::fun([](std::shared_ptr<Component> component)
+		{
+			return component->getAttachedObject()->getScene()->getApplication()->getInput();
+		}), "Input");
+		chai.add(chaiscript::fun(&Input::isKeyPressed), "isKeyPressed");
+		chai.add(chaiscript::fun([](Input* const input, const std::string& key_name)
+		{
+			return 	input->isKeyPressed(std::wstring(key_name.begin(), key_name.end()));
+		}), "isKeyPressed");
+		chai.add(chaiscript::fun(&Input::wasKeyPressed), "wasKeyPressed");
+		chai.add(chaiscript::fun([](Input* const input, const std::string& key_name)
+		{
+			return input->wasKeyPressed(std::wstring(key_name.begin(), key_name.end()));
+		}), "wasKeyPressed");
+	}
+	
 }
