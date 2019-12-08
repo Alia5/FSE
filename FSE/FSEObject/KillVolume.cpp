@@ -108,14 +108,14 @@ namespace fse
 		return size_;
 	}
 
-	FSE_CHAI_REGISTER(KillVolume)
+	FSE_V8_REGISTER(KillVolume)
 	{
-		RegisterChaiUserTypeFromRTTR<KillVolume>(chai);
-		chai.add(chaiscript::base_class<fse::FSEObject, KillVolume>());
-		chai.add(chaiscript::constructor<KillVolume()>(), "KillVolume");
-		chai.add(chaiscript::fun(static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize)), "getSize");
-		chai.add(chaiscript::fun(static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize)),
-			"setSize");
+		RegisterJSUserTypeFromRTTR<KillVolume>(isolate);
+		//chai.add(chaiscript::base_class<fse::FSEObject, KillVolume>());
+		//chai.add(chaiscript::constructor<KillVolume()>(), "KillVolume");
+		//chai.add(chaiscript::fun(static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize)), "getSize");
+		//chai.add(chaiscript::fun(static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize)),
+		//	"setSize");
 	}
 
 }

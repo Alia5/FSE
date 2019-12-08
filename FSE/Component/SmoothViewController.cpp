@@ -101,13 +101,13 @@ namespace fse
 		return vertical_offset_;
 	}
 
-	FSE_CHAI_REGISTER(SmoothViewController)
+	FSE_V8_REGISTER(SmoothViewController)
 	{
-		RegisterChaiUserTypeFromRTTR<SmoothViewController>(chai);
-		chai.add(chaiscript::base_class<fse::Component, SmoothViewController>());
-		chai.add(chaiscript::base_class<fse::ViewController, SmoothViewController>());
-		chai.add(chaiscript::constructor<SmoothViewController()>(), "SmoothViewController");
-		chai.add(chaiscript::constructor<SmoothViewController(sf::RenderTarget* const)>(), "SmoothViewController");
+		RegisterJSUserTypeFromRTTR<SmoothViewController>(isolate);
+		//chai.add(chaiscript::base_class<fse::Component, SmoothViewController>());
+		//chai.add(chaiscript::base_class<fse::ViewController, SmoothViewController>());
+		//chai.add(chaiscript::constructor<SmoothViewController()>(), "SmoothViewController");
+		//chai.add(chaiscript::constructor<SmoothViewController(sf::RenderTarget* const)>(), "SmoothViewController");
 	}
 }
 

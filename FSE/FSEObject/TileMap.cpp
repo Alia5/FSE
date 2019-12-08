@@ -362,27 +362,27 @@ namespace fse
 	}
 
 
-	FSE_CHAI_REGISTER(TileMap)
+	FSE_V8_REGISTER(TileMap)
 	{
-		RegisterChaiUserTypeFromRTTR<TileMap>(chai);
-		chai.add(chaiscript::base_class<fse::FSEObject, TileMap>());
-		chai.add(chaiscript::constructor<TileMap()>(), "TileMap");
-		chai.add(chaiscript::fun(&TileMap::getTexturePath), "getTexturePath");
-		chai.add(chaiscript::fun(&TileMap::setTexturePath), "setTexturePath");
-		chai.add(chaiscript::fun(&TileMap::getTileSize), "getTileSize");
-		chai.add(chaiscript::fun(&TileMap::setTileSize), "setTileSize");
-		chai.add(chaiscript::fun(&TileMap::getMapSize), "getMapSize");
-		chai.add(chaiscript::fun(&TileMap::setMapSize), "setMapSize");
-		chai.add(chaiscript::fun(&TileMap::getTileIndices), "getTileIndices");
-		chai.add(chaiscript::fun(static_cast<void(TileMap::*)(const std::vector<std::vector<int>>&)>(&TileMap::setTileIndices)), "setTileIndices");
-		chai.add(chaiscript::fun(static_cast<void(TileMap::*)(const std::string&)>(&TileMap::setTileIndices)), "setTileIndices");
-		chai.add(chaiscript::fun(&TileMap::getTileIndices1D), "getTileIndices1D");
-		chai.add(chaiscript::fun(&TileMap::setTileIndices1D), "setTileIndices1D");
-		chai.add(chaiscript::fun(&TileMap::hasCollision), "hasCollision");
-		chai.add(chaiscript::fun(&TileMap::setHasCollision), "setHasCollision");
-		chai.add(chaiscript::fun(&TileMap::blocksLight), "blocksLight");
-		chai.add(chaiscript::fun(&TileMap::setBlocksLight), "setBlocksLight");
-		chai.add(chaiscript::fun(&TileMap::generate), "generate");
+		RegisterJSUserTypeFromRTTR<TileMap>(isolate);
+		//chai.add(chaiscript::base_class<fse::FSEObject, TileMap>());
+		//chai.add(chaiscript::constructor<TileMap()>(), "TileMap");
+		//chai.add(chaiscript::fun(&TileMap::getTexturePath), "getTexturePath");
+		//chai.add(chaiscript::fun(&TileMap::setTexturePath), "setTexturePath");
+		//chai.add(chaiscript::fun(&TileMap::getTileSize), "getTileSize");
+		//chai.add(chaiscript::fun(&TileMap::setTileSize), "setTileSize");
+		//chai.add(chaiscript::fun(&TileMap::getMapSize), "getMapSize");
+		//chai.add(chaiscript::fun(&TileMap::setMapSize), "setMapSize");
+		//chai.add(chaiscript::fun(&TileMap::getTileIndices), "getTileIndices");
+		//chai.add(chaiscript::fun(static_cast<void(TileMap::*)(const std::vector<std::vector<int>>&)>(&TileMap::setTileIndices)), "setTileIndices");
+		//chai.add(chaiscript::fun(static_cast<void(TileMap::*)(const std::string&)>(&TileMap::setTileIndices)), "setTileIndices");
+		//chai.add(chaiscript::fun(&TileMap::getTileIndices1D), "getTileIndices1D");
+		//chai.add(chaiscript::fun(&TileMap::setTileIndices1D), "setTileIndices1D");
+		//chai.add(chaiscript::fun(&TileMap::hasCollision), "hasCollision");
+		//chai.add(chaiscript::fun(&TileMap::setHasCollision), "setHasCollision");
+		//chai.add(chaiscript::fun(&TileMap::blocksLight), "blocksLight");
+		//chai.add(chaiscript::fun(&TileMap::setBlocksLight), "setBlocksLight");
+		//chai.add(chaiscript::fun(&TileMap::generate), "generate");
 	}
 
 }

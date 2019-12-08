@@ -30,15 +30,15 @@ namespace fse
 		return light_->getScale().x / (scene_->getPixelsPerMeter() / light_texture_->getSize().x);
 	}
 
-	FSE_CHAI_REGISTER(PointLight)
+	FSE_V8_REGISTER(PointLight)
 	{
-		RegisterChaiUserTypeFromRTTR<PointLight>(chai);
-		chai.add(chaiscript::base_class<fse::Light, PointLight>());
-		chai.add(chaiscript::fun(static_cast<void (PointLight::*)(float) const>(&PointLight::setRadius)), "setRadius");
-		chai.add(chaiscript::fun(static_cast<float(PointLight::*)() const>(&PointLight::getRadius)), "getRadius");
+		RegisterJSUserTypeFromRTTR<PointLight>(isolate);
+		//chai.add(chaiscript::base_class<fse::Light, PointLight>());
+		//chai.add(chaiscript::fun(static_cast<void (PointLight::*)(float) const>(&PointLight::setRadius)), "setRadius");
+		//chai.add(chaiscript::fun(static_cast<float(PointLight::*)() const>(&PointLight::getRadius)), "getRadius");
 
-		chai.add(chaiscript::constructor<PointLight()>(), "PointLight");
-		chai.add(chaiscript::constructor<PointLight(Scene*, const sf::Vector2f&)>(), "PointLight");
+		//chai.add(chaiscript::constructor<PointLight()>(), "PointLight");
+		//chai.add(chaiscript::constructor<PointLight(Scene*, const sf::Vector2f&)>(), "PointLight");
 	}
 
 }

@@ -58,8 +58,8 @@ namespace fse
 		float vertical_offset_ = 0.0f;
 
 
-		FSE_CHAI_ENABLE(SmoothViewController);
-		FSE_CHAI_REGISTRATION_FRIEND
+		FSE_V8_ENABLE(SmoothViewController);
+		FSE_V8_REGISTRATION_FRIEND
 
 		
 		RTTR_ENABLE(fse::ViewController)

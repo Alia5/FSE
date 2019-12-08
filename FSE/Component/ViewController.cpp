@@ -83,12 +83,12 @@ namespace fse
 		render_target_->setView(view);
 	}
 
-	FSE_CHAI_REGISTER(ViewController)
+	FSE_V8_REGISTER(ViewController)
 	{
-		RegisterChaiUserTypeFromRTTR<ViewController>(chai);
-		chai.add(chaiscript::base_class<fse::Component, ViewController>());
-		chai.add(chaiscript::constructor<ViewController()>(), "ViewController");
-		chai.add(chaiscript::constructor<ViewController(sf::RenderTarget* const)>(), "ViewController");
+		RegisterJSUserTypeFromRTTR<ViewController>(isolate);
+		//chai.add(chaiscript::base_class<fse::Component, ViewController>());
+		//chai.add(chaiscript::constructor<ViewController()>(), "ViewController");
+		//chai.add(chaiscript::constructor<ViewController(sf::RenderTarget* const)>(), "ViewController");
 	}
 
 }

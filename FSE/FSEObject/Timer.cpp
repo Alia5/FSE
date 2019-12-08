@@ -80,18 +80,18 @@ namespace fse
 		single_shot_ = singleShot;
 	}
 
-	FSE_CHAI_REGISTER(Timer)
+	FSE_V8_REGISTER(Timer)
 	{
-		RegisterChaiUserTypeFromRTTR<Timer>(chai);
-		chai.add(chaiscript::base_class<fse::FSEObject, Timer>());
-		chai.add(chaiscript::constructor<Timer()>(), "Timer");
-		chai.add(chaiscript::fun((&Timer::active_)), "active");
-		chai.add(chaiscript::fun((&Timer::single_shot_)), "singleShot");
-		chai.add(chaiscript::fun((&Timer::interval_)), "interval");
-		chai.add(chaiscript::fun(((&Timer::stop))), "stop");
-		chai.add(chaiscript::fun(([](Timer* timer, std::function<void()> slot) { timer->start(slot); })), "start");
-		chai.add(chaiscript::fun(([](Scene* scene, int msecs, std::function<void()> slot) { Timer::singleShot(scene, msecs, slot); })),
-			"startSingleShotTimer");
+		RegisterJSUserTypeFromRTTR<Timer>(isolate);
+		//chai.add(chaiscript::base_class<fse::FSEObject, Timer>());
+		//chai.add(chaiscript::constructor<Timer()>(), "Timer");
+		//chai.add(chaiscript::fun((&Timer::active_)), "active");
+		//chai.add(chaiscript::fun((&Timer::single_shot_)), "singleShot");
+		//chai.add(chaiscript::fun((&Timer::interval_)), "interval");
+		//chai.add(chaiscript::fun(((&Timer::stop))), "stop");
+		//chai.add(chaiscript::fun(([](Timer* timer, std::function<void()> slot) { timer->start(slot); })), "start");
+		//chai.add(chaiscript::fun(([](Scene* scene, int msecs, std::function<void()> slot) { Timer::singleShot(scene, msecs, slot); })),
+		//	"startSingleShotTimer");
 	}
 }
 

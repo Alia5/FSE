@@ -249,9 +249,6 @@
     <ClInclude Include="..\imgui-sfml-config\imconfig.h">
       <Filter>Header Files\imgui-sfml-config</Filter>
     </ClInclude>
-    <ClInclude Include="FSEChaiLib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -275,6 +272,9 @@
     </ClInclude>
     <ClInclude Include="FSEObject\JSConsole.h">
       <Filter>Header Files\FSEObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FSEV8Lib.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -398,9 +398,6 @@
     <ClCompile Include="..\imgui\imgui_demo.cpp">
       <Filter>Source Files\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="FSEChaiLib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -424,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="FSEObject\JSConsole.cpp">
       <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEV8Lib.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

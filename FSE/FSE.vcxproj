@@ -125,7 +125,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;SFML_STATIC;IMGUI_USER_CONFIG=&lt;imconfig.h&gt;;IMGUI_DISABLE_INCLUDE_IMCONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\extlibs\SFML-2.5.1-x64\include;$(ProjectDir)..\extlibs\liquidfun\liquidfun\Box2D;$(ProjectDir)..\extlibs\rttr-0.9.6-x64\include;$(ProjectDir)..\imgui-sfml-config\;$(ProjectDir)..\chaiscript\include\;$(ProjectDir)..\ChaiScript_Extras\include\;$(ProjectDir)..\ChaiScript_Extras_Liquidfun\include\;$(ProjectDir)..\ChaiScript_Extras_SFML\include\;$(ProjectDir)..\imgui\;$(ProjectDir)..\imgui-SFML\;$(ProjectDir)..\rapidjson\include\;$(ProjectDir)..\poly2tri\poly2tri\;$(ProjectDir)..\extlibs\v8_monolith\include;$(ProjectDir)..\v8pp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\extlibs\SFML-2.5.1-x64\include;$(ProjectDir)..\extlibs\liquidfun\liquidfun\Box2D;$(ProjectDir)..\extlibs\rttr-0.9.6-x64\include;$(ProjectDir)..\imgui-sfml-config\;$(ProjectDir)..\chaiscript\include\;$(ProjectDir)..\ChaiScript_Extras\include\;$(ProjectDir)..\ChaiScript_Extras_Liquidfun\include\;$(ProjectDir)..\ChaiScript_Extras_SFML\include\;$(ProjectDir)..\imgui\;$(ProjectDir)..\imgui-SFML\;$(ProjectDir)..\rapidjson\include\;$(ProjectDir)..\poly2tri\poly2tri\;$(ProjectDir)..\v8pp;$(ProjectDir)..\extlibs\v8_monolith\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <OmitFramePointers>false</OmitFramePointers>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -225,7 +225,7 @@
     <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep.h" />
     <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep_context.h" />
     <ClInclude Include="AssetLoader.h" />
-    <ClInclude Include="FSEChaiLib.h" />
+    <ClInclude Include="FSEV8Lib.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\SmoothViewController.h" />
     <ClInclude Include="Component\ViewController.h" />
@@ -285,7 +285,7 @@
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp" />
-    <ClCompile Include="FSEChaiLib.cpp" />
+    <ClCompile Include="FSEV8Lib.cpp" />
     <ClCompile Include="FSEObject\JSConsole.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />
     <ClCompile Include="FSEObject\KillVolume.cpp" />

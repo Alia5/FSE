@@ -2,7 +2,7 @@
 
 #include "FSELightWorld.h"
 #include "../AssetLoader.h"
-#include "../FSEChaiLib.h"
+#include "../FSEV8Lib.h"
 
 namespace fse
 {
@@ -68,7 +68,7 @@ namespace fse
 		RTTR_ENABLE()
 		RTTR_REGISTRATION_FRIEND
 
-		FSE_CHAI_ENABLE(Light);
-		FSE_CHAI_REGISTRATION_FRIEND
+		FSE_V8_ENABLE(Light);
+		FSE_V8_REGISTRATION_FRIEND
 	};
 }

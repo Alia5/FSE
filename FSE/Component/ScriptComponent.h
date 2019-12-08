@@ -35,8 +35,8 @@
 //		mutable std::function<void(const chaiscript::Boxed_Value&, FSEObject*, b2Contact*, const b2Manifold*)> preSolveFun = nullptr;
 //		mutable std::function<void(const chaiscript::Boxed_Value&, FSEObject*, b2Contact*, const b2ContactImpulse*)> postSolveFun = nullptr;
 //
-//		FSE_CHAI_ENABLE(ScriptComponent);
-//		FSE_CHAI_REGISTRATION_FRIEND
+//		FSE_V8_ENABLE(ScriptComponent);
+//		FSE_V8_REGISTRATION_FRIEND
 //
 //		RTTR_ENABLE(fse::Component)
 //		RTTR_REGISTRATION_FRIEND

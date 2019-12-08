@@ -64,8 +64,8 @@ namespace fse
 
 		bool has_spawned_ = false;
 
-		FSE_CHAI_ENABLE(TileMap);
-		FSE_CHAI_REGISTRATION_FRIEND
+		FSE_V8_ENABLE(TileMap);
+		FSE_V8_REGISTRATION_FRIEND
 
 		RTTR_ENABLE(fse::FSEObject)
 		RTTR_REGISTRATION_FRIEND

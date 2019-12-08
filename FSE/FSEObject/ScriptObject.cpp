@@ -259,54 +259,54 @@
 //	}
 //
 //
-//	FSE_CHAI_REGISTER(ScriptObject)
+//	FSE_V8_REGISTER(ScriptObject)
 //	{
-//		RegisterChaiUserTypeFromRTTR<ScriptObject>(chai);
-//		chai.add(chaiscript::base_class<fse::FSEObject, ScriptObject>());
-//		chai.add(chaiscript::constructor<ScriptObject(const std::string&)>(), "ScriptObject");
-//		chai.add(chaiscript::constructor<ScriptObject(const sf::Vector2f&, const std::string&)>(), "ScriptObject");
-//		chai.add(chaiscript::fun([](const ScriptObject* object)
+//		RegisterJSUserTypeFromRTTR<ScriptObject>(isolate);
+//		//chai.add(chaiscript::base_class<fse::FSEObject, ScriptObject>());
+//		//chai.add(chaiscript::constructor<ScriptObject(const std::string&)>(), "ScriptObject");
+//		//chai.add(chaiscript::constructor<ScriptObject(const sf::Vector2f&, const std::string&)>(), "ScriptObject");
+//		//chai.add(chaiscript::fun([](const ScriptObject* object)
 //		{
 //			return object->initialized_;
 //		}), "isInitialized");
 //
-//		chai.add(chaiscript::fun([](const ScriptObject* object)
+//		//chai.add(chaiscript::fun([](const ScriptObject* object)
 //		{
 //			return object->script_name_;
 //		}), "getScriptName");
 //
-//		chai.add(chaiscript::fun([](const ScriptObject* object)
+//		//chai.add(chaiscript::fun([](const ScriptObject* object)
 //		{
 //			return object->script_child_;
 //		}), "_child");
 //
-//		chai.add(chaiscript::fun(&ScriptObject::position_), "position");
+//		//chai.add(chaiscript::fun(&ScriptObject::position_), "position");
 //
-//		chai.add(chaiscript::fun(&ScriptObject::spawnedFun), "spawnedCallback");
-//		chai.add(chaiscript::fun(&ScriptObject::onDespawnFun), "onDespawnCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::spawnedFun), "spawnedCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::onDespawnFun), "onDespawnCallback");
 //
-//		chai.add(chaiscript::fun(&ScriptObject::updateFun), "updateCallback");
-//		chai.add(chaiscript::fun(&ScriptObject::drawFun), "drawCallback");
-//		chai.add(chaiscript::fun(&ScriptObject::drawNormalsFun), "drawNormalsCallback");
-//		chai.add(chaiscript::fun(&ScriptObject::drawSpecularFun), "drawSpecularCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::updateFun), "updateCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::drawFun), "drawCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::drawNormalsFun), "drawNormalsCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::drawSpecularFun), "drawSpecularCallback");
 //
-//		chai.add(chaiscript::fun(&ScriptObject::setPositionFun), "setPositionCallback");
-//		chai.add(chaiscript::fun(&ScriptObject::getPositionFun), "getPositionCallback");
-//		chai.add(chaiscript::fun(&ScriptObject::getAABBsFun), "getAABBsCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::setPositionFun), "setPositionCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::getPositionFun), "getPositionCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::getAABBsFun), "getAABBsCallback");
 //
-//		chai.add(chaiscript::fun(&ScriptObject::beginContactFun), "beginContactCallback");
-//		chai.add(chaiscript::fun(&ScriptObject::endContactFun), "endContactCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::beginContactFun), "beginContactCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::endContactFun), "endContactCallback");
 //
-//		chai.add(chaiscript::fun(&ScriptObject::preSolveFun), "preSolveCallback");
-//		chai.add(chaiscript::fun(&ScriptObject::postSolveFun), "postSolveCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::preSolveFun), "preSolveCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::postSolveFun), "postSolveCallback");
 //
-//		chai.add(chaiscript::fun(&ScriptObject::destroyFun), "destroyCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::destroyFun), "destroyCallback");
 //
-//		chai.add(chaiscript::fun(&ScriptObject::beginContactComponentsFun), "beginContactComponentsCallback");
-//		chai.add(chaiscript::fun(&ScriptObject::endContactComponentsFun), "endContactComponentsCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::beginContactComponentsFun), "beginContactComponentsCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::endContactComponentsFun), "endContactComponentsCallback");
 //
-//		chai.add(chaiscript::fun(&ScriptObject::preSolveComponentsFun), "preSolveComponentsCallback");
-//		chai.add(chaiscript::fun(&ScriptObject::postSolveComponentsFun), "postSolveComponentsCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::preSolveComponentsFun), "preSolveComponentsCallback");
+//		//chai.add(chaiscript::fun(&ScriptObject::postSolveComponentsFun), "postSolveComponentsCallback");
 //
 //	}
 //

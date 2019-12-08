@@ -214,66 +214,66 @@ namespace fse
 	}
 
 
-	FSE_CHAI_REGISTER(FSEObject)
+	FSE_V8_REGISTER(FSEObject)
 	{
-		RegisterChaiUserTypeFromRTTR<FSEObject>(chai);
-		chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
-		chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getZOrder)), "getZOrder");
-		chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(int)>(&FSEObject::setZOrder)), "setZOrder");
-		chai.add(chaiscript::fun(static_cast<bool(FSEObject::*)() const>(&FSEObject::isPendingKill)), "isPendingKill");
-		chai.add(chaiscript::fun(static_cast<void(FSEObject::*)()>(&FSEObject::setTimedKill)), "setTimedKill");
-		chai.add(chaiscript::fun(static_cast<sf::Vector2f(FSEObject::*)()>(&FSEObject::getPosition)), "getPosition");
-		chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(sf::Vector2f position)>(&FSEObject::setPosition)),
-			"setPosition");
-		chai.add(chaiscript::fun([](FSEObject* object, float x, float y)
-		{
-			object->setPosition({ x, y });
-		}), "setPosition");
-		chai.add(chaiscript::fun(static_cast<sf::FloatRect(FSEObject::*)() const>(&FSEObject::GetAABBs)),
-			"getAABBs");
-		chai.add(chaiscript::fun(static_cast<bool(FSEObject::*)()>(&FSEObject::destroy)),
-			"destroy");
-		chai.add(chaiscript::fun(static_cast<Scene*(FSEObject::*)() const>(&FSEObject::getScene)),
-			"getScene");
-		chai.add(chaiscript::fun([](const FSEObject* object)
-		{
-			return object->input_;
-		}), "getInput");
-		chai.add(chaiscript::fun(static_cast<std::weak_ptr<Component>(FSEObject::*)(std::shared_ptr<Component>)>(&FSEObject::attachComponent)), "attachComponent");
-		chai.add(chaiscript::fun(static_cast<std::shared_ptr<Component>(FSEObject::*)(Component*)>(&FSEObject::detachComponent)), "detachComponent");
-		chai.add(chaiscript::fun([](const FSEObject* object)
-		{
-			std::vector<std::weak_ptr<Component>> result;
-			result.reserve(object->components_.size());
-			for (auto& component : object->components_)
-			{
-				result.emplace_back(component);
-			}
-			return result;
-		}), "getComponents");
-		chai.add(chaiscript::fun(([](const FSEObject* object) {
-			if (object == nullptr)
-				return std::string({'n', 'u', 'l', 'l'}); //funny written because my cheatsheet generator script is crap
-			return object->get_type().get_name().to_string();
-		})), "getTypeName");
-		chai.add(chaiscript::fun(([](const FSEObject* object) {
-			if (object == nullptr)
-				return std::string({ 'n', 'u', 'l', 'l' });
-			return object->get_type().get_name().to_string();
-		})), "type_name");
+		RegisterJSUserTypeFromRTTR<FSEObject>(isolate);
+		//chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getID)), "getID");
+		//chai.add(chaiscript::fun(static_cast<int (FSEObject::*)() const>(&FSEObject::getZOrder)), "getZOrder");
+		//chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(int)>(&FSEObject::setZOrder)), "setZOrder");
+		//chai.add(chaiscript::fun(static_cast<bool(FSEObject::*)() const>(&FSEObject::isPendingKill)), "isPendingKill");
+		//chai.add(chaiscript::fun(static_cast<void(FSEObject::*)()>(&FSEObject::setTimedKill)), "setTimedKill");
+		//chai.add(chaiscript::fun(static_cast<sf::Vector2f(FSEObject::*)()>(&FSEObject::getPosition)), "getPosition");
+		//chai.add(chaiscript::fun(static_cast<void(FSEObject::*)(sf::Vector2f position)>(&FSEObject::setPosition)),
+		//	"setPosition");
+		////chai.add(chaiscript::fun([](FSEObject* object, float x, float y)
+		//{
+		//	object->setPosition({ x, y });
+		//}), "setPosition");
+		////chai.add(chaiscript::fun(static_cast<sf::FloatRect(FSEObject::*)() const>(&FSEObject::GetAABBs)),
+		//	"getAABBs");
+		////chai.add(chaiscript::fun(static_cast<bool(FSEObject::*)()>(&FSEObject::destroy)),
+		//	"destroy");
+		////chai.add(chaiscript::fun(static_cast<Scene*(FSEObject::*)() const>(&FSEObject::getScene)),
+		//	"getScene");
+		////chai.add(chaiscript::fun([](const FSEObject* object)
+		//{
+		//	return object->input_;
+		//}), "getInput");
+		////chai.add(chaiscript::fun(static_cast<std::weak_ptr<Component>(FSEObject::*)(std::shared_ptr<Component>)>(&FSEObject::attachComponent)), "attachComponent");
+		////chai.add(chaiscript::fun(static_cast<std::shared_ptr<Component>(FSEObject::*)(Component*)>(&FSEObject::detachComponent)), "detachComponent");
+		////chai.add(chaiscript::fun([](const FSEObject* object)
+		//{
+		//	std::vector<std::weak_ptr<Component>> result;
+		//	result.reserve(object->components_.size());
+		//	for (auto& component : object->components_)
+		//	{
+		//		result.emplace_back(component);
+		//	}
+		//	return result;
+		//}), "getComponents");
+		////chai.add(chaiscript::fun(([](const FSEObject* object) {
+		//	if (object == nullptr)
+		//		return std::string({'n', 'u', 'l', 'l'}); //funny written because my cheatsheet generator script is crap
+		//	return object->get_type().get_name().to_string();
+		//})), "getTypeName");
+		////chai.add(chaiscript::fun(([](const FSEObject* object) {
+		//	if (object == nullptr)
+		//		return std::string({ 'n', 'u', 'l', 'l' });
+		//	return object->get_type().get_name().to_string();
+		//})), "type_name");
 
 
-		chai.add(chaiscript::user_type<std::weak_ptr<FSEObject>>(), "WeakFSEObject");
-		chai.add(chaiscript::type_conversion<std::weak_ptr<FSEObject>, std::shared_ptr<FSEObject>>([](const std::weak_ptr<FSEObject>& t_bt) { return t_bt.lock(); }));
-		chai.add(chaiscript::fun([](const std::weak_ptr<FSEObject> & weak_obj)
-		{
-			return weak_obj.lock();
-		}), "lock");
+		////chai.add(chaiscript::user_type<std::weak_ptr<FSEObject>>(), "WeakFSEObject");
+		////chai.add(chaiscript::type_conversion<std::weak_ptr<FSEObject>, std::shared_ptr<FSEObject>>([](const std::weak_ptr<FSEObject>& t_bt) { return t_bt.lock(); }));
+		////chai.add(chaiscript::fun([](const std::weak_ptr<FSEObject> & weak_obj)
+		//{
+		//	return weak_obj.lock();
+		//}), "lock");
 
-		chai.add(chaiscript::fun([](const std::weak_ptr<FSEObject> & weak_obj)
-		{
-			return !weak_obj.expired();
-		}), "valid");
+		////chai.add(chaiscript::fun([](const std::weak_ptr<FSEObject> & weak_obj)
+		//{
+		//	return !weak_obj.expired();
+		//}), "valid");
 
 	}
 

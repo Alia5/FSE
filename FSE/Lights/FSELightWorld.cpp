@@ -193,20 +193,20 @@ namespace fse
 		lights_.erase(std::remove(lights_.begin(), lights_.end(), light), lights_.end());
 	}
 
-	FSE_CHAI_REGISTER(FSELightWorld)
+	FSE_V8_REGISTER(FSELightWorld)
 	{
-		RegisterChaiUserTypeFromRTTR<FSELightWorld>(chai);
-		chai.add(chaiscript::base_class<fse::FSEObject, FSELightWorld>());
-		chai.add(chaiscript::fun((&FSELightWorld::lighting_)), "lighting");
-		chai.add(chaiscript::fun(static_cast<bool(FSELightWorld::*)() const>(&FSELightWorld::getBloom)), "getBloom");
-		chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(bool)>(&FSELightWorld::setBloom)), "setBloom");
-		chai.add(chaiscript::fun(static_cast<sf::Color(FSELightWorld::*)() const>(&FSELightWorld::getAmbientColor)), "getAmbientColor");
-		chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(const sf::Color color) const>(&FSELightWorld::setAmbientColor)), "setAmbientColor");
-		chai.add(chaiscript::fun([](const FSELightWorld& lightWorld)
-		{
-			const std::vector<Light*> result = lightWorld.lights_;
-			return result;
-		}), "getLights");
+		RegisterJSUserTypeFromRTTR<FSELightWorld>(isolate);
+		//chai.add(chaiscript::base_class<fse::FSEObject, FSELightWorld>());
+		//chai.add(chaiscript::fun((&FSELightWorld::lighting_)), "lighting");
+		//chai.add(chaiscript::fun(static_cast<bool(FSELightWorld::*)() const>(&FSELightWorld::getBloom)), "getBloom");
+		//chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(bool)>(&FSELightWorld::setBloom)), "setBloom");
+		//chai.add(chaiscript::fun(static_cast<sf::Color(FSELightWorld::*)() const>(&FSELightWorld::getAmbientColor)), "getAmbientColor");
+		//chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(const sf::Color color) const>(&FSELightWorld::setAmbientColor)), "setAmbientColor");
+		//chai.add(chaiscript::fun([](const FSELightWorld& lightWorld)
+		//{
+		//	const std::vector<Light*> result = lightWorld.lights_;
+		//	return result;
+		//}), "getLights");
 	}
 
 }

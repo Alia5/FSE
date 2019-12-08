@@ -9,7 +9,7 @@
 #include "PhysContactListener.h"
 #include "PhysDebugDraw.h"
 #include "NetworkHandler.h"
-#include "FSEChaiLib.h"
+#include "FSEV8Lib.h"
 
 constexpr auto FSE_RADTODEG = 57.2957795f;
 constexpr auto FSE_DEGTORAD = 0.01745329f;
@@ -259,8 +259,8 @@ namespace fse
 
 		friend class Serializer;
 
-		FSE_CHAI_ENABLE(Scene);
-		FSE_CHAI_REGISTRATION_FRIEND
+		FSE_V8_ENABLE(Scene);
+		FSE_V8_REGISTRATION_FRIEND
 
 	};
 }

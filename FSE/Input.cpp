@@ -277,31 +277,31 @@ namespace fse
 		entered_text_ = str;
 	}
 
-	FSE_CHAI_REGISTER(Input)
+	FSE_V8_REGISTER(Input)
 	{
-		chai.add(chaiscript::user_type<Input>(), "Input");
-		chai.add(chaiscript::fun([](Scene* scene)
-		{
-				return scene->getApplication()->getInput();
-		}), "Input");
-		chai.add(chaiscript::fun([](std::shared_ptr<FSEObject> object)
-		{
-				return object->getScene()->getApplication()->getInput();
-		}), "Input");
-		chai.add(chaiscript::fun([](std::shared_ptr<Component> component)
-		{
-			return component->getAttachedObject()->getScene()->getApplication()->getInput();
-		}), "Input");
-		chai.add(chaiscript::fun(&Input::isKeyPressed), "isKeyPressed");
-		chai.add(chaiscript::fun([](Input* const input, const std::string& key_name)
-		{
-			return 	input->isKeyPressed(std::wstring(key_name.begin(), key_name.end()));
-		}), "isKeyPressed");
-		chai.add(chaiscript::fun(&Input::wasKeyPressed), "wasKeyPressed");
-		chai.add(chaiscript::fun([](Input* const input, const std::string& key_name)
-		{
-			return input->wasKeyPressed(std::wstring(key_name.begin(), key_name.end()));
-		}), "wasKeyPressed");
+		//chai.add(chaiscript::user_type<Input>(), "Input");
+		//chai.add(chaiscript::fun([](Scene* scene)
+		//{
+		//		return scene->getApplication()->getInput();
+		//}), "Input");
+		////chai.add(chaiscript::fun([](std::shared_ptr<FSEObject> object)
+		//{
+		//		return object->getScene()->getApplication()->getInput();
+		//}), "Input");
+		////chai.add(chaiscript::fun([](std::shared_ptr<Component> component)
+		//{
+		//	return component->getAttachedObject()->getScene()->getApplication()->getInput();
+		//}), "Input");
+		////chai.add(chaiscript::fun(&Input::isKeyPressed), "isKeyPressed");
+		////chai.add(chaiscript::fun([](Input* const input, const std::string& key_name)
+		//{
+		//	return 	input->isKeyPressed(std::wstring(key_name.begin(), key_name.end()));
+		//}), "isKeyPressed");
+		////chai.add(chaiscript::fun(&Input::wasKeyPressed), "wasKeyPressed");
+		////chai.add(chaiscript::fun([](Input* const input, const std::string& key_name)
+		//{
+		//	return input->wasKeyPressed(std::wstring(key_name.begin(), key_name.end()));
+		//}), "wasKeyPressed");
 	}
 	
 }

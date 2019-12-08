@@ -2,7 +2,7 @@
 
 #include <rttr/type>
 #include <rttr/registration_friend>
-#include "../FSEChaiLib.h"
+#include "../FSEV8Lib.h"
 
 
 struct b2Manifold;
@@ -77,8 +77,8 @@ namespace fse
 
 	private:
 
-		FSE_CHAI_ENABLE(Component);
-		FSE_CHAI_REGISTRATION_FRIEND
+		FSE_V8_ENABLE(Component);
+		FSE_V8_REGISTRATION_FRIEND
 
 		RTTR_ENABLE()
 		RTTR_REGISTRATION_FRIEND

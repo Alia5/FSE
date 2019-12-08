@@ -2,9 +2,10 @@
 #include <imgui.h>
 #include <imgui-SFML.h>
 #include "FSEObject/FSEObject.h"
-#include "FSEChaiLib.h"
+#include "FSEV8Lib.h"
 
-
+#include <v8pp/class.hpp>
+#include <v8pp/module.hpp>
 
 #ifdef ANDROID
 #include <android/log.h>
@@ -24,20 +25,19 @@ namespace fse
 			v8::ArrayBuffer::Allocator::NewDefaultAllocator();
 		platform_ = v8::platform::NewDefaultPlatform();
 		v8::V8::InitializePlatform(platform_.get());
-		isolate_ = v8::Isolate::New(create_params_);
-		isolate_->Enter();
 	}
 
 	Application::~Application()
 	{
-		if (render_window_ != nullptr)
-			ImGui::SFML::Shutdown();
-
+		v8pp::cleanup(isolate_);
 		isolate_->Exit();
 		isolate_->Dispose();
 		v8::V8::Dispose();
 		v8::V8::ShutdownPlatform();
 		delete create_params_.array_buffer_allocator;
+		
+		if (render_window_ != nullptr)
+			ImGui::SFML::Shutdown();
 	}
 
 	void Application::update()
@@ -104,10 +104,18 @@ namespace fse
 
 	void Application::initV8Ctx()
 	{
+		if (isolate_)
+		{
+			v8pp::cleanup(isolate_);
+			isolate_->Exit();
+			isolate_->Dispose();
+		}
+		isolate_ = v8::Isolate::New(create_params_);
+		isolate_->Enter();
 		v8::HandleScope handle_scope(isolate_);
 		v8_context_ = v8::Context::New(isolate_);
 		v8_context_->Enter();
-		//priv::FSEChaiLib::Init(chai_);
+		priv::FSEV8Lib::Init(isolate_);	
 		on_v8_ctx_init_();
 	}
 
