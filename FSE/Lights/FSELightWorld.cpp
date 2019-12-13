@@ -6,7 +6,8 @@
 #include <rttr/registration>
 
 #include <SFML/Graphics.hpp>
-
+#include <v8pp/module.hpp>
+#include <v8pp/class.hpp>
 namespace fse
 {
 	FSELightWorld::FSELightWorld() : FSELightWorld(sf::Vector2f(0, 0))
@@ -195,7 +196,35 @@ namespace fse
 
 	FSE_V8_REGISTER(FSELightWorld)
 	{
-		RegisterJSUserTypeFromRTTR<FSELightWorld>(isolate);
+
+		//v8::HandleScope handle_scope(isolate);
+		//v8pp::module module(isolate);
+		//v8pp::class_<FSELightWorld, v8pp::shared_ptr_traits>FSELightWorld_class(isolate);
+		//FSELightWorld_class.inherit<FSEObject>();
+		//FSELightWorld_class.var("lighting", &FSELightWorld::lighting_);
+		////Scene_class.function("setPaused", &Scene::setPaused);
+		////Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
+		////Scene_class.function("setPhysDrawDebug", &Scene::setPhysDrawDebug);
+		////Scene_class.function("getLightWorld", &Scene::getLightWorld);
+		////Scene_class.function("getPhysWorld", &Scene::getPhysWorld);
+		////Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);
+		////Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
+		////Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
+		////Scene_class.function("spawnObject", &Scene::spawnObject);
+
+		//module.class_("FSELightWorld_class", FSELightWorld_class);
+
+		////v8pp::class_<FSEObject, v8pp::shared_ptr_traits> FSEObject_shared_class(isolate);
+		////FSEObject_shared_class.function("getID", &FSEObject::getID);
+
+		////module.class_("SharedFSEObject", FSEObject_shared_class);
+
+
+		//// set bindings in global object as `mylib`
+		//isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
+		//	v8::String::NewFromUtf8(isolate, "FSELightWorld_class").ToLocalChecked(), module.new_instance());
+		
+		//RegisterJSUserTypeFromRTTR<FSELightWorld>(isolate);
 		//chai.add(chaiscript::base_class<fse::FSEObject, FSELightWorld>());
 		//chai.add(chaiscript::fun((&FSELightWorld::lighting_)), "lighting");
 		//chai.add(chaiscript::fun(static_cast<bool(FSELightWorld::*)() const>(&FSELightWorld::getBloom)), "getBloom");

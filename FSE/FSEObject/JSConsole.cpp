@@ -6,6 +6,7 @@
 #include <imgui_internal.h>
 #include "../imgui-colorText.h"
 #include <v8pp/module.hpp>
+#include "../v8bind.h"
 
 namespace fse
 {
@@ -162,13 +163,13 @@ namespace fse
 		}
 	}
 
-
+	
 	void JSConsole::addDefaultFuns()
 	{
 		v8::Isolate* iso = v8::Isolate::GetCurrent();
 		v8::HandleScope handle_scope(iso);
 		v8::Local<v8::Context> ctx = iso->GetEnteredContext();
-		
+
 		v8pp::module console(iso);
 		console
 			.function("log", [this](v8::FunctionCallbackInfo<v8::Value> const& args)
@@ -197,8 +198,8 @@ namespace fse
 			.function("exit", [this]() { shown_ = false;  })
 			.function("clear", [this]() { output_data_.str(std::string());  });
 		ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "console").ToLocalChecked(), console.new_instance());
-		//ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "print").ToLocalChecked(),
-		//	console.new_instance()->Get(ctx, v8::String::NewFromUtf8(iso, "log").ToLocalChecked()).ToLocalChecked());
+		ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "print").ToLocalChecked(),
+			console.new_instance()->Get(ctx, v8::String::NewFromUtf8(iso, "log").ToLocalChecked()).ToLocalChecked());
 	
 	}
 	void JSConsole::consoleEval(const std::string& js)

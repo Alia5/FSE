@@ -3,6 +3,7 @@
 #include "FSEObject/FSEObject.h"
 #include "Lights/FSELightWorld.h"
 #include <v8pp/module.hpp>
+#include <v8pp/class.hpp>
 
 namespace fse
 {
@@ -244,9 +245,9 @@ namespace fse
 		//v8::EscapableHandleScope scope(isolate);
 		v8::HandleScope handle_scope(isolate);
 		v8pp::module module(isolate);
-		v8pp::class_<Scene> Scene_class(isolate);
-		Scene_class.var("is_paused_", &Scene::is_paused_);
+		//v8pp::class_<Scene> Scene_class(isolate);
 		//Scene_class.function("isPaused", &Scene::isPaused);
+		//Scene_class.function("setPaused", &Scene::setPaused);
 		//Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
 		//Scene_class.function("setPhysDrawDebug", &Scene::setPhysDrawDebug);
 		//Scene_class.function("getLightWorld", &Scene::getLightWorld);
@@ -254,14 +255,20 @@ namespace fse
 		//Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);
 		//Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
 		//Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
-		Scene_class.function("testFun", []() { return "gdfhjdsfsdf";  });
-		//Scene_class.function("spawnObject", &Scene::spawnObject);
+		//Scene_class.function("test", [](Scene* scene)
+		//{
+		//		//typedef v8pp::class_<fse::FSE> my_class_wrapper;
+		//		//v8::Local<v8::Value> val = my_class_wrapper::reference_external(iso, sub_scene_.get());
+		//		//ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "gameScene").ToLocalChecked(), val);
+		//		return scene->fse_objects_[0].get();
+		//});
+		////Scene_class.function("spawnObject", &Scene::spawnObject);
 
-		module.class_("Scene", Scene_class);
+		//module.class_("Scene", Scene_class);
 
-		// set bindings in global object as `mylib`
-		isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
-			v8::String::NewFromUtf8(isolate, "fse").ToLocalChecked(), module.new_instance());
+		//// set bindings in global object as `mylib`
+		//isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
+		//	v8::String::NewFromUtf8(isolate, "fse").ToLocalChecked(), module.new_instance());
 		
 		//chai.add(chaiscript::user_type<Scene>(), "FSEScene");
 		//chai.add(chaiscript::fun(static_cast<bool(Scene::*)() const>(&Scene::isPaused)), "isPaused");

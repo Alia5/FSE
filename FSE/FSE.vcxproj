@@ -259,6 +259,7 @@
     <ClInclude Include="Serialize.h" />
     <ClInclude Include="Signals.h" />
     <ClInclude Include="FSEObject\TileMap.h" />
+    <ClInclude Include="v8bind.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\imgui-sfml\imgui-SFML.cpp" />
