@@ -1,0 +1,10 @@
+^D:\ALIA5\DOCUMENTS\VISUAL_STUDIO_PROJECTS\FSE\EXTLIBS\LIQUIDFUN\LIQUIDFUN\BUILD\CMAKEFILES\76C3E1CB2B1EBDFBD978644002D3CDAF\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/Box2D -BD:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/Alia5/Documents/Visual_Studio_Projects/FSE/extlibs/liquidfun/liquidfun/build/Box2D.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
