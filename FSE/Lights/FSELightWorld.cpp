@@ -197,28 +197,14 @@ namespace fse
 	FSE_V8_REGISTER(FSELightWorld)
 	{
 
-		//v8::HandleScope handle_scope(isolate);
-		//v8pp::module module(isolate);
-		//v8pp::class_<FSELightWorld, v8pp::shared_ptr_traits>FSELightWorld_class(isolate);
-		//FSELightWorld_class.inherit<FSEObject>();
-		//FSELightWorld_class.var("lighting", &FSELightWorld::lighting_);
-		////Scene_class.function("setPaused", &Scene::setPaused);
-		////Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
-		////Scene_class.function("setPhysDrawDebug", &Scene::setPhysDrawDebug);
-		////Scene_class.function("getLightWorld", &Scene::getLightWorld);
-		////Scene_class.function("getPhysWorld", &Scene::getPhysWorld);
-		////Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);
-		////Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
-		////Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
-		////Scene_class.function("spawnObject", &Scene::spawnObject);
+		v8::HandleScope handle_scope(isolate);
+		v8pp::class_<FSELightWorld>FSELightWorld_class(isolate);
+		FSELightWorld_class.inherit<FSEObject>();
+		fse::addV8DownCastHelper<fse::FSEObject, fse::FSELightWorld>();
+		FSELightWorld_class.auto_wrap_objects(true);
+		FSELightWorld_class.var("lighting", &FSELightWorld::lighting_);
 
-		//module.class_("FSELightWorld_class", FSELightWorld_class);
-
-		////v8pp::class_<FSEObject, v8pp::shared_ptr_traits> FSEObject_shared_class(isolate);
-		////FSEObject_shared_class.function("getID", &FSEObject::getID);
-
-		////module.class_("SharedFSEObject", FSEObject_shared_class);
-
+		module.class_("FSELightWorld", FSELightWorld_class);
 
 		//// set bindings in global object as `mylib`
 		//isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),

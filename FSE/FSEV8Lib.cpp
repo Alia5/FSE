@@ -11,52 +11,6 @@
 #include <functional>
 
 
-template<>
-struct v8pp::convert<std::shared_ptr<fse::FSEObject>>
-{
-	using from_type = std::shared_ptr<fse::FSEObject>;
-	using from_type_raw = fse::FSEObject*;
-	using to_type = v8::Local<v8::Object>;
-
-	typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
-
-	
-	static bool is_valid(v8::Isolate*, v8::Local<v8::Value> value)
-	{
-		return !value.IsEmpty();
-	}
-
-	static from_type_raw from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
-	{
-		if (!is_valid(isolate, value))
-		{
-			throw std::invalid_argument("expected wtf array");
-		}
-
-		return my_class_wrapper::unwrap_object(isolate, value);
-	}
-
-	static to_type to_v8(v8::Isolate* isolate, std::shared_ptr<fse::FSEObject> const& value)
-	{
-		auto val = my_class_wrapper::find_object(isolate, value.get());
-		if (val.IsEmpty())
-		{
-			const auto raw_ptr = value.get();
-			for (auto & func : fse::fseV8DownCastHelpers<fse::FSEObject>)
-			{
-				val = func(raw_ptr, isolate);
-				if (!val.IsEmpty())
-					return val;
-			}
-			val = my_class_wrapper::reference_external(isolate, (value.get()));
-		}
-		return val;
-	}
-};
-
-template<>
-struct v8pp::is_wrapped_class<std::shared_ptr<fse::FSEObject>> : std::false_type {};
-
 namespace fse
 {
 	namespace priv
@@ -68,31 +22,37 @@ namespace fse
 				v8pp::module module(isolate);
 				
 
-				v8pp::class_<FSEObject> FSEObject_class(isolate);
-				FSEObject_class.auto_wrap_objects(true);
-				FSEObject_class.function("getID", &FSEObject::getID);
-				//Scene_class.function("setPaused", &Scene::setPaused);
-				//Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
-				//Scene_class.function("setPhysDrawDebug", &Scene::setPhysDrawDebug);
-				//Scene_class.function("getLightWorld", &Scene::getLightWorld);
-				//Scene_class.function("getPhysWorld", &Scene::getPhysWorld);
-				//Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);
-				//Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
-				//Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
-				//Scene_class.function("spawnObject", &Scene::spawnObject);
-
-				module.class_("FSEObject", FSEObject_class);
-
 				//v8pp::class_<FSEObject, v8pp::shared_ptr_traits> FSEObject_shared_class(isolate);
 				//FSEObject_shared_class.function("getID", &FSEObject::getID);
 
 				//module.class_("SharedFSEObject", FSEObject_shared_class);
 
 				
-				v8pp::class_<FSELightWorld>FSELightWorld_class(isolate);
-				FSELightWorld_class.inherit<FSEObject>();
-				FSELightWorld_class.auto_wrap_objects(true);
-				FSELightWorld_class.var("lighting", &FSELightWorld::lighting_);
+				//v8pp::class_<FSELightWorld>FSELightWorld_class(isolate);
+				//FSELightWorld_class.inherit<FSEObject>();
+				//FSELightWorld_class.auto_wrap_objects(true);
+				//FSELightWorld_class.var("lighting", &FSELightWorld::lighting_);
+				////Scene_class.function("setPaused", &Scene::setPaused);
+				////Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
+				////Scene_class.function("setPhysDrawDebug", &Scene::setPhysDrawDebug);
+				////Scene_class.function("getLightWorld", &Scene::getLightWorld);
+				////Scene_class.function("getPhysWorld", &Scene::getPhysWorld);
+				////Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);
+				////Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
+				////Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
+				////Scene_class.function("spawnObject", &Scene::spawnObject);
+
+				//module.class_("FSELightWorld", FSELightWorld_class);
+
+				//fse::addV8DownCastHelper<fse::FSEObject, fse::FSELightWorld>();
+
+				//v8pp::class_<FSEObject, v8pp::shared_ptr_traits> FSEObject_shared_class(isolate);
+				//FSEObject_shared_class.function("getID", &FSEObject::getID);
+
+				//module.class_("SharedFSEObject", FSEObject_shared_class);
+
+				//v8pp::class_<Scene> Scene_class(isolate);
+				//Scene_class.function("isPaused", &Scene::isPaused);
 				//Scene_class.function("setPaused", &Scene::setPaused);
 				//Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
 				//Scene_class.function("setPhysDrawDebug", &Scene::setPhysDrawDebug);
@@ -101,47 +61,26 @@ namespace fse
 				//Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);
 				//Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
 				//Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
-				//Scene_class.function("spawnObject", &Scene::spawnObject);
+				//Scene_class.function("test", [isolate](Scene* scene)
+				//	{
+				//		typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
+				//		auto val = my_class_wrapper::find_object(isolate, scene->fse_objects_[0].get());
+				//		if (val.IsEmpty())
+				//		{
+				//			if (auto obj = dynamic_cast<fse::FSELightWorld*>(scene->fse_objects_[0].get())) {
+				//				typedef v8pp::class_<fse::FSELightWorld> lightclass_Wrapper;
+				//				val = lightclass_Wrapper::reference_external(isolate, obj);
+				//			} else
+				//			{
+				//				val = my_class_wrapper::reference_external(isolate, (scene->fse_objects_[0].get()));
+				//			}
+				//		}
+				//		return val;
+				//	});
+				//Scene_class.var("objs", &Scene::fse_objects_);
+				////Scene_class.function("spawnObject", &Scene::spawnObject);
 
-				module.class_("FSELightWorld", FSELightWorld_class);
-
-				fse::addV8DownCastHelper<fse::FSEObject, fse::FSELightWorld>();
-
-				//v8pp::class_<FSEObject, v8pp::shared_ptr_traits> FSEObject_shared_class(isolate);
-				//FSEObject_shared_class.function("getID", &FSEObject::getID);
-
-				//module.class_("SharedFSEObject", FSEObject_shared_class);
-
-				v8pp::class_<Scene> Scene_class(isolate);
-				Scene_class.function("isPaused", &Scene::isPaused);
-				Scene_class.function("setPaused", &Scene::setPaused);
-				Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
-				Scene_class.function("setPhysDrawDebug", &Scene::setPhysDrawDebug);
-				Scene_class.function("getLightWorld", &Scene::getLightWorld);
-				Scene_class.function("getPhysWorld", &Scene::getPhysWorld);
-				Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);
-				Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
-				Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
-				Scene_class.function("test", [isolate](Scene* scene)
-					{
-						typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
-						auto val = my_class_wrapper::find_object(isolate, scene->fse_objects_[0].get());
-						if (val.IsEmpty())
-						{
-							if (auto obj = dynamic_cast<fse::FSELightWorld*>(scene->fse_objects_[0].get())) {
-								typedef v8pp::class_<fse::FSELightWorld> lightclass_Wrapper;
-								val = lightclass_Wrapper::reference_external(isolate, obj);
-							} else
-							{
-								val = my_class_wrapper::reference_external(isolate, (scene->fse_objects_[0].get()));
-							}
-						}
-						return val;
-					});
-				Scene_class.var("objs", &Scene::fse_objects_);
-				//Scene_class.function("spawnObject", &Scene::spawnObject);
-
-				module.class_("Scene", Scene_class);
+				//module.class_("Scene", Scene_class);
 
 				// set bindings in global object as `mylib`
 
