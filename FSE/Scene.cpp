@@ -244,7 +244,6 @@ namespace fse
 	{
 		//v8::EscapableHandleScope scope(isolate);
 		v8::HandleScope handle_scope(isolate);
-		v8pp::module module(isolate);
 		//v8pp::class_<Scene> Scene_class(isolate);
 		//Scene_class.function("isPaused", &Scene::isPaused);
 		//Scene_class.function("setPaused", &Scene::setPaused);

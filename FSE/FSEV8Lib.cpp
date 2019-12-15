@@ -8,17 +8,54 @@
 #include "Lights/SpotLight.h"
 #include "Random.h"
 #include "Scene.h"
-#include <v8pp/module.hpp>
 #include <functional>
 
-//#include <chaiscript/extras/math.hpp>
-//#include <chaiscript/extras/string_methods.hpp>
-//#include <chaiscript/extras/box2d.hpp>
-//#include <chaiscript/extras/sfml.hpp>
 
+template<>
+struct v8pp::convert<std::shared_ptr<fse::FSEObject>>
+{
+	using from_type = std::shared_ptr<fse::FSEObject>;
+	using from_type_raw = fse::FSEObject*;
+	using to_type = v8::Local<v8::Object>;
 
-#include <v8pp/module.hpp>
-#include <v8pp/class.hpp>
+	typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
+
+	
+	static bool is_valid(v8::Isolate*, v8::Local<v8::Value> value)
+	{
+		return !value.IsEmpty();
+	}
+
+	static from_type_raw from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
+	{
+		if (!is_valid(isolate, value))
+		{
+			throw std::invalid_argument("expected wtf array");
+		}
+
+		return my_class_wrapper::unwrap_object(isolate, value);
+	}
+
+	static to_type to_v8(v8::Isolate* isolate, std::shared_ptr<fse::FSEObject> const& value)
+	{
+		auto val = my_class_wrapper::find_object(isolate, value.get());
+		if (val.IsEmpty())
+		{
+			const auto raw_ptr = value.get();
+			for (auto & func : fse::fseV8DownCastHelpers<fse::FSEObject>)
+			{
+				val = func(raw_ptr, isolate);
+				if (!val.IsEmpty())
+					return val;
+			}
+			val = my_class_wrapper::reference_external(isolate, (value.get()));
+		}
+		return val;
+	}
+};
+
+template<>
+struct v8pp::is_wrapped_class<std::shared_ptr<fse::FSEObject>> : std::false_type {};
 
 namespace fse
 {
@@ -29,12 +66,10 @@ namespace fse
 
 				v8::HandleScope handle_scope(isolate);
 				v8pp::module module(isolate);
-				v8pp::class_<sf::Vector2f> vector2fClass(isolate);
-				vector2fClass.var("x", &sf::Vector2f::x);
-				vector2fClass.var("y", &sf::Vector2f::y);
-
+				
 
 				v8pp::class_<FSEObject> FSEObject_class(isolate);
+				FSEObject_class.auto_wrap_objects(true);
 				FSEObject_class.function("getID", &FSEObject::getID);
 				//Scene_class.function("setPaused", &Scene::setPaused);
 				//Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
@@ -56,6 +91,7 @@ namespace fse
 				
 				v8pp::class_<FSELightWorld>FSELightWorld_class(isolate);
 				FSELightWorld_class.inherit<FSEObject>();
+				FSELightWorld_class.auto_wrap_objects(true);
 				FSELightWorld_class.var("lighting", &FSELightWorld::lighting_);
 				//Scene_class.function("setPaused", &Scene::setPaused);
 				//Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
@@ -67,7 +103,9 @@ namespace fse
 				//Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
 				//Scene_class.function("spawnObject", &Scene::spawnObject);
 
-				module.class_("FSELightWorld_class", FSELightWorld_class);
+				module.class_("FSELightWorld", FSELightWorld_class);
+
+				fse::addV8DownCastHelper<fse::FSEObject, fse::FSELightWorld>();
 
 				//v8pp::class_<FSEObject, v8pp::shared_ptr_traits> FSEObject_shared_class(isolate);
 				//FSEObject_shared_class.function("getID", &FSEObject::getID);
@@ -87,17 +125,26 @@ namespace fse
 				Scene_class.function("test", [isolate](Scene* scene)
 					{
 						typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
-						v8::Local<v8::Value> val = my_class_wrapper::import_external(isolate, (scene->fse_objects_[0].get()));
+						auto val = my_class_wrapper::find_object(isolate, scene->fse_objects_[0].get());
+						if (val.IsEmpty())
+						{
+							if (auto obj = dynamic_cast<fse::FSELightWorld*>(scene->fse_objects_[0].get())) {
+								typedef v8pp::class_<fse::FSELightWorld> lightclass_Wrapper;
+								val = lightclass_Wrapper::reference_external(isolate, obj);
+							} else
+							{
+								val = my_class_wrapper::reference_external(isolate, (scene->fse_objects_[0].get()));
+							}
+						}
 						return val;
 					});
+				Scene_class.var("objs", &Scene::fse_objects_);
 				//Scene_class.function("spawnObject", &Scene::spawnObject);
 
 				module.class_("Scene", Scene_class);
 
 				// set bindings in global object as `mylib`
-				isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
-					v8::String::NewFromUtf8(isolate, "fse").ToLocalChecked(), module.new_instance());
-			
+
 
 				//// set bindings in global object as `mylib`
 				//isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
@@ -193,7 +240,10 @@ namespace fse
 				////chai.add(chaiscript::vector_conversion<std::vector<Light*>>());
 				////chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<Light*>>("LightList"));
 
-				v8_init::execute(isolate);
+				v8_init::execute(isolate, module);
+				isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
+					v8::String::NewFromUtf8(isolate, "fse").ToLocalChecked(), module.new_instance());
+
 		}
 
 	}
