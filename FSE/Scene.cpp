@@ -255,13 +255,25 @@ namespace fse
 		Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);
 		Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
 		Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
-		//Scene_class.function("spawnObject", static_cast<std::weak_ptr<FSEObject> (Scene::*)(std::shared_ptr<FSEObject>)>(&Scene::spawnFSEObject));
+		Scene_class.function("spawnObject", static_cast<std::weak_ptr<FSEObject> (Scene::*)(std::shared_ptr<FSEObject>)>(&Scene::spawnFSEObject));
+		//Scene_class.function("getObjects", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		//{
+		//	v8::Isolate* isolate = args.GetIsolate();
+		//	const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
+		//	return *scene->getFSEObjects();
+		//});
 		Scene_class.function("getObjects", [](v8::FunctionCallbackInfo<v8::Value> const& args)
-		{
-			v8::Isolate* isolate = args.GetIsolate();
-			const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
-			return *scene->getFSEObjects();
-		});
+			{
+				v8::Isolate* isolate = args.GetIsolate();
+				const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
+				std::vector<std::weak_ptr<fse::FSEObject>> result;
+				result.reserve(scene->getFSEObjects()->size());
+				for (auto& object : *scene->getFSEObjects())
+				{
+					result.push_back(object);
+				}
+				return result;
+			});
 		Scene_class.function("getObjectWithId", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 		{
 			v8::Isolate* isolate = args.GetIsolate();

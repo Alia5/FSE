@@ -45,7 +45,7 @@ namespace fse
 	}
 
 
-	void KillVolume::draw(sf::RenderTarget & target)
+	void KillVolume::draw(sf::RenderTarget& target)
 	{
 	}
 
@@ -76,7 +76,7 @@ namespace fse
 	}
 
 
-	void KillVolume::BeginContact(FSEObject * otherObject, b2Contact * contact)
+	void KillVolume::BeginContact(FSEObject* otherObject, b2Contact* contact)
 	{
 		otherObject->destroy();
 	}
@@ -107,10 +107,44 @@ namespace fse
 	{
 		return size_;
 	}
+//}
+//
+//
+//	struct v8pp::factory<fse::KillVolume>
+//	{
+//		static std::shared_ptr<fse::KillVolume> create(v8::FunctionCallbackInfo<v8::Value> const& args)
+//		{
+//			if (args.Length() == 0) return std::make_shared<fse::KillVolume>();
+//			return nullptr;
+//		}
+//
+//		static void destroy(v8::Isolate*, std::shared_ptr<fse::KillVolume> object)
+//		{
+//			//delete object;
+//		}
+//	};
+//
+//namespace fse {
 
 	FSE_V8_REGISTER(KillVolume)
 	{
-		RegisterJSUserTypeFromRTTR<KillVolume>(isolate);
+
+		v8::HandleScope handle_scope(isolate);
+		v8pp::class_<KillVolume>KillVolume_class(isolate);
+		KillVolume_class.inherit<FSEObject>();
+		fse::addV8DownCastHelper<fse::FSEObject, fse::KillVolume>();
+		KillVolume_class.auto_wrap_objects(true);
+		KillVolume_class.ctor<void>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+				{
+					return new KillVolume(); //dangling ptr after object is spawned and deleted by scene...
+				});
+		//chai.add(chaiscript::constructor<KillVolume()>(), "KillVolume");
+		KillVolume_class.function("getSize", static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize));
+		KillVolume_class.function("setSize", static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize));
+		module.class_("KillVolume", KillVolume_class);
+		
+		//RegisterJSUserTypeFromRTTR<KillVolume>(isolate);
 		//chai.add(chaiscript::base_class<fse::FSEObject, KillVolume>());
 		//chai.add(chaiscript::constructor<KillVolume()>(), "KillVolume");
 		//chai.add(chaiscript::fun(static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize)), "getSize");
