@@ -358,7 +358,7 @@ template<>
 struct v8pp::convert<std::shared_ptr<fse::FSEObject>>
 {
 	using from_type = std::shared_ptr<fse::FSEObject>;
-	using from_type_raw = fse::FSEObject*;
+	//using from_type_raw = fse::FSEObject*;
 	using to_type = v8::Local<v8::Object>;
 
 	typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
@@ -368,14 +368,14 @@ struct v8pp::convert<std::shared_ptr<fse::FSEObject>>
 		return !value.IsEmpty();
 	}
 
-	static from_type_raw from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
+	static from_type from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
 	{
 		if (!is_valid(isolate, value))
 		{
 			throw std::invalid_argument("expected FSEObject");
 		}
 
-		return my_class_wrapper::unwrap_object(isolate, value);
+		return std::shared_ptr<fse::FSEObject>(my_class_wrapper::unwrap_object(isolate, value));
 	}
 
 	static to_type to_v8(v8::Isolate* isolate, std::shared_ptr<fse::FSEObject> const& value)
@@ -399,7 +399,7 @@ template<>
 struct v8pp::convert<std::weak_ptr<fse::FSEObject>>
 {
 	using from_type = std::weak_ptr<fse::FSEObject>;
-	using from_type_raw = fse::FSEObject*;
+	//using from_type_raw = fse::FSEObject*;
 	using to_type = v8::Local<v8::Object>;
 
 	typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
@@ -409,14 +409,14 @@ struct v8pp::convert<std::weak_ptr<fse::FSEObject>>
 		return !value.IsEmpty();
 	}
 
-	static from_type_raw from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
+	static from_type from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
 	{
 		if (!is_valid(isolate, value))
 		{
 			throw std::invalid_argument("expected FSEObject");
 		}
 
-		return my_class_wrapper::unwrap_object(isolate, value);
+		return std::shared_ptr<fse::FSEObject>(my_class_wrapper::unwrap_object(isolate, value));
 	}
 
 	static to_type to_v8(v8::Isolate* isolate, std::weak_ptr<fse::FSEObject> const& value)
@@ -445,7 +445,7 @@ template<>
 struct v8pp::convert<std::vector<std::shared_ptr<fse::FSEObject>>>
 {
 	using from_type = std::vector<std::shared_ptr<fse::FSEObject>>;
-	using from_type_raw = std::vector<fse::FSEObject*>;
+	//using from_type_raw = std::vector<fse::FSEObject*>;
 	using to_type = v8::Local<v8::Array>;
 
 	typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
@@ -455,7 +455,7 @@ struct v8pp::convert<std::vector<std::shared_ptr<fse::FSEObject>>>
 		return !value.IsEmpty() && value->IsArray();
 	}
 
-	static from_type_raw from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
+	static from_type from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
 	{
 		if (!is_valid(isolate, value))
 		{
@@ -464,7 +464,7 @@ struct v8pp::convert<std::vector<std::shared_ptr<fse::FSEObject>>>
 
 		v8::Local<v8::Array> arr = value.As<v8::Array>();
 
-		from_type_raw result;
+		from_type result;
 		result.reserve(arr->Length());
 		for (unsigned i = 0; i < arr->Length(); ++i)
 		{
