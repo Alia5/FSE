@@ -32,13 +32,33 @@ namespace fse
 
 	FSE_V8_REGISTER(PointLight)
 	{
-		RegisterJSUserTypeFromRTTR<PointLight>(isolate);
-		//chai.add(chaiscript::base_class<fse::Light, PointLight>());
-		//chai.add(chaiscript::fun(static_cast<void (PointLight::*)(float) const>(&PointLight::setRadius)), "setRadius");
-		//chai.add(chaiscript::fun(static_cast<float(PointLight::*)() const>(&PointLight::getRadius)), "getRadius");
+		v8::HandleScope handle_scope(isolate);
+		v8pp::class_<PointLight> PointLight_class(isolate);
+		PointLight_class.auto_wrap_objects(true);
+		PointLight_class.inherit<Light>();
+		PointLight_class.function("setRadius", &PointLight::setRadius);
+		PointLight_class.function("getRadius", &PointLight::getRadius);
+		PointLight_class.property("radius", &PointLight::getRadius, &PointLight::setRadius);
 
-		//chai.add(chaiscript::constructor<PointLight()>(), "PointLight");
-		//chai.add(chaiscript::constructor<PointLight(Scene*, const sf::Vector2f&)>(), "PointLight");
+
+		PointLight_class.ctor<void>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				return new PointLight();
+			});
+		PointLight_class.ctor<Scene*>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				return new PointLight(v8pp::from_v8<Scene*>(args.GetIsolate(), args[0]), {0,0});
+			});
+		PointLight_class.ctor<Scene*, const sf::Vector2f&>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				return new PointLight(v8pp::from_v8<Scene*>(args.GetIsolate(), args[0]),
+					v8pp::from_v8<const sf::Vector2f&>(args.GetIsolate(), args[1]));
+			});
+
+		module.class_("PointLight", PointLight_class);
 	}
 
 }

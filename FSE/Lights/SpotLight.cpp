@@ -45,15 +45,32 @@ namespace fse
 
 	FSE_V8_REGISTER(SpotLight)
 	{
-		RegisterJSUserTypeFromRTTR<SpotLight>(isolate);
-		////chai.add(chaiscript::base_class<fse::Light, SpotLight>());
-		////chai.add(chaiscript::fun(static_cast<void (SpotLight::*)(float)>(&SpotLight::setLenght)), "setLenght");
-		////chai.add(chaiscript::fun(static_cast<float(SpotLight::*)() const>(&SpotLight::getLenght)), "getLenght");
-		////chai.add(chaiscript::fun(static_cast<void (SpotLight::*)(float)>(&SpotLight::setAngle)), "setAngle");
-		////chai.add(chaiscript::fun(static_cast<float(SpotLight::*)() const>(&SpotLight::getAngle)), "getAngle");
+		v8::HandleScope handle_scope(isolate);
+		v8pp::class_<SpotLight> SpotLight_class(isolate);
+		SpotLight_class.auto_wrap_objects(true);
+		SpotLight_class.inherit<Light>();
+		SpotLight_class.var("length", &SpotLight::lenght_);
+		SpotLight_class.var("angle", &SpotLight::angle_);
 
-		////chai.add(chaiscript::constructor<SpotLight()>(), "SpotLight");
-		////chai.add(chaiscript::constructor<SpotLight(Scene*, const sf::Vector2f&)>(), "SpotLight");
+
+		SpotLight_class.ctor<void>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				return new SpotLight();
+			});
+		SpotLight_class.ctor<Scene*>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				return new SpotLight(v8pp::from_v8<Scene*>(args.GetIsolate(), args[0]), { 0,0 });
+			});
+		SpotLight_class.ctor<Scene*, const sf::Vector2f&>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				return new SpotLight(v8pp::from_v8<Scene*>(args.GetIsolate(), args[0]),
+					v8pp::from_v8<const sf::Vector2f&>(args.GetIsolate(), args[1]));
+			});
+
+		module.class_("SpotLight", SpotLight_class);
 	}
 
 }

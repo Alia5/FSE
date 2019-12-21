@@ -130,9 +130,62 @@ namespace fse
 		return *this;
 	}
 
-	FSE_V8_REGISTER(Light)
+	FSE_V8_REGISTER_BASE(Light)
 	{
-		RegisterJSUserTypeFromRTTR<fse::Light>(isolate);
+		v8::HandleScope handle_scope(isolate);
+		v8pp::class_<Light> Light_class(isolate);
+		Light_class.auto_wrap_objects(true);
+		Light_class.function("setPosition", static_cast<void (Light::*)(const sf::Vector2f) const>(&Light::setPosition));
+		Light_class.function("getPosition", static_cast<sf::Vector2f(Light::*)() const>(&Light::getPosition));
+		Light_class.property("position", &Light::getPosition, &Light::setPosition);
+
+		Light_class.function("setZPosition", static_cast<void (Light::*)(const float)>(&Light::setZPosition));
+		Light_class.function("getZPosition", static_cast<float(Light::*)() const>(&Light::getZPosition));
+		Light_class.property("zPosition", &Light::getZPosition, &Light::setZPosition);
+
+
+		Light_class.function("setScale", static_cast<void (Light::*)(const sf::Vector2f) const>(&Light::setScale));
+		Light_class.function("getScale", static_cast<sf::Vector2f(Light::*)() const>(&Light::getScale));
+		Light_class.property("scale", &Light::getScale, &Light::setScale);
+
+		
+		Light_class.function("setColor", static_cast<void (Light::*)(const sf::Color) const>(&Light::setColor));
+		Light_class.function("getColor", static_cast<sf::Color(Light::*)() const>(&Light::getColor));
+		Light_class.property("color", &Light::getColor, &Light::setColor);
+
+		Light_class.function("setRotation", static_cast<void (Light::*)(float) const>(&Light::setRotation));
+		Light_class.function("getRotation", static_cast<float(Light::*)() const>(&Light::getRotation));
+		Light_class.function("rotate", static_cast<void(Light::*)(float) const>(&Light::rotate));
+		Light_class.property("rotation", &Light::getRotation, &Light::setRotation);
+
+		Light_class.function("setTurnedOn", static_cast<void (Light::*)(bool) const>(&Light::setTurnedOn));
+		Light_class.function("isTurnedOn", static_cast<bool(Light::*)() const>(&Light::isTurnedOn));
+		Light_class.function("toggle", static_cast<void(Light::*)() const>(&Light::toggleTurnedOn));
+		Light_class.property("turnedOn", &Light::isTurnedOn, &Light::setTurnedOn);
+
+		Light_class.ctor<void>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				return new Light();
+			});
+		Light_class.ctor<const Light&>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				return new Light(v8pp::from_v8<Light>(args.GetIsolate(), args[0]));
+			});
+		Light_class.ctor<Scene*, const sf::Vector2f&, const std::string&, bool>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				return new Light(v8pp::from_v8<Scene*>(args.GetIsolate(), args[0]),
+					v8pp::from_v8<const sf::Vector2f&>(args.GetIsolate(), args[1]),
+					v8pp::from_v8<const std::string&>(args.GetIsolate(), args[2]),
+					v8pp::from_v8<bool>(args.GetIsolate(), args[3]));
+			});
+		
+		module.class_("Light", Light_class);
+
+		
+		//RegisterJSUserTypeFromRTTR<fse::Light>(isolate);
 		//chai.add(chaiscript::fun(static_cast<void (Light::*)(const sf::Vector2f) const>(&Light::setPosition)), "setPosition");
 		//chai.add(chaiscript::fun(static_cast<sf::Vector2f(Light::*)() const>(&Light::getPosition)), "getPosition");
 

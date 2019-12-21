@@ -4,6 +4,51 @@
 #include "Scene.h"
 #include "FSEObject/FSEObject.h"
 
+
+template<typename T>
+struct v8pp::convert<sf::Vector2<T>>
+{
+	using from_type = sf::Vector2<T>;
+	using to_type = v8::Local<v8::Array>;
+
+	static bool is_valid(v8::Isolate*, v8::Local<v8::Value> value)
+	{
+		return !value.IsEmpty() && value->IsArray()
+			&& value.As<v8::Array>()->Length() == 2;
+	}
+
+	static from_type from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
+	{
+		if (!is_valid(isolate, value))
+		{
+			throw std::invalid_argument("expected [x, y] array");
+		}
+
+		v8::HandleScope scope(isolate);
+		v8::Local<v8::Array> arr = value.As<v8::Array>();
+
+		from_type result;
+		result.x = v8pp::from_v8<T>(isolate, arr->Get(isolate->GetCurrentContext(), 0).ToLocalChecked());
+		result.y = v8pp::from_v8<T>(isolate, arr->Get(isolate->GetCurrentContext(),1).ToLocalChecked());
+
+		return result;
+	}
+
+	static to_type to_v8(v8::Isolate* isolate, sf::Vector2<T> const& value)
+	{
+		v8::EscapableHandleScope scope(isolate);
+
+		v8::Local<v8::Array> arr = v8::Array::New(isolate, 3);
+		arr->Set(isolate->GetCurrentContext(), 0, v8pp::to_v8(isolate, value.x));
+		arr->Set(isolate->GetCurrentContext(), 1, v8pp::to_v8(isolate, value.y));
+
+		return scope.Escape(arr);
+	}
+};
+
+template<typename T>
+struct v8pp::is_wrapped_class<sf::Vector2<T>> : std::false_type {};
+
 template<>
 struct v8pp::convert<std::shared_ptr<fse::Scene>>
 {
@@ -240,5 +285,3 @@ struct v8pp::convert<std::vector<std::shared_ptr<fse::FSEObject>>>
 
 template<>
 struct v8pp::is_wrapped_class<std::vector<std::shared_ptr<fse::FSEObject>> > : std::false_type {};
-
-
