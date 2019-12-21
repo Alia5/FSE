@@ -57,7 +57,7 @@ namespace fse
 
 	FSE_V8_REGISTER(Component)
 	{
-		RegisterJSUserTypeFromRTTR<Component>(isolate);
+		//RegisterJSUserTypeFromRTTR<Component>(isolate);
 		////chai.add(chaiscript::fun(static_cast<FSEObject* (Component::*)() const>(&Component::getAttachedObject)), "getAttachedObject");
 		////chai.add(chaiscript::fun(static_cast<bool (Component::*)() const>(&Component::isAttached)), "isAttached");
 

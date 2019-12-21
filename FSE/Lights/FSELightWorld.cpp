@@ -198,7 +198,7 @@ namespace fse
 	{
 
 		v8::HandleScope handle_scope(isolate);
-		v8pp::class_<FSELightWorld>FSELightWorld_class(isolate);
+		v8pp::class_<FSELightWorld, v8pp::shared_ptr_traits>FSELightWorld_class(isolate);
 		FSELightWorld_class.inherit<FSEObject>();
 		fse::addV8DownCastHelper<fse::FSEObject, fse::FSELightWorld>();
 		FSELightWorld_class.auto_wrap_objects(true);

@@ -45,16 +45,30 @@ namespace fse
 			}
 			return v8::Local<v8::Object>();
 		}
+
+		template<typename Base, typename Derived>
+		v8::Local<v8::Object> sharedPtrDowncastHelper(std::shared_ptr<Base> const& base_ptr, v8::Isolate* isolate)
+		{
+			if (auto d_ptr = std::dynamic_pointer_cast<Derived>(base_ptr))
+			{
+				typedef v8pp::class_<Derived, v8pp::shared_ptr_traits> derived_class_wrapper;
+				return static_cast<v8::Local<v8::Object>>(derived_class_wrapper::reference_external(isolate, d_ptr));
+			}
+			return v8::Local<v8::Object>();
+		}
 		
 	}
 
 	template<typename Base>
 	inline std::vector<std::function<v8::Local<v8::Object>(Base*, v8::Isolate*)>> fseV8DownCastHelpers;
+	template<typename Base>
+	inline std::vector<std::function<v8::Local<v8::Object>(std::shared_ptr<Base> const&, v8::Isolate*)>> fseV8SharedPtrDownCastHelpers;
 	
 	template<typename Base, typename Derived>
 	void addV8DownCastHelper()
 	{
 		fseV8DownCastHelpers<Base>.push_back(priv::downcastHelper<Base, Derived>);
+		fseV8SharedPtrDownCastHelpers<Base>.push_back(priv::sharedPtrDowncastHelper<Base, Derived>);
 	}
 
 	

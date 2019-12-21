@@ -130,14 +130,14 @@ namespace fse
 	{
 
 		v8::HandleScope handle_scope(isolate);
-		v8pp::class_<KillVolume>KillVolume_class(isolate);
+		v8pp::class_<KillVolume, v8pp::shared_ptr_traits>KillVolume_class(isolate);
 		KillVolume_class.inherit<FSEObject>();
 		fse::addV8DownCastHelper<fse::FSEObject, fse::KillVolume>();
 		KillVolume_class.auto_wrap_objects(true);
 		KillVolume_class.ctor<void>(
 			[](v8::FunctionCallbackInfo<v8::Value> const& args)
 				{
-					return new KillVolume(); //dangling ptr after object is spawned and deleted by scene...
+					return std::make_shared<KillVolume>();
 				});
 		//chai.add(chaiscript::constructor<KillVolume()>(), "KillVolume");
 		KillVolume_class.function("getSize", static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize));

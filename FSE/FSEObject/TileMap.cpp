@@ -364,7 +364,7 @@ namespace fse
 
 	FSE_V8_REGISTER(TileMap)
 	{
-		RegisterJSUserTypeFromRTTR<TileMap>(isolate);
+		//RegisterJSUserTypeFromRTTR<TileMap>(isolate);
 		//chai.add(chaiscript::base_class<fse::FSEObject, TileMap>());
 		//chai.add(chaiscript::constructor<TileMap()>(), "TileMap");
 		//chai.add(chaiscript::fun(&TileMap::getTexturePath), "getTexturePath");

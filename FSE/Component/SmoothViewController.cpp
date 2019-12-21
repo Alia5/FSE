@@ -103,7 +103,7 @@ namespace fse
 
 	FSE_V8_REGISTER(SmoothViewController)
 	{
-		RegisterJSUserTypeFromRTTR<SmoothViewController>(isolate);
+		//RegisterJSUserTypeFromRTTR<SmoothViewController>(isolate);
 		//chai.add(chaiscript::base_class<fse::Component, SmoothViewController>());
 		//chai.add(chaiscript::base_class<fse::ViewController, SmoothViewController>());
 		//chai.add(chaiscript::constructor<SmoothViewController()>(), "SmoothViewController");

@@ -82,7 +82,7 @@ namespace fse
 
 	FSE_V8_REGISTER(Timer)
 	{
-		RegisterJSUserTypeFromRTTR<Timer>(isolate);
+		//RegisterJSUserTypeFromRTTR<Timer>(isolate);
 		//chai.add(chaiscript::base_class<fse::FSEObject, Timer>());
 		//chai.add(chaiscript::constructor<Timer()>(), "Timer");
 		//chai.add(chaiscript::fun((&Timer::active_)), "active");

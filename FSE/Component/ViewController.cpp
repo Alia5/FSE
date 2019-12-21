@@ -85,7 +85,7 @@ namespace fse
 
 	FSE_V8_REGISTER(ViewController)
 	{
-		RegisterJSUserTypeFromRTTR<ViewController>(isolate);
+		//RegisterJSUserTypeFromRTTR<ViewController>(isolate);
 		//chai.add(chaiscript::base_class<fse::Component, ViewController>());
 		//chai.add(chaiscript::constructor<ViewController()>(), "ViewController");
 		//chai.add(chaiscript::constructor<ViewController(sf::RenderTarget* const)>(), "ViewController");

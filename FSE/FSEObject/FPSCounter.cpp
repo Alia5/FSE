@@ -113,7 +113,7 @@ namespace fse
 
 	FSE_V8_REGISTER(FPSCounter)
 	{
-		RegisterJSUserTypeFromRTTR<FPSCounter>(isolate);
+		//RegisterJSUserTypeFromRTTR<FPSCounter>(isolate);
 		//chai.add(chaiscript::base_class<fse::FSEObject, FPSCounter>());
 		//chai.add(chaiscript::fun((&FPSCounter::detailed_view_)), "detailed");
 	}

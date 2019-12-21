@@ -34,7 +34,7 @@ namespace fse
 		std::wcout << "Deleting scene\n";
 	}
 
-	void Scene::setRenderTarget(sf::RenderTarget * renderTarget)
+	void Scene::setRenderTarget(sf::RenderTarget* renderTarget)
 	{
 		render_target_ = renderTarget;
 		renderer_ = std::make_unique<Renderer>(render_target_);
@@ -86,9 +86,9 @@ namespace fse
 			std::sort(fse_objects_.begin(), fse_objects_.end(),
 				[](const std::shared_ptr<FSEObject>& a, const std::shared_ptr<FSEObject>& b) {
 
-				return a->getZOrder() < b->getZOrder();
+					return a->getZOrder() < b->getZOrder();
 
-			});
+				});
 
 			z_order_changed_ = false;
 		}
@@ -175,7 +175,7 @@ namespace fse
 	}
 
 
-	b2World *Scene::getPhysWorld()
+	b2World* Scene::getPhysWorld()
 	{
 		return &phys_world_;
 	}
@@ -199,11 +199,11 @@ namespace fse
 		}
 	}
 
-	void Scene::removeFSEObject(FSEObject * object)
+	void Scene::removeFSEObject(FSEObject* object)
 	{
-		auto it = std::find_if(fse_objects_.begin(), fse_objects_.end(), [&](const std::shared_ptr<FSEObject> & obj) {
+		auto it = std::find_if(fse_objects_.begin(), fse_objects_.end(), [&](const std::shared_ptr<FSEObject>& obj) {
 			return obj.get() == object;
-		});
+			});
 		if (it != fse_objects_.end())
 		{
 			it->get()->onDespawn();
@@ -216,7 +216,7 @@ namespace fse
 	{
 		if (!pending_object_removals_.empty())
 		{
-			for (auto & object : pending_object_removals_)
+			for (auto& object : pending_object_removals_)
 			{
 				removeFSEObject(object);
 			}
@@ -229,7 +229,7 @@ namespace fse
 	{
 		if (!pending_object_spawns_.empty())
 		{
-			for (auto & object : pending_object_spawns_)
+			for (auto& object : pending_object_spawns_)
 			{
 				fse_objects_.push_back(object);
 				fse_objects_.rbegin()->get()->spawn(spawn_count_++, this);
@@ -238,7 +238,6 @@ namespace fse
 			pending_object_spawns_.clear();
 		}
 	}
-
 
 	FSE_V8_REGISTER(Scene)
 	{
@@ -321,189 +320,3 @@ namespace fse
 	}
 
 }
-
-
-template<>
-struct v8pp::convert<fse::FSEObject*>
-{
-	using from_type = fse::FSEObject*;
-	using to_type = v8::Local<v8::Object>;
-
-	typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
-
-	static bool is_valid(v8::Isolate*, v8::Local<v8::Value> value)
-	{
-		return !value.IsEmpty();
-	}
-
-	static from_type from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
-	{
-		if (!is_valid(isolate, value))
-		{
-			throw std::invalid_argument("expected FSEObject");
-		}
-
-		return my_class_wrapper::unwrap_object(isolate, value);
-	}
-
-	static to_type to_v8(v8::Isolate* isolate, fse::FSEObject* const& value)
-	{
-		auto val = my_class_wrapper::find_object(isolate, value);
-		if (val.IsEmpty())
-		{
-			for (auto& func : fse::fseV8DownCastHelpers<fse::FSEObject>)
-			{
-				val = func(value, isolate);
-				if (!val.IsEmpty())
-					return val;
-			}
-			val = my_class_wrapper::reference_external(isolate, value);
-		}
-		return val;
-	}
-};
-
-template<>
-struct v8pp::is_wrapped_class<fse::FSEObject*> : std::false_type {};
-
-template<>
-struct v8pp::convert<std::shared_ptr<fse::FSEObject>>
-{
-	using from_type = std::shared_ptr<fse::FSEObject>;
-	//using from_type_raw = fse::FSEObject*;
-	using to_type = v8::Local<v8::Object>;
-
-	typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
-
-	static bool is_valid(v8::Isolate*, v8::Local<v8::Value> value)
-	{
-		return !value.IsEmpty();
-	}
-
-	static from_type from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
-	{
-		if (!is_valid(isolate, value))
-		{
-			throw std::invalid_argument("expected FSEObject");
-		}
-
-		return std::shared_ptr<fse::FSEObject>(my_class_wrapper::unwrap_object(isolate, value));
-	}
-
-	static to_type to_v8(v8::Isolate* isolate, std::shared_ptr<fse::FSEObject> const& value)
-	{
-		const auto raw_ptr = value.get();
-
-		auto val = my_class_wrapper::find_object(isolate, raw_ptr);
-		if (val.IsEmpty())
-		{
-			val = convert<fse::FSEObject*>::to_v8(isolate, raw_ptr);
-		}
-		return val;
-	}
-};
-
-template<>
-struct v8pp::is_wrapped_class<std::shared_ptr<fse::FSEObject>> : std::false_type {};
-
-
-template<>
-struct v8pp::convert<std::weak_ptr<fse::FSEObject>>
-{
-	using from_type = std::weak_ptr<fse::FSEObject>;
-	//using from_type_raw = fse::FSEObject*;
-	using to_type = v8::Local<v8::Object>;
-
-	typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
-
-	static bool is_valid(v8::Isolate*, v8::Local<v8::Value> value)
-	{
-		return !value.IsEmpty();
-	}
-
-	static from_type from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
-	{
-		if (!is_valid(isolate, value))
-		{
-			throw std::invalid_argument("expected FSEObject");
-		}
-
-		return std::shared_ptr<fse::FSEObject>(my_class_wrapper::unwrap_object(isolate, value));
-	}
-
-	static to_type to_v8(v8::Isolate* isolate, std::weak_ptr<fse::FSEObject> const& value)
-	{
-		if (value.expired())
-		{
-			throw std::invalid_argument("Value is expired");
-		}
-		const auto raw_ptr = value.lock().get();
-
-		auto val = my_class_wrapper::find_object(isolate, raw_ptr);
-		if (val.IsEmpty())
-		{
-			val = convert<fse::FSEObject*>::to_v8(isolate, raw_ptr);
-
-		}
-		return val;
-	}
-};
-
-template<>
-struct v8pp::is_wrapped_class<std::weak_ptr<fse::FSEObject>> : std::false_type {};
-
-
-template<>
-struct v8pp::convert<std::vector<std::shared_ptr<fse::FSEObject>>>
-{
-	using from_type = std::vector<std::shared_ptr<fse::FSEObject>>;
-	//using from_type_raw = std::vector<fse::FSEObject*>;
-	using to_type = v8::Local<v8::Array>;
-
-	typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
-
-	static bool is_valid(v8::Isolate*, v8::Local<v8::Value> value)
-	{
-		return !value.IsEmpty() && value->IsArray();
-	}
-
-	static from_type from_v8(v8::Isolate* isolate, v8::Local<v8::Value> value)
-	{
-		if (!is_valid(isolate, value))
-		{
-			throw std::invalid_argument("expected FSEObject array");
-		}
-
-		v8::Local<v8::Array> arr = value.As<v8::Array>();
-
-		from_type result;
-		result.reserve(arr->Length());
-		for (unsigned i = 0; i < arr->Length(); ++i)
-		{
-			result.push_back(
-				convert<std::shared_ptr<fse::FSEObject>>
-				::from_v8(isolate, arr->Get(isolate->GetCurrentContext(), i).ToLocalChecked()));
-		}
-
-		return result;
-	}
-
-	static to_type to_v8(v8::Isolate* isolate, std::vector<std::shared_ptr<fse::FSEObject>> const& value)
-	{
-		v8::EscapableHandleScope scope(isolate);
-
-		v8::Local<v8::Array> arr = v8::Array::New(isolate, value.size());
-		for (unsigned i = 0; i < arr->Length(); ++i) {
-			arr->Set(isolate->GetCurrentContext(), i,
-				convert<std::shared_ptr<fse::FSEObject>>
-				::to_v8(isolate, value[i]));
-		}
-
-		return scope.Escape(arr);
-	}
-};
-
-template<>
-struct v8pp::is_wrapped_class<std::vector<std::shared_ptr<fse::FSEObject>> > : std::false_type {};
-
-
