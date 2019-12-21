@@ -203,25 +203,19 @@ namespace fse
 		fse::addV8DownCastHelper<fse::FSEObject, fse::FSELightWorld>();
 		FSELightWorld_class.auto_wrap_objects(true);
 		FSELightWorld_class.var("lighting", &FSELightWorld::lighting_);
-
+		FSELightWorld_class.var("bloom", &FSELightWorld::bloom_);
+		FSELightWorld_class.function("getBloom", &FSELightWorld::getBloom);
+		FSELightWorld_class.function("setBloom", &FSELightWorld::setBloom);
+		FSELightWorld_class.function("getAmbientColor", &FSELightWorld::getAmbientColor);
+		FSELightWorld_class.function("setAmbientColor", &FSELightWorld::setAmbientColor);
+		FSELightWorld_class.function("getLights", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				v8::Isolate* isolate = args.GetIsolate();
+				auto object = v8pp::from_v8<std::shared_ptr<FSELightWorld>>(isolate, args.This());
+				const std::vector<Light*> result = object->lights_;
+				return result;
+			});
 		module.class_("FSELightWorld", FSELightWorld_class);
-
-		//// set bindings in global object as `mylib`
-		//isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
-		//	v8::String::NewFromUtf8(isolate, "FSELightWorld_class").ToLocalChecked(), module.new_instance());
-		
-		//RegisterJSUserTypeFromRTTR<FSELightWorld>(isolate);
-		//chai.add(chaiscript::base_class<fse::FSEObject, FSELightWorld>());
-		//chai.add(chaiscript::fun((&FSELightWorld::lighting_)), "lighting");
-		//chai.add(chaiscript::fun(static_cast<bool(FSELightWorld::*)() const>(&FSELightWorld::getBloom)), "getBloom");
-		//chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(bool)>(&FSELightWorld::setBloom)), "setBloom");
-		//chai.add(chaiscript::fun(static_cast<sf::Color(FSELightWorld::*)() const>(&FSELightWorld::getAmbientColor)), "getAmbientColor");
-		//chai.add(chaiscript::fun(static_cast<void(FSELightWorld::*)(const sf::Color color) const>(&FSELightWorld::setAmbientColor)), "setAmbientColor");
-		//chai.add(chaiscript::fun([](const FSELightWorld& lightWorld)
-		//{
-		//	const std::vector<Light*> result = lightWorld.lights_;
-		//	return result;
-		//}), "getLights");
 	}
 
 }

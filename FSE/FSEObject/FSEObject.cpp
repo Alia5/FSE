@@ -228,23 +228,20 @@ namespace fse
 		FSEObject_class.function("isPendingKill", static_cast<bool(FSEObject::*)() const>(&FSEObject::isPendingKill));
 		FSEObject_class.function("setTimedKill", static_cast<void(FSEObject::*)()>(&FSEObject::setTimedKill));
 		FSEObject_class.function("getPosition", static_cast<sf::Vector2f(FSEObject::*)()>(&FSEObject::getPosition));
-		//FSEObject_class.function("setPosition", static_cast<void(FSEObject::*)(sf::Vector2f position)>(&FSEObject::setPosition));
 		FSEObject_class.function("setPosition", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](FSEObject* object, float x, float y)
 			{
-				// TODO: accept sf::Vector2<T>
 				v8::Isolate* isolate = args.GetIsolate();
 				auto object = v8pp::from_v8<std::shared_ptr<FSEObject>>(isolate, args.This());
-				object->setPosition({ v8pp::from_v8<float>(isolate, args[0]), v8pp::from_v8<float>(isolate, args[1]) });
+				if (args[0]->IsNumber() && args[1]->IsNumber())
+				{
+					object->setPosition({ v8pp::from_v8<float>(isolate, args[0]), v8pp::from_v8<float>(isolate, args[1]) });
+				} else {
+					object->setPosition(v8pp::from_v8<sf::Vector2f>(isolate, args[0]));
+				}
 			});
 		FSEObject_class.function("getAABBs", static_cast<sf::FloatRect(FSEObject::*)() const>(&FSEObject::GetAABBs));
 		FSEObject_class.function("destroy", static_cast<bool(FSEObject::*)()>(&FSEObject::destroy));
-		FSEObject_class.function("getScene", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](FSEObject* object, float x, float y)
-			{
-				v8::Isolate* isolate = args.GetIsolate();
-				auto object = v8pp::from_v8<std::shared_ptr<FSEObject>>(isolate, args.This());
-				return object->getScene();
-			});
-		//FSEObject_class.function("getScene", static_cast<Scene * (FSEObject::*)() const>(&FSEObject::getScene));
+		FSEObject_class.function("getScene", static_cast<Scene * (FSEObject::*)() const>(&FSEObject::getScene));
 		//FSEObject_class.function("getInput", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](const FSEObject* object)
 		//	{
 		//		v8::Isolate* isolate = args.GetIsolate();

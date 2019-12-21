@@ -258,12 +258,6 @@
     <ClInclude Include="..\liquidfun_contrib\ConvexDecomposition\b2Triangle.h">
       <Filter>Header Files\liquidfun_contrib\ConvexDecomposition</Filter>
     </ClInclude>
-    <ClInclude Include="FSEObject\ScriptObject.h">
-      <Filter>Header Files\FSEObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\ScriptComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
     <ClInclude Include="FSEObject\TileMap.h">
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
@@ -412,12 +406,6 @@
     </ClCompile>
     <ClCompile Include="..\imgui\imgui_widgets.cpp">
       <Filter>Source Files\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="FSEObject\ScriptObject.cpp">
-      <Filter>Source Files\FSEObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\ScriptComponent.cpp">
-      <Filter>Source Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="FSEObject\TileMap.cpp">
       <Filter>Source Files\FSEObject</Filter>

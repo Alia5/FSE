@@ -254,8 +254,6 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneDebugger.h" />
-    <ClInclude Include="FSEObject\ScriptObject.h" />
-    <ClInclude Include="Component\ScriptComponent.h" />
     <ClInclude Include="Serialize.h" />
     <ClInclude Include="Signals.h" />
     <ClInclude Include="FSEObject\TileMap.h" />
@@ -307,8 +305,6 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneDebugger.cpp" />
-    <ClCompile Include="FSEObject\ScriptObject.cpp" />
-    <ClCompile Include="Component\ScriptComponent.cpp" />
     <ClCompile Include="Serialize.cpp" />
     <ClCompile Include="FSEObject\TileMap.cpp" />
   </ItemGroup>

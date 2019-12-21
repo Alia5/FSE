@@ -113,9 +113,18 @@ namespace fse
 
 	FSE_V8_REGISTER(FPSCounter)
 	{
-		//RegisterJSUserTypeFromRTTR<FPSCounter>(isolate);
-		//chai.add(chaiscript::base_class<fse::FSEObject, FPSCounter>());
-		//chai.add(chaiscript::fun((&FPSCounter::detailed_view_)), "detailed");
+		v8::HandleScope handle_scope(isolate);
+		v8pp::class_<FPSCounter, v8pp::shared_ptr_traits>FPSCounter_class(isolate);
+		FPSCounter_class.inherit<FSEObject>();
+		fse::addV8DownCastHelper<fse::FSEObject, fse::FPSCounter>();
+		FPSCounter_class.auto_wrap_objects(true);
+		FPSCounter_class.ctor<void>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				return std::make_shared<FPSCounter>();
+			});
+		FPSCounter_class.var("detailed", &FPSCounter::detailed_view_);
+		module.class_("FPSCounter", FPSCounter_class);
 	}
 
 }

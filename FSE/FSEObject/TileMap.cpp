@@ -364,25 +364,46 @@ namespace fse
 
 	FSE_V8_REGISTER(TileMap)
 	{
-		//RegisterJSUserTypeFromRTTR<TileMap>(isolate);
-		//chai.add(chaiscript::base_class<fse::FSEObject, TileMap>());
-		//chai.add(chaiscript::constructor<TileMap()>(), "TileMap");
-		//chai.add(chaiscript::fun(&TileMap::getTexturePath), "getTexturePath");
-		//chai.add(chaiscript::fun(&TileMap::setTexturePath), "setTexturePath");
-		//chai.add(chaiscript::fun(&TileMap::getTileSize), "getTileSize");
-		//chai.add(chaiscript::fun(&TileMap::setTileSize), "setTileSize");
-		//chai.add(chaiscript::fun(&TileMap::getMapSize), "getMapSize");
-		//chai.add(chaiscript::fun(&TileMap::setMapSize), "setMapSize");
-		//chai.add(chaiscript::fun(&TileMap::getTileIndices), "getTileIndices");
-		//chai.add(chaiscript::fun(static_cast<void(TileMap::*)(const std::vector<std::vector<int>>&)>(&TileMap::setTileIndices)), "setTileIndices");
-		//chai.add(chaiscript::fun(static_cast<void(TileMap::*)(const std::string&)>(&TileMap::setTileIndices)), "setTileIndices");
-		//chai.add(chaiscript::fun(&TileMap::getTileIndices1D), "getTileIndices1D");
-		//chai.add(chaiscript::fun(&TileMap::setTileIndices1D), "setTileIndices1D");
-		//chai.add(chaiscript::fun(&TileMap::hasCollision), "hasCollision");
-		//chai.add(chaiscript::fun(&TileMap::setHasCollision), "setHasCollision");
-		//chai.add(chaiscript::fun(&TileMap::blocksLight), "blocksLight");
-		//chai.add(chaiscript::fun(&TileMap::setBlocksLight), "setBlocksLight");
-		//chai.add(chaiscript::fun(&TileMap::generate), "generate");
+		v8::HandleScope handle_scope(isolate);
+		v8pp::class_<TileMap, v8pp::shared_ptr_traits>TileMap_class(isolate);
+		TileMap_class.inherit<FSEObject>();
+		fse::addV8DownCastHelper<fse::FSEObject, fse::TileMap>();
+		TileMap_class.auto_wrap_objects(true);
+		TileMap_class.ctor<void>(
+			[](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				// TODO: overloads
+				return std::make_shared<TileMap>();
+			});
+		TileMap_class.function("getTexturePath", &TileMap::getTexturePath);
+		TileMap_class.function("setTexturePath", &TileMap::setTexturePath);
+		TileMap_class.function("getTileSize", &TileMap::getTileSize);
+		TileMap_class.function("setTileSize", &TileMap::setTileSize);
+		TileMap_class.function("getMapSize", &TileMap::getMapSize);
+		TileMap_class.function("setMapSize", &TileMap::setMapSize);
+		TileMap_class.function("getTileIndices", &TileMap::getTileIndices);
+		//TileMap_class.function("setTileIndices", static_cast<void(TileMap::*(const std::vector<std::vector<int>>&)>(&TileMap::setTileIndices)));
+		//TileMap_class.function("setTileIndices", static_cast<void(TileMap::*(const std::string&)>(&TileMap::setTileIndices)));
+		TileMap_class.function("setTileIndices", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				v8::Isolate* isolate = args.GetIsolate();
+				auto object = v8pp::from_v8<std::shared_ptr<TileMap>>(isolate, args.This());
+				if (args[0]->IsArray() || args[0]->IsArrayBuffer() || args[0]->IsArrayBufferView())
+				{
+					object->setTileIndices(v8pp::from_v8<std::vector<std::vector<int>>>(isolate, args[0]));
+				} else {
+					object->setTileIndices(v8pp::from_v8<std::string>(isolate, args[0]));		
+				}
+			});
+		TileMap_class.function("getTileIndices1D", &TileMap::getTileIndices1D);
+		TileMap_class.function("setTileIndices1D", &TileMap::setTileIndices1D);
+		TileMap_class.function("hasCollision", &TileMap::hasCollision);
+		TileMap_class.function("setHasCollision", &TileMap::setHasCollision);
+		TileMap_class.function("blocksLight", &TileMap::blocksLight);
+		TileMap_class.function("setBlocksLight", &TileMap::setBlocksLight);
+		TileMap_class.function("generate", &TileMap::generate);
+
+		module.class_("TileMap", TileMap_class);
 	}
 
 }

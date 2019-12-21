@@ -137,19 +137,12 @@ namespace fse
 		KillVolume_class.ctor<void>(
 			[](v8::FunctionCallbackInfo<v8::Value> const& args)
 				{
+					// TODO: overloads
 					return std::make_shared<KillVolume>();
 				});
-		//chai.add(chaiscript::constructor<KillVolume()>(), "KillVolume");
 		KillVolume_class.function("getSize", static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize));
 		KillVolume_class.function("setSize", static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize));
 		module.class_("KillVolume", KillVolume_class);
-		
-		//RegisterJSUserTypeFromRTTR<KillVolume>(isolate);
-		//chai.add(chaiscript::base_class<fse::FSEObject, KillVolume>());
-		//chai.add(chaiscript::constructor<KillVolume()>(), "KillVolume");
-		//chai.add(chaiscript::fun(static_cast<const sf::Vector2f&(KillVolume::*)() const>(&KillVolume::getSize)), "getSize");
-		//chai.add(chaiscript::fun(static_cast<void(KillVolume::*)(const sf::Vector2f& size)>(&KillVolume::setSize)),
-		//	"setSize");
 	}
 
 }

@@ -255,12 +255,6 @@ namespace fse
 		Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
 		Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
 		Scene_class.function("spawnObject", static_cast<std::weak_ptr<FSEObject> (Scene::*)(std::shared_ptr<FSEObject>)>(&Scene::spawnFSEObject));
-		//Scene_class.function("getObjects", [](v8::FunctionCallbackInfo<v8::Value> const& args)
-		//{
-		//	v8::Isolate* isolate = args.GetIsolate();
-		//	const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
-		//	return *scene->getFSEObjects();
-		//});
 		Scene_class.function("getObjects", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 			{
 				v8::Isolate* isolate = args.GetIsolate();
@@ -286,37 +280,6 @@ namespace fse
 			return std::weak_ptr<FSEObject>();
 		});
 		module.class_("Scene", Scene_class);
-
-		//module.class_("Scene", Scene_class);
-
-		//// set bindings in global object as `mylib`
-		//isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
-		//	v8::String::NewFromUtf8(isolate, "fse").ToLocalChecked(), module.new_instance());
-		
-		//chai.add(chaiscript::user_type<Scene>(), "FSEScene");
-		//chai.add(chaiscript::fun(static_cast<bool(Scene::*)() const>(&Scene::isPaused)), "isPaused");
-		//chai.add(chaiscript::fun(static_cast<void(Scene::*)(bool)>(&Scene::setPaused)), "setPaused");
-		//chai.add(chaiscript::fun(static_cast<bool(Scene::*)() const>(&Scene::getPhysDrawDebug)), "getPhysDrawDebug");
-		//chai.add(chaiscript::fun(static_cast<void(Scene::*)(bool)>(&Scene::setPhysDrawDebug)), "setPhysDrawDebug");
-		//chai.add(chaiscript::fun(static_cast<FSELightWorld*(Scene::*)() const>(&Scene::getLightWorld)), "getLightWorld");
-		//chai.add(chaiscript::fun(static_cast<b2World*(Scene::*)()>(&Scene::getPhysWorld)), "getPhysWorld");
-		//chai.add(chaiscript::fun(static_cast<float(Scene::*)() const>(&Scene::getPixelsPerMeter)), "getPixelsPerMeter");
-		//chai.add(chaiscript::fun(static_cast<float(Scene::*)() const>(&Scene::getMetersPerPixel)), "getMetersPerPixel");
-		//chai.add(chaiscript::fun(static_cast<sf::RenderTarget*(Scene::*)() const>(&Scene::getRenderTarget)), "getRenderTarget");
-		//chai.add(chaiscript::fun(static_cast<std::weak_ptr<FSEObject> (Scene::*)(std::shared_ptr<FSEObject>) > (&Scene::spawnFSEObject)), "spawnObject");
-		//chai.add(chaiscript::fun(([](Scene* scene)
-		//{
-		//	return scene->getFSEObjects();
-		//})), "getObjects");
-		////chai.add(chaiscript::fun(([](Scene* scene, int id)
-		//{
-		//	for (auto& object : *scene->getFSEObjects())
-		//	{
-		//		if (object->getID() == id)
-		//			return std::weak_ptr<FSEObject>(object);
-		//	}
-		//	return std::weak_ptr<FSEObject>();
-		//})), "getObjectWithId");
 	}
 
 }
