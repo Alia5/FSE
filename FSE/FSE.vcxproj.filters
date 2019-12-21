@@ -276,7 +276,7 @@
     <ClInclude Include="FSEV8Lib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="v8bind.h">
+    <ClInclude Include="v8ppconverters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
