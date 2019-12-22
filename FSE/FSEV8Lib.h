@@ -25,16 +25,37 @@
 	void ClassName::v8_init_func(v8::Isolate* isolate, v8pp::module& module)
 
 
+namespace std {
+	namespace filesystem {
+		class path;
+	}
+}
+
 namespace fse
 {
 	namespace priv
 	{
+		class FSEV8Require
+		{
+		public:
+			void require(v8::FunctionCallbackInfo<v8::Value> const& args);
+			void clearCache();
+		private:
+			static void v8EvalCatch(v8::TryCatch& try_catch);
+			static void consoleError(v8::Isolate* isolate, const std::string& error_string);
+			static std::string readFile(const std::filesystem::path& path);
+			std::filesystem::path resolveModuleFilePath(const std::filesystem::path& basePath, const std::string& module_name) const;
+			std::map<std::string, v8::Persistent<v8::Value, v8::CopyablePersistentTraits<v8::Value>>> module_cache_;
+		};
+		
 		class FSEV8Lib
 		{
 		public:
-			static void Init(v8::Isolate* isolate);
+			static void Init(int argc, char* argv[], char** env, v8::Isolate* isolate, FSEV8Require* const require);
+		private:
 		};
 
+		
 		template<typename Base, typename Derived>
 		v8::Local<v8::Object> downcastHelper(Base * base_ptr, v8::Isolate* isolate)
 		{

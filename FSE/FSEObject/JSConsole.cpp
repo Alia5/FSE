@@ -196,9 +196,28 @@ namespace fse
 				})
 			.function("exit", [this]() { shown_ = false;  })
 			.function("clear", [this]() { output_data_.str(std::string());  });
-		ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "console").ToLocalChecked(), console.new_instance());
+				console.function("indexJS", [this](v8::FunctionCallbackInfo<v8::Value> const& args)
+				{
+					v8::Isolate* iso = args.GetIsolate();
+					v8::HandleScope handle_scope(iso);
+					v8::TryCatch try_catch(iso);
+					try_catch.SetCaptureMessage(true);
+					try_catch.SetVerbose(true);
+					this->scene_->getApplication()->getV8PPContext().lock()->run_file("js/index.js");
+					if (try_catch.HasCaught())
+					{
+						if (!try_catch.CanContinue())
+						{
+							throw std::exception(std::string(*v8::String::Utf8Value(iso, try_catch.Message()->Get())).c_str());
+						}
+						output_data_ << "\33[31m" << std::string(*v8::String::Utf8Value(iso, try_catch.Message()->Get())) << "\33[0m \n";
+					}
+					try_catch.Reset();
+				});
+		v8::Local<v8::Object> object = console.new_instance();
+		ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "console").ToLocalChecked(), object);
 		ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "print").ToLocalChecked(),
-			console.new_instance()->Get(ctx, v8::String::NewFromUtf8(iso, "log").ToLocalChecked()).ToLocalChecked());
+			object->Get(ctx, v8::String::NewFromUtf8(iso, "log").ToLocalChecked()).ToLocalChecked());
 	
 	}
 	void JSConsole::consoleEval(const std::string& js)
@@ -222,14 +241,21 @@ namespace fse
 		}
 		const v8::Local<v8::String> source = maybe_source.ToLocalChecked();
 
-		// Compile the source code.	
-		v8::MaybeLocal<v8::Script> maybe_script = v8::Script::Compile(ctx, source);
+		v8::ScriptOrigin origin(v8pp::to_v8(iso, "JSConsole"),      // specifier
+			v8::Integer::New(iso, 0),             // line offset
+			v8::Integer::New(iso, 0),             // column offset
+			v8::False(iso),                       // is cross origin
+			v8::Local<v8::Integer>(),                     // script id
+			v8::Local<v8::Value>(),                       // source map URL
+			v8::False(iso),                       // is opaque
+			v8::False(iso),                       // is WASM
+			v8::False(iso));                       // is ES6 module
+		v8::MaybeLocal<v8::Script> maybe_script = v8::Script::Compile(ctx, source, &origin);
 		if (maybe_script.IsEmpty())
 		{
 			v8EvalCatch(try_catch);
 			return;
 		}
-		// Compile the source code.	
 		v8::Local<v8::Script> script = maybe_script.ToLocalChecked();
 
 		

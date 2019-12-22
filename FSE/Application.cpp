@@ -24,11 +24,20 @@ namespace fse
 		create_params_.array_buffer_allocator =
 			v8::ArrayBuffer::Allocator::NewDefaultAllocator();
 		platform_ = v8::platform::NewDefaultPlatform();
-		v8::V8::InitializePlatform(platform_.get());
+		v8::V8::InitializePlatform(platform_.get());		
+	}
+
+	Application::Application(int argc, char* argv[], char** env) : Application()
+	{
+		argc_ = argc;
+		argv_ = argv;
+		env_ = env;
 	}
 
 	Application::~Application()
 	{
+		requireLib.clearCache();
+		v8pp_context_ = nullptr;
 		v8pp::cleanup(isolate_);
 		isolate_->Exit();
 		isolate_->Dispose();
@@ -106,16 +115,20 @@ namespace fse
 	{
 		if (isolate_)
 		{
+			requireLib.clearCache();
+			v8pp_context_ = nullptr;
 			v8pp::cleanup(isolate_);
 			isolate_->Exit();
 			isolate_->Dispose();
 		}
 		isolate_ = v8::Isolate::New(create_params_);
 		isolate_->Enter();
+		//v8pp_context_ = std::make_shared<v8pp::context>(isolate_, create_params_.array_buffer_allocator, true);
+		//v8pp_context_->set_lib_path("js/node_modules");
 		v8::HandleScope handle_scope(isolate_);
 		v8_context_ = v8::Context::New(isolate_);
 		v8_context_->Enter();
-		priv::FSEV8Lib::Init(isolate_);	
+		priv::FSEV8Lib::Init(argc_, argv_, env_, isolate_, &requireLib);
 		on_v8_ctx_init_();
 	}
 
@@ -163,5 +176,8 @@ namespace fse
 		return asset_loader_;
 	}
 
-
+	std::weak_ptr<v8pp::context> Application::getV8PPContext()
+	{
+		return v8pp_context_;
+	}
 }

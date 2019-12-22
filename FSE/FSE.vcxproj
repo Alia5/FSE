@@ -141,8 +141,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sfml-system-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;ws2_32.lib;liquidfun.lib;librttr_core_s_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\extlibs\liquidfun\liquidfun\build\Box2D\Debug;..\extlibs\SFML-2.5.1-x64\lib;..\extlibs\rttr-0.9.6-x64\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-system-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;ws2_32.lib;liquidfun.lib;librttr_core_s_d.lib;v8pp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\extlibs\liquidfun\liquidfun\build\Box2D\Debug;..\extlibs\SFML-2.5.1-x64\lib;..\extlibs\rttr-0.9.6-x64\lib;..\v8pp\bin\Debug</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -196,8 +196,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;ws2_32.lib;liquidfun.lib;librttr_core_s.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\extlibs\liquidfun\liquidfun\build\Release;..\extlibs\SFML-2.5.1-x64\lib;..\extlibs\rttr-0.9.6-x64\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;ws2_32.lib;liquidfun.lib;librttr_core_s.lib;v8pp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\extlibs\liquidfun\liquidfun\build\Release;..\extlibs\SFML-2.5.1-x64\lib;..\extlibs\rttr-0.9.6-x64\lib;..\v8pp\bin\Release</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

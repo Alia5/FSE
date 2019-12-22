@@ -12,6 +12,7 @@
 #include <libplatform/libplatform.h>
 #include <v8.h>
 #include "v8ppconverters.h"
+#include <v8pp/context.hpp>
 
 
 
@@ -51,6 +52,7 @@ namespace fse
 
 	public:
 		Application();
+		explicit Application(int argc, char* argv[], char** env);
 		virtual ~Application();
 
 		/*!
@@ -99,6 +101,8 @@ namespace fse
 		 */
 		fse::AssetLoader& getAssetLoader();
 
+		std::weak_ptr<v8pp::context> getV8PPContext();
+		
 		virtual void initV8Ctx();
 		
 
@@ -113,6 +117,11 @@ namespace fse
 #endif
 
 	private:
+
+		int argc_ = 0;
+		char** argv_ = nullptr;
+		char** env_ = nullptr;
+		
 		bool is_server_ = false;
 
 		sf::Clock application_clock_;
@@ -122,7 +131,9 @@ namespace fse
 		v8::Isolate::CreateParams create_params_;
 		std::unique_ptr<v8::Platform> platform_;
 		v8::Isolate* isolate_;
+		std::shared_ptr<v8pp::context> v8pp_context_;
 		v8::Local<v8::Context> v8_context_;
+		priv::FSEV8Require requireLib;
 
 	};
 }
