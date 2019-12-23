@@ -7,6 +7,10 @@
 #include <v8pp/class.hpp>
 #include <v8pp/module.hpp>
 
+#include <v8-inspector.h>
+#include <v8-inspector-protocol.h>
+
+
 #ifdef ANDROID
 #include <android/log.h>
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))

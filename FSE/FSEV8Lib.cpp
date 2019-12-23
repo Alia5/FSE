@@ -234,6 +234,11 @@ namespace fse
 			return std::filesystem::path();
 		}
 
+		void FSEV8Require::cacheEmptyModule(const std::string& file_path, v8::Isolate* isolate)
+		{
+			module_cache_[file_path].Reset(isolate, v8pp::module(isolate).new_instance());
+		}
+
 		std::string FSEV8Require::readFile(const std::filesystem::path& path)
 		{
 			std::ifstream inFile;
@@ -295,7 +300,7 @@ namespace fse
 					->GetFrame(isolate, 0)->GetScriptName());
 
 			std::string current_script_filepath = std::filesystem::current_path().string();
-			if (current_script_filepath_v8.length() > 0)
+			if (current_script_filepath_v8.length() > 0 && std::filesystem::exists(*current_script_filepath_v8))
 			{
 				current_script_filepath = std::filesystem::path(*current_script_filepath_v8).parent_path().string();
 			}
@@ -357,15 +362,15 @@ namespace fse
 					return;
 				}
 				const v8::Local<v8::String> source = maybe_source.ToLocalChecked();
-				v8::ScriptOrigin origin(v8pp::to_v8(isolate, script_file_path.string()),      // specifier
-					v8::Integer::New(isolate, 5),             // line offset
-					v8::Integer::New(isolate, 0),             // column offset
-					v8::False(isolate),                       // is cross origin
-					v8::Local<v8::Integer>(),                     // script id
-					v8::Local<v8::Value>(),                       // source map URL
-					v8::False(isolate),                       // is opaque
-					v8::False(isolate),                       // is WASM
-					v8::False(isolate));                       // is ES6 module
+				v8::ScriptOrigin origin(v8pp::to_v8(isolate, script_file_path.string()),
+					v8::Integer::New(isolate, -5),
+					v8::Integer::New(isolate, 0),             
+					v8::False(isolate),                      
+					v8::Local<v8::Integer>(),                     
+					v8::Local<v8::Value>(),                       
+					v8::False(isolate),                      
+					v8::False(isolate),                      
+					v8::False(isolate));                      
 				v8::MaybeLocal<v8::Script> maybe_script = v8::Script::Compile(ctx, source, &origin);
 				if (maybe_script.IsEmpty())
 				{
@@ -374,8 +379,8 @@ namespace fse
 				}
 				v8::Local<v8::Script> script = maybe_script.ToLocalChecked();
 
-
-				// Run the script to get the result.
+				
+				cacheEmptyModule(script_file_path.string(), isolate);
 				v8::MaybeLocal<v8::Value> maybe_result = script->Run(ctx);
 				if (maybe_result.IsEmpty())
 				{
@@ -384,7 +389,6 @@ namespace fse
 				}
 				const v8::Local<v8::Value> exports = maybe_result.ToLocalChecked();
 
-				// Store module in cache
 				module_cache_[script_file_path.string()].Reset(args.GetIsolate(), exports);
 
 				args.GetReturnValue().Set(exports);

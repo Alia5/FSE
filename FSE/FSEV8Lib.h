@@ -45,6 +45,7 @@ namespace fse
 			static void consoleError(v8::Isolate* isolate, const std::string& error_string);
 			static std::string readFile(const std::filesystem::path& path);
 			std::filesystem::path resolveModuleFilePath(const std::filesystem::path& basePath, const std::string& module_name) const;
+			void cacheEmptyModule(const std::string& file_path, v8::Isolate* isolate);
 			std::map<std::string, v8::Persistent<v8::Value, v8::CopyablePersistentTraits<v8::Value>>> module_cache_;
 		};
 		
