@@ -6,6 +6,7 @@
 #include <imgui_internal.h>
 #include "../imgui-colorText.h"
 #include <v8pp/module.hpp>
+#include "../V8Debug/v8Inspector.h"
 
 namespace fse
 {
@@ -196,29 +197,16 @@ namespace fse
 				})
 			.function("exit", [this]() { shown_ = false;  })
 			.function("clear", [this]() { output_data_.str(std::string());  });
-				console.function("indexJS", [this](v8::FunctionCallbackInfo<v8::Value> const& args)
-				{
-					v8::Isolate* iso = args.GetIsolate();
-					v8::HandleScope handle_scope(iso);
-					v8::TryCatch try_catch(iso);
-					try_catch.SetCaptureMessage(true);
-					try_catch.SetVerbose(true);
-					this->scene_->getApplication()->getV8PPContext().lock()->run_file("js/index.js");
-					if (try_catch.HasCaught())
-					{
-						if (!try_catch.CanContinue())
-						{
-							throw std::exception(std::string(*v8::String::Utf8Value(iso, try_catch.Message()->Get())).c_str());
-						}
-						output_data_ << "\33[31m" << std::string(*v8::String::Utf8Value(iso, try_catch.Message()->Get())) << "\33[0m \n";
-					}
-					try_catch.Reset();
-				});
 		v8::Local<v8::Object> object = console.new_instance();
 		ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "console").ToLocalChecked(), object);
 		ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "print").ToLocalChecked(),
 			object->Get(ctx, v8::String::NewFromUtf8(iso, "log").ToLocalChecked()).ToLocalChecked());
-	
+
+
+		Inspector inspector(getScene()->getApplication()->platform_.get(), ctx, 9847);
+		inspector.addFileForInspection("./example/code.js");
+		inspector.startAgent();
+		
 	}
 	void JSConsole::consoleEval(const std::string& js)
 	{

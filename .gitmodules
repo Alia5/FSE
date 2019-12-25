@@ -25,3 +25,6 @@
 [submodule "v8pp"]
 	path = v8pp
 	url = git@github.com:pmed/v8pp.git
+[submodule "websocketpp"]
+	path = websocketpp
+	url = git@github.com:zaphoyd/websocketpp.git

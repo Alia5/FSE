@@ -100,6 +100,12 @@
     <Filter Include="Source Files\liquidfun_contrib\ConvexDecomposition">
       <UniqueIdentifier>{a5e5ad13-c5ef-4e1f-b289-7d5b011c1ef6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\V8Debug">
+      <UniqueIdentifier>{ffffe245-1a5c-443e-be6d-0ce897b99366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\V8Debug">
+      <UniqueIdentifier>{3e7e3f02-5ff7-4a6a-a6f4-a8b640b9af6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetLoader.h">
@@ -273,6 +279,21 @@
     <ClInclude Include="v8ppconverters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="V8Debug\v8Inspector.h">
+      <Filter>Header Files\V8Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="V8Debug\v8InspectorChannel.h">
+      <Filter>Header Files\V8Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="V8Debug\v8DebugUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="V8Debug\v8InspectorClient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="V8Debug\WebSocketServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -414,6 +435,18 @@
       <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
     <ClCompile Include="FSEV8Lib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="V8Debug\v8Inspector.cpp">
+      <Filter>Source Files\V8Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="V8Debug\v8InspectorChannel.cpp">
+      <Filter>Source Files\V8Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="V8Debug\v8InspectorClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="V8Debug\WebSocketServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

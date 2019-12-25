@@ -125,7 +125,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;SFML_STATIC;IMGUI_USER_CONFIG=&lt;imconfig.h&gt;;IMGUI_DISABLE_INCLUDE_IMCONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\extlibs\SFML-2.5.1-x64\include;$(ProjectDir)..\extlibs\liquidfun\liquidfun\Box2D;$(ProjectDir)..\extlibs\rttr-0.9.6-x64\include;$(ProjectDir)..\imgui-sfml-config\;$(ProjectDir)..\chaiscript\include\;$(ProjectDir)..\ChaiScript_Extras\include\;$(ProjectDir)..\ChaiScript_Extras_Liquidfun\include\;$(ProjectDir)..\ChaiScript_Extras_SFML\include\;$(ProjectDir)..\imgui\;$(ProjectDir)..\imgui-SFML\;$(ProjectDir)..\rapidjson\include\;$(ProjectDir)..\poly2tri\poly2tri\;$(ProjectDir)..\v8pp;$(ProjectDir)..\extlibs\v8_monolith\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\extlibs\SFML-2.5.1-x64\include;$(ProjectDir)..\extlibs\liquidfun\liquidfun\Box2D;$(ProjectDir)..\extlibs\rttr-0.9.6-x64\include;$(ProjectDir)..\imgui-sfml-config\;$(ProjectDir)..\chaiscript\include\;$(ProjectDir)..\ChaiScript_Extras\include\;$(ProjectDir)..\ChaiScript_Extras_Liquidfun\include\;$(ProjectDir)..\ChaiScript_Extras_SFML\include\;$(ProjectDir)..\imgui\;$(ProjectDir)..\imgui-SFML\;$(ProjectDir)..\rapidjson\include\;$(ProjectDir)..\poly2tri\poly2tri\;$(ProjectDir)..\v8pp;$(ProjectDir)..\extlibs\v8_monolith\include;$(ProjectDir)..\websocketpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <OmitFramePointers>false</OmitFramePointers>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -257,6 +257,11 @@
     <ClInclude Include="Serialize.h" />
     <ClInclude Include="Signals.h" />
     <ClInclude Include="FSEObject\TileMap.h" />
+    <ClInclude Include="V8Debug\v8DebugUtils.h" />
+    <ClInclude Include="V8Debug\v8Inspector.h" />
+    <ClInclude Include="V8Debug\v8InspectorChannel.h" />
+    <ClInclude Include="V8Debug\v8InspectorClient.h" />
+    <ClInclude Include="V8Debug\WebSocketServer.h" />
     <ClInclude Include="v8ppconverters.h" />
   </ItemGroup>
   <ItemGroup>
@@ -307,6 +312,10 @@
     <ClCompile Include="SceneDebugger.cpp" />
     <ClCompile Include="Serialize.cpp" />
     <ClCompile Include="FSEObject\TileMap.cpp" />
+    <ClCompile Include="V8Debug\v8Inspector.cpp" />
+    <ClCompile Include="V8Debug\v8InspectorChannel.cpp" />
+    <ClCompile Include="V8Debug\v8InspectorClient.cpp" />
+    <ClCompile Include="V8Debug\WebSocketServer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

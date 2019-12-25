@@ -14,7 +14,7 @@
 #include "v8ppconverters.h"
 #include <v8pp/context.hpp>
 
-
+class WebSocketServer;
 
 namespace fse
 {
@@ -100,8 +100,6 @@ namespace fse
 		 * \return Reference to asset loader
 		 */
 		fse::AssetLoader& getAssetLoader();
-
-		std::weak_ptr<v8pp::context> getV8PPContext();
 		
 		virtual void initV8Ctx();
 		
@@ -129,11 +127,12 @@ namespace fse
 		sf::RenderWindow *render_window_ = nullptr;
 
 		v8::Isolate::CreateParams create_params_;
-		std::unique_ptr<v8::Platform> platform_;
 		v8::Isolate* isolate_;
-		std::shared_ptr<v8pp::context> v8pp_context_;
 		v8::Local<v8::Context> v8_context_;
 		priv::FSEV8Require requireLib;
+		public:
+			std::unique_ptr<v8::Platform> platform_;
+
 
 	};
 }
