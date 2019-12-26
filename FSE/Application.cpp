@@ -6,6 +6,7 @@
 #include <v8pp/class.hpp>
 #include "V8Debug/v8Inspector.h"
 
+#include <regex>
 
 #ifdef ANDROID
 #include <android/log.h>
@@ -37,6 +38,8 @@ namespace fse
 
 	Application::~Application()
 	{
+		if (fse_inspector_ != nullptr)
+			fse_inspector_->quit();
 		requireLib.clearCache();
 		v8pp::cleanup(isolate_);
 		isolate_->Exit();
@@ -108,6 +111,8 @@ namespace fse
 		}
 
 		network_handler_.updateSignals();
+		if (fse_inspector_ != nullptr)
+			fse_inspector_->poll();
 
 	}
 
@@ -115,6 +120,8 @@ namespace fse
 	{
 		if (isolate_)
 		{
+			if (fse_inspector_ != nullptr)
+				fse_inspector_->quit();
 			requireLib.clearCache();
 			v8pp::cleanup(isolate_);
 			isolate_->Exit();
@@ -126,6 +133,27 @@ namespace fse
 		v8_context_ = v8::Context::New(isolate_);
 		v8_context_->Enter();
 		priv::FSEV8Lib::Init(argc_, argv_, env_, isolate_, &requireLib);
+		bool debug = false;
+		unsigned short port = 9229; //node default debug port
+		bool block = false;
+		for (int i = 0; i < argc_; i++)
+		{
+			const std::string argStr(argv_[i]);
+			std::smatch base_match;
+			if (std::regex_match(argStr, base_match, std::regex("--inspect((-brk)*)(=*)(.*)")))
+			{
+				debug = true;
+				if (std::regex_search(argv_[i], std::regex("-brk")))
+					block = true;
+				if (base_match.size() == 5 && base_match[4].length() > 0)
+					port = std::stoi(base_match[4]);
+			}
+		}
+		if (debug)
+		{
+			fse_inspector_ = std::make_unique<FSEInspector>(platform_.get(), port, block);
+			fse_inspector_->startAgent();
+		}
 		on_v8_ctx_init_();
 		
 	}

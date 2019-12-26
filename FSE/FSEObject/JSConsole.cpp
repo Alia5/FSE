@@ -200,13 +200,7 @@ namespace fse
 		v8::Local<v8::Object> object = console.new_instance();
 		ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "console").ToLocalChecked(), object);
 		ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "print").ToLocalChecked(),
-			object->Get(ctx, v8::String::NewFromUtf8(iso, "log").ToLocalChecked()).ToLocalChecked());
-
-
-		Inspector inspector(getScene()->getApplication()->platform_.get(), ctx, 9847);
-		inspector.addFileForInspection("./example/code.js");
-		inspector.startAgent();
-		
+			object->Get(ctx, v8::String::NewFromUtf8(iso, "log").ToLocalChecked()).ToLocalChecked());		
 	}
 	void JSConsole::consoleEval(const std::string& js)
 	{

@@ -19,19 +19,21 @@ public:
 	using WSConnections = std::vector<websocketpp::connection_hdl>;
 
 	
-	void run();
+	void run(bool block = true);
 	void sendMessage(const std::string& message);
 	void waitForFrontendMessageOnPause();
 	void poll();
+	void quit();
 private:
 	void startListening();
-	void printListeningMessage();
+	void printListeningMessage() const;
 	void waitFrontendMessage();
 
 	unsigned short port_;
 	std::function<void(std::string)> on_message_;
 	std::vector<std::string> receive_buffer_;
-
+	bool poll_ = true;
+	
 	WSServer ws_server_;
 	WSConnections connections_;
 	bool websocket_validation_handler(websocketpp::connection_hdl hdl);

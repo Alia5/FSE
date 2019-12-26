@@ -7,22 +7,21 @@
 #include "v8InspectorClient.h"
 #include "WebSocketServer.h"
 
-class Inspector {
+class FSEInspector {
 public:
-	Inspector(v8::Platform* platform, const v8::Local<v8::Context>& context, int webSocketPort);
+	FSEInspector(v8::Platform* platform, int webSocketPort, bool block);
 	void startAgent() const;
-	void addFileForInspection(const std::string& filePath);
+	void startAgentBlocking() const;
+	void poll() const;
+	void quit() const;
 private:
-	void executeScripts();
-	void onMessage(const std::string& message);
+	void onMessage(const std::string& message) const;
 	void sendMessage(const std::string& message) const;
-	bool compileScript(const v8::Local<v8::String>& source, const std::string& filePath, v8::Local<v8::Script>& script, const v8::TryCatch& tryCatch) const;
-	bool executeScript(const v8::Local<v8::Script>& script, const v8::TryCatch& tryCatch) const;
-	int waitForFrontendMessage() const;
+	void waitForFrontendMessage() const;
 
-	v8::Handle<v8::Context> context_;
 	std::unique_ptr<WebSocketServer> websocket_server_;
 	std::unique_ptr<V8InspectorClientImpl> inspector_client_;
 	std::vector<std::string> scripts = {};
+	bool block_;
 
 };

@@ -8,7 +8,7 @@ WebSocketServer::WebSocketServer(unsigned short port, std::function<void(std::st
 	on_message_ = std::move(onMessage);
 }
 
-void WebSocketServer::run() {
+void WebSocketServer::run(bool block) {
 	try
 	{
 		//ws_server_.set_error_channels(websocketpp::log::elevel::all);
@@ -36,7 +36,11 @@ void WebSocketServer::run() {
 		ws_server_.start_accept();
 
 		printListeningMessage();
-		startListening();
+		if (block)
+		{
+			std::cout << "Waiting for debugger...\n";
+			waitFrontendMessage();
+		}
 	}
 	catch (const std::exception & e)
 	{
@@ -62,9 +66,10 @@ void WebSocketServer::startListening()
 	
 }
 
-void WebSocketServer::printListeningMessage() {
-	std::cout << "WebSocket based Inspector Agent started" << std::endl;
-	std::cout << "Open the following link in your Chrome/Chromium browser: chrome-devtools://devtools/bundled/inspector.html?experiments=true&v8only=true&ws=127.0.0.1:" << port_ << std::endl;
+void WebSocketServer::printListeningMessage() const
+{
+	std::cout << "Node compatible Debugger listening on ws://127.0.0.1:" << port_ << " ( \"chrome://inspect\" )\n";
+	std::cout << "To introspect Inspector Agent itself visit: \"chrome-devtools://devtools/bundled/inspector.html?experiments=true&v8only=true&ws=127.0.0.1:" << port_ << "\"\n";
 }
 
 void WebSocketServer::waitForFrontendMessageOnPause() {
@@ -74,10 +79,22 @@ void WebSocketServer::waitForFrontendMessageOnPause() {
 void WebSocketServer::poll()
 {
 	ws_server_.poll();
+	if (!receive_buffer_.empty())
+	{
+		waitFrontendMessage();
+	}
+}
+
+void WebSocketServer::quit()
+{
+	if (!connections_.empty())
+		ws_server_.close(connections_[0], websocketpp::close::status::normal, "quit");
+	ws_server_.stop();
 }
 
 void WebSocketServer::waitFrontendMessage()
 {
+	poll_ = true;
 	while(receive_buffer_.empty())
 	{
 		ws_server_.poll();
@@ -102,32 +119,29 @@ bool WebSocketServer::websocket_validation_handler(websocketpp::connection_hdl h
 
 
 void WebSocketServer::on_message(websocketpp::connection_hdl hdl, WebSocketServer::WSServer::message_ptr msg) {
-	std::string message_payload = msg->get_payload();
+	const std::string message_payload = msg->get_payload();
 	receive_buffer_.push_back(message_payload);
 }
 
 
 void WebSocketServer::on_open(const websocketpp::connection_hdl& connection) {
-	assert(connections_.size() == 0);
+	assert(connections_.empty());
 	connections_.emplace_back(connection);
 }
 
 
 
 void WebSocketServer::on_close(const websocketpp::connection_hdl& hdl) {
+	std::cout << "Websocket closed!\n";
 	assert(connections_.size() == 1);
 	connections_.clear();
-	assert(connections_.size() == 0);
-	// TODO: 
-	// not sure if this is right, but unpause when debugger disconnects
-	////////////this->debug_context.reset_session();
-	////////////this->debug_context.paused = false;
-	////////////this->message_received_time = std::chrono::high_resolution_clock::now();
+	assert(connections_.empty());
+	poll_ = false;
 }
 
 void WebSocketServer::on_http(const websocketpp::connection_hdl& hdl) {
 	WSServer::connection_ptr con = ws_server_.get_con_from_hdl(hdl);
-	auto resource = con->get_resource();
+	const auto resource = con->get_resource();
 
 	std::stringstream output;
 	if (resource == "/json/version")
@@ -138,18 +152,21 @@ void WebSocketServer::on_http(const websocketpp::connection_hdl& hdl) {
 	}
 	else if (resource == "/json/list" || resource == "/json")
 	{
-		output << R"JSON([ {
+		output << R"PART1([ {
 			  "description": "FSE instance",
-			  "devtoolsFrontendUrl": "chrome-devtools://devtools/bundled/js_app.html?experiments=true&v8only=true&ws=localhost:9847",
-			  "devtoolsFrontendUrlCompat": "chrome-devtools://devtools/bundled/inspector.html?experiments=true&v8only=true&ws=localhost:9847",
+			  "devtoolsFrontendUrl": "chrome-devtools://devtools/bundled/js_app.html?experiments=true&v8only=true&ws=localhost:)PART1"
+				<< port_  << R"PART2(",
+			  "devtoolsFrontendUrlCompat": "chrome-devtools://devtools/bundled/inspector.html?experiments=true&v8only=true&ws=localhost:)PART2"
+				<< port_  << R"PART3(",
 			  "faviconUrl": "https://nodejs.org/static/images/favicons/favicon.ico",
 			  "id": "beb0095e-a81d-42a1-9788-12484a03f74c",
 			  "title": "FSE",
 			  "type": "node",
 			  "url": "file://",
-			  "webSocketDebuggerUrl": "ws://localhost:9847"
-			} ]
-			)JSON";
+			  "webSocketDebuggerUrl": "ws://localhost:)PART3"
+				<< port_ << R"PART4("
+			  } ]
+			  )PART4";
 	}
 	else
 	{

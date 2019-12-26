@@ -1,7 +1,7 @@
 #include "v8InspectorClient.h"
 #include "v8DebugUtils.h"
 
-V8InspectorClientImpl::V8InspectorClientImpl(v8::Platform* platform, const v8::Local<v8::Context>& context, const std::function<void(std::string)>& onResponse, const std::function<int(void)>& onWaitFrontendMessageOnPause) {
+V8InspectorClientImpl::V8InspectorClientImpl(v8::Platform* platform, const v8::Local<v8::Context>& context, const std::function<void(std::string)>& onResponse, const std::function<void(void)>& onWaitFrontendMessageOnPause) {
 	platform_ = platform;
 	context_ = context;
 	onWaitFrontendMessageOnPause_ = onWaitFrontendMessageOnPause;
@@ -11,10 +11,10 @@ V8InspectorClientImpl::V8InspectorClientImpl(v8::Platform* platform, const v8::L
 	session_ = inspector_->connect(kContextGroupId, channel_.get(), v8_inspector::StringView());
 	context_->SetAlignedPointerInEmbedderData(1, this);
 
-	v8_inspector::StringView contextName = convertToStringView("inspector");
+	const v8_inspector::StringView contextName = convertToStringView("inspector");
 	inspector_->contextCreated(v8_inspector::V8ContextInfo(context, kContextGroupId, contextName));
 	terminated_ = true;
-	run_nested_loop_ = false;
+	run_nested_loop_ = false;	
 }
 
 void V8InspectorClientImpl::dispatchProtocolMessage(const v8_inspector::StringView& message_view) const
@@ -28,7 +28,8 @@ void V8InspectorClientImpl::runMessageLoopOnPause(int contextGroupId) {
 	}
 	terminated_ = false;
 	run_nested_loop_ = true;
-	while (!terminated_ && onWaitFrontendMessageOnPause_()) {
+	while (!terminated_) {
+		onWaitFrontendMessageOnPause_();
 		while (v8::platform::PumpMessageLoop(platform_, isolate_)) {}
 	}
 	terminated_ = true;
@@ -48,11 +49,19 @@ void V8InspectorClientImpl::schedulePauseOnNextStatement(const v8_inspector::Str
 	session_->schedulePauseOnNextStatement(reason, reason);
 }
 
-int V8InspectorClientImpl::isWaitFrontendMessageMessageOnPause() const
+bool V8InspectorClientImpl::isWaitFrontendMessageMessageOnPause() const
 {
 	return !terminated_;
 }
 
 void V8InspectorClientImpl::waitFrontendMessageOnPause() {
 	terminated_ = false;
+}
+
+void V8InspectorClientImpl::quit()
+{
+	channel_.release();
+	session_.release();
+	inspector_.release();
+	terminated_ = true;
 }

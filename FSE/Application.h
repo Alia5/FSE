@@ -14,7 +14,7 @@
 #include "v8ppconverters.h"
 #include <v8pp/context.hpp>
 
-class WebSocketServer;
+class FSEInspector;
 
 namespace fse
 {
@@ -130,8 +130,8 @@ namespace fse
 		v8::Isolate* isolate_;
 		v8::Local<v8::Context> v8_context_;
 		priv::FSEV8Require requireLib;
-		public:
-			std::unique_ptr<v8::Platform> platform_;
+		std::unique_ptr<v8::Platform> platform_;
+		std::unique_ptr<FSEInspector> fse_inspector_;
 
 
 	};

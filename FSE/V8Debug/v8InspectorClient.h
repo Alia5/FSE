@@ -12,19 +12,15 @@ class V8InspectorClientImpl final : public v8_inspector::V8InspectorClient {
 public:
 	V8InspectorClientImpl(v8::Platform* platform, const v8::Local<v8::Context>& context,
 		const std::function<void(std::string)>& onResponse,
-		const std::function<int(void)>& onWaitFrontendMessageOnPause);
+		const std::function<void(void)>& onWaitFrontendMessageOnPause);
 
 	void dispatchProtocolMessage(const v8_inspector::StringView& message_view) const;
-
 	void runMessageLoopOnPause(int contextGroupId) override;
-
 	void quitMessageLoopOnPause() override;
-
 	void schedulePauseOnNextStatement(const v8_inspector::StringView& reason) const;
-
-	int isWaitFrontendMessageMessageOnPause() const;
-
+	bool isWaitFrontendMessageMessageOnPause() const;
 	void waitFrontendMessageOnPause();
+	void quit();
 private:
 	v8::Local<v8::Context> ensureDefaultContextInGroup(int contextGroupId) override;
 
@@ -35,9 +31,9 @@ private:
 	std::unique_ptr<V8InspectorChannelImp> channel_;
 	v8::Isolate* isolate_;
 	v8::Handle<v8::Context> context_;
-	std::function<int(void)> onWaitFrontendMessageOnPause_;
-	uint8_t terminated_ = 0;
-	uint8_t run_nested_loop_ = 0;
+	std::function<void(void)> onWaitFrontendMessageOnPause_;
+	bool terminated_ = false;
+	bool run_nested_loop_ = false;
 };
 
 #endif // V8INSPECTORCLIENTIMPL_H
