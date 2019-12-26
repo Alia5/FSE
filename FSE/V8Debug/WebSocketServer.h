@@ -8,6 +8,7 @@
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
 #include "v8InspectorChannel.h"
+#include <SFML/Network/TcpSocket.hpp>
 
 class WebSocketServer
 {
@@ -29,9 +30,8 @@ private:
 
 	unsigned short port_;
 	std::function<void(std::string)> on_message_;
-	//std::unique_ptr<websocket::stream<tcp::socket>> ws_ = nullptr;
+	std::vector<std::string> receive_buffer_;
 
-	std::string message_to_send_;
 	WSServer ws_server_;
 	WSConnections connections_;
 	bool websocket_validation_handler(websocketpp::connection_hdl hdl);

@@ -24,4 +24,5 @@ private:
 	std::unique_ptr<WebSocketServer> websocket_server_;
 	std::unique_ptr<V8InspectorClientImpl> inspector_client_;
 	std::vector<std::string> scripts = {};
+
 };
