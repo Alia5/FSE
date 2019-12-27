@@ -163,6 +163,21 @@ namespace fse
 		Light_class.function("toggle", static_cast<void(Light::*)() const>(&Light::toggleTurnedOn));
 		Light_class.property("turnedOn", &Light::isTurnedOn, &Light::setTurnedOn);
 
+		Light_class.function("destroy", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+				v8::Isolate* isolate = args.GetIsolate();
+				const auto object = v8pp::from_v8<Light*>(isolate, args.This());
+				if (object->scene_ != nullptr)
+				{
+					if (object->light_ != nullptr && object->scene_->getLightWorld() != nullptr)
+					{
+						object->scene_->getLightWorld()->getLightSystem()->removeLight(object->light_);
+					}
+					object->scene_->getLightWorld()->unregisterLight(object);
+				}
+				object->scene_ = nullptr;
+		});
+		
 		Light_class.ctor<void>(
 			[](v8::FunctionCallbackInfo<v8::Value> const& args)
 			{
@@ -176,6 +191,10 @@ namespace fse
 		Light_class.ctor<Scene*, const sf::Vector2f&, const std::string&, bool>(
 			[](v8::FunctionCallbackInfo<v8::Value> const& args)
 			{
+				if (args.Length() == 0)
+					return new Light();
+				if (args.Length() == 1)
+					return new Light(v8pp::from_v8<Light>(args.GetIsolate(), args[0]));
 				return new Light(v8pp::from_v8<Scene*>(args.GetIsolate(), args[0]),
 					v8pp::from_v8<const sf::Vector2f&>(args.GetIsolate(), args[1]),
 					v8pp::from_v8<const std::string&>(args.GetIsolate(), args[2]),
@@ -183,32 +202,6 @@ namespace fse
 			});
 		
 		module.class_("Light", Light_class);
-
-		
-		//RegisterJSUserTypeFromRTTR<fse::Light>(isolate);
-		//chai.add(chaiscript::fun(static_cast<void (Light::*)(const sf::Vector2f) const>(&Light::setPosition)), "setPosition");
-		//chai.add(chaiscript::fun(static_cast<sf::Vector2f(Light::*)() const>(&Light::getPosition)), "getPosition");
-
-		//chai.add(chaiscript::fun(static_cast<void (Light::*)(const float)>(&Light::setZPosition)), "setZPosition");
-		//chai.add(chaiscript::fun(static_cast<float(Light::*)() const>(&Light::getZPosition)), "getZPosition");
-
-		//chai.add(chaiscript::fun(static_cast<void (Light::*)(const sf::Vector2f) const>(&Light::setScale)), "setScale");
-		//chai.add(chaiscript::fun(static_cast<sf::Vector2f(Light::*)() const>(&Light::getScale)), "getScale");
-		//chai.add(chaiscript::fun(static_cast<void (Light::*)(const sf::Color) const>(&Light::setColor)), "setColor");
-		//chai.add(chaiscript::fun(static_cast<sf::Color(Light::*)() const>(&Light::getColor)), "getColor");
-
-		//chai.add(chaiscript::fun(static_cast<void (Light::*)(float) const>(&Light::setRotation)), "setRotation");
-		//chai.add(chaiscript::fun(static_cast<float(Light::*)() const>(&Light::getRotation)), "getRotation");
-		//chai.add(chaiscript::fun(static_cast<void(Light::*)(float) const>(&Light::rotate)), "rotate");
-
-		//chai.add(chaiscript::fun(static_cast<void (Light::*)(bool) const>(&Light::setTurnedOn)), "setTurnedOn");
-		//chai.add(chaiscript::fun(static_cast<bool(Light::*)() const>(&Light::isTurnedOn)), "isTurnedOn");
-		//chai.add(chaiscript::fun(static_cast<void(Light::*)() const>(&Light::toggleTurnedOn)), "toggle");
-
-		//chai.add(chaiscript::constructor<Light()>(), "Light");
-		//chai.add(chaiscript::constructor<Light(const Light&)>(), "Light");
-		//chai.add(chaiscript::constructor<Light(Scene*, const sf::Vector2f&, const std::string&, bool)>(), "Light");
-		//chai.add(chaiscript::fun(static_cast<Light&(Light::*)(const Light&)>(&Light::operator=)), "=");
 	}
 
 }

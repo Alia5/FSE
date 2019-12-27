@@ -38,12 +38,15 @@ namespace fse
 
 	Application::~Application()
 	{
-		if (fse_inspector_ != nullptr)
-			fse_inspector_->quit();
-		requireLib.clearCache();
-		v8pp::cleanup(isolate_);
-		isolate_->Exit();
-		isolate_->Dispose();
+		if (isolate_)
+		{
+			if (fse_inspector_ != nullptr)
+				fse_inspector_->quit();
+			requireLib.clearCache();
+			v8pp::cleanup(isolate_);
+			isolate_->Exit();
+			isolate_->Dispose();
+		}
 		v8::V8::Dispose();
 		v8::V8::ShutdownPlatform();
 		delete create_params_.array_buffer_allocator;
@@ -63,6 +66,15 @@ namespace fse
 
 				if (event.type == sf::Event::Closed)
 				{
+					if (isolate_)
+					{
+						if (fse_inspector_ != nullptr)
+							fse_inspector_->quit();
+						requireLib.clearCache();
+						v8pp::cleanup(isolate_);
+						isolate_->Exit();
+						isolate_->Dispose();
+					}
 					render_window_->close();
 					return;
 				}
@@ -132,7 +144,7 @@ namespace fse
 		v8::HandleScope handle_scope(isolate_);
 		v8_context_ = v8::Context::New(isolate_);
 		v8_context_->Enter();
-		priv::FSEV8Lib::Init(argc_, argv_, env_, isolate_, &requireLib);
+		priv::FSEV8Lib::Init(argc_, argv_, env_,this, isolate_, &requireLib);
 		bool debug = false;
 		unsigned short port = 9229; //node default debug port
 		bool block = false;
@@ -202,5 +214,8 @@ namespace fse
 		return asset_loader_;
 	}
 
-
+	fse::Scene& Application::getRootScene()
+	{
+		return root_scene_;
+	}
 }

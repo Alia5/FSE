@@ -1,7 +1,6 @@
 #include "Timer.h"
 
 #include "../Application.h"
-#include <regex>
 
 namespace fse
 {
@@ -12,7 +11,8 @@ namespace fse
 
 	Timer::~Timer()
 	{
-		
+		persistent_callback_.Reset();
+		persistent_this_.Reset();
 	}
 
 	void Timer::update(float deltaTime)
@@ -23,19 +23,7 @@ namespace fse
 			while (elapsed_time_ * 1000 >= interval_)
 			{
 				elapsed_time_ -= interval_*0.001f;
-				////since chaiscript functions can be run, we have to catch chai exceptions
-				//try
-				//{
-				//	timeout_();
-				//} catch(chaiscript::exception::eval_error& e) {
-				//	const std::string evalString = "puts(\"" + std::regex_replace(e.pretty_print(), std::regex("(\")"), "\\\"") + "\");";
-				//	scene_->getApplication()->getChai()->eval(evalString);
-				//} catch (std::exception& e) {
-				//	const std::string evalString = "puts(\"" + std::regex_replace(e.what(), std::regex("(\")"), "\\\"") + "\");";
-				//	scene_->getApplication()->getChai()->eval(evalString);
-				//} catch (...) {
-				//	
-				//}
+				timeout_();
 				if (single_shot_)
 				{
 					active_ = false;
@@ -104,15 +92,47 @@ namespace fse
 			{
 				v8::Isolate* isolate = args.GetIsolate();
 				auto object = v8pp::from_v8<std::shared_ptr<Timer>>(isolate, args.This());
-				object->start(v8pp::from_v8<std::function<void()>>(isolate, args[0]));
+				object->persistent_callback_.Reset(isolate, args[0].As<v8::Function>());
+				object->persistent_this_.Reset(isolate, args.This());
+				object->start([object, isolate]()
+				{
+						v8::HandleScope handle_scope(isolate);
+						object->persistent_callback_.Get(isolate)->Call(isolate->GetCurrentContext(), object->persistent_this_.Get(isolate), 0, nullptr);
+				});
 			});
+		
 		Timer_class.function("startSingleShot", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 			{
 				v8::Isolate* isolate = args.GetIsolate();
+				v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> persistentCallback(isolate, args[2].As<v8::Function>());
+				v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>> persistentThis(isolate, args.This());
 				return Timer::singleShot(v8pp::from_v8<Scene*>(isolate, args[0]),
 					v8pp::from_v8<int>(isolate, args[1]),
-					v8pp::from_v8<std::function<void()>>(isolate, args[2]));
+					[persistentCallback, persistentThis, isolate]()
+				{
+						v8::HandleScope handle_scope(isolate);
+						persistentCallback.Get(isolate)->Call(isolate->GetCurrentContext(), persistentThis.Get(isolate),  0, nullptr);
+						const_cast<v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>>&>(persistentCallback).Reset();
+						const_cast<v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>>&>(persistentThis).Reset();
+				});
 			});
+		isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
+			v8::String::NewFromUtf8(isolate, "setTimeout").ToLocalChecked(),
+			v8pp::wrap_function(isolate, "__setTimeout",[app](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+					v8::Isolate* isolate = args.GetIsolate();
+					v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> persistentCallback(isolate, args[0].As<v8::Function>());
+					v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>> persistentThis(isolate, args.This());
+					return Timer::singleShot(&app->getRootScene(),
+						v8pp::from_v8<int>(isolate, args[1]),
+						[persistentCallback, persistentThis, isolate]()
+						{
+							v8::HandleScope handle_scope(isolate);
+							persistentCallback.Get(isolate)->Call(isolate->GetCurrentContext(), persistentThis.Get(isolate), 0, nullptr);
+							const_cast<v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>>&>(persistentCallback).Reset();
+							const_cast<v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>>&>(persistentThis).Reset();
+						});
+		}));
 		module.class_("Timer", Timer_class);
 		
 		//RegisterJSUserTypeFromRTTR<Timer>(isolate);

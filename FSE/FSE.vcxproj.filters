@@ -443,11 +443,11 @@
     <ClCompile Include="V8Debug\v8InspectorChannel.cpp">
       <Filter>Source Files\V8Debug</Filter>
     </ClCompile>
-    <ClCompile Include="V8Debug\v8InspectorClient.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="V8Debug\WebSocketServer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\V8Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="V8Debug\v8InspectorClient.cpp">
+      <Filter>Source Files\V8Debug</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

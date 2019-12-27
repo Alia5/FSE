@@ -13,16 +13,16 @@
 #define FSE_V8_REGISTRATION_FRIEND friend class fse::priv::FSEV8Lib;
 
 #define FSE_V8_ENABLE(ClassName) \
-   static void v8_init_func(v8::Isolate* isolate, v8pp::module& module); \
+   static void v8_init_func(fse::Application* app, v8::Isolate* isolate, v8pp::module& module); \
    static v8_init_helper ClassName##_v8_init_helper
 
 #define FSE_V8_REGISTER(ClassName) \
 	v8_init_helper ClassName::ClassName##_v8_init_helper(&ClassName::v8_init_func); \
-	void ClassName::v8_init_func(v8::Isolate* isolate, v8pp::module& module)
+	void ClassName::v8_init_func(fse::Application* app, v8::Isolate* isolate, v8pp::module& module)
 
 #define FSE_V8_REGISTER_BASE(ClassName) \
 	v8_init_helper ClassName::ClassName##_v8_init_helper(&ClassName::v8_init_func, true); \
-	void ClassName::v8_init_func(v8::Isolate* isolate, v8pp::module& module)
+	void ClassName::v8_init_func(fse::Application* app, v8::Isolate* isolate, v8pp::module& module)
 
 
 namespace std {
@@ -33,6 +33,7 @@ namespace std {
 
 namespace fse
 {
+	class Application;
 	namespace priv
 	{
 		class FSEV8Require
@@ -52,7 +53,7 @@ namespace fse
 		class FSEV8Lib
 		{
 		public:
-			static void Init(int argc, char* argv[], char** env, v8::Isolate* isolate, FSEV8Require* const require);
+			static void Init(int argc, char* argv[], char** env, fse::Application* app, v8::Isolate* isolate, FSEV8Require* const require);
 		private:
 		};
 
@@ -106,7 +107,7 @@ namespace fse
 
 }
 
-typedef void(*init_func_type)(v8::Isolate* isolate, v8pp::module& module);
+typedef void(*init_func_type)(fse::Application* app, v8::Isolate* isolate, v8pp::module& module);
 
 class v8_init
 {
@@ -127,11 +128,11 @@ public:
 		funcs_.push_back(f);
 	}
 
-	static void execute(v8::Isolate* isolate, v8pp::module& module)
+	static void execute(fse::Application* app, v8::Isolate* isolate, v8pp::module& module)
 	{
 		auto& inst = instance();
-		for (auto b : inst.base_funcs_) b(isolate, module);
-		for (auto c : inst.funcs_) c(isolate, module);
+		for (auto b : inst.base_funcs_) b(app, isolate, module);
+		for (auto c : inst.funcs_) c(app, isolate, module);
 	}
 
 

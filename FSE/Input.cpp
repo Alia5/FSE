@@ -279,6 +279,20 @@ namespace fse
 
 	FSE_V8_REGISTER(Input)
 	{
+		v8::HandleScope handle_scope(isolate);
+		v8pp::module input_module(isolate);
+		v8pp::class_<Input> Input_class(isolate);
+		Input_class.auto_wrap_objects(true);
+		Input_class.function("isKeyPressed", &Input::isKeyPressed);
+		Input_class.function("wasKeyPressed", &Input::wasKeyPressed);
+		module.class_("Input", Input_class);
+
+		//isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
+		//	v8::String::NewFromUtf8(isolate, "FSEInput").ToLocalChecked(), input_module.new_instance());
+		const v8::Local<v8::Object> object = v8pp::class_<Input>::reference_external(isolate, app->getInput());
+		isolate->GetCurrentContext()->Global()->Set(isolate->GetCurrentContext(),
+			v8::String::NewFromUtf8(isolate, "Input").ToLocalChecked(), object);
+		
 		//chai.add(chaiscript::user_type<Input>(), "Input");
 		//chai.add(chaiscript::fun([](Scene* scene)
 		//{
@@ -302,6 +316,7 @@ namespace fse
 		//{
 		//	return input->wasKeyPressed(std::wstring(key_name.begin(), key_name.end()));
 		//}), "wasKeyPressed");
+		
 	}
 	
 }

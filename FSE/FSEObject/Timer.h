@@ -80,6 +80,9 @@ namespace fse
 		bool single_shot_ = false;
 		int interval_ = 0;
 		float elapsed_time_ = 0.f;
+
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> persistent_callback_;
+		v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>> persistent_this_;
 	
 
 		RTTR_ENABLE(fse::FSEObject)

@@ -100,6 +100,11 @@ namespace fse
 		 * \return Reference to asset loader
 		 */
 		fse::AssetLoader& getAssetLoader();
+
+		/*!
+		 * \return Reference to root_scene_
+		 */
+		fse::Scene& getRootScene();
 		
 		virtual void initV8Ctx();
 		

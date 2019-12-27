@@ -12,13 +12,14 @@
 #include <filesystem>
 #include <string>
 #include <sstream>
+#include "Application.h"
 
 namespace fse
 {
 	namespace priv
 	{
 		void require(v8::FunctionCallbackInfo<v8::Value> const&);
-		void FSEV8Lib::Init(int argc, char* argv[], char** env, v8::Isolate* isolate, FSEV8Require* const require)
+		void FSEV8Lib::Init(int argc, char* argv[], char** env, fse::Application* app, v8::Isolate* isolate, FSEV8Require* const require)
 		{
 
 				v8::HandleScope handle_scope(isolate);
@@ -148,10 +149,14 @@ namespace fse
 				////chai.add(chaiscript::vector_conversion<std::vector<Light*>>());
 				////chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<Light*>>("LightList"));
 
-				v8_init::execute(isolate, module);
+				v8_init::execute(app, isolate, module);
 				ctx->Global()->Set(ctx,
 					v8::String::NewFromUtf8(isolate, "fse").ToLocalChecked(), module.new_instance());
 
+				typedef v8pp::class_<fse::Scene> my_class_wrapper;
+				v8::Local<v8::Value> val = my_class_wrapper::reference_external(isolate, &app->getRootScene());
+				ctx->Global()->Set(ctx, v8::String::NewFromUtf8(isolate, "rootScene").ToLocalChecked(), val);
+			
 				v8pp::module require_mod(isolate);
 				v8pp::class_<FSEV8Require> require_class(isolate);
 				require_class.function("require", &FSEV8Require::require);
