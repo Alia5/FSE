@@ -191,6 +191,7 @@ void b2World::DestroyBody(b2Body* b)
 	}
 
 	--m_bodyCount;
+	b->m_world = NULL;
 	b->~b2Body();
 	m_blockAllocator.Free(b, sizeof(b2Body));
 }
