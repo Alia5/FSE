@@ -10,6 +10,8 @@
 #include <v8pp/module.hpp>
 #include <v8pp/class.hpp>
 
+#include "extv8bind/liquidfunconvert.h"
+
 #define FSE_V8_REGISTRATION_FRIEND friend class fse::priv::FSEV8Lib;
 
 #define FSE_V8_ENABLE(ClassName) \

@@ -106,6 +106,9 @@
     <Filter Include="Header Files\V8Debug">
       <UniqueIdentifier>{3e7e3f02-5ff7-4a6a-a6f4-a8b640b9af6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\extv8bind">
+      <UniqueIdentifier>{448b44ee-5928-4145-b444-05b432b9069a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetLoader.h">
@@ -288,11 +291,17 @@
     <ClInclude Include="V8Debug\v8DebugUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="extv8bind\liquidfunbind.h">
+      <Filter>Header Files\extv8bind</Filter>
+    </ClInclude>
     <ClInclude Include="V8Debug\v8InspectorClient.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\V8Debug</Filter>
     </ClInclude>
     <ClInclude Include="V8Debug\WebSocketServer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\V8Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="extv8bind\liquidfunconvert.h">
+      <Filter>Header Files\extv8bind</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

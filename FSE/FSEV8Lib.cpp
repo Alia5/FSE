@@ -14,6 +14,9 @@
 #include <sstream>
 #include "Application.h"
 
+#include "extv8bind/liquidfunbind.h"
+
+
 namespace fse
 {
 	namespace priv
@@ -173,6 +176,11 @@ namespace fse
 					v8::String::NewFromUtf8(isolate, "require").ToLocalChecked(),
 					req_mod->Get(ctx,
 						v8::String::NewFromUtf8(isolate, "__v8require").ToLocalChecked()).ToLocalChecked());
+
+
+				const v8::Local<v8::Object> b2Mod = getB2Mod(isolate).new_instance();
+				ctx->Global()->Set(ctx,
+					v8::String::NewFromUtf8(isolate, "lf").ToLocalChecked(), b2Mod);
 			
 		}
 
