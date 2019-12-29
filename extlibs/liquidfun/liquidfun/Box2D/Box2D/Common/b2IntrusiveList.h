@@ -135,7 +135,7 @@ public:
 		uint32 length = 0;
 		const b2IntrusiveListNode * const terminator = GetTerminator();
 		for (const b2IntrusiveListNode* node = GetNext();
-			 node != terminator; node = node->GetNext())
+			 node != terminator && node != node->GetNext(); node = node->GetNext())
 		{
 			length++;
 		}
