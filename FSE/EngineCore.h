@@ -1,10 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <memory>
-
-
-#include <SFML/Graphics.hpp>
 
 
 namespace fse

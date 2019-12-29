@@ -38,7 +38,7 @@ struct v8pp::convert<sf::Vector2<T>>
 	{
 		v8::EscapableHandleScope scope(isolate);
 
-		v8::Local<v8::Array> arr = v8::Array::New(isolate, 3);
+		v8::Local<v8::Array> arr = v8::Array::New(isolate, 2);
 		arr->Set(isolate->GetCurrentContext(), 0, v8pp::to_v8(isolate, value.x));
 		arr->Set(isolate->GetCurrentContext(), 1, v8pp::to_v8(isolate, value.y));
 
@@ -282,6 +282,5 @@ struct v8pp::convert<std::vector<std::shared_ptr<fse::FSEObject>>>
 		return scope.Escape(arr);
 	}
 };
-
 template<>
 struct v8pp::is_wrapped_class<std::vector<std::shared_ptr<fse::FSEObject>> > : std::false_type {};

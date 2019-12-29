@@ -6,7 +6,6 @@
 #include <imgui_internal.h>
 #include "../imgui-colorText.h"
 #include <v8pp/module.hpp>
-#include "../V8Debug/v8Inspector.h"
 
 namespace fse
 {

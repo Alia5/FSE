@@ -46,6 +46,7 @@ namespace fse
 			v8pp::cleanup(isolate_);
 			isolate_->Exit();
 			isolate_->Dispose();
+			isolate_ = nullptr;
 		}
 		v8::V8::Dispose();
 		v8::V8::ShutdownPlatform();
@@ -74,6 +75,7 @@ namespace fse
 						v8pp::cleanup(isolate_);
 						isolate_->Exit();
 						isolate_->Dispose();
+						isolate_ = nullptr;
 					}
 					render_window_->close();
 					return;
@@ -138,6 +140,7 @@ namespace fse
 			v8pp::cleanup(isolate_);
 			isolate_->Exit();
 			isolate_->Dispose();
+			isolate_ = nullptr;
 		}
 		isolate_ = v8::Isolate::New(create_params_);
 		isolate_->Enter();
