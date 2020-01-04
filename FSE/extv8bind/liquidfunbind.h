@@ -1555,6 +1555,128 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 				This->DestroyParticles();
 			This->DestroyParticles(v8pp::from_v8<bool>(isolate, args[0]));
 		});
-	
+	b2mod.class_("ParticleGroup", b2ParticleGroupClass);
+
+
+	v8pp::class_<b2ParticleSystemDef> b2ParticleSystemDefClass(isolate);
+	b2ParticleSystemDefClass.ctor<>();
+	b2ParticleSystemDefClass.var("strictContactCheck", &b2ParticleSystemDef::strictContactCheck);
+	b2ParticleSystemDefClass.var("filter", &b2ParticleSystemDef::filter);
+	b2ParticleSystemDefClass.var("density", &b2ParticleSystemDef::density);
+	b2ParticleSystemDefClass.var("gravityScale", &b2ParticleSystemDef::gravityScale);
+	b2ParticleSystemDefClass.var("radius", &b2ParticleSystemDef::radius);
+	b2ParticleSystemDefClass.var("maxCount", &b2ParticleSystemDef::maxCount);
+	b2ParticleSystemDefClass.var("pressureStrength", &b2ParticleSystemDef::pressureStrength);
+	b2ParticleSystemDefClass.var("dampingStrength", &b2ParticleSystemDef::dampingStrength);
+	b2ParticleSystemDefClass.var("elasticStrength", &b2ParticleSystemDef::elasticStrength);
+	b2ParticleSystemDefClass.var("springStrength", &b2ParticleSystemDef::springStrength);
+	b2ParticleSystemDefClass.var("viscousStrength", &b2ParticleSystemDef::viscousStrength);
+	b2ParticleSystemDefClass.var("surfaceTensionPressureStrength", &b2ParticleSystemDef::surfaceTensionPressureStrength);
+	b2ParticleSystemDefClass.var("surfaceTensionNormalStrength", &b2ParticleSystemDef::surfaceTensionNormalStrength);
+	b2ParticleSystemDefClass.var("repulsiveStrength", &b2ParticleSystemDef::repulsiveStrength);
+	b2ParticleSystemDefClass.var("powderStrength", &b2ParticleSystemDef::powderStrength);
+	b2ParticleSystemDefClass.var("ejectionStrength", &b2ParticleSystemDef::ejectionStrength);
+	b2ParticleSystemDefClass.var("staticPressureStrength", &b2ParticleSystemDef::staticPressureStrength);
+	b2ParticleSystemDefClass.var("staticPressureRelaxation", &b2ParticleSystemDef::staticPressureRelaxation);
+	b2ParticleSystemDefClass.var("staticPressureIterations", &b2ParticleSystemDef::staticPressureIterations);
+	b2ParticleSystemDefClass.var("colorMixingStrength", &b2ParticleSystemDef::colorMixingStrength);
+	b2ParticleSystemDefClass.var("destroyByAge", &b2ParticleSystemDef::destroyByAge);
+	b2ParticleSystemDefClass.var("lifetimeGranularity", &b2ParticleSystemDef::lifetimeGranularity);	
+	b2mod.class_("ParticleSystemDef", b2ParticleSystemDefClass);
+
+	v8pp::class_<b2ParticleSystem> b2ParticleSystemClass(isolate, [](v8::Isolate* isolate, b2ParticleSystem* fixture)
+		{
+			// cannot be created or destroyed by their own.
+		});
+	b2ParticleSystemClass.function("CreateParticle", &b2ParticleSystem::CreateParticle);
+	b2ParticleSystemClass.function("GetParticleHandleFromIndex", &b2ParticleSystem::GetParticleHandleFromIndex);
+	b2ParticleSystemClass.function("DestroyParticle", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+			const auto isolate = args.GetIsolate();
+			const auto This = v8pp::from_v8<b2ParticleSystem*>(isolate, args.This());
+			if (args.Length() == 1)
+				This->DestroyParticle(v8pp::from_v8<int>(isolate, args[0]));
+			This->DestroyParticle(v8pp::from_v8<int>(isolate, args[0]), v8pp::from_v8<int>(isolate, args[1]));
+		});
+	b2ParticleSystemClass.function("DestroyOldestParticle", &b2ParticleSystem::DestroyOldestParticle);
+	b2ParticleSystemClass.function("DestroyParticlesInShape", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+			const auto isolate = args.GetIsolate();
+			const auto This = v8pp::from_v8<b2ParticleSystem*>(isolate, args.This());
+			if (args.Length() == 2)
+				This->DestroyParticlesInShape(v8pp::from_v8<b2Shape>(isolate, args[0]), v8pp::from_v8<b2Transform>(isolate, args[1]));
+			This->DestroyParticlesInShape(v8pp::from_v8<b2Shape>(isolate, args[0]),
+				v8pp::from_v8<b2Transform>(isolate, args[1]), 
+				v8pp::from_v8<bool>(isolate, args[2]));
+		});
+	b2ParticleSystemClass.function("CreateParticleGroup", &b2ParticleSystem::CreateParticleGroup);
+	b2ParticleSystemClass.function("JoinParticleGroups", &b2ParticleSystem::JoinParticleGroups);
+	b2ParticleSystemClass.function("SplitParticleGroup", &b2ParticleSystem::SplitParticleGroup);
+	// TODO: b2ParticleSystemClass.function("GetParticleGroupList", &b2ParticleSystem::GetParticleGroupList);
+	b2ParticleSystemClass.function("GetParticleGroupCount", &b2ParticleSystem::GetParticleGroupCount);
+	b2ParticleSystemClass.function("GetParticleCount", &b2ParticleSystem::GetParticleCount);
+	b2ParticleSystemClass.function("GetMaxParticleCount", &b2ParticleSystem::GetMaxParticleCount);
+	b2ParticleSystemClass.function("SetMaxParticleCount", &b2ParticleSystem::SetMaxParticleCount);
+	b2ParticleSystemClass.function("GetAllParticleFlags", &b2ParticleSystem::GetAllParticleFlags);
+	b2ParticleSystemClass.function("GetAllGroupFlags", &b2ParticleSystem::GetAllGroupFlags);
+	b2ParticleSystemClass.function("SetPaused", &b2ParticleSystem::SetPaused);
+	b2ParticleSystemClass.function("GetPaused", &b2ParticleSystem::GetPaused);
+	b2ParticleSystemClass.function("SetDensity", &b2ParticleSystem::SetDensity);
+	b2ParticleSystemClass.function("GetDensity", &b2ParticleSystem::GetDensity);
+	b2ParticleSystemClass.function("SetGravityScale", &b2ParticleSystem::SetGravityScale);
+	b2ParticleSystemClass.function("GetGravityScale", &b2ParticleSystem::GetGravityScale);
+	b2ParticleSystemClass.function("SetDamping", &b2ParticleSystem::SetDamping);
+	b2ParticleSystemClass.function("GetDamping", &b2ParticleSystem::GetDamping);
+	b2ParticleSystemClass.function("SetStaticPressureIterations", &b2ParticleSystem::SetStaticPressureIterations);
+	b2ParticleSystemClass.function("GetStaticPressureIterations", &b2ParticleSystem::GetStaticPressureIterations);
+	b2ParticleSystemClass.function("SetRadius", &b2ParticleSystem::SetRadius);
+	b2ParticleSystemClass.function("GetRadius", &b2ParticleSystem::GetRadius);
+	// TODO: b2ParticleSystemClass.function("GetPositionBuffer", &b2ParticleSystem::GetPositionBuffer);
+	// TODO: b2ParticleSystemClass.function("GetVelocityBuffer", &b2ParticleSystem::GetVelocityBuffer);
+	// TODO: b2ParticleSystemClass.function("GetColorBuffer", &b2ParticleSystem::GetColorBuffer);
+	// TODO: b2ParticleSystemClass.function("GetGroupBuffer", &b2ParticleSystem::GetGroupBuffer);
+	// TODO: b2ParticleSystemClass.function("GetWeightBuffer", &b2ParticleSystem::GetWeightBuffer);
+	//TODO: b2ParticleSystemClass.function("GetUserDataBuffer", &b2ParticleSystem::GetUserDataBuffer);
+	// TODO: b2ParticleSystemClass.function("GetFlagsBuffer", &b2ParticleSystem::GetFlagsBuffer);
+	b2ParticleSystemClass.function("SetParticleFlags", &b2ParticleSystem::SetParticleFlags);
+	b2ParticleSystemClass.function("GetParticleFlags", &b2ParticleSystem::GetParticleFlags);
+	// TODO: b2ParticleSystemClass.function("SetFlagsBuffer", &b2ParticleSystem::SetFlagsBuffer);
+	// TODO: b2ParticleSystemClass.function("SetPositionBuffer", &b2ParticleSystem::SetPositionBuffer);
+	// TODO: b2ParticleSystemClass.function("SetVelocityBuffer", &b2ParticleSystem::SetVelocityBuffer);
+	// TODO: b2ParticleSystemClass.function("SetColorBuffer", &b2ParticleSystem::SetColorBuffer);
+	// TODO: b2ParticleSystemClass.function("SetUserDataBuffer", &b2ParticleSystem::SetUserDataBuffer);
+	// TODO: b2ParticleSystemClass.function("GetContacts", &b2ParticleSystem::GetContacts);
+	b2ParticleSystemClass.function("GetContactCount", &b2ParticleSystem::GetContactCount);
+	// TODO: b2ParticleSystemClass.function("GetBodyContacts", &b2ParticleSystem::GetBodyContacts);
+	b2ParticleSystemClass.function("GetBodyContactCount", &b2ParticleSystem::GetBodyContactCount);
+	// TODO: b2ParticleSystemClass.function("GetPairs", &b2ParticleSystem::GetPairs);
+	b2ParticleSystemClass.function("GetPairCount", &b2ParticleSystem::GetPairCount);
+	// TODO: b2ParticleSystemClass.function("GetTriads", &b2ParticleSystem::GetTriads);
+	b2ParticleSystemClass.function("GetTriadCount", &b2ParticleSystem::GetTriadCount);
+	b2ParticleSystemClass.function("SetStuckThreshold", &b2ParticleSystem::SetStuckThreshold);
+	// TODO: b2ParticleSystemClass.function("GetStuckCandidates", &b2ParticleSystem::GetStuckCandidates);
+	b2ParticleSystemClass.function("GetStuckCandidateCount", &b2ParticleSystem::GetStuckCandidateCount);
+	b2ParticleSystemClass.function("ComputeCollisionEnergy", &b2ParticleSystem::ComputeCollisionEnergy);
+	b2ParticleSystemClass.function("SetStrictContactCheck", &b2ParticleSystem::SetStrictContactCheck);
+	b2ParticleSystemClass.function("GetStrictContactCheck", &b2ParticleSystem::GetStrictContactCheck);
+	b2ParticleSystemClass.function("SetParticleLifetime", &b2ParticleSystem::SetParticleLifetime);
+	b2ParticleSystemClass.function("GetParticleLifetime", &b2ParticleSystem::GetParticleLifetime);
+	b2ParticleSystemClass.function("SetDestructionByAge", &b2ParticleSystem::SetDestructionByAge);
+	b2ParticleSystemClass.function("GetDestructionByAge", &b2ParticleSystem::GetDestructionByAge);
+	// TODO: b2ParticleSystemClass.function("GetExpirationTimeBuffer", &b2ParticleSystem::GetExpirationTimeBuffer);
+	b2ParticleSystemClass.function("ExpirationTimeToLifetime", &b2ParticleSystem::ExpirationTimeToLifetime);
+	// TODO: b2ParticleSystemClass.function("GetIndexByExpirationTimeBuffer", &b2ParticleSystem::GetIndexByExpirationTimeBuffer);
+	b2ParticleSystemClass.function("ParticleApplyLinearImpulse", &b2ParticleSystem::ParticleApplyLinearImpulse);
+	b2ParticleSystemClass.function("ApplyLinearImpulse", &b2ParticleSystem::ApplyLinearImpulse);
+	b2ParticleSystemClass.function("ParticleApplyForce", &b2ParticleSystem::ParticleApplyForce);
+	b2ParticleSystemClass.function("ApplyForce", &b2ParticleSystem::ApplyForce);
+	b2ParticleSystemClass.function("GetNext", static_cast<b2ParticleSystem*( b2ParticleSystem::*)()>(&b2ParticleSystem::GetNext));
+	// TODO: b2ParticleSystemClass.function("QueryAABB", &b2ParticleSystem::QueryAABB);
+	// TODO: b2ParticleSystemClass.function("QueryShapeAABB", &b2ParticleSystem::QueryShapeAABB);
+	// TODO: b2ParticleSystemClass.function("RayCast", &b2ParticleSystem::RayCast);
+	// TODO: b2ParticleSystemClass.function("ComputeAABB", &b2ParticleSystem::ComputeAABB);
+	b2mod.class_("ParticleSystem", b2ParticleSystemClass);
+
+
 	return b2mod;
 }
