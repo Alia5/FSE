@@ -31,12 +31,12 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 
 	v8pp::class_<b2Draw> b2DrawClass(isolate);
 	b2DrawClass.auto_wrap_objects();
-	b2DrawClass.static_("e_shapeBit", 0x0001, true);
-	b2DrawClass.static_("e_jointBit", 0x0002, true);
-	b2DrawClass.static_("e_aabbBit", 0x0004, true);
-	b2DrawClass.static_("e_pairBit", 0x0008, true);
-	b2DrawClass.static_("e_centerOfMassBit", 0x0010, true);
-	b2DrawClass.static_("e_particleBit", 0x0020, true);
+	b2DrawClass.static_("shapeBit", 0x0001, true);
+	b2DrawClass.static_("jointBit", 0x0002, true);
+	b2DrawClass.static_("aabbBit", 0x0004, true);
+	b2DrawClass.static_("pairBit", 0x0008, true);
+	b2DrawClass.static_("centerOfMassBit", 0x0010, true);
+	b2DrawClass.static_("particleBit", 0x0020, true);
 	b2DrawClass.function("SetFlags", &b2Draw::SetFlags);
 	b2DrawClass.function("GetFlags", &b2Draw::GetFlags);
 	b2DrawClass.function("AppendFlags", &b2Draw::AppendFlags);
@@ -291,8 +291,8 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	{
 			return new b2ContactFeature();
 	});
-	b2ContactFeatureClass.static_("e_vertex", 0, true);
-	b2ContactFeatureClass.static_("e_face", 1, true);
+	b2ContactFeatureClass.static_("vertex", 0, true);
+	b2ContactFeatureClass.static_("face", 1, true);
 	b2ContactFeatureClass.var("indexA", &b2ContactFeature::indexA);
 	b2ContactFeatureClass.var("indexB", &b2ContactFeature::indexB);
 	b2ContactFeatureClass.var("typeA", &b2ContactFeature::typeA);
@@ -327,9 +327,9 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 		{
 			return new b2Manifold();
 		});
-	b2ManifoldClass.static_("e_circles", b2Manifold::Type::e_circles, true);
-	b2ManifoldClass.static_("e_faceA", b2Manifold::Type::e_faceA, true);
-	b2ManifoldClass.static_("e_circles", b2Manifold::Type::e_faceB, true);
+	b2ManifoldClass.static_("circles", b2Manifold::Type::e_circles, true);
+	b2ManifoldClass.static_("faceA", b2Manifold::Type::e_faceA, true);
+	b2ManifoldClass.static_("faceB", b2Manifold::Type::e_faceB, true);
 	b2ManifoldClass.property("points", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 		{
 			const auto isolate = args.GetIsolate();
@@ -520,15 +520,15 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	
 	v8pp::class_<b2Shape> b2ShapeClass(isolate);
 	b2ShapeClass.auto_wrap_objects();
-	//b2ShapeClass.function("Clone", &b2Shape::Clone);
+	b2ShapeClass.function("Clone", &b2Shape::Clone);
 	b2ShapeClass.function("GetType", &b2Shape::GetType);
-	//b2ShapeClass.function("GetChildCount", &b2Shape::GetChildCount);
-	b2ShapeClass.static_("e_circle", 0, true);
-	b2ShapeClass.static_("e_edge", 1, true);
-	b2ShapeClass.static_("e_polygon", 2, true);
-	b2ShapeClass.static_("e_chain", 3, true);
-	b2ShapeClass.static_("e_typeCount", 4, true);
-	//b2ShapeClass.function("TestPoint", &b2Shape::TestPoint);
+	b2ShapeClass.function("GetChildCount", &b2Shape::GetChildCount);
+	b2ShapeClass.static_("circle", 0, true);
+	b2ShapeClass.static_("edge", 1, true);
+	b2ShapeClass.static_("polygon", 2, true);
+	b2ShapeClass.static_("chain", 3, true);
+	b2ShapeClass.static_("typeCount", 4, true);
+	b2ShapeClass.function("TestPoint", &b2Shape::TestPoint);
 	b2ShapeClass.function("ComputeDistance", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 		{
 			const auto isolate = args.GetIsolate();
@@ -613,9 +613,6 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2EdgeShapeClass.auto_wrap_objects();
 	b2EdgeShapeClass.inherit<b2Shape>();
 	b2EdgeShapeClass.ctor<>();
-	b2EdgeShapeClass.function("Clone", &b2EdgeShape::Clone);
-	b2EdgeShapeClass.function("GetChildCount", &b2EdgeShape::GetChildCount);
-	b2EdgeShapeClass.function("TestPoint", &b2EdgeShape::TestPoint);
 	b2EdgeShapeClass.var("m_vertex1", &b2EdgeShape::m_vertex1);
 	b2EdgeShapeClass.var("m_vertex2", &b2EdgeShape::m_vertex2);
 	b2EdgeShapeClass.var("m_vertex0", &b2EdgeShape::m_vertex0);
@@ -632,10 +629,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2ChainShapeClass.function("CreateChain", &b2ChainShape::CreateChain);
 	b2ChainShapeClass.function("SetPrevVertex", &b2ChainShape::SetPrevVertex);
 	b2ChainShapeClass.function("SetNextVertex", &b2ChainShape::SetNextVertex);
-	b2ChainShapeClass.function("Clone", &b2ChainShape::Clone);
-	b2ChainShapeClass.function("GetChildCount", &b2ChainShape::GetChildCount);
 	b2ChainShapeClass.function("GetChildEdge", &b2ChainShape::GetChildEdge);
-	b2ChainShapeClass.function("TestPoint", &b2ChainShape::TestPoint);
 	b2ChainShapeClass.property("m_vertices", [](v8::Local<v8::String> property, const v8::PropertyCallbackInfo<v8::Value>& info)
 		{
 			const auto isolate = info.GetIsolate();
@@ -691,10 +685,6 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 				v8pp::from_v8<b2Vec2>(isolate, args[2]),
 				v8pp::from_v8<float32>(isolate, args[3]));
 		});
-
-	b2PolygonShapeClass.function("Clone", &b2PolygonShape::Clone);
-	b2PolygonShapeClass.function("GetChildCount", &b2PolygonShape::GetChildCount);
-	b2PolygonShapeClass.function("TestPoint", &b2PolygonShape::TestPoint);
 	b2PolygonShapeClass.function("GetVertexCount", &b2PolygonShape::GetVertexCount);
 	b2PolygonShapeClass.function("GetVertex", &b2PolygonShape::GetVertex);
 	b2PolygonShapeClass.function("Validate", &b2PolygonShape::Validate);
@@ -1066,6 +1056,505 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("Contact", b2ContactClass);
 
 	// b2Joint.h
+	v8pp::module b2JointTypeMod(isolate);
+	b2JointTypeMod.const_("unknownJoint", b2JointType::e_unknownJoint);
+	b2JointTypeMod.const_("revoluteJoint", b2JointType::e_revoluteJoint);
+	b2JointTypeMod.const_("prismaticJoint", b2JointType::e_prismaticJoint);
+	b2JointTypeMod.const_("distanceJoint", b2JointType::e_distanceJoint);
+	b2JointTypeMod.const_("pulleyJoint", b2JointType::e_pulleyJoint);
+	b2JointTypeMod.const_("mouseJoint", b2JointType::e_mouseJoint);
+	b2JointTypeMod.const_("gearJoint", b2JointType::e_gearJoint);
+	b2JointTypeMod.const_("wheelJoint", b2JointType::e_wheelJoint);
+	b2JointTypeMod.const_("weldJoint", b2JointType::e_weldJoint);
+	b2JointTypeMod.const_("frictionJoint", b2JointType::e_frictionJoint);
+	b2JointTypeMod.const_("ropeJoint", b2JointType::e_ropeJoint);
+	b2JointTypeMod.const_("motorJoint", b2JointType::e_motorJoint);
+	b2mod.submodule("JointType", b2JointTypeMod);
+
+	v8pp::module b2LimitStateMod(isolate);
+	b2LimitStateMod.const_("inactiveLimit", b2LimitState::e_inactiveLimit);
+	b2LimitStateMod.const_("atLowerLimit", b2LimitState::e_atLowerLimit);
+	b2LimitStateMod.const_("atUpperLimit", b2LimitState::e_atUpperLimit);
+	b2LimitStateMod.const_("equalLimits", b2LimitState::e_equalLimits);
+	b2mod.submodule("LimitState", b2LimitStateMod);
+
+	v8pp::class_<b2Jacobian> b2JacobianClass(isolate);
+	b2JacobianClass.auto_wrap_objects();
+	b2JacobianClass.ctor<>([](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+			return new b2Jacobian();
+		});
+	b2JacobianClass.var("linear", &b2Jacobian::linear);
+	b2JacobianClass.var("angularA", &b2Jacobian::angularA);
+	b2JacobianClass.var("angularB", &b2Jacobian::angularB);
+	b2mod.class_("Jacobian", b2JacobianClass);
+
+	v8pp::class_<b2JointEdge> b2JointEdgeClass(isolate);
+	b2JointEdgeClass.auto_wrap_objects();
+	b2JointEdgeClass.ctor<>([](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+			return new b2JointEdge();
+		});
+	b2JointEdgeClass.var("other", &b2JointEdge::other);
+	b2JointEdgeClass.var("joint", &b2JointEdge::joint);
+	b2JointEdgeClass.var("prev", &b2JointEdge::prev);
+	b2JointEdgeClass.var("next", &b2JointEdge::next);
+	b2mod.class_("JointEdge", b2JointEdgeClass);
+
+	v8pp::class_<b2JointDef> b2JointDefClass(isolate);
+	b2JointDefClass.ctor<>();
+	b2JointDefClass.var("type", &b2JointDef::type);
+	b2JointDefClass.var("bodyA", &b2JointDef::bodyA);
+	b2JointDefClass.var("bodyB", &b2JointDef::bodyB);
+	b2JointDefClass.var("collideConnected", &b2JointDef::collideConnected);
+	// TODO: b2JointDefClass.var("userData", &b2JointDef::userData);
+	b2mod.class_("JointDef", b2JointDefClass);
+
+	v8pp::class_<b2Joint> b2JointClass(isolate, [](v8::Isolate* isolate, b2Joint* joint)
+	{
+		// cannot create or destroy joint directly
+	});
+	b2JointClass.function("GetType", &b2Joint::GetType);
+	b2JointClass.function("GetBodyA", &b2Joint::GetBodyA);
+	b2JointClass.function("GetBodyB", &b2Joint::GetBodyB);
+	b2JointClass.function("GetAnchorA", &b2Joint::GetAnchorA);
+	b2JointClass.function("GetAnchorB", &b2Joint::GetAnchorB);
+	b2JointClass.function("GetReactionForce", &b2Joint::GetReactionForce);
+	b2JointClass.function("GetReactionTorque", &b2Joint::GetReactionTorque);
+	b2JointClass.function("GetNext", static_cast<b2Joint*( b2Joint::*)()>(&b2Joint::GetNext));
+	// TODO: b2JointClass.function("GetUserData", &b2Joint::GetUserData);
+	// TODO: b2JointClass.function("SetUserData", &b2Joint::SetUserData);
+	b2JointClass.function("IsActive", &b2Joint::IsActive);
+	b2JointClass.function("GetCollideConnected", &b2Joint::GetCollideConnected);
+	b2JointClass.function("Dump", &b2Joint::Dump);
+	b2JointClass.function("ShiftOrigin", &b2Joint::ShiftOrigin);
+	b2mod.class_("Joint", b2JointClass);
+
+	v8pp::class_<b2DistanceJointDef> b2DistanceJointDefClass(isolate);
+	b2DistanceJointDefClass.inherit<b2JointDef>();
+	b2DistanceJointDefClass.ctor<>();
+	b2DistanceJointDefClass.function("Initialize", &b2DistanceJointDef::Initialize);
+	b2DistanceJointDefClass.var("localAnchorA", &b2DistanceJointDef::localAnchorA);
+	b2DistanceJointDefClass.var("localAnchorB", &b2DistanceJointDef::localAnchorB);
+	b2DistanceJointDefClass.var("length", &b2DistanceJointDef::length);
+	b2DistanceJointDefClass.var("frequencyHz", &b2DistanceJointDef::frequencyHz);
+	b2DistanceJointDefClass.var("dampingRatio", &b2DistanceJointDef::dampingRatio);
+	b2mod.class_("DistanceJointDef", b2DistanceJointDefClass);
+
+	v8pp::class_<b2DistanceJoint> b2DistanceJointClass(isolate);
+	b2DistanceJointClass.inherit<b2Joint>();
+	b2DistanceJointClass.function("GetLocalAnchorA", &b2DistanceJoint::GetLocalAnchorA);
+	b2DistanceJointClass.function("GetLocalAnchorB", &b2DistanceJoint::GetLocalAnchorB);
+	b2DistanceJointClass.function("SetLength", &b2DistanceJoint::SetLength);
+	b2DistanceJointClass.function("GetLength", &b2DistanceJoint::GetLength);
+	b2DistanceJointClass.function("SetFrequency", &b2DistanceJoint::SetFrequency);
+	b2DistanceJointClass.function("GetFrequency", &b2DistanceJoint::GetFrequency);
+	b2DistanceJointClass.function("SetDampingRatio", &b2DistanceJoint::SetDampingRatio);
+	b2DistanceJointClass.function("GetDampingRatio", &b2DistanceJoint::GetDampingRatio);
+	b2mod.class_("DistanceJoint", b2DistanceJointClass);
+
+	v8pp::class_<b2FrictionJointDef> b2FrictionJointDefClass(isolate);
+	b2FrictionJointDefClass.inherit<b2JointDef>();
+	b2FrictionJointDefClass.ctor<>();
+	b2FrictionJointDefClass.function("Initialize", &b2FrictionJointDef::Initialize);
+	b2FrictionJointDefClass.var("localAnchorA", &b2FrictionJointDef::localAnchorA);
+	b2FrictionJointDefClass.var("localAnchorB", &b2FrictionJointDef::localAnchorB);
+	b2FrictionJointDefClass.var("maxForce", &b2FrictionJointDef::maxForce);
+	b2FrictionJointDefClass.var("maxTorque", &b2FrictionJointDef::maxTorque);
+	b2mod.class_("FrictionJointDef", b2FrictionJointDefClass);
+
+
+	v8pp::class_<b2FrictionJoint> b2FrictionJointClass(isolate);
+	b2FrictionJointClass.inherit<b2Joint>();
+	b2FrictionJointClass.function("GetLocalAnchorA", &b2FrictionJoint::GetLocalAnchorA);
+	b2FrictionJointClass.function("GetLocalAnchorB", &b2FrictionJoint::GetLocalAnchorB);
+	b2FrictionJointClass.function("SetMaxForce", &b2FrictionJoint::SetMaxForce);
+	b2FrictionJointClass.function("GetMaxForce", &b2FrictionJoint::GetMaxForce);
+	b2FrictionJointClass.function("SetMaxTorque", &b2FrictionJoint::SetMaxTorque);
+	b2FrictionJointClass.function("GetMaxTorque", &b2FrictionJoint::GetMaxTorque);
+	b2mod.class_("FrictionJoint", b2FrictionJointClass);
+
+	v8pp::class_<b2GearJointDef> b2GearJointDefClass(isolate);
+	b2GearJointDefClass.inherit<b2JointDef>();
+	b2GearJointDefClass.ctor<>();
+	b2GearJointDefClass.var("joint1", &b2GearJointDef::joint1);
+	b2GearJointDefClass.var("joint2", &b2GearJointDef::joint2);
+	b2GearJointDefClass.var("ratio", &b2GearJointDef::ratio);
+	b2mod.class_("GearJointDef", b2GearJointDefClass);
+
+	v8pp::class_<b2GearJoint> b2GearJointClass(isolate);
+	b2GearJointClass.inherit<b2Joint>();
+	b2GearJointClass.function("GetJoint1", &b2GearJoint::GetJoint1);
+	b2GearJointClass.function("GetJoint2", &b2GearJoint::GetJoint2);
+	b2GearJointClass.function("SetRatio", &b2GearJoint::SetRatio);
+	b2GearJointClass.function("GetRatio", &b2GearJoint::GetRatio);
+	b2mod.class_("GearJoint", b2GearJointClass);
+
+	v8pp::class_<b2MotorJointDef> b2MotorJointDefClass(isolate);
+	b2MotorJointDefClass.inherit<b2JointDef>();
+	b2MotorJointDefClass.ctor<>();
+	b2MotorJointDefClass.function("Initialize", &b2MotorJointDef::Initialize);
+	b2MotorJointDefClass.var("linearOffset", &b2MotorJointDef::linearOffset);
+	b2MotorJointDefClass.var("angularOffset", &b2MotorJointDef::angularOffset);
+	b2MotorJointDefClass.var("maxForce", &b2MotorJointDef::maxForce);
+	b2MotorJointDefClass.var("maxTorque", &b2MotorJointDef::maxTorque);
+	b2MotorJointDefClass.var("correctionFactor", &b2MotorJointDef::correctionFactor);
+	b2mod.class_("MotorJointDef", b2MotorJointDefClass);
+
+	v8pp::class_<b2MotorJoint> b2MotorJointClass(isolate);
+	b2MotorJointClass.inherit<b2Joint>();
+	b2MotorJointClass.function("SetLinearOffset", &b2MotorJoint::SetLinearOffset);
+	b2MotorJointClass.function("GetLinearOffset", &b2MotorJoint::GetLinearOffset);
+	b2MotorJointClass.function("SetAngularOffset", &b2MotorJoint::SetAngularOffset);
+	b2MotorJointClass.function("GetAngularOffset", &b2MotorJoint::GetAngularOffset);
+	b2MotorJointClass.function("SetMaxForce", &b2MotorJoint::SetMaxForce);
+	b2MotorJointClass.function("GetMaxForce", &b2MotorJoint::GetMaxForce);
+	b2MotorJointClass.function("SetMaxTorque", &b2MotorJoint::SetMaxTorque);
+	b2MotorJointClass.function("GetMaxTorque", &b2MotorJoint::GetMaxTorque);
+	b2MotorJointClass.function("SetCorrectionFactor", &b2MotorJoint::SetCorrectionFactor);
+	b2MotorJointClass.function("GetCorrectionFactor", &b2MotorJoint::GetCorrectionFactor);
+	b2mod.class_("MotorJoint", b2MotorJointClass);
+
+	v8pp::class_<b2MouseJointDef> b2MouseJointDefClass(isolate);
+	b2MouseJointDefClass.inherit<b2JointDef>();
+	b2MouseJointDefClass.ctor<>();
+	b2MouseJointDefClass.var("target", &b2MouseJointDef::target);
+	b2MouseJointDefClass.var("maxForce", &b2MouseJointDef::maxForce);
+	b2MouseJointDefClass.var("frequencyHz", &b2MouseJointDef::frequencyHz);
+	b2MouseJointDefClass.var("dampingRatio", &b2MouseJointDef::dampingRatio);
+	b2mod.class_("MouseJointDef", b2MouseJointDefClass);
+
+	v8pp::class_<b2MouseJoint> b2MouseJointClass(isolate);
+	b2MouseJointClass.inherit<b2Joint>();
+	b2MouseJointClass.function("SetTarget", &b2MouseJoint::SetTarget);
+	b2MouseJointClass.function("GetTarget", &b2MouseJoint::GetTarget);
+	b2MouseJointClass.function("SetMaxForce", &b2MouseJoint::SetMaxForce);
+	b2MouseJointClass.function("GetMaxForce", &b2MouseJoint::GetMaxForce);
+	b2MouseJointClass.function("SetFrequency", &b2MouseJoint::SetFrequency);
+	b2MouseJointClass.function("GetFrequency", &b2MouseJoint::GetFrequency);
+	b2MouseJointClass.function("SetDampingRatio", &b2MouseJoint::SetDampingRatio);
+	b2MouseJointClass.function("GetDampingRatio", &b2MouseJoint::GetDampingRatio);
+	b2mod.class_("MouseJoint", b2MouseJointClass);
+
+	v8pp::class_<b2PrismaticJointDef> b2PrismaticJointDefClass(isolate);
+	b2PrismaticJointDefClass.inherit<b2JointDef>();
+	b2PrismaticJointDefClass.ctor<>();
+	b2PrismaticJointDefClass.function("Initialize", &b2PrismaticJointDef::Initialize);
+	b2PrismaticJointDefClass.var("localAnchorA", &b2PrismaticJointDef::localAnchorA);
+	b2PrismaticJointDefClass.var("localAnchorB", &b2PrismaticJointDef::localAnchorB);
+	b2PrismaticJointDefClass.var("localAxisA", &b2PrismaticJointDef::localAxisA);
+	b2PrismaticJointDefClass.var("referenceAngle", &b2PrismaticJointDef::referenceAngle);
+	b2PrismaticJointDefClass.var("enableLimit", &b2PrismaticJointDef::enableLimit);
+	b2PrismaticJointDefClass.var("lowerTranslation", &b2PrismaticJointDef::lowerTranslation);
+	b2PrismaticJointDefClass.var("upperTranslation", &b2PrismaticJointDef::upperTranslation);
+	b2PrismaticJointDefClass.var("enableMotor", &b2PrismaticJointDef::enableMotor);
+	b2PrismaticJointDefClass.var("maxMotorForce", &b2PrismaticJointDef::maxMotorForce);
+	b2PrismaticJointDefClass.var("motorSpeed", &b2PrismaticJointDef::motorSpeed);
+	b2mod.class_("PrismaticJointDef", b2PrismaticJointDefClass);
+
+	v8pp::class_<b2PrismaticJoint> b2PrismaticJointClass(isolate);
+	b2PrismaticJointClass.inherit<b2Joint>();
+	b2PrismaticJointClass.function("GetLocalAnchorA", &b2PrismaticJoint::GetLocalAnchorA);
+	b2PrismaticJointClass.function("GetLocalAnchorB", &b2PrismaticJoint::GetLocalAnchorB);
+	b2PrismaticJointClass.function("GetLocalAxisA", &b2PrismaticJoint::GetLocalAxisA);
+	b2PrismaticJointClass.function("GetReferenceAngle", &b2PrismaticJoint::GetReferenceAngle);
+	b2PrismaticJointClass.function("GetJointTranslation", &b2PrismaticJoint::GetJointTranslation);
+	b2PrismaticJointClass.function("GetJointSpeed", &b2PrismaticJoint::GetJointSpeed);
+	b2PrismaticJointClass.function("IsLimitEnabled", &b2PrismaticJoint::IsLimitEnabled);
+	b2PrismaticJointClass.function("EnableLimit", &b2PrismaticJoint::EnableLimit);
+	b2PrismaticJointClass.function("GetLowerLimit", &b2PrismaticJoint::GetLowerLimit);
+	b2PrismaticJointClass.function("GetUpperLimit", &b2PrismaticJoint::GetUpperLimit);
+	b2PrismaticJointClass.function("SetLimits", &b2PrismaticJoint::SetLimits);
+	b2PrismaticJointClass.function("IsMotorEnabled", &b2PrismaticJoint::IsMotorEnabled);
+	b2PrismaticJointClass.function("EnableMotor", &b2PrismaticJoint::EnableMotor);
+	b2PrismaticJointClass.function("SetMotorSpeed", &b2PrismaticJoint::SetMotorSpeed);
+	b2PrismaticJointClass.function("GetMotorSpeed", &b2PrismaticJoint::GetMotorSpeed);
+	b2PrismaticJointClass.function("SetMaxMotorForce", &b2PrismaticJoint::SetMaxMotorForce);
+	b2PrismaticJointClass.function("GetMaxMotorForce", &b2PrismaticJoint::GetMaxMotorForce);
+	b2PrismaticJointClass.function("GetMotorForce", &b2PrismaticJoint::GetMotorForce);
+	b2mod.class_("PrismaticJoint", b2PrismaticJointClass);
+
+
+	v8pp::class_<b2PulleyJointDef> b2PulleyJointDefClass(isolate);
+	b2PulleyJointDefClass.inherit<b2JointDef>();
+	b2PulleyJointDefClass.ctor<>();
+	b2PulleyJointDefClass.function("Initialize", &b2PulleyJointDef::Initialize);
+	b2PulleyJointDefClass.var("groundAnchorA", &b2PulleyJointDef::groundAnchorA);
+	b2PulleyJointDefClass.var("groundAnchorB", &b2PulleyJointDef::groundAnchorB);
+	b2PulleyJointDefClass.var("localAnchorA", &b2PulleyJointDef::localAnchorA);
+	b2PulleyJointDefClass.var("localAnchorB", &b2PulleyJointDef::localAnchorB);
+	b2PulleyJointDefClass.var("lengthA", &b2PulleyJointDef::lengthA);
+	b2PulleyJointDefClass.var("lengthB", &b2PulleyJointDef::lengthB);
+	b2PulleyJointDefClass.var("ratio", &b2PulleyJointDef::ratio);
+	b2mod.class_("PulleyJointDef", b2PulleyJointDefClass);
+
+	v8pp::class_<b2PulleyJoint> b2PulleyJointClass(isolate);
+	b2PulleyJointClass.inherit<b2Joint>();
+	b2PulleyJointClass.function("GetGroundAnchorA", &b2PulleyJoint::GetGroundAnchorA);
+	b2PulleyJointClass.function("GetGroundAnchorB", &b2PulleyJoint::GetGroundAnchorB);
+	b2PulleyJointClass.function("GetLengthA", &b2PulleyJoint::GetLengthA);
+	b2PulleyJointClass.function("GetLengthB", &b2PulleyJoint::GetLengthB);
+	b2PulleyJointClass.function("GetRatio", &b2PulleyJoint::GetRatio);
+	b2PulleyJointClass.function("GetCurrentLengthA", &b2PulleyJoint::GetCurrentLengthA);
+	b2PulleyJointClass.function("GetCurrentLengthB", &b2PulleyJoint::GetCurrentLengthB);
+	b2mod.class_("PulleyJoint", b2PulleyJointClass);
+
+
+	v8pp::class_<b2RevoluteJointDef> b2RevoluteJointDefClass(isolate);
+	b2RevoluteJointDefClass.inherit<b2JointDef>();
+	b2RevoluteJointDefClass.ctor<>();
+	b2RevoluteJointDefClass.function("Initialize", &b2RevoluteJointDef::Initialize);
+	b2RevoluteJointDefClass.var("localAnchorA", &b2RevoluteJointDef::localAnchorA);
+	b2RevoluteJointDefClass.var("localAnchorB", &b2RevoluteJointDef::localAnchorB);
+	b2RevoluteJointDefClass.var("referenceAngle", &b2RevoluteJointDef::referenceAngle);
+	b2RevoluteJointDefClass.var("enableLimit", &b2RevoluteJointDef::enableLimit);
+	b2RevoluteJointDefClass.var("lowerAngle", &b2RevoluteJointDef::lowerAngle);
+	b2RevoluteJointDefClass.var("upperAngle", &b2RevoluteJointDef::upperAngle);
+	b2RevoluteJointDefClass.var("enableMotor", &b2RevoluteJointDef::enableMotor);
+	b2RevoluteJointDefClass.var("motorSpeed", &b2RevoluteJointDef::motorSpeed);
+	b2RevoluteJointDefClass.var("maxMotorTorque", &b2RevoluteJointDef::maxMotorTorque);
+	b2mod.class_("RevoluteJointDef", b2RevoluteJointDefClass);
+
+
+	v8pp::class_<b2RevoluteJoint> b2RevoluteJointClass(isolate);
+	b2RevoluteJointClass.inherit<b2Joint>();
+	b2RevoluteJointClass.function("GetLocalAnchorA", &b2RevoluteJoint::GetLocalAnchorA);
+	b2RevoluteJointClass.function("GetLocalAnchorB", &b2RevoluteJoint::GetLocalAnchorB);
+	b2RevoluteJointClass.function("GetReferenceAngle", &b2RevoluteJoint::GetReferenceAngle);
+	b2RevoluteJointClass.function("GetJointAngle", &b2RevoluteJoint::GetJointAngle);
+	b2RevoluteJointClass.function("GetJointSpeed", &b2RevoluteJoint::GetJointSpeed);
+	b2RevoluteJointClass.function("IsLimitEnabled", &b2RevoluteJoint::IsLimitEnabled);
+	b2RevoluteJointClass.function("EnableLimit", &b2RevoluteJoint::EnableLimit);
+	b2RevoluteJointClass.function("GetLowerLimit", &b2RevoluteJoint::GetLowerLimit);
+	b2RevoluteJointClass.function("GetUpperLimit", &b2RevoluteJoint::GetUpperLimit);
+	b2RevoluteJointClass.function("SetLimits", &b2RevoluteJoint::SetLimits);
+	b2RevoluteJointClass.function("IsMotorEnabled", &b2RevoluteJoint::IsMotorEnabled);
+	b2RevoluteJointClass.function("EnableMotor", &b2RevoluteJoint::EnableMotor);
+	b2RevoluteJointClass.function("SetMotorSpeed", &b2RevoluteJoint::SetMotorSpeed);
+	b2RevoluteJointClass.function("GetMotorSpeed", &b2RevoluteJoint::GetMotorSpeed);
+	b2RevoluteJointClass.function("SetMaxMotorTorque", &b2RevoluteJoint::SetMaxMotorTorque);
+	b2RevoluteJointClass.function("GetMaxMotorTorque", &b2RevoluteJoint::GetMaxMotorTorque);
+	b2RevoluteJointClass.function("GetReactionForce", &b2RevoluteJoint::GetReactionForce);
+	b2RevoluteJointClass.function("GetReactionTorque", &b2RevoluteJoint::GetReactionTorque);
+	b2RevoluteJointClass.function("GetMotorTorque", &b2RevoluteJoint::GetMotorTorque);
+	b2mod.class_("RevoluteJoint", b2RevoluteJointClass);
+
+
+	v8pp::class_<b2RopeJointDef> b2RopeJointDefClass(isolate);
+	b2RopeJointDefClass.inherit<b2JointDef>();
+	b2RopeJointDefClass.ctor<>();
+	b2RopeJointDefClass.var("localAnchorA", &b2RopeJointDef::localAnchorA);
+	b2RopeJointDefClass.var("localAnchorB", &b2RopeJointDef::localAnchorB);
+	b2RopeJointDefClass.var("maxLength", &b2RopeJointDef::maxLength);
+	b2mod.class_("RopeJointDef", b2RopeJointDefClass);
+
+	v8pp::class_<b2RopeJoint> b2RopeJointClass(isolate);
+	b2RopeJointClass.inherit<b2Joint>();
+	b2RopeJointClass.function("GetLocalAnchorA", &b2RopeJoint::GetLocalAnchorA);
+	b2RopeJointClass.function("GetLocalAnchorB", &b2RopeJoint::GetLocalAnchorB);
+	b2RopeJointClass.function("SetMaxLength", &b2RopeJoint::SetMaxLength);
+	b2RopeJointClass.function("GetMaxLength", &b2RopeJoint::GetMaxLength);
+	b2RopeJointClass.function("GetLimitState", &b2RopeJoint::GetLimitState);
+	b2mod.class_("RopeJoint", b2RopeJointClass);
+
+
+	v8pp::class_<b2WeldJointDef> b2WeldJointDefClass(isolate);
+	b2WeldJointDefClass.inherit<b2JointDef>();
+	b2WeldJointDefClass.ctor<>();
+	b2WeldJointDefClass.function("Initialize", &b2WeldJointDef::Initialize);
+	b2WeldJointDefClass.var("localAnchorA", &b2WeldJointDef::localAnchorA);
+	b2WeldJointDefClass.var("localAnchorB", &b2WeldJointDef::localAnchorB);
+	b2WeldJointDefClass.var("referenceAngle", &b2WeldJointDef::referenceAngle);
+	b2WeldJointDefClass.var("frequencyHz", &b2WeldJointDef::frequencyHz);
+	b2WeldJointDefClass.var("dampingRatio", &b2WeldJointDef::dampingRatio);
+	b2mod.class_("WeldJointDef", b2WeldJointDefClass);
+
+	v8pp::class_<b2WeldJoint> b2WeldJointClass(isolate);
+	b2WeldJointClass.inherit<b2Joint>();
+	b2WeldJointClass.function("GetLocalAnchorA", &b2WeldJoint::GetLocalAnchorA);
+	b2WeldJointClass.function("GetLocalAnchorB", &b2WeldJoint::GetLocalAnchorB);
+	b2WeldJointClass.function("GetReferenceAngle", &b2WeldJoint::GetReferenceAngle);
+	b2WeldJointClass.function("SetFrequency", &b2WeldJoint::SetFrequency);
+	b2WeldJointClass.function("GetFrequency", &b2WeldJoint::GetFrequency);
+	b2WeldJointClass.function("SetDampingRatio", &b2WeldJoint::SetDampingRatio);
+	b2WeldJointClass.function("GetDampingRatio", &b2WeldJoint::GetDampingRatio);
+	b2mod.class_("WeldJoint", b2WeldJointClass);
+
+	
+	v8pp::class_<b2WheelJointDef> b2WheelJointDefClass(isolate);
+	b2WheelJointDefClass.inherit<b2JointDef>();
+	b2WheelJointDefClass.ctor<>();
+	b2WheelJointDefClass.function("Initialize", &b2WheelJointDef::Initialize);
+	b2WheelJointDefClass.var("localAnchorA", &b2WheelJointDef::localAnchorA);
+	b2WheelJointDefClass.var("localAnchorB", &b2WheelJointDef::localAnchorB);
+	b2WheelJointDefClass.var("localAxisA", &b2WheelJointDef::localAxisA);
+	b2WheelJointDefClass.var("enableMotor", &b2WheelJointDef::enableMotor);
+	b2WheelJointDefClass.var("maxMotorTorque", &b2WheelJointDef::maxMotorTorque);
+	b2WheelJointDefClass.var("motorSpeed", &b2WheelJointDef::motorSpeed);
+	b2WheelJointDefClass.var("frequencyHz", &b2WheelJointDef::frequencyHz);
+	b2WheelJointDefClass.var("dampingRatio", &b2WheelJointDef::dampingRatio);
+	b2mod.class_("WheelJointDef", b2WheelJointDefClass);
+
+	v8pp::class_<b2WheelJoint> b2WheelJointClass(isolate);
+	b2WheelJointClass.inherit<b2Joint>();
+	b2WheelJointClass.function("GetLocalAnchorA", &b2WheelJoint::GetLocalAnchorA);
+	b2WheelJointClass.function("GetLocalAnchorB", &b2WheelJoint::GetLocalAnchorB);
+	b2WheelJointClass.function("GetLocalAxisA", &b2WheelJoint::GetLocalAxisA);
+	b2WheelJointClass.function("GetJointTranslation", &b2WheelJoint::GetJointTranslation);
+	b2WheelJointClass.function("GetJointSpeed", &b2WheelJoint::GetJointSpeed);
+	b2WheelJointClass.function("IsMotorEnabled", &b2WheelJoint::IsMotorEnabled);
+	b2WheelJointClass.function("EnableMotor", &b2WheelJoint::EnableMotor);
+	b2WheelJointClass.function("SetMotorSpeed", &b2WheelJoint::SetMotorSpeed);
+	b2WheelJointClass.function("GetMotorSpeed", &b2WheelJoint::GetMotorSpeed);
+	b2WheelJointClass.function("SetMaxMotorTorque", &b2WheelJoint::SetMaxMotorTorque);
+	b2WheelJointClass.function("GetMaxMotorTorque", &b2WheelJoint::GetMaxMotorTorque);
+	b2WheelJointClass.function("GetMotorTorque", &b2WheelJoint::GetMotorTorque);
+	b2WheelJointClass.function("SetSpringFrequencyHz", &b2WheelJoint::SetSpringFrequencyHz);
+	b2WheelJointClass.function("GetSpringFrequencyHz", &b2WheelJoint::GetSpringFrequencyHz);
+	b2WheelJointClass.function("SetSpringDampingRatio", &b2WheelJoint::SetSpringDampingRatio);
+	b2WheelJointClass.function("GetSpringDampingRatio", &b2WheelJoint::GetSpringDampingRatio);
+	b2mod.class_("WheelJoint", b2WheelJointClass);
+
+	//b2Particle
+	v8pp::module b2ParticleFlagModule(isolate);
+	b2ParticleFlagModule.const_("waterParticle", b2ParticleFlag::b2_waterParticle);
+	b2ParticleFlagModule.const_("zombieParticle", b2ParticleFlag::b2_zombieParticle);
+	b2ParticleFlagModule.const_("wallParticle", b2ParticleFlag::b2_wallParticle);
+	b2ParticleFlagModule.const_("springParticle", b2ParticleFlag::b2_springParticle);
+	b2ParticleFlagModule.const_("elasticParticle", b2ParticleFlag::b2_elasticParticle);
+	b2ParticleFlagModule.const_("viscousParticle", b2ParticleFlag::b2_viscousParticle);
+	b2ParticleFlagModule.const_("powderParticle", b2ParticleFlag::b2_powderParticle);
+	b2ParticleFlagModule.const_("tensileParticle", b2ParticleFlag::b2_tensileParticle);
+	b2ParticleFlagModule.const_("colorMixingParticle", b2ParticleFlag::b2_colorMixingParticle);
+	b2ParticleFlagModule.const_("destructionListenerParticle", b2ParticleFlag::b2_destructionListenerParticle);
+	b2ParticleFlagModule.const_("barrierParticle", b2ParticleFlag::b2_barrierParticle);
+	b2ParticleFlagModule.const_("staticPressureParticle", b2ParticleFlag::b2_staticPressureParticle);
+	b2ParticleFlagModule.const_("reactiveParticle", b2ParticleFlag::b2_reactiveParticle);
+	b2ParticleFlagModule.const_("repulsiveParticle", b2ParticleFlag::b2_repulsiveParticle);
+	b2ParticleFlagModule.const_("fixtureContactListenerParticle", b2ParticleFlag::b2_fixtureContactListenerParticle);
+	b2ParticleFlagModule.const_("particleContactListenerParticle", b2ParticleFlag::b2_particleContactListenerParticle);
+	b2ParticleFlagModule.const_("fixtureContactFilterParticle", b2ParticleFlag::b2_fixtureContactFilterParticle);
+	b2ParticleFlagModule.const_("particleContactFilterParticle", b2ParticleFlag::b2_particleContactFilterParticle);
+	b2mod.submodule("ParticleFlag", b2ParticleFlagModule);
+
+	v8pp::class_<b2ParticleColor> b2ParticleColorClass(isolate);
+	b2ParticleColorClass.ctor<>([](v8::FunctionCallbackInfo<v8::Value> const& args)
+	{
+			const auto isolate = args.GetIsolate();
+			if (args.Length() == 0)
+				return new b2ParticleColor();
+			if (args.Length() == 1)
+				return new b2ParticleColor(v8pp::from_v8<b2Color>(isolate, args[0]));
+			return new b2ParticleColor(v8pp::from_v8<uint8>(isolate, args[0]),
+				v8pp::from_v8<uint8>(isolate, args[1]),
+				v8pp::from_v8<uint8>(isolate, args[2]), 
+				v8pp::from_v8<uint8>(isolate, args[3]));
+	});
+	b2ParticleColorClass.function("IsZero", &b2ParticleColor::IsZero);
+	b2ParticleColorClass.function("GetColor", &b2ParticleColor::GetColor);
+	b2ParticleColorClass.function("Set", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+	{
+			const auto isolate = args.GetIsolate();
+			const auto This = v8pp::from_v8<b2ParticleColor*>(isolate, args.This());
+			if (args.Length() == 1)
+				This->Set(v8pp::from_v8<b2Color>(isolate, args[0]));
+			This->Set(v8pp::from_v8<uint8>(isolate, args[0]),
+				v8pp::from_v8<uint8>(isolate, args[1]),
+				v8pp::from_v8<uint8>(isolate, args[2]),
+				v8pp::from_v8<uint8>(isolate, args[3]));
+	});
+	b2ParticleColorClass.function("Mix", &b2ParticleColor::Mix);
+	b2ParticleColorClass.function("MixColors", &b2ParticleColor::MixColors);
+	b2mod.class_("ParticleColor", b2ParticleColorClass);
+
+	v8pp::class_<b2ParticleDef> b2ParticleDefClass(isolate);
+	b2ParticleDefClass.ctor<>();
+	b2ParticleDefClass.var("flags", &b2ParticleDef::flags);
+	b2ParticleDefClass.var("position", &b2ParticleDef::position);
+	b2ParticleDefClass.var("velocity", &b2ParticleDef::velocity);
+	b2ParticleDefClass.var("color", &b2ParticleDef::color);
+	b2ParticleDefClass.var("lifetime", &b2ParticleDef::lifetime);
+	// TODO: b2ParticleDefClass.var("userData", &b2ParticleDef::userData);
+	b2ParticleDefClass.var("group", &b2ParticleDef::group);
+	b2mod.class_("ParticleDef", b2ParticleDefClass);
+
+	v8pp::module b2ParticleGroupFlagModule(isolate);
+	b2ParticleGroupFlagModule.const_("solidParticleGroup", b2ParticleGroupFlag::b2_solidParticleGroup);
+	b2ParticleGroupFlagModule.const_("rigidParticleGroup", b2ParticleGroupFlag::b2_rigidParticleGroup);
+	b2ParticleGroupFlagModule.const_("particleGroupCanBeEmpty", b2ParticleGroupFlag::b2_particleGroupCanBeEmpty);
+	b2ParticleGroupFlagModule.const_("particleGroupWillBeDestroyed", b2ParticleGroupFlag::b2_particleGroupWillBeDestroyed);
+	b2ParticleGroupFlagModule.const_("particleGroupNeedsUpdateDepth", b2ParticleGroupFlag::b2_particleGroupNeedsUpdateDepth);
+	b2ParticleGroupFlagModule.const_("particleGroupInternalMask", b2ParticleGroupFlag::b2_particleGroupInternalMask);
+	b2mod.submodule("ParticleGroupFlag", b2ParticleGroupFlagModule);
+
+	v8pp::class_<b2ParticleGroupDef> b2ParticleGroupDefClass(isolate);
+	b2ParticleGroupDefClass.ctor<>();
+	b2ParticleGroupDefClass.var("flags", &b2ParticleGroupDef::flags);
+	b2ParticleGroupDefClass.var("groupFlags", &b2ParticleGroupDef::groupFlags);
+	b2ParticleGroupDefClass.var("position", &b2ParticleGroupDef::position);
+	b2ParticleGroupDefClass.var("angle", &b2ParticleGroupDef::angle);
+	b2ParticleGroupDefClass.var("linearVelocity", &b2ParticleGroupDef::linearVelocity);
+	b2ParticleGroupDefClass.var("angularVelocity", &b2ParticleGroupDef::angularVelocity);
+	b2ParticleGroupDefClass.var("color", &b2ParticleGroupDef::color);
+	b2ParticleGroupDefClass.var("strength", &b2ParticleGroupDef::strength);
+	b2ParticleGroupDefClass.var("shape", &b2ParticleGroupDef::shape);
+	// TODO: array b2ParticleGroupDefClass.var("shapes", &b2ParticleGroupDef::shapes);
+	b2ParticleGroupDefClass.var("shapeCount", &b2ParticleGroupDef::shapeCount);
+	b2ParticleGroupDefClass.var("stride", &b2ParticleGroupDef::stride);
+	b2ParticleGroupDefClass.var("particleCount", &b2ParticleGroupDef::particleCount);
+	b2ParticleGroupDefClass.var("positionData", &b2ParticleGroupDef::positionData);
+	b2ParticleGroupDefClass.var("positionData", &b2ParticleGroupDef::positionData);
+	b2ParticleGroupDefClass.var("lifetime", &b2ParticleGroupDef::lifetime);
+	// TODO: b2ParticleGroupDefClass.var("userData", &b2ParticleGroupDef::userData);
+	b2ParticleGroupDefClass.var("group", &b2ParticleGroupDef::group);
+	b2mod.class_("ParticleGroupDef", b2ParticleGroupDefClass);
+
+	v8pp::class_<b2ParticleGroup> b2ParticleGroupClass(isolate, [](v8::Isolate* isolate, b2ParticleGroup* fixture)
+		{
+			// cannot be created or destroyed by their own.
+		});
+	b2ParticleGroupClass.function("GetNext", static_cast<b2ParticleGroup*( b2ParticleGroup::*)()>(&b2ParticleGroup::GetNext));
+	b2ParticleGroupClass.function("GetParticleSystem", static_cast<b2ParticleSystem*( b2ParticleGroup::*)()>(&b2ParticleGroup::GetParticleSystem));
+	b2ParticleGroupClass.function("GetParticleCount", &b2ParticleGroup::GetParticleCount);
+	b2ParticleGroupClass.function("GetBufferIndex", &b2ParticleGroup::GetBufferIndex);
+	b2ParticleGroupClass.function("ContainsParticle", &b2ParticleGroup::ContainsParticle);
+	b2ParticleGroupClass.function("GetAllParticleFlags", &b2ParticleGroup::GetAllParticleFlags);
+	b2ParticleGroupClass.function("GetGroupFlags", &b2ParticleGroup::GetGroupFlags);
+	b2ParticleGroupClass.function("SetGroupFlags", &b2ParticleGroup::SetGroupFlags);
+	b2ParticleGroupClass.function("GetMass", &b2ParticleGroup::GetMass);
+	b2ParticleGroupClass.function("GetInertia", &b2ParticleGroup::GetInertia);
+	b2ParticleGroupClass.function("GetCenter", &b2ParticleGroup::GetCenter);
+	b2ParticleGroupClass.function("GetLinearVelocity", &b2ParticleGroup::GetLinearVelocity);
+	b2ParticleGroupClass.function("GetAngularVelocity", &b2ParticleGroup::GetAngularVelocity);
+	b2ParticleGroupClass.function("GetTransform", &b2ParticleGroup::GetTransform);
+	b2ParticleGroupClass.function("GetPosition", &b2ParticleGroup::GetPosition);
+	b2ParticleGroupClass.function("GetAngle", &b2ParticleGroup::GetAngle);
+	b2ParticleGroupClass.function("GetLinearVelocityFromWorldPoint", &b2ParticleGroup::GetLinearVelocityFromWorldPoint);
+	// TODO: change if using something else as user data
+	b2ParticleGroupClass.function("GetUserData", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+			const auto isolate = args.GetIsolate();
+			const auto This = v8pp::from_v8<b2ParticleGroup*>(isolate, args.This());
+			return static_cast<fse::FSEObject*>(This->GetUserData());
+		});
+	// TODO: change if using something else as user data
+	b2ParticleGroupClass.function("SetUserData", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+			const auto isolate = args.GetIsolate();
+			const auto This = v8pp::from_v8<b2ParticleGroup*>(isolate, args.This());
+			const auto obj = v8pp::from_v8<fse::FSEObject*>(isolate, args[0]);
+			This->SetUserData(obj);
+		});
+	b2ParticleGroupClass.function("ApplyForce", &b2ParticleGroup::ApplyForce);
+	b2ParticleGroupClass.function("ApplyLinearImpulse", &b2ParticleGroup::ApplyLinearImpulse);
+	b2ParticleGroupClass.function("DestroyParticles", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+			const auto isolate = args.GetIsolate();
+			const auto This = v8pp::from_v8<b2ParticleGroup*>(isolate, args.This());
+			if (args.Length() == 0)
+				This->DestroyParticles();
+			This->DestroyParticles(v8pp::from_v8<bool>(isolate, args[0]));
+		});
 	
 	return b2mod;
 }
