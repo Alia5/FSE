@@ -1114,6 +1114,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	{
 		// cannot create or destroy joint directly
 	});
+	b2JointClass.auto_wrap_objects();
 	b2JointClass.function("GetType", &b2Joint::GetType);
 	b2JointClass.function("GetBodyA", &b2Joint::GetBodyA);
 	b2JointClass.function("GetBodyB", &b2Joint::GetBodyB);
@@ -1131,6 +1132,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("Joint", b2JointClass);
 
 	v8pp::class_<b2DistanceJointDef> b2DistanceJointDefClass(isolate);
+	b2DistanceJointDefClass.auto_wrap_objects();
 	b2DistanceJointDefClass.inherit<b2JointDef>();
 	b2DistanceJointDefClass.ctor<>();
 	b2DistanceJointDefClass.function("Initialize", &b2DistanceJointDef::Initialize);
@@ -1142,6 +1144,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("DistanceJointDef", b2DistanceJointDefClass);
 
 	v8pp::class_<b2DistanceJoint> b2DistanceJointClass(isolate);
+	b2DistanceJointClass.auto_wrap_objects();
 	b2DistanceJointClass.inherit<b2Joint>();
 	b2DistanceJointClass.function("GetLocalAnchorA", &b2DistanceJoint::GetLocalAnchorA);
 	b2DistanceJointClass.function("GetLocalAnchorB", &b2DistanceJoint::GetLocalAnchorB);
@@ -1154,6 +1157,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("DistanceJoint", b2DistanceJointClass);
 
 	v8pp::class_<b2FrictionJointDef> b2FrictionJointDefClass(isolate);
+	b2FrictionJointDefClass.auto_wrap_objects();
 	b2FrictionJointDefClass.inherit<b2JointDef>();
 	b2FrictionJointDefClass.ctor<>();
 	b2FrictionJointDefClass.function("Initialize", &b2FrictionJointDef::Initialize);
@@ -1165,6 +1169,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 
 
 	v8pp::class_<b2FrictionJoint> b2FrictionJointClass(isolate);
+	b2FrictionJointClass.auto_wrap_objects();
 	b2FrictionJointClass.inherit<b2Joint>();
 	b2FrictionJointClass.function("GetLocalAnchorA", &b2FrictionJoint::GetLocalAnchorA);
 	b2FrictionJointClass.function("GetLocalAnchorB", &b2FrictionJoint::GetLocalAnchorB);
@@ -1175,6 +1180,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("FrictionJoint", b2FrictionJointClass);
 
 	v8pp::class_<b2GearJointDef> b2GearJointDefClass(isolate);
+	b2GearJointDefClass.auto_wrap_objects();
 	b2GearJointDefClass.inherit<b2JointDef>();
 	b2GearJointDefClass.ctor<>();
 	b2GearJointDefClass.var("joint1", &b2GearJointDef::joint1);
@@ -1183,6 +1189,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("GearJointDef", b2GearJointDefClass);
 
 	v8pp::class_<b2GearJoint> b2GearJointClass(isolate);
+	b2GearJointClass.auto_wrap_objects();
 	b2GearJointClass.inherit<b2Joint>();
 	b2GearJointClass.function("GetJoint1", &b2GearJoint::GetJoint1);
 	b2GearJointClass.function("GetJoint2", &b2GearJoint::GetJoint2);
@@ -1191,6 +1198,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("GearJoint", b2GearJointClass);
 
 	v8pp::class_<b2MotorJointDef> b2MotorJointDefClass(isolate);
+	b2MotorJointDefClass.auto_wrap_objects();
 	b2MotorJointDefClass.inherit<b2JointDef>();
 	b2MotorJointDefClass.ctor<>();
 	b2MotorJointDefClass.function("Initialize", &b2MotorJointDef::Initialize);
@@ -1202,6 +1210,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("MotorJointDef", b2MotorJointDefClass);
 
 	v8pp::class_<b2MotorJoint> b2MotorJointClass(isolate);
+	b2MotorJointClass.auto_wrap_objects();
 	b2MotorJointClass.inherit<b2Joint>();
 	b2MotorJointClass.function("SetLinearOffset", &b2MotorJoint::SetLinearOffset);
 	b2MotorJointClass.function("GetLinearOffset", &b2MotorJoint::GetLinearOffset);
@@ -1216,6 +1225,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("MotorJoint", b2MotorJointClass);
 
 	v8pp::class_<b2MouseJointDef> b2MouseJointDefClass(isolate);
+	b2MouseJointDefClass.auto_wrap_objects();
 	b2MouseJointDefClass.inherit<b2JointDef>();
 	b2MouseJointDefClass.ctor<>();
 	b2MouseJointDefClass.var("target", &b2MouseJointDef::target);
@@ -1225,6 +1235,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("MouseJointDef", b2MouseJointDefClass);
 
 	v8pp::class_<b2MouseJoint> b2MouseJointClass(isolate);
+	b2MouseJointClass.auto_wrap_objects();
 	b2MouseJointClass.inherit<b2Joint>();
 	b2MouseJointClass.function("SetTarget", &b2MouseJoint::SetTarget);
 	b2MouseJointClass.function("GetTarget", &b2MouseJoint::GetTarget);
@@ -1237,6 +1248,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("MouseJoint", b2MouseJointClass);
 
 	v8pp::class_<b2PrismaticJointDef> b2PrismaticJointDefClass(isolate);
+	b2PrismaticJointDefClass.auto_wrap_objects();
 	b2PrismaticJointDefClass.inherit<b2JointDef>();
 	b2PrismaticJointDefClass.ctor<>();
 	b2PrismaticJointDefClass.function("Initialize", &b2PrismaticJointDef::Initialize);
@@ -1253,6 +1265,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("PrismaticJointDef", b2PrismaticJointDefClass);
 
 	v8pp::class_<b2PrismaticJoint> b2PrismaticJointClass(isolate);
+	b2PrismaticJointClass.auto_wrap_objects();
 	b2PrismaticJointClass.inherit<b2Joint>();
 	b2PrismaticJointClass.function("GetLocalAnchorA", &b2PrismaticJoint::GetLocalAnchorA);
 	b2PrismaticJointClass.function("GetLocalAnchorB", &b2PrismaticJoint::GetLocalAnchorB);
@@ -1276,6 +1289,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 
 
 	v8pp::class_<b2PulleyJointDef> b2PulleyJointDefClass(isolate);
+	b2PulleyJointDefClass.auto_wrap_objects();
 	b2PulleyJointDefClass.inherit<b2JointDef>();
 	b2PulleyJointDefClass.ctor<>();
 	b2PulleyJointDefClass.function("Initialize", &b2PulleyJointDef::Initialize);
@@ -1289,6 +1303,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("PulleyJointDef", b2PulleyJointDefClass);
 
 	v8pp::class_<b2PulleyJoint> b2PulleyJointClass(isolate);
+	b2PulleyJointClass.auto_wrap_objects();
 	b2PulleyJointClass.inherit<b2Joint>();
 	b2PulleyJointClass.function("GetGroundAnchorA", &b2PulleyJoint::GetGroundAnchorA);
 	b2PulleyJointClass.function("GetGroundAnchorB", &b2PulleyJoint::GetGroundAnchorB);
@@ -1301,6 +1316,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 
 
 	v8pp::class_<b2RevoluteJointDef> b2RevoluteJointDefClass(isolate);
+	b2RevoluteJointDefClass.auto_wrap_objects();
 	b2RevoluteJointDefClass.inherit<b2JointDef>();
 	b2RevoluteJointDefClass.ctor<>();
 	b2RevoluteJointDefClass.function("Initialize", &b2RevoluteJointDef::Initialize);
@@ -1317,6 +1333,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 
 
 	v8pp::class_<b2RevoluteJoint> b2RevoluteJointClass(isolate);
+	b2RevoluteJointClass.auto_wrap_objects();
 	b2RevoluteJointClass.inherit<b2Joint>();
 	b2RevoluteJointClass.function("GetLocalAnchorA", &b2RevoluteJoint::GetLocalAnchorA);
 	b2RevoluteJointClass.function("GetLocalAnchorB", &b2RevoluteJoint::GetLocalAnchorB);
@@ -1341,6 +1358,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 
 
 	v8pp::class_<b2RopeJointDef> b2RopeJointDefClass(isolate);
+	b2RopeJointDefClass.auto_wrap_objects();
 	b2RopeJointDefClass.inherit<b2JointDef>();
 	b2RopeJointDefClass.ctor<>();
 	b2RopeJointDefClass.var("localAnchorA", &b2RopeJointDef::localAnchorA);
@@ -1349,6 +1367,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("RopeJointDef", b2RopeJointDefClass);
 
 	v8pp::class_<b2RopeJoint> b2RopeJointClass(isolate);
+	b2RopeJointClass.auto_wrap_objects();
 	b2RopeJointClass.inherit<b2Joint>();
 	b2RopeJointClass.function("GetLocalAnchorA", &b2RopeJoint::GetLocalAnchorA);
 	b2RopeJointClass.function("GetLocalAnchorB", &b2RopeJoint::GetLocalAnchorB);
@@ -1359,6 +1378,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 
 
 	v8pp::class_<b2WeldJointDef> b2WeldJointDefClass(isolate);
+	b2WeldJointDefClass.auto_wrap_objects();
 	b2WeldJointDefClass.inherit<b2JointDef>();
 	b2WeldJointDefClass.ctor<>();
 	b2WeldJointDefClass.function("Initialize", &b2WeldJointDef::Initialize);
@@ -1370,6 +1390,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("WeldJointDef", b2WeldJointDefClass);
 
 	v8pp::class_<b2WeldJoint> b2WeldJointClass(isolate);
+	b2WeldJointClass.auto_wrap_objects();
 	b2WeldJointClass.inherit<b2Joint>();
 	b2WeldJointClass.function("GetLocalAnchorA", &b2WeldJoint::GetLocalAnchorA);
 	b2WeldJointClass.function("GetLocalAnchorB", &b2WeldJoint::GetLocalAnchorB);
@@ -1382,6 +1403,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 
 	
 	v8pp::class_<b2WheelJointDef> b2WheelJointDefClass(isolate);
+	b2WheelJointDefClass.auto_wrap_objects();
 	b2WheelJointDefClass.inherit<b2JointDef>();
 	b2WheelJointDefClass.ctor<>();
 	b2WheelJointDefClass.function("Initialize", &b2WheelJointDef::Initialize);
@@ -1396,6 +1418,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("WheelJointDef", b2WheelJointDefClass);
 
 	v8pp::class_<b2WheelJoint> b2WheelJointClass(isolate);
+	b2WheelJointClass.auto_wrap_objects();
 	b2WheelJointClass.inherit<b2Joint>();
 	b2WheelJointClass.function("GetLocalAnchorA", &b2WheelJoint::GetLocalAnchorA);
 	b2WheelJointClass.function("GetLocalAnchorB", &b2WheelJoint::GetLocalAnchorB);
@@ -1438,6 +1461,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.submodule("ParticleFlag", b2ParticleFlagModule);
 
 	v8pp::class_<b2ParticleColor> b2ParticleColorClass(isolate);
+	b2ParticleColorClass.auto_wrap_objects();
 	b2ParticleColorClass.ctor<>([](v8::FunctionCallbackInfo<v8::Value> const& args)
 	{
 			const auto isolate = args.GetIsolate();
@@ -1468,6 +1492,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.class_("ParticleColor", b2ParticleColorClass);
 
 	v8pp::class_<b2ParticleDef> b2ParticleDefClass(isolate);
+	b2ParticleDefClass.auto_wrap_objects();
 	b2ParticleDefClass.ctor<>();
 	b2ParticleDefClass.var("flags", &b2ParticleDef::flags);
 	b2ParticleDefClass.var("position", &b2ParticleDef::position);
@@ -1488,6 +1513,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.submodule("ParticleGroupFlag", b2ParticleGroupFlagModule);
 
 	v8pp::class_<b2ParticleGroupDef> b2ParticleGroupDefClass(isolate);
+	b2ParticleGroupDefClass.auto_wrap_objects();
 	b2ParticleGroupDefClass.ctor<>();
 	b2ParticleGroupDefClass.var("flags", &b2ParticleGroupDef::flags);
 	b2ParticleGroupDefClass.var("groupFlags", &b2ParticleGroupDef::groupFlags);
@@ -1513,6 +1539,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 		{
 			// cannot be created or destroyed by their own.
 		});
+	b2ParticleGroupClass.auto_wrap_objects();
 	b2ParticleGroupClass.function("GetNext", static_cast<b2ParticleGroup*( b2ParticleGroup::*)()>(&b2ParticleGroup::GetNext));
 	b2ParticleGroupClass.function("GetParticleSystem", static_cast<b2ParticleSystem*( b2ParticleGroup::*)()>(&b2ParticleGroup::GetParticleSystem));
 	b2ParticleGroupClass.function("GetParticleCount", &b2ParticleGroup::GetParticleCount);
@@ -1559,6 +1586,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 
 
 	v8pp::class_<b2ParticleSystemDef> b2ParticleSystemDefClass(isolate);
+	b2ParticleSystemDefClass.auto_wrap_objects();
 	b2ParticleSystemDefClass.ctor<>();
 	b2ParticleSystemDefClass.var("strictContactCheck", &b2ParticleSystemDef::strictContactCheck);
 	b2ParticleSystemDefClass.var("filter", &b2ParticleSystemDef::filter);
@@ -1588,6 +1616,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 		{
 			// cannot be created or destroyed by their own.
 		});
+	b2ParticleSystemClass.auto_wrap_objects();
 	b2ParticleSystemClass.function("CreateParticle", &b2ParticleSystem::CreateParticle);
 	b2ParticleSystemClass.function("GetParticleHandleFromIndex", &b2ParticleSystem::GetParticleHandleFromIndex);
 	b2ParticleSystemClass.function("DestroyParticle", [](v8::FunctionCallbackInfo<v8::Value> const& args)
