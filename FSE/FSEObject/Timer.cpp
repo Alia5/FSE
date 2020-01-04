@@ -22,8 +22,10 @@ namespace fse
 			elapsed_time_ += deltaTime;
 			while (elapsed_time_ * 1000 >= interval_)
 			{
-				elapsed_time_ -= interval_*0.001f;
+				elapsed_time_ -= 0.001f * interval_;
 				timeout_();
+				if (interval_ == 0)
+					break;
 				if (single_shot_)
 				{
 					active_ = false;
