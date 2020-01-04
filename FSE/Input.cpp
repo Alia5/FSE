@@ -280,7 +280,6 @@ namespace fse
 	FSE_V8_REGISTER(Input)
 	{
 		v8::HandleScope handle_scope(isolate);
-		v8pp::module input_module(isolate);
 		v8pp::class_<Input> Input_class(isolate);
 		Input_class.auto_wrap_objects(true);
 		Input_class.function("isKeyPressed", &Input::isKeyPressed);
