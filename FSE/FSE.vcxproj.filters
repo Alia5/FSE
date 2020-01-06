@@ -303,6 +303,12 @@
     <ClInclude Include="extv8bind\liquidfunconvert.h">
       <Filter>Header Files\extv8bind</Filter>
     </ClInclude>
+    <ClInclude Include="extv8bind\sfmlbind.h">
+      <Filter>Header Files\extv8bind</Filter>
+    </ClInclude>
+    <ClInclude Include="extv8bind\sfmlconvert.h">
+      <Filter>Header Files\extv8bind</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">

@@ -272,7 +272,7 @@ namespace fse
 			{
 				v8::Isolate* isolate = args.GetIsolate();
 				const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
-				std::vector<std::weak_ptr<fse::FSEObject>> result;
+				std::vector<std::shared_ptr<fse::FSEObject>> result;
 				result.reserve(scene->getFSEObjects()->size());
 				for (auto& object : *scene->getFSEObjects())
 				{
@@ -292,6 +292,12 @@ namespace fse
 			}
 			return std::weak_ptr<FSEObject>();
 		});
+		Scene_class.function("getWindow", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				v8::Isolate* isolate = args.GetIsolate();
+				const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
+				return  scene->getApplication()->getWindow();
+			});
 		module.class_("Scene", Scene_class);
 	}
 

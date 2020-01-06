@@ -15,6 +15,7 @@
 #include "Application.h"
 
 #include "extv8bind/liquidfunbind.h"
+#include "extv8bind/sfmlbind.h"
 
 
 namespace fse
@@ -181,6 +182,9 @@ namespace fse
 				const v8::Local<v8::Object> b2Mod = getB2Mod(isolate).new_instance();
 				ctx->Global()->Set(ctx,
 					v8::String::NewFromUtf8(isolate, "lf").ToLocalChecked(), b2Mod);
+				const v8::Local<v8::Object> sfMod = getSFMod(isolate).new_instance();
+				ctx->Global()->Set(ctx,
+					v8::String::NewFromUtf8(isolate, "sf").ToLocalChecked(), sfMod);
 			
 		}
 

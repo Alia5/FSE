@@ -72,69 +72,120 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2mod.function("IsValid", b2IsValid);
 	b2mod.function("b2InvSqrt", b2InvSqrt);
 
+	b2mod.function("Sqrt", sqrtf);
+	b2mod.function("Atan2", atan2f);
 
-	v8pp::class_<b2Vec2> b2Vec2Class(isolate);
-	b2Vec2Class.auto_wrap_objects();
-	b2Vec2Class.ctor<float, float>([](v8::FunctionCallbackInfo<v8::Value> const& args)
-	{
-		const auto isolate = args.GetIsolate();
-		if (args.Length() == 0)
-			return new b2Vec2();
-		return new b2Vec2(v8pp::from_v8<float>(isolate, args[0]), v8pp::from_v8<float>(isolate, args[1]));
-	});
-	b2Vec2Class.function("SetZero", &b2Vec2::SetZero);
-	b2Vec2Class.function("Set", &b2Vec2::Set);
-	b2Vec2Class.function("Length", &b2Vec2::Length);
-	b2Vec2Class.function("LengthSquared", &b2Vec2::LengthSquared);
-	b2Vec2Class.function("Normalize", &b2Vec2::Normalize);
-	b2Vec2Class.function("IsValid", &b2Vec2::IsValid);
-	b2Vec2Class.function("Skew", &b2Vec2::Skew);
-	b2Vec2Class.var("x", &b2Vec2::x);
-	b2Vec2Class.var("y", &b2Vec2::y);
-	b2Vec2Class.function("toJSON", [](v8::FunctionCallbackInfo<v8::Value> const& args)
-	{
-			const auto isolate = args.GetIsolate();
-			const auto This = v8pp::from_v8<b2Vec2>(isolate, args.This());
-			return "[" + std::to_string(This.x) +", " + std::to_string(This.y) + "]";
-	});
-	b2mod.class_("Vec2", b2Vec2Class);
+	//v8pp::class_<b2Vec2> b2Vec2Class(isolate);
+	//b2Vec2Class.auto_wrap_objects();
+	//b2Vec2Class.ctor<float, float>([](v8::FunctionCallbackInfo<v8::Value> const& args)
+	//{
+	//	const auto isolate = args.GetIsolate();
+	//	if (args.Length() == 0)
+	//		return new b2Vec2();
+	//	return new b2Vec2(v8pp::from_v8<float>(isolate, args[0]), v8pp::from_v8<float>(isolate, args[1]));
+	//});
+	//b2Vec2Class.function("SetZero", &b2Vec2::SetZero);
+	//b2Vec2Class.function("Set", &b2Vec2::Set);
+	//b2Vec2Class.function("Length", &b2Vec2::Length);
+	//b2Vec2Class.function("LengthSquared", &b2Vec2::LengthSquared);
+	//b2Vec2Class.function("Normalize", &b2Vec2::Normalize);
+	//b2Vec2Class.function("IsValid", &b2Vec2::IsValid);
+	//b2Vec2Class.function("Skew", &b2Vec2::Skew);
+	//b2Vec2Class.var("x", &b2Vec2::x);
+	//b2Vec2Class.var("y", &b2Vec2::y);
+	//b2Vec2Class.function("toJSON", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+	//{
+	//		const auto isolate = args.GetIsolate();
+	//		const auto This = v8pp::from_v8<b2Vec2>(isolate, args.This());
+	//		return "[" + std::to_string(This.x) +", " + std::to_string(This.y) + "]";
+	//});
+	//b2mod.class_("Vec2", b2Vec2Class);
 
-	v8pp::class_<b2Vec3> b2Vec3Class(isolate);
-	b2Vec3Class.auto_wrap_objects();
-	b2Vec3Class.ctor<float, float, float>([](v8::FunctionCallbackInfo<v8::Value> const& args)
+	//v8pp::class_<b2Vec3> b2Vec3Class(isolate);
+	//b2Vec3Class.auto_wrap_objects();
+	//b2Vec3Class.ctor<float, float, float>([](v8::FunctionCallbackInfo<v8::Value> const& args)
+	//	{
+	//		const auto isolate = args.GetIsolate();
+	//		if (args.Length() == 0)
+	//			return new b2Vec3();
+	//		return new b2Vec3(v8pp::from_v8<float>(isolate, args[0]),
+	//			v8pp::from_v8<float>(isolate, args[1]),
+	//			v8pp::from_v8<float>(isolate, args[2]));
+	//	});
+	//b2Vec3Class.function("SetZero", &b2Vec3::SetZero);
+	//b2Vec3Class.function("Set", &b2Vec3::Set);
+	//b2Vec3Class.function("Length", &b2Vec3::Length);
+	//b2Vec3Class.function("Normalize", &b2Vec3::Normalize);
+	//b2Vec3Class.var("x", &b2Vec3::x);
+	//b2Vec3Class.var("y", &b2Vec3::y);
+	//b2Vec3Class.var("z", &b2Vec3::z);
+	//b2mod.class_("Vec3", b2Vec3Class);
+
+	b2mod.function("LengthSquared", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 		{
 			const auto isolate = args.GetIsolate();
-			if (args.Length() == 0)
-				return new b2Vec3();
-			return new b2Vec3(v8pp::from_v8<float>(isolate, args[0]),
-				v8pp::from_v8<float>(isolate, args[1]),
-				v8pp::from_v8<float>(isolate, args[2]));
+			const auto vec = v8pp::from_v8<b2Vec2>(isolate, args[0]);
+			return vec.LengthSquared();
 		});
-	b2Vec3Class.function("SetZero", &b2Vec3::SetZero);
-	b2Vec3Class.function("Set", &b2Vec3::Set);
-	b2Vec3Class.function("Length", &b2Vec3::Length);
-	b2Vec3Class.function("Normalize", &b2Vec3::Normalize);
-	b2Vec3Class.var("x", &b2Vec3::x);
-	b2Vec3Class.var("y", &b2Vec3::y);
-	b2Vec3Class.var("z", &b2Vec3::z);
-	b2mod.class_("Vec3", b2Vec3Class);
 
-	v8pp::class_<b2Vec4> b2Vec4Class(isolate);
-	b2Vec4Class.ctor<float, float, float, float>([](v8::FunctionCallbackInfo<v8::Value> const& args)
+	b2mod.function("IsValidVec2", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 		{
 			const auto isolate = args.GetIsolate();
-			if (args.Length() == 0)
-				return new b2Vec4();
-			return new b2Vec4(v8pp::from_v8<float>(isolate, args[0]),
-				v8pp::from_v8<float>(isolate, args[1]),
-				v8pp::from_v8<float>(isolate, args[2]),
-				v8pp::from_v8<float>(isolate, args[3]));
+			const auto vec = v8pp::from_v8<b2Vec2>(isolate, args[0]);
+			return vec.IsValid();
 		});
-	b2Vec4Class.var("x", &b2Vec4::x);
-	b2Vec4Class.var("y", &b2Vec4::y);
-	b2Vec4Class.var("z", &b2Vec4::z);
-	b2Vec4Class.var("w", &b2Vec4::w);
-	b2mod.class_("Vec4", b2Vec4Class);
+
+	b2mod.function("Skew", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+			const auto isolate = args.GetIsolate();
+			const auto vec = v8pp::from_v8<b2Vec2>(isolate, args[0]);
+			return vec.Skew();
+		});
+
+	
+	b2mod.function("Length", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+			const auto isolate = args.GetIsolate();
+			try
+			{
+				const auto vec = v8pp::from_v8<b2Vec2>(isolate, args[0]);
+				return vec.Length();
+			} catch (const std::invalid_argument e) {
+				const auto vec = v8pp::from_v8<b2Vec3>(isolate, args[0]);
+				return vec.Length();
+			}
+		});
+	b2mod.function("Normalize", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		{
+			const auto isolate = args.GetIsolate();
+			try
+			{
+				auto vec = v8pp::from_v8<b2Vec2>(isolate, args[0]);
+				return vec.Normalize();
+			}
+			catch (const std::invalid_argument e) {
+				auto vec = v8pp::from_v8<b2Vec3>(isolate, args[0]);
+				return vec.Normalize();
+			}
+		});
+	
+	
+	//v8pp::class_<b2Vec4> b2Vec4Class(isolate);
+	//b2Vec4Class.ctor<float, float, float, float>([](v8::FunctionCallbackInfo<v8::Value> const& args)
+	//	{
+	//		const auto isolate = args.GetIsolate();
+	//		if (args.Length() == 0)
+	//			return new b2Vec4();
+	//		return new b2Vec4(v8pp::from_v8<float>(isolate, args[0]),
+	//			v8pp::from_v8<float>(isolate, args[1]),
+	//			v8pp::from_v8<float>(isolate, args[2]),
+	//			v8pp::from_v8<float>(isolate, args[3]));
+	//	});
+	//b2Vec4Class.var("x", &b2Vec4::x);
+	//b2Vec4Class.var("y", &b2Vec4::y);
+	//b2Vec4Class.var("z", &b2Vec4::z);
+	//b2Vec4Class.var("w", &b2Vec4::w);
+	//b2mod.class_("Vec4", b2Vec4Class);
 
 	v8pp::class_<b2Mat22> b2Mat22Class(isolate);
 	b2Mat22Class.auto_wrap_objects();
@@ -165,8 +216,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 		{
 			if (args.Length() == 0)
 				return new b2Mat33();
-			if (args.Length() == 3)
-				return new b2Mat33(v8pp::from_v8<b2Vec3>(args.GetIsolate(), args[0]),
+			return new b2Mat33(v8pp::from_v8<b2Vec3>(args.GetIsolate(), args[0]),
 					v8pp::from_v8<b2Vec3>(args.GetIsolate(), args[1]),
 					v8pp::from_v8<b2Vec3>(args.GetIsolate(), args[2]));
 		});
@@ -747,16 +797,16 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2BodyDefClass.auto_wrap_objects();
 	b2BodyDefClass.ctor<>();
 	b2BodyDefClass.var("type", &b2BodyDef::type);
-	//b2BodyDefClass.var("position", &b2BodyDef::position);
-	b2BodyDefClass.property("position",[](v8::Local<v8::String> property, const v8::PropertyCallbackInfo<v8::Value>& info)
-	{
-			b2BodyDef* This = v8pp::from_v8<b2BodyDef*>(info.GetIsolate(), info.This());
-			b2Vec2* vecRef = &(This->position);
-			info.GetReturnValue().Set(v8pp::to_v8(info.GetIsolate(), vecRef));
-		}, [](v8::Local<v8::String> property, v8::Local <v8::Value> value, const v8::PropertyCallbackInfo<void>& info)
-	{
-		v8pp::from_v8<b2BodyDef*>(info.GetIsolate(), info.This())->position = v8pp::from_v8<b2Vec2>(info.GetIsolate(), value);
-	});
+	b2BodyDefClass.var("position", &b2BodyDef::position);
+	//b2BodyDefClass.property("position",[](v8::Local<v8::String> property, const v8::PropertyCallbackInfo<v8::Value>& info)
+	//{
+	//		b2BodyDef* This = v8pp::from_v8<b2BodyDef*>(info.GetIsolate(), info.This());
+	//		b2Vec2* vecRef = &(This->position);
+	//		info.GetReturnValue().Set(v8pp::to_v8(info.GetIsolate(), vecRef));
+	//	}, [](v8::Local<v8::String> property, v8::Local <v8::Value> value, const v8::PropertyCallbackInfo<void>& info)
+	//{
+	//	v8pp::from_v8<b2BodyDef*>(info.GetIsolate(), info.This())->position = v8pp::from_v8<b2Vec2>(info.GetIsolate(), value);
+	//});
 	b2BodyDefClass.var("angle", &b2BodyDef::angle);
 	b2BodyDefClass.var("linearVelocity", &b2BodyDef::linearVelocity);
 	b2BodyDefClass.var("angularVelocity", &b2BodyDef::angularVelocity);

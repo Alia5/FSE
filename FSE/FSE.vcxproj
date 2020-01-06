@@ -257,6 +257,8 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneDebugger.h" />
     <ClInclude Include="Serialize.h" />
+    <ClInclude Include="extv8bind\sfmlbind.h" />
+    <ClInclude Include="extv8bind\sfmlconvert.h" />
     <ClInclude Include="Signals.h" />
     <ClInclude Include="FSEObject\TileMap.h" />
     <ClInclude Include="V8Debug\v8DebugUtils.h" />

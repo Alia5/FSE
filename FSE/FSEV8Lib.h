@@ -11,6 +11,7 @@
 #include <v8pp/class.hpp>
 
 #include "extv8bind/liquidfunconvert.h"
+#include "extv8bind/sfmlconvert.h"
 
 #define FSE_V8_REGISTRATION_FRIEND friend class fse::priv::FSEV8Lib;
 
