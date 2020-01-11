@@ -226,6 +226,7 @@
     <ClInclude Include="..\poly2tri\poly2tri\sweep\sweep_context.h" />
     <ClInclude Include="AssetLoader.h" />
     <ClInclude Include="extv8bind\liquidfunbind.h" />
+    <ClInclude Include="FSEObject\ScriptObject.h" />
     <ClInclude Include="FSEV8Lib.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\SmoothViewController.h" />
@@ -293,6 +294,7 @@
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp" />
+    <ClCompile Include="FSEObject\ScriptObject.cpp" />
     <ClCompile Include="FSEV8Lib.cpp" />
     <ClCompile Include="FSEObject\JSConsole.cpp" />
     <ClCompile Include="FSEObject\FPSCounter.cpp" />

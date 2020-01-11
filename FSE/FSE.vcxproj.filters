@@ -309,6 +309,9 @@
     <ClInclude Include="extv8bind\sfmlconvert.h">
       <Filter>Header Files\extv8bind</Filter>
     </ClInclude>
+    <ClInclude Include="FSEObject\ScriptObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -463,6 +466,9 @@
     </ClCompile>
     <ClCompile Include="V8Debug\v8InspectorClient.cpp">
       <Filter>Source Files\V8Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEObject\ScriptObject.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
