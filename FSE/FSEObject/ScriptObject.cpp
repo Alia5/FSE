@@ -7,11 +7,6 @@ namespace fse
 	{
 	}
 
-	ScriptObject::ScriptObject(v8::Persistent < v8::Object, v8::CopyablePersistentTraits<v8::Object>> object) : ScriptObject({ 0,0 })
-	{
-		child_ = object;
-	}
-
 	ScriptObject::ScriptObject(const sf::Vector2f& spawnPos) : FSEObject(spawnPos)
 	{
 	}
@@ -31,16 +26,6 @@ namespace fse
 
 			auto getId = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "getID"));
 			
-			//auto val = child_->Get(ctx, v8pp::to_v8(iso, "testString"));
-			//if (!val.IsEmpty())
-			//{
-			//	std::string meh = v8pp::from_v8<std::string>(iso, val.ToLocalChecked());
-			//}
-			////if (child_->HasOwnProperty(v8::Isolate::GetCurrent()->GetCurrentContext(),
-			////	v8::Local<v8::Name>(v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), "testString").ToLocalChecked())).FromJust())
-			////{
-			////	std::cout << "test has property!\n";
-			////}
 		}
 	}
 
@@ -51,7 +36,18 @@ namespace fse
 
 	void ScriptObject::update(float deltaTime)
 	{
-		
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto update = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "update"));
+		if (!update.IsEmpty())
+		{
+			v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, deltaTime) };
+			update.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 1, argv);
+		} else
+		{
+			FSEObject::update(deltaTime);
+		}
 	}
 
 	void ScriptObject::draw(sf::RenderTarget& target)
@@ -119,7 +115,6 @@ namespace fse
 
 	FSE_V8_REGISTER(ScriptObject)
 	{
-
 		v8::HandleScope handle_scope(isolate);
 		v8pp::class_<ScriptObject, v8pp::shared_ptr_traits>ScriptObject_class(isolate);
 		ScriptObject_class.inherit<FSEObject>();
@@ -128,50 +123,96 @@ namespace fse
 		ScriptObject_class.ctor<>(
 			[](v8::FunctionCallbackInfo<v8::Value> const& args)
 			{
-				auto iso = v8::Isolate::GetCurrent();
-				auto ctx = iso->GetCurrentContext();
-				// TODO: overloads
-				auto test = args.This();
-				//auto test = args.Data();
-				v8::Local<v8::Object> v8Object =
-					test->ToObject(args.GetIsolate()->GetCurrentContext()).ToLocalChecked();
-				if (test->IsObject())
-				{
-					std::cout << "test is object\n";
-					auto meh = v8Object->GetPropertyNames(ctx).ToLocalChecked();
-					auto blaaa = v8pp::from_v8<std::vector<std::string>>(iso, meh);
-
-					for (auto fu : blaaa)
-						std::cout << fu << "\n";
-				}
-				v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>> persistentThis(iso, v8Object);
-
-				return std::make_shared<ScriptObject>(persistentThis);
+				return std::make_shared<ScriptObject>();
 			});
-		ScriptObject_class.function("setScriptChild", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+		ScriptObject_class.function("update", &ScriptObject::update);
+
+
+		ScriptObject_class.function("extend", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 		{
 				auto iso = v8::Isolate::GetCurrent();
 				auto ctx = iso->GetCurrentContext();
-				// TODO: overloads
-				auto test = args[0];
-				v8::Local<v8::Object> v8Object =
-					test->ToObject(args.GetIsolate()->GetCurrentContext()).ToLocalChecked();
-				if (test->IsObject())
-				{
-					std::cout << "test is object\n";
-					auto meh = v8Object->GetPropertyNames(ctx).ToLocalChecked();
-					auto blaaa = v8pp::from_v8<std::vector<std::string>>(iso, meh);
 
-					for (auto fu : blaaa)
-						std::cout << fu << "\n";
-				}
-				v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>> persistentThis(iso, v8Object);
-				v8pp::from_v8<std::shared_ptr<fse::ScriptObject>>(iso, args.This())->child_ = persistentThis;
+				auto This = v8pp::from_v8<std::shared_ptr<fse::ScriptObject>>(iso, args.This());
+			
+				v8pp::module supermod(iso);
+				supermod.function("update", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						auto deltaTime = v8pp::from_v8<float>(iso, args[0]);
+						This->FSEObject::update(deltaTime);
+					});
+				supermod.function("setPosition", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						auto position = v8pp::from_v8<sf::Vector2f>(iso, args[0]);
+						This->FSEObject::setPosition(position);
+					});
+				supermod.function("getPosition", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						return This->FSEObject::getPosition();
+					});
+				supermod.function("GetAABBs", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						return This->FSEObject::GetAABBs();
+					});
+				supermod.function("BeginContact", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
+						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
+						This->FSEObject::BeginContact(otherObject.get(), contact);
+					});
+				supermod.function("EndContact", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
+						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
+						This->FSEObject::EndContact(otherObject.get(), contact);
+					});
+				supermod.function("PreSolve", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
+						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
+						auto oldManifold = v8pp::from_v8<b2Manifold*>(iso, args[2]);
+						This->FSEObject::PreSolve(otherObject.get(), contact, oldManifold);
+					});
+				supermod.function("PostSolve", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
+						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
+						auto impulse = v8pp::from_v8<b2ContactImpulse*>(iso, args[2]);
+						This->FSEObject::PostSolve(otherObject.get(), contact, impulse);
+					});
+				auto object = args[0].As<v8::Object>();
+				object->Set(ctx, v8pp::to_v8(iso, "super"), supermod.new_instance());
+				v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>> persistentJS(iso, object);
+				This->child_ = persistentJS;
 		});
-		module.class_("ScriptObject", ScriptObject_class);
+		ScriptObject_class.function("jsObject", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				auto iso = args.GetIsolate();
+				auto This = v8pp::from_v8<std::shared_ptr<ScriptObject>>(iso, args.This());
+				return This->child_.Get(iso);
+			});
+		module.class_("ScriptObjectNative", ScriptObject_class);
 	}
 	
 }
+
+
 
 RTTR_REGISTRATION
 {

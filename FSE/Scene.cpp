@@ -26,7 +26,6 @@ namespace fse
 	Scene::~Scene()
 	{
 		application_->on_window_resized_.disconnect(win_resize_signal_connection_);
-
 		fse_objects_.clear();
 		pending_object_removals_.clear();
 		pending_object_spawns_.clear();
@@ -267,7 +266,18 @@ namespace fse
 		Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);
 		Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
 		Scene_class.function("getRenderTarget", &Scene::getRenderTarget);
-		Scene_class.function("spawnObject", static_cast<std::weak_ptr<FSEObject> (Scene::*)(std::shared_ptr<FSEObject>)>(&Scene::spawnFSEObject));
+		//Scene_class.function("spawnObject", static_cast<std::weak_ptr<FSEObject> (Scene::*)(std::shared_ptr<FSEObject>)>(&Scene::spawnFSEObject));
+		Scene_class.function("spawnObject", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				v8::Isolate* isolate = args.GetIsolate();
+				const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
+				const auto object = v8pp::from_v8<std::shared_ptr<fse::FSEObject>>(isolate, args[0]);
+				if (object == nullptr)
+				{
+					throw std::exception("Expected FSEObjectNative");
+				}
+				return static_cast<std::weak_ptr<FSEObject>>(scene->spawnFSEObject(object));
+			});
 		Scene_class.function("getObjects", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 			{
 				v8::Isolate* isolate = args.GetIsolate();

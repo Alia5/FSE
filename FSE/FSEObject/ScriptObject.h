@@ -7,7 +7,6 @@ namespace fse
 	{
 	public:
 		explicit ScriptObject();
-		explicit ScriptObject(v8::Persistent < v8::Object, v8::CopyablePersistentTraits<v8::Object>> object);
 		explicit ScriptObject(const sf::Vector2f& spawnPos);
 		~ScriptObject() = default;
 
@@ -37,10 +36,6 @@ namespace fse
 		void PostSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse) override;
 
 	private:
-
-		std::string script_name_;
-		bool initialized_ = false;
-
 		v8::Persistent < v8::Object, v8::CopyablePersistentTraits<v8::Object>> child_;
 
 		FSE_V8_ENABLE(ScriptObject);
