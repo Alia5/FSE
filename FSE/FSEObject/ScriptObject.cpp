@@ -16,22 +16,24 @@ namespace fse
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
 		auto ctx = iso->GetCurrentContext();
-		if (!child_.IsEmpty())
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "spawned"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
 		{
-			auto meh = child_.Get(iso)->GetPropertyNames(ctx).ToLocalChecked();
-			auto blaaa = v8pp::from_v8<std::vector<std::string>>(iso, meh);
-
-			for (auto fu : blaaa)
-				std::cout << fu << "\n";
-
-			auto getId = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "getID"));
-			
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 0, nullptr);
 		}
 	}
 
 	
 	void ScriptObject::onDespawn()
 	{
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "onDespawn"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 0, nullptr);
+		}
 	}
 
 	void ScriptObject::update(float deltaTime)
@@ -39,11 +41,11 @@ namespace fse
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
 		auto ctx = iso->GetCurrentContext();
-		auto update = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "update"));
-		if (!update.IsEmpty())
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "update"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
 		{
 			v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, deltaTime) };
-			update.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 1, argv);
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 1, argv);
 		} else
 		{
 			FSEObject::update(deltaTime);
@@ -52,49 +54,180 @@ namespace fse
 
 	void ScriptObject::draw(sf::RenderTarget& target)
 	{
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "draw"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, target) };
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 1, argv);
+		}
 	}
 
 	void ScriptObject::drawNormals(sf::RenderTarget& target)
 	{
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "drawNormals"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, target) };
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 1, argv);
+		}
 	}
 
 	void ScriptObject::drawSpecular(sf::RenderTarget& target)
 	{
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "drawSpecular"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, target) };
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 1, argv);
+		}
 	}
 
 	void ScriptObject::setPosition(const sf::Vector2f position)
 	{
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "setPosition"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, position) };
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 1, argv);
+		}
+		else
+		{
+			FSEObject::setPosition(position);
+		}
 	}
 
 	sf::Vector2f ScriptObject::getPosition()
 	{
-		return FSEObject::getPosition();
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "getPosition"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			return v8pp::from_v8<sf::Vector2f>(iso,
+				func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 0, nullptr)
+				.ToLocalChecked());
+		}
+		else
+		{
+			return FSEObject::getPosition();
+		}
 	}
 
 	sf::FloatRect ScriptObject::GetAABBs() const
 	{
-		return FSEObject::GetAABBs();
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "GetAABBs"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			return v8pp::from_v8<sf::FloatRect>(iso,
+				func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 0, nullptr)
+				.ToLocalChecked());
+		}
+		else
+		{
+			return FSEObject::GetAABBs();
+		}
 	}
 
 	void ScriptObject::BeginContact(FSEObject* otherObject, b2Contact* contact)
 	{
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "BeginContact"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, otherObject), v8pp::to_v8(iso, contact) };
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 2, argv);
+		}
+		else
+		{
+			return FSEObject::BeginContact(otherObject, contact);
+		}
 	}
 
 	void ScriptObject::EndContact(FSEObject* otherObject, b2Contact* contact)
 	{
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "EndContact"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, otherObject), v8pp::to_v8(iso, contact) };
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 2, argv);
+		}
+		else
+		{
+			return FSEObject::EndContact(otherObject, contact);
+		}
 	}
 
 	void ScriptObject::PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold)
 	{
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "PreSolve"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, otherObject), v8pp::to_v8(iso, contact), v8pp::to_v8(iso, oldManifold) };
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 3, argv);
+		}
+		else
+		{
+			return FSEObject::PreSolve(otherObject, contact, oldManifold);
+		}
 	}
 
 	void ScriptObject::PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
 	{
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "PostSolve"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, otherObject), v8pp::to_v8(iso, contact), v8pp::to_v8(iso, impulse) };
+			func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 3, argv);
+		}
+		else
+		{
+			return FSEObject::PostSolve(otherObject, contact, impulse);
+		}
 	}
 
 	bool ScriptObject::destroy()
 	{
-		return FSEObject::destroy();
+		auto iso = v8::Isolate::GetCurrent();
+		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
+		auto ctx = iso->GetCurrentContext();
+		auto func = child_.Get(iso)->Get(ctx, v8pp::to_v8(iso, "destroy"));
+		if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+		{
+			return v8pp::from_v8<bool>(iso,
+				func.ToLocalChecked().As<v8::Function>()->Call(ctx, child_.Get(iso), 0, nullptr)
+				.ToLocalChecked());
+		}
+		else
+		{
+			return FSEObject::destroy();
+		}
 	}
 
 	void ScriptObject::BeginContactComponents(FSEObject* otherObject, b2Contact* contact)
@@ -195,6 +328,46 @@ namespace fse
 						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
 						auto impulse = v8pp::from_v8<b2ContactImpulse*>(iso, args[2]);
 						This->FSEObject::PostSolve(otherObject.get(), contact, impulse);
+					});
+				supermod.function("destroy", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						return This->FSEObject::destroy();
+					});
+				supermod.function("BeginContactComponents", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
+						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
+						This->FSEObject::BeginContactComponents(otherObject.get(), contact);
+					});
+				supermod.function("EndContactComponents", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
+						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
+						This->FSEObject::EndContactComponents(otherObject.get(), contact);
+					});
+				supermod.function("PreSolveComponents", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
+						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
+						auto oldManifold = v8pp::from_v8<b2Manifold*>(iso, args[2]);
+						This->FSEObject::PreSolveComponents(otherObject.get(), contact, oldManifold);
+					});
+				supermod.function("PostSolveComponents", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
+					{
+						auto iso = v8::Isolate::GetCurrent();
+						auto ctx = iso->GetCurrentContext();
+						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
+						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
+						auto impulse = v8pp::from_v8<b2ContactImpulse*>(iso, args[2]);
+						This->FSEObject::PostSolveComponents(otherObject.get(), contact, impulse);
 					});
 				auto object = args[0].As<v8::Object>();
 				object->Set(ctx, v8pp::to_v8(iso, "super"), supermod.new_instance());
