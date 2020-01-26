@@ -63,96 +63,6 @@ namespace fse
 			
 				v8pp::module module(isolate);
 			
-				////chai.add(chaiscript::extras::math::bootstrap());
-				////chai.add(chaiscript::extras::string_methods::bootstrap());
-
-				////chai.add(chaiscript::extras::box2d::bootstrap());
-
-				////chai.add(chaiscript::fun([](const b2Body* body)
-				//{
-				//	return static_cast<FSEObject*>(body->GetUserData());
-				//}), "GetUserData");
-				////chai.add(chaiscript::fun([](b2Body* body, FSEObject* data)
-				//{
-				//	body->SetUserData(data);
-				//}), "SetUserData");
-
-				////chai.add(chaiscript::fun([](const b2Fixture* fixture)
-				//{
-				//	return static_cast<FSEObject*>(fixture->GetUserData());
-				//}), "GetUserData");
-				////chai.add(chaiscript::fun([](b2Fixture* fixture, FSEObject* data)
-				//{
-				//	fixture->SetUserData(data);
-				//}), "SetUserData");
-
-
-				////chai.add(chaiscript::fun([](const b2ParticleDef* pdef)
-				//{
-				//	return static_cast<FSEObject*>(pdef->userData);
-				//}), "GetUserData");
-				////chai.add(chaiscript::fun([](b2ParticleDef* pdef, FSEObject* data)
-				//{
-				//	pdef->userData = data;
-				//}), "SetUserData");
-
-
-				////chai.add(chaiscript::fun([](const b2ParticleGroupDef* pdef)
-				//{
-				//	return static_cast<FSEObject*>(pdef->userData);
-				//}), "GetUserData");
-				////chai.add(chaiscript::fun([](b2ParticleGroupDef* pdef, FSEObject* data)
-				//{
-				//	pdef->userData = data;
-				//}), "SetUserData");
-
-				////chai.add(chaiscript::fun([](const b2ParticleGroup* group)
-				//{
-				//	return static_cast<FSEObject*>(group->GetUserData());
-				//}), "GetUserData");
-				////chai.add(chaiscript::fun([](b2ParticleGroup* group, FSEObject* data)
-				//{
-				//	group->SetUserData(data);
-				//}), "SetUserData");
-
-				////chai.add(chaiscript::fun([](const b2ParticleSystem* system)
-				//{
-				//	return (FSEObject**)(system->GetUserDataBuffer());
-				//}), "GetUserData");
-				////chai.add(chaiscript::fun([](const b2ParticleSystem* system)
-				//{
-				//	return reinterpret_cast<FSEObject* const*>(system->GetUserDataBuffer());
-				//}), "GetUserData");
-				////chai.add(chaiscript::fun([](b2ParticleSystem* system, FSEObject** data, const int capacity)
-				//{
-				//	system->SetUserDataBuffer(reinterpret_cast<void**>(data), capacity);
-				//}), "SetUserData");
-
-
-				////chai.add(fse::Random::bootstrap());
-
-				////chai.add(chaiscript::extras::sfml::bootstrap());
-
-				////chai.add(chaiscript::type_conversion<sf::Vector2f, b2Vec2>([](const sf::Vector2f& vec) { return b2Vec2(vec.x, vec.y); }));
-				////chai.add(chaiscript::type_conversion<b2Vec2, sf::Vector2f>([](const b2Vec2& vec) { return sf::Vector2f(vec.x, vec.y); }));
-
-				////chai.add(chaiscript::fun([](sf::Vector2f& lhs, const b2Vec2& rhs) { return lhs = sf::Vector2f(rhs.x, rhs.y); }), "=");
-				////chai.add(chaiscript::fun([](b2Vec2& lhs, const sf::Vector2f& rhs) { return lhs = b2Vec2(rhs.x, rhs.y); }), "=");
-
-				////chai.add(chaiscript::fun([](const sf::Vector2f& lhs, const b2Vec2& rhs) { return lhs == sf::Vector2f(rhs.x, rhs.y); }), "==");
-				////chai.add(chaiscript::fun([](const b2Vec2& lhs, const sf::Vector2f& rhs) { return lhs == b2Vec2(rhs.x, rhs.y); }), "==");
-
-
-				////chai.add(chaiscript::vector_conversion<std::vector<std::shared_ptr<FSEObject>>>());
-				////chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::shared_ptr<FSEObject>>>("ObjectList"));
-
-
-				////chai.add(chaiscript::vector_conversion<std::vector<std::weak_ptr<FSEObject>>>());
-				////chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::weak_ptr<FSEObject>>>("WeakObjectList"));
-
-				////chai.add(chaiscript::vector_conversion<std::vector<Light*>>());
-				////chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<Light*>>("LightList"));
-
 				v8_init::execute(app, isolate, module);
 				ctx->Global()->Set(ctx,
 					v8::String::NewFromUtf8(isolate, "fse").ToLocalChecked(), module.new_instance());
@@ -185,7 +95,25 @@ namespace fse
 				const v8::Local<v8::Object> sfMod = getSFMod(isolate).new_instance();
 				ctx->Global()->Set(ctx,
 					v8::String::NewFromUtf8(isolate, "sf").ToLocalChecked(), sfMod);
-			
+
+				loadIndexFile();
+		}
+
+		void FSEV8Lib::loadIndexFile()
+		{
+			std::filesystem::path filePath = std::filesystem::path("./data/js/fse/index.js");
+			if (std::filesystem::exists(filePath))
+			{
+				auto iso = v8::Isolate::GetCurrent();
+				auto ctx = iso->GetCurrentContext();
+				auto v8req = ctx->Global()->Get(ctx, v8pp::to_v8(iso, "V8Require")).ToLocalChecked();
+				auto func = v8req.As<v8::Object>()->Get(ctx, v8pp::to_v8(iso, "__v8require"));
+				if (!func.IsEmpty() && func.ToLocalChecked()->IsFunction())
+				{
+					v8::Local<v8::Value> argv[] = { v8pp::to_v8(iso, filePath.string()) };
+					func.ToLocalChecked().As<v8::Function>()->Call(ctx, v8req, 1, argv);
+				}
+			}
 		}
 
 		std::filesystem::path FSEV8Require::resolveModuleFilePath(const std::filesystem::path& basePath, const std::string& module_name) const
@@ -310,21 +238,28 @@ namespace fse
 			// TODO: Check if system module (i.e. fs, net, ...)
 			// TODO: Check if core module (i.e. entity, renderer, resource, etc.)
 
-			// Get current script filepath
-			v8::String::Utf8Value
-				current_script_filepath_v8(isolate,
-					v8::StackTrace::CurrentStackTrace(isolate, 1, v8::StackTrace::kScriptName)
-					->GetFrame(isolate, 0)->GetScriptName());
-
-			std::string current_script_filepath = std::filesystem::current_path().string();
-			if (current_script_filepath_v8.length() > 0 && std::filesystem::exists(*current_script_filepath_v8))
+			std::filesystem::path current_script_path;
+			std::filesystem::path script_file_path;
+			if (args.This() == isolate->GetCurrentContext()->Global())
 			{
-				current_script_filepath = std::filesystem::path(*current_script_filepath_v8).parent_path().string();
+				// Get current script filepath
+				v8::String::Utf8Value
+					current_script_filepath_v8(isolate,
+						v8::StackTrace::CurrentStackTrace(isolate, 1, v8::StackTrace::kScriptName)
+						->GetFrame(isolate, 0)->GetScriptName());
+
+				std::string current_script_filepath = std::filesystem::current_path().string();
+				if (current_script_filepath_v8.length() > 0 && std::filesystem::exists(*current_script_filepath_v8))
+				{
+					current_script_filepath = std::filesystem::path(*current_script_filepath_v8).parent_path().string();
+				}
+				current_script_path = current_script_filepath;
+				script_file_path = resolveModuleFilePath(current_script_filepath, *required_module);
+			} else {
+				current_script_path = ".";
+				script_file_path = resolveModuleFilePath(current_script_path, *required_module);
 			}
-			
-			const std::filesystem::path current_script_path(current_script_filepath);
-			auto script_file_path = resolveModuleFilePath(current_script_filepath, *required_module);
-		
+
 			if (script_file_path.empty())
 			{
 				args.GetReturnValue().Set(Undefined(args.GetIsolate()));

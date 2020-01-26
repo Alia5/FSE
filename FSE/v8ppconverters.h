@@ -79,7 +79,7 @@ struct v8pp::convert<std::shared_ptr<fse::Scene>>
 		auto val = my_class_wrapper::find_object(isolate, value);
 		if (val.IsEmpty())
 		{
-			val = my_class_wrapper::reference_external(isolate, value);
+			val = my_class_wrapper::import_external(isolate, value);
 		}
 		return val;
 	}
@@ -177,7 +177,7 @@ struct v8pp::convert<std::shared_ptr<fse::FSEObject>>
 				if (!val.IsEmpty())
 					return val;
 			}
-			val = my_class_wrapper::reference_external(isolate, value);
+			val = my_class_wrapper::import_external(isolate, value);
 		}
 		return val;
 	}

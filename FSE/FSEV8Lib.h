@@ -58,6 +58,7 @@ namespace fse
 		public:
 			static void Init(int argc, char* argv[], char** env, fse::Application* app, v8::Isolate* isolate, FSEV8Require* const require);
 		private:
+			static void loadIndexFile();
 		};
 
 		

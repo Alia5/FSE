@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "allowJs": true,
+        "inlineSourceMap": true,
+        "lib": ["ES2019"],
+        "typeRoots": ["./types/"],
+        "types": [ "node" ],
+        "moduleResolution": "node",
+        "outDir": "../data/js/fse",
+        "target": "ES2019",
+        "declaration": true,
+        "declarationDir": "../data/js/fse/types",
+        "allowSyntheticDefaultImports": true,
+    },
+    "include": [
+        "src/**/*",
+        "types/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts",
+        "dist/**/*"
+    ]
+}

@@ -6,8 +6,6 @@ namespace fse
 {
 	Renderer::Renderer(sf::RenderTarget *renderTarget) : render_target_(renderTarget)
 	{
-
-
 	}
 
 	Renderer::~Renderer()
@@ -40,6 +38,8 @@ namespace fse
 			if (viewRect.intersects(object->GetAABBs()))
 				object->drawSpecular(*specular_target_);
 		}
+		v8::HandleScope scope(v8::Isolate::GetCurrent());
+		_v8_render_target = v8pp::to_v8(v8::Isolate::GetCurrent(), render_target_);;
 		for (const auto & object : objects)
 		{
 			if (viewRect.intersects(object->GetAABBs()))

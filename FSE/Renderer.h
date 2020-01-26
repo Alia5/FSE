@@ -3,12 +3,13 @@
 #include <memory>
 
 #include <SFML/Graphics.hpp>
-
+#include <v8.h>
 
 
 namespace fse
 {
 	class FSEObject;
+	class ScriptObject;
 	class Renderer
 	{
 	public:
@@ -25,6 +26,11 @@ namespace fse
 		sf::RenderTarget* normal_target_ = nullptr;
 		sf::RenderTarget* specular_target_ = nullptr;
 
+		v8::Local<v8::Object> v8_render_target;
+		
+		friend class ScriptObject;
+		inline static v8::Local<v8::Object> _v8_render_target;
+		
 
 	};
 }
