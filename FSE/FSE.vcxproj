@@ -257,6 +257,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneDebugger.h" />
+    <ClInclude Include="Component\ScriptComponent.h" />
     <ClInclude Include="Serialize.h" />
     <ClInclude Include="extv8bind\sfmlbind.h" />
     <ClInclude Include="extv8bind\sfmlconvert.h" />
@@ -316,6 +317,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneDebugger.cpp" />
+    <ClCompile Include="Component\ScriptComponent.cpp" />
     <ClCompile Include="Serialize.cpp" />
     <ClCompile Include="FSEObject\TileMap.cpp" />
     <ClCompile Include="V8Debug\v8Inspector.cpp" />

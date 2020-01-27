@@ -242,33 +242,26 @@ namespace fse
 		FSEObject_class.function("getAABBs", static_cast<sf::FloatRect(FSEObject::*)() const>(&FSEObject::GetAABBs));
 		FSEObject_class.function("destroy", static_cast<bool(FSEObject::*)()>(&FSEObject::destroy));
 		FSEObject_class.function("getScene", static_cast<Scene * (FSEObject::*)() const>(&FSEObject::getScene));
-		//FSEObject_class.function("attachComponent", static_cast<std::weak_ptr<Component>(FSEObject::*)(std::shared_ptr<Component>)>(&FSEObject::attachComponent));
-		//FSEObject_class.function("detachComponent", static_cast<std::shared_ptr<Component>(FSEObject::*)(Component*)>(&FSEObject::detachComponent));
-		//FSEObject_class.function("getComponents", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](const FSEObject* object)
-		//	{
-		//		v8::Isolate* isolate = args.GetIsolate();
-		//		const auto object = v8pp::from_v8<std::shared_ptr<FSEObject>>(isolate, args.This());
-		//		std::vector<std::weak_ptr<Component>> result;
-		//		result.reserve(object->components_.size());
-		//		for (auto& component : object->components_)
-		//		{
-		//			result.emplace_back(component);
-		//		}
-		//		return result;
-		//	});
-
-
-		
-		//FSEObject_class.function(chaiscript::fun(([](const FSEObject* object) {
-		//	if (object == nullptr)
-		//		return std::string({ 'n', 'u', 'l', 'l' }); funny written because my cheatsheet generator script is crap
-		//		return object->get_type().get_name().to_string();
-		//	})), "getTypeName");
-		//FSEObject_class.function(chaiscript::fun(([](const FSEObject* object) {
-		//	if (object == nullptr)
-		//		return std::string({ 'n', 'u', 'l', 'l' });
-		//	return object->get_type().get_name().to_string();
-		//	})), "type_name");
+		FSEObject_class.function("attachComponent", static_cast<std::weak_ptr<Component>(FSEObject::*)(std::shared_ptr<Component>)>(&FSEObject::attachComponent));
+		FSEObject_class.function("detachComponent", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](FSEObject* object, float x, float y)
+			{
+				v8::Isolate* isolate = args.GetIsolate();
+				auto object = v8pp::from_v8<std::shared_ptr<FSEObject>>(isolate, args.This());
+				const auto component = v8pp::from_v8<std::shared_ptr<Component>>(isolate, args[0]);
+				object->detachComponent(component.get());
+			});
+		FSEObject_class.function("getComponents", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](const FSEObject* object)
+			{
+				v8::Isolate* isolate = args.GetIsolate();
+				const auto object = v8pp::from_v8<std::shared_ptr<FSEObject>>(isolate, args.This());
+				std::vector<std::weak_ptr<Component>> result;
+				result.reserve(object->components_.size());
+				for (auto& component : object->components_)
+				{
+					result.emplace_back(component);
+				}
+				return result;
+			});
 		module.class_("FSEObject", FSEObject_class);
 	}
 

@@ -24,7 +24,7 @@ namespace fse
 		 * \brief Call every frame to update the component
 		 * \param deltaTime elapsed time in seconds
 		 */
-		virtual void update(float deltaTime) = 0;
+		virtual void update(float deltaTime);
 
 		virtual void onAttach();
 		virtual void onDetach();

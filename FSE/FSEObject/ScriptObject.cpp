@@ -407,24 +407,26 @@ namespace fse
 					{
 						auto iso = v8::Isolate::GetCurrent();
 						auto ctx = iso->GetCurrentContext();
-						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
-						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
-						auto oldManifold = v8pp::from_v8<b2Manifold*>(iso, args[2]);
+						const auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
+						const auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
+						const auto oldManifold = v8pp::from_v8<b2Manifold*>(iso, args[2]);
 						This->FSEObject::PreSolveComponents(otherObject.get(), contact, oldManifold);
 					});
 				supermod.function("PostSolveComponents", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
 					{
 						auto iso = v8::Isolate::GetCurrent();
 						auto ctx = iso->GetCurrentContext();
-						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
-						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
-						auto impulse = v8pp::from_v8<b2ContactImpulse*>(iso, args[2]);
+						const auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
+						const auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
+						const auto impulse = v8pp::from_v8<b2ContactImpulse*>(iso, args[2]);
 						This->FSEObject::PostSolveComponents(otherObject.get(), contact, impulse);
 					});
 				auto object = args[0].As<v8::Object>();
 				object->Set(ctx, v8pp::to_v8(iso, "super"), supermod.new_instance());
-				v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>> persistentJS(iso, object);
+				const v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>> persistentJS(iso, object);
 				This->child_ = persistentJS;
+				This->scriptClassName = v8pp::from_v8<std::string>(iso,
+					persistentJS.Get(iso)->Get(ctx, v8pp::to_v8(iso, "classname")).ToLocalChecked());
 		});
 		ScriptObject_class.function("jsObject", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 			{
@@ -453,5 +455,6 @@ RTTR_REGISTRATION
 	//	policy::ctor::as_std_shared_ptr,
 	//	parameter_names("spawn position")
 	//)
+	.property_readonly("className", &fse::ScriptObject::scriptClassName);
 	;
 }

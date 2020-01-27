@@ -38,6 +38,8 @@ namespace fse
 	private:
 		v8::Persistent < v8::Object, v8::CopyablePersistentTraits<v8::Object>> child_;
 
+		std::string scriptClassName;
+		
 		FSE_V8_ENABLE(ScriptObject);
 		FSE_V8_REGISTRATION_FRIEND
 

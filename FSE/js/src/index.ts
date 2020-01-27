@@ -1,2 +1,3 @@
 import { ScriptObject } from './ScriptObject';
-Object.assign(fse, {ScriptObject: ScriptObject});
+import { ScriptComponent } from './ScriptComponent';
+Object.assign(fse, {ScriptObject: ScriptObject, ScriptComponent: ScriptComponent});

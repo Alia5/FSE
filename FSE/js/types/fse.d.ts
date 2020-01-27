@@ -28,6 +28,21 @@
         public setPosition(position: {x: number, y:number}): void;
         public GetAABBs(): any;
         public destroy(): boolean;
+        public attachComponent(component: Component): void;
+    }
+
+    abstract class Component {
+        public update(deltaTime: number): void;
+	    public onAttach(): void;
+		public onDetach(): void;
+		public getAttachedObject(): FSEObject;
+		public attachToObject(object: FSEObject): void;
+		public isAttached(): boolean;
+		public detach(): void;
+		public BeginContact(otherObject: FSEObject, contact: any): void;
+		public EndContact(otherObject: FSEObject, contact: any): void;
+		public PreSolve(otherObject: FSEObject, contact: any, oldManifold: any): void;
+		public PostSolve(otherObject: FSEObject, contact: any, impulse: any): void;
     }
 
     class Scene {
@@ -48,7 +63,7 @@
     }
 
     class ScriptObjectNative extends FSEObject {
-        public extend(object: any): void;
+        public extend(object: object ): void;
         public update(deltaTime: number): void;
         public BeginContact(args: any): any;
         public EndContact(args: any): any;
@@ -76,7 +91,7 @@
         public PostSolveComponents(args: any): void;
     }
 
-    class ScriptObject extends ScriptObjectSuper {        
+    class ScriptObject {        
         classname: string;
         native: fse.ScriptObjectNative;
         super: fse.ScriptObjectSuper;
@@ -85,6 +100,17 @@
         set position(position: fse.Vector2);
         public draw(renderTarget: sf.RenderTarget): void;
         public spawned(): void;
+    }
+
+    
+    class ScriptComponentNative extends Component {        
+        public extend(object: object): void;
+    }
+
+    class ScriptComponent {        
+        classname: string;
+        native: fse.ScriptComponentNative;
+        constructor();
     }
 
 

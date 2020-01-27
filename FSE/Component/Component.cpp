@@ -9,6 +9,10 @@ namespace fse
 	{
 	}
 
+	void Component::update(float deltaTime)
+	{
+	}
+
 	void Component::onAttach()
 	{
 	}
@@ -57,32 +61,28 @@ namespace fse
 
 	FSE_V8_REGISTER(Component)
 	{
-		//RegisterJSUserTypeFromRTTR<Component>(isolate);
-		////chai.add(chaiscript::fun(static_cast<FSEObject* (Component::*)() const>(&Component::getAttachedObject)), "getAttachedObject");
-		////chai.add(chaiscript::fun(static_cast<bool (Component::*)() const>(&Component::isAttached)), "isAttached");
+		v8::HandleScope handle_scope(isolate);
+		v8pp::class_<Component, v8pp::shared_ptr_traits> Component_class(isolate);
+		Component_class.auto_wrap_objects(true);
+		Component_class.function("update", &Component::update);
+		Component_class.function("onAttach", &Component::onAttach);
+		Component_class.function("onDetach", &Component::onDetach);
+		Component_class.function("getAttachedObject", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+			{
+				v8::Isolate* isolate = args.GetIsolate();
+				const auto This = v8pp::from_v8<Component*>(isolate, args.This());
+				typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
+				return my_class_wrapper::import_external(isolate, This->object_);
+			});
+		//Component_class.function("attachToObject", &Component::attachToObject);
+		Component_class.function("isAttached", &Component::isAttached);
+		Component_class.function("detach", &Component::detach);
+		//Component_class.function("BeginContact", &Component::BeginContact);
+		//Component_class.function("EndContact", &Component::EndContact);
+		//Component_class.function("PreSolve", &Component::PreSolve);
+		//Component_class.function("PostSolve", &Component::PostSolve);
+		module.class_("Component", Component_class);
 
-
-
-		////chai.add(chaiscript::user_type<std::weak_ptr<Component>>(), "WeakComponent");
-		////chai.add(chaiscript::type_conversion<std::weak_ptr<Component>, std::shared_ptr<Component>>([](const std::weak_ptr<Component>& t_bt) { return t_bt.lock(); }));
-		////chai.add(chaiscript::fun([](const std::weak_ptr<Component> & weak_obj)
-		//{
-		//	return weak_obj.lock();
-		//}), "lock");
-
-		////chai.add(chaiscript::fun([](const std::weak_ptr<Component> & weak_obj)
-		//{
-		//	return !weak_obj.expired();
-		//}), "valid");
-
-
-
-		////chai.add(chaiscript::vector_conversion<std::vector<std::shared_ptr<Component>>>());
-		////chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::shared_ptr<Component>>>("ComponentList"));
-
-
-		////chai.add(chaiscript::vector_conversion<std::vector<std::weak_ptr<Component>>>());
-		////chai.add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::weak_ptr<Component>>>("WeakComponentList"));
 	}
 
 }
