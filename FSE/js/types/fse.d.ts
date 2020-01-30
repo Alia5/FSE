@@ -29,6 +29,7 @@
         public GetAABBs(): any;
         public destroy(): boolean;
         public attachComponent(component: Component): void;
+        public getScene(): fse.Scene;
     }
 
     abstract class Component {
@@ -55,6 +56,7 @@
         public getPixelsPerMeter(): number;
         public getMetersPerPixel(): number;
         public spawnObject(object: FSEObject): FSEObject;
+        public getRenderTarget(): sf.RenderTarget;
     }
 
     class Input {
@@ -91,28 +93,9 @@
         public PostSolveComponents(args: any): void;
     }
 
-    class ScriptObject {        
-        classname: string;
-        native: fse.ScriptObjectNative;
-        super: fse.ScriptObjectSuper;
-        constructor();
-        get position(): fse.Vector2;
-        set position(position: fse.Vector2);
-        public draw(renderTarget: sf.RenderTarget): void;
-        public spawned(): void;
-    }
-
-    
     class ScriptComponentNative extends Component {        
         public extend(object: object): void;
     }
-
-    class ScriptComponent {        
-        classname: string;
-        native: fse.ScriptComponentNative;
-        constructor();
-    }
-
 
     interface Vector2 {
         x: number;

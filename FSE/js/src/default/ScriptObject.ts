@@ -15,5 +15,4 @@ export abstract class ScriptObject {
     set position(position: fse.Vector2) {
         this.super.setPosition(position);
     }
-
 }

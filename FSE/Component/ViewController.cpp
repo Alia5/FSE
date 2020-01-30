@@ -20,13 +20,13 @@ namespace fse
 	{
 		Component::onAttach();
 		if (render_target_ == nullptr)
-			setRenderTarget(getAttachedObject()->getScene()->getRenderTarget());
+			setRenderTarget(getAttachedObject().lock()->getScene()->getRenderTarget());
 	}
 
 	void ViewController::update(float deltaTime)
 	{
 		if (follow_object_)
-			moveView(object_->getPosition(), deltaTime);
+			moveView(object_.lock()->getPosition(), deltaTime);
 	}
 
 	bool ViewController::isFollowingObject() const
@@ -53,7 +53,7 @@ namespace fse
 
 		sf::View view = render_target_->getView();
 
-		view.move((objectPos - oldPosition) * object_->getScene()->getPixelsPerMeter());
+		view.move((objectPos - oldPosition) * object_.lock()->getScene()->getPixelsPerMeter());
 
 		oldPosition = objectPos;
 

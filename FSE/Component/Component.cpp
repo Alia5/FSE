@@ -21,12 +21,12 @@ namespace fse
 	{
 	}
 
-	FSEObject* Component::getAttachedObject() const
+	std::weak_ptr<FSEObject> Component::getAttachedObject() const
 	{
 		return object_;
 	}
 
-	void Component::attachToObject(FSEObject* object)
+	void Component::attachToObject(std::shared_ptr<FSEObject> object)
 	{
 		object_ = object;
 		onAttach();
@@ -34,13 +34,13 @@ namespace fse
 
 	bool Component::isAttached() const
 	{
-		return object_ != nullptr;
+		return !object_.expired();// != nullptr;
 	}
 
 	void Component::detach()
 	{
 		onDetach();
-		object_ = nullptr;
+		object_ = std::shared_ptr<FSEObject>(nullptr);
 	}
 
 	void Component::BeginContact(FSEObject* otherObject, b2Contact* contact)
@@ -70,9 +70,11 @@ namespace fse
 		Component_class.function("getAttachedObject", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 			{
 				v8::Isolate* isolate = args.GetIsolate();
-				const auto This = v8pp::from_v8<Component*>(isolate, args.This());
-				typedef v8pp::class_<fse::FSEObject> my_class_wrapper;
-				return my_class_wrapper::import_external(isolate, This->object_);
+				auto This = v8pp::from_v8<std::shared_ptr<Component>>(isolate, args.This());
+				if (This->isAttached())
+				{
+					return This->getAttachedObject().lock();
+				}
 			});
 		//Component_class.function("attachToObject", &Component::attachToObject);
 		Component_class.function("isAttached", &Component::isAttached);

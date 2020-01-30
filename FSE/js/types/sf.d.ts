@@ -49,9 +49,39 @@ declare namespace sf {
         public static Transparent: Color;
     }
 
+    class View {
+        public constructor();
+        public constructor(rect: any);
+        public constructor(pos: Vector2, size: Vector2);
+        public setCenter(pos: Vector2): void;
+        public setCenter(x: number, y: number): void;
+        public setSize(pos: Vector2): void;
+        public setSize(x: number, y: number): void;
+        public setRotation(rotation: number): void;
+        public setViewport(viewport: any): void;
+        public reset(viewport: any): void;
+        public getCenter(): Vector2;
+        public getSize(): Vector2;
+        public getRotation(): number;
+        public getViewport(): object;
+        public move(pos: Vector2): void;
+        public move(x: number, y: number): void;
+        public rotate(rot: number): void;
+        public zoom(factor: number): void;
+        public getTransform(): any;
+        public getInverseTransform(): any;
+    }
+
     class RenderTarget {
         public clear(): void;
         public draw(drawable: Drawable): void;
+        public getView(): View;
+        public setView(view: View): void;
+    }
+
+    class Window extends RenderTarget {
+        public close(): void;
+        public isOpen(): boolean;
     }
 
     abstract class Shape extends Transformable implements Drawable {
@@ -84,6 +114,24 @@ declare namespace sf {
         public setSize(size: Vector2): void;
         public getSize(): Vector2;
         public getPointCount(): number;
+    }
+
+    namespace Mouse {
+        enum Button {
+            Left,
+            Right,
+            Middle,
+            XButton1,
+            XButton2,
+            ButtonCount
+        }
+        enum Wheel {
+            VerticalWheel,
+            HorizontalWheel
+        }
+        function isButtonPressed(button: Button): boolean;
+        function getPosition(window?: Window): Vector2;
+        function setPosition(pos: Vector2, window?: Window): void;
     }
 
 }

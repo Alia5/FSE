@@ -191,12 +191,12 @@ inline v8pp::module getSFMod(v8::Isolate* isolate)
 	v8pp::module sfMouseModule(isolate);
 	
 	v8pp::module sfMouseButtonModule(isolate);
-	sfMouseModule.const_("Left", sf::Mouse::Button::Left);
-	sfMouseModule.const_("Right", sf::Mouse::Button::Right);
-	sfMouseModule.const_("Middle", sf::Mouse::Button::Middle);
-	sfMouseModule.const_("XButton1", sf::Mouse::Button::XButton1);
-	sfMouseModule.const_("XButton2", sf::Mouse::Button::XButton2);
-	sfMouseModule.const_("ButtonCount", sf::Mouse::Button::ButtonCount);
+	sfMouseButtonModule.const_("Left", sf::Mouse::Button::Left);
+	sfMouseButtonModule.const_("Right", sf::Mouse::Button::Right);
+	sfMouseButtonModule.const_("Middle", sf::Mouse::Button::Middle);
+	sfMouseButtonModule.const_("XButton1", sf::Mouse::Button::XButton1);
+	sfMouseButtonModule.const_("XButton2", sf::Mouse::Button::XButton2);
+	sfMouseButtonModule.const_("ButtonCount", sf::Mouse::Button::ButtonCount);
 	sfMouseModule.submodule("Button", sfMouseButtonModule);
 
 	v8pp::module sfMouseWheelModule(isolate);

@@ -196,7 +196,7 @@ namespace fse
 			return std::weak_ptr<Component>();
 		}
 		components_.push_back(component);
-		(*components_.rbegin())->attachToObject(this);
+		(*components_.rbegin())->attachToObject(shared_from_this());
 		return (*components_.rbegin());
 	}
 

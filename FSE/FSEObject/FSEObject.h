@@ -18,7 +18,7 @@ namespace fse
 	/*!
 	 * \brief Base Class for every Object that can live in a Scene
 	 */
-	class FSEObject
+	class FSEObject : public std::enable_shared_from_this<FSEObject>
 	{
 	public:
 

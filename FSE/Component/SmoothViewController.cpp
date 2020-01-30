@@ -30,16 +30,16 @@ namespace fse
 
 		const sf::FloatRect viewRekt(ct.x - (sz.x * 0.5f), ct.y - (sz.y * 0.5f) - view.getSize().y*vertical_offset_, sz.x, sz.y);
 		
-		objectPos = sf::Vector2f(objectPos.x, objectPos.y - (view.getSize().y * object_->getScene()->getMetersPerPixel() * vertical_offset_));
+		objectPos = sf::Vector2f(objectPos.x, objectPos.y - (view.getSize().y * object_.lock()->getScene()->getMetersPerPixel() * vertical_offset_));
 
-		sf::Vector2f toCenter = fse::FMath::Lerp(view.getCenter(), objectPos*object_->getScene()->getPixelsPerMeter(), deltaTime /** 0.75f*/);
-		if (!viewRekt.contains(objectPos * object_->getScene()->getPixelsPerMeter()))
+		sf::Vector2f toCenter = fse::FMath::Lerp(view.getCenter(), objectPos* object_.lock()->getScene()->getPixelsPerMeter(), deltaTime /** 0.75f*/);
+		if (!viewRekt.contains(objectPos * object_.lock()->getScene()->getPixelsPerMeter()))
 		{
 			if (objectPos == oldPosition)
 			{
 				view.setCenter(toCenter);
 			}
-			view.move((objectPos - oldPosition) * object_->getScene()->getPixelsPerMeter());
+			view.move((objectPos - oldPosition) * object_.lock()->getScene()->getPixelsPerMeter());
 		}
 		else
 		{
@@ -57,8 +57,8 @@ namespace fse
 			return;
 
 		sf::View view = render_target_->getView();
-		objectPos = sf::Vector2f(objectPos.x, objectPos.y - (view.getSize().y * object_->getScene()->getMetersPerPixel() * vertical_offset_));
-		view.setCenter(objectPos * object_->getScene()->getPixelsPerMeter());
+		objectPos = sf::Vector2f(objectPos.x, objectPos.y - (view.getSize().y * object_.lock()->getScene()->getMetersPerPixel() * vertical_offset_));
+		view.setCenter(objectPos * object_.lock()->getScene()->getPixelsPerMeter());
 		oldPosition = objectPos;
 		render_target_->setView(view);
 	}
@@ -87,7 +87,7 @@ namespace fse
 		auto view = render_target_->getView();
 		view.setSize(size.x / zoom, size.y / zoom);
 		render_target_->setView(view);
-		const auto objectPos = sf::Vector2f(oldPosition.x, oldPosition.y + (view.getSize().y * object_->getScene()->getMetersPerPixel() * vertical_offset_));
+		const auto objectPos = sf::Vector2f(oldPosition.x, oldPosition.y + (view.getSize().y * object_.lock()->getScene()->getMetersPerPixel() * vertical_offset_));
 		setView(objectPos);
 	}
 

@@ -101,7 +101,7 @@ namespace fse
 
 		void FSEV8Lib::loadIndexFile()
 		{
-			std::filesystem::path filePath = std::filesystem::path("./data/js/fse/index.js");
+			std::filesystem::path filePath = std::filesystem::path("./data/js/fse/default/index.js");
 			if (std::filesystem::exists(filePath))
 			{
 				auto iso = v8::Isolate::GetCurrent();

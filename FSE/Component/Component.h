@@ -31,8 +31,8 @@ namespace fse
 
 
 
-		FSEObject* getAttachedObject() const;
-		void attachToObject(FSEObject* object);
+		std::weak_ptr<FSEObject> getAttachedObject() const;
+		void attachToObject(std::shared_ptr<FSEObject> object);
 
 		bool isAttached() const;
 
@@ -73,7 +73,7 @@ namespace fse
 		virtual void PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
 
 	protected:
-		FSEObject* object_ = nullptr;
+		std::weak_ptr<FSEObject> object_;
 
 	private:
 
