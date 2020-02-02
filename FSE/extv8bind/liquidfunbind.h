@@ -70,7 +70,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 
 	// b2Math.h
 	b2mod.function("IsValid", b2IsValid);
-	b2mod.function("b2InvSqrt", b2InvSqrt);
+	b2mod.function("InvSqrt", b2InvSqrt);
 
 	b2mod.function("Sqrt", sqrtf);
 	b2mod.function("Atan2", atan2f);
@@ -571,13 +571,15 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	v8pp::class_<b2Shape> b2ShapeClass(isolate);
 	b2ShapeClass.auto_wrap_objects();
 	b2ShapeClass.function("Clone", &b2Shape::Clone);
+	auto b2ShapeTypeMod = v8pp::module(isolate);
+	b2ShapeTypeMod.const_("circle", 0);
+	b2ShapeTypeMod.const_("edge", 1);
+	b2ShapeTypeMod.const_("polygon", 2);
+	b2ShapeTypeMod.const_("chain", 3);
+	b2ShapeTypeMod.const_("typeCount", 4);
+	b2ShapeClass.static_("Type", b2ShapeTypeMod.new_instance(), true);
 	b2ShapeClass.function("GetType", &b2Shape::GetType);
 	b2ShapeClass.function("GetChildCount", &b2Shape::GetChildCount);
-	b2ShapeClass.static_("circle", 0, true);
-	b2ShapeClass.static_("edge", 1, true);
-	b2ShapeClass.static_("polygon", 2, true);
-	b2ShapeClass.static_("chain", 3, true);
-	b2ShapeClass.static_("typeCount", 4, true);
 	b2ShapeClass.function("TestPoint", &b2Shape::TestPoint);
 	b2ShapeClass.function("ComputeDistance", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 		{

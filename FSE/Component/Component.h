@@ -32,7 +32,7 @@ namespace fse
 
 
 		std::weak_ptr<FSEObject> getAttachedObject() const;
-		void attachToObject(std::shared_ptr<FSEObject> object);
+		void attachToObject(std::weak_ptr<FSEObject> object);
 
 		bool isAttached() const;
 

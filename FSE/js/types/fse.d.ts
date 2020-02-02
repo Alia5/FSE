@@ -20,6 +20,7 @@
 // declare var global: object;
 
 /// <reference path="sf.d.ts" />
+/// <reference path="lf.d.ts" />
 
  declare namespace fse {
     abstract class FSEObject {
@@ -52,7 +53,7 @@
 		public getPhysDrawDebug(): boolean;
 		public setPhysDrawDebug(draw: boolean): void;
 		public getLightWorld(): any;
-        public getPhysWorld(): any;
+        public getPhysWorld(): lf.World;
         public getPixelsPerMeter(): number;
         public getMetersPerPixel(): number;
         public spawnObject(object: FSEObject): FSEObject;
@@ -75,6 +76,7 @@
         public EndContactComponents(args: any): void;
         public PreSolveComponents(args: any): void;
         public PostSolveComponents(args: any): void;
+        public jsObject(): ScriptObject;
     }
 
     class ScriptObjectSuper {        

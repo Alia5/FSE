@@ -26,7 +26,7 @@ namespace fse
 		return object_;
 	}
 
-	void Component::attachToObject(std::shared_ptr<FSEObject> object)
+	void Component::attachToObject(std::weak_ptr<FSEObject> object)
 	{
 		object_ = object;
 		onAttach();

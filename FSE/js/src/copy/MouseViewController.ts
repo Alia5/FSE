@@ -30,8 +30,8 @@ export class MouseViewController extends fse.ScriptComponent {
             const view = this.renderTarget.getView();
             const mousePos = sf.Mouse.getPosition();
             view.move({ 
-                x: this.currentOffset.x - mousePos.x,
-                y: this.currentOffset.y - mousePos.y
+                x: (this.currentOffset.x - mousePos.x) * 2,
+                y: (this.currentOffset.y - mousePos.y) * 2
             });
             this.currentOffset = {x: 0, y: 0};
             this.renderTarget.setView(view);
