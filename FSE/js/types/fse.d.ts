@@ -52,6 +52,7 @@
         public setPaused(paused: boolean): void;
 		public getPhysDrawDebug(): boolean;
 		public setPhysDrawDebug(draw: boolean): void;
+        public physDrawDebug: boolean;
 		public getLightWorld(): any;
         public getPhysWorld(): lf.World;
         public getPixelsPerMeter(): number;
@@ -102,6 +103,14 @@
     interface Vector2 {
         x: number;
         y: number;
+    }
+
+    namespace fmath {
+        function lerp(a: number,b: number,c: number): number;
+        function lerpVector(a: Vector2,b: Vector2,c: number): Vector2;
+		function sqrtVec(vec: Vector2): number
+        function angle(vec: Vector2): number;
+        function angleDegree(vec: Vector2): number;
     }
 
 }

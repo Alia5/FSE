@@ -7,9 +7,9 @@ namespace fse
 {
 	namespace FMath
 	{
-#define PI 3.14159265358979323846
+		constexpr int PI = 3.14159265358979323846;
 
-		static float Lerp(float a, float b, float t)
+		static constexpr float Lerp(float a, float b, float t)
 		{
 			if (t > 1.0f)
 				t = 1;
@@ -65,6 +65,17 @@ namespace fse
 			return std::atan2(p2.y - p1.y, p2.x - p1.x) * (180 / PI);
 		}
 
+
+		static v8pp::module getFMathMod(v8::Isolate* isolate)
+		{
+			v8pp::module fmathModule(isolate);
+			fmathModule.function("lerp", static_cast<float(*)(float, float, float)>(&Lerp));
+			fmathModule.function("lerpVector", static_cast<sf::Vector2f(*)(sf::Vector2f, sf::Vector2f, float)>(&Lerp));
+			fmathModule.function("sqrtVec", static_cast<float(*)(const sf::Vector2<float>&)>(&sqrtVec));
+			fmathModule.function("angle", static_cast<float(*)(const sf::Vector2<float>, const sf::Vector2<float>)>(&angle));
+			fmathModule.function("angleDegree", static_cast<float(*)(const sf::Vector2<float>, const sf::Vector2<float>)>(&angleDegree));
+			return fmathModule;
+		}
 
 	}
 

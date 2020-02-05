@@ -16,6 +16,7 @@
 
 #include "extv8bind/liquidfunbind.h"
 #include "extv8bind/sfmlbind.h"
+#include "FMath.h"
 
 
 namespace fse
@@ -64,6 +65,7 @@ namespace fse
 				v8pp::module module(isolate);
 			
 				v8_init::execute(app, isolate, module);
+				module.submodule("fmath", fse::FMath::getFMathMod(isolate));
 				ctx->Global()->Set(ctx,
 					v8::String::NewFromUtf8(isolate, "fse").ToLocalChecked(), module.new_instance());
 

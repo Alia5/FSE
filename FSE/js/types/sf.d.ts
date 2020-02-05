@@ -9,6 +9,30 @@ declare namespace sf {
     interface Drawable {
     }
 
+    class FloatRect {
+        constructor(rectLeft: number, rectTop: number, rectWidth: number, rectHeight: number);
+        constructor(pos: Vector2, size: Vector2);
+        public contains(x: number, y: number): boolean;
+        public contains(point: Vector2): boolean;
+        public intersects(rect: FloatRect, intersection: FloatRect): boolean;
+        public left: number;
+        public top: number;
+        public width: number;
+        public height: number;
+    }
+
+    class IntRect {
+        constructor(rectLeft: number, rectTop: number, rectWidth: number, rectHeight: number);
+        constructor(pos: Vector2, size: Vector2);
+        public contains(x: number, y: number): boolean;
+        public contains(point: Vector2): boolean;
+        public intersects(rect: IntRect, intersection: IntRect): boolean;
+        public left: number;
+        public top: number;
+        public width: number;
+        public height: number;
+    }
+
     class Transformable {
         public setPosition(position: Vector2): void;
         public setPosition(x: number, y: number): void;

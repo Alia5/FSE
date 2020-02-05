@@ -249,8 +249,7 @@ namespace fse
 		
 		Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
 		Scene_class.function("setPhysDrawDebug", &Scene::setPhysDrawDebug);
-		//Scene_class.property("physDrawDebug", &Scene::getPhysDrawDebug, &Scene::setPhysDrawDebug);
-
+		Scene_class.property("physDrawDebug", &Scene::getPhysDrawDebug, &Scene::setPhysDrawDebug);
 		Scene_class.function("getLightWorld", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 			{
 				v8::Isolate* isolate = args.GetIsolate();
@@ -258,9 +257,9 @@ namespace fse
 				for (auto& object : *scene->getFSEObjects())
 				{
 					if (auto lw = std::dynamic_pointer_cast<FSELightWorld>(object))
-						return std::shared_ptr<FSEObject>(object);
+						return lw;
 				}
-				return std::shared_ptr<FSEObject>();
+				return std::shared_ptr<FSELightWorld>();
 			});
 		Scene_class.function("getPhysWorld", &Scene::getPhysWorld);
 		Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);

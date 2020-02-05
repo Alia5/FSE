@@ -107,24 +107,7 @@ namespace fse
 	{
 		return size_;
 	}
-//}
-//
-//
-//	struct v8pp::factory<fse::KillVolume>
-//	{
-//		static std::shared_ptr<fse::KillVolume> create(v8::FunctionCallbackInfo<v8::Value> const& args)
-//		{
-//			if (args.Length() == 0) return std::make_shared<fse::KillVolume>();
-//			return nullptr;
-//		}
-//
-//		static void destroy(v8::Isolate*, std::shared_ptr<fse::KillVolume> object)
-//		{
-//			//delete object;
-//		}
-//	};
-//
-//namespace fse {
+
 
 	FSE_V8_REGISTER(KillVolume)
 	{
