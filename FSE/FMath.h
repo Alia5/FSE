@@ -2,6 +2,9 @@
 #include <Box2D/Common/b2Math.h>
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
+#include <v8.h>
+#include <v8pp/module.hpp>
+#include <v8pp/class.hpp>
 
 namespace fse
 {
