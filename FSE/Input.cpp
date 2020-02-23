@@ -37,7 +37,9 @@ namespace fse
 			{ L"TogglePhysDebug", sf::Keyboard::Key::F5},
 			{ L"TogglePhysDebugAABBs", sf::Keyboard::Key::F6},
 			{ L"ToggleConsole0", sf::Keyboard::Key::Tab},
-			{ L"ToggleConsole1", sf::Keyboard::Key::LControl}
+			{ L"ToggleConsole1", sf::Keyboard::Key::LControl},
+			{ L"DebugZoomIn", sf::Keyboard::Key::Add},
+			{ L"DebugZoomOut", sf::Keyboard::Key::Subtract}
 		};
 		key_map_ = m;
 
