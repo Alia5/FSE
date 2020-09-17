@@ -4,7 +4,7 @@ module.exports =  {
       'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from @typescript-eslint/eslint-plugin
     ],
     parserOptions:  {
-        ecmaVersion:  2019,  // Allows for the parsing of modern ECMAScript features
+        ecmaVersion:  2020,  // Allows for the parsing of modern ECMAScript features
     },
     rules:  {
       // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
