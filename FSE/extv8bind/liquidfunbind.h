@@ -525,8 +525,12 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 			const auto This = args.This();
 			auto nThis = v8pp::from_v8<b2AABB>(isolate, This);
 			if (args.Length() == 1)
-				return nThis.Combine(v8pp::from_v8<b2AABB>(isolate, args[0]));
-			return nThis.Combine(v8pp::from_v8<b2AABB>(isolate, args[0]), v8pp::from_v8<b2AABB>(isolate, args[1]));
+			{
+				nThis.Combine(v8pp::from_v8<b2AABB>(isolate, args[0]));
+				return nThis;
+			}
+			nThis.Combine(v8pp::from_v8<b2AABB>(isolate, args[0]), v8pp::from_v8<b2AABB>(isolate, args[1]));
+			return nThis;
 		});
 	b2AABBClass.function("Contains", &b2AABB::Contains);
 	b2AABBClass.function("RayCast", &b2AABB::RayCast);
@@ -631,6 +635,7 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 			);
 			args[0] = v8pp::to_v8(isolate, aabb);
 			args[1] = v8pp::to_v8(isolate, transform);
+			return aabb;
 		});
 	b2ShapeClass.function("ComputeMass", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 		{
@@ -882,7 +887,12 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2BodyClass.function("IsActive", &b2Body::IsActive);
 	b2BodyClass.function("SetFixedRotation", &b2Body::SetFixedRotation);
 	b2BodyClass.function("IsFixedRotation", &b2Body::IsFixedRotation);
-	// TODO: b2BodyClass.function("GetFixtureList", &b2Body::GetFixtureList);
+	b2BodyClass.function("GetFixtureList", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+	{
+			const auto isolate = args.GetIsolate();
+			const auto This = v8pp::from_v8<b2Body*>(isolate, args.This());
+			return This->GetFixtureList();
+	});
 	// TODO: b2BodyClass.function("GetJointList", &b2Body::GetJointList);
 	// TODO: b2BodyClass.function("GetContactList", &b2Body::GetContactList);
 	b2BodyClass.function("GetNext",[](v8::FunctionCallbackInfo<v8::Value> const& args)
@@ -896,15 +906,15 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 		{
 			const auto isolate = args.GetIsolate();
 			const auto This = v8pp::from_v8<b2Body*>(isolate, args.This());
-			return static_cast<fse::FSEObject*>(This->GetUserData());
+			return static_cast<fse::FSEObject*>(This->GetUserData())->shared_from_this();
 		});
 	// TODO: change if using something else as user data
 	b2BodyClass.function("SetUserData", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 		{
 			const auto isolate = args.GetIsolate();
 			const auto This = v8pp::from_v8<b2Body*>(isolate, args.This());
-			const auto obj = v8pp::from_v8<fse::FSEObject*>(isolate, args[0]);
-			This->SetUserData(obj);
+			const auto obj = v8pp::from_v8<std::weak_ptr<fse::FSEObject>>(isolate, args[0]);
+			This->SetUserData(obj.lock().get());
 		});
 	b2BodyClass.function("GetWorld", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 		{
@@ -972,7 +982,17 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2FixtureClass.function("GetFilterData", &b2Fixture::GetFilterData);
 	b2FixtureClass.function("Refilter", &b2Fixture::Refilter);
 	b2FixtureClass.function("GetBody", static_cast<b2Body* (b2Fixture::*)()>(&b2Fixture::GetBody));
-	b2FixtureClass.function("GetNext", static_cast<b2Fixture* (b2Fixture::*)()>(&b2Fixture::GetNext));
+	b2FixtureClass.function("GetNext", [](v8::FunctionCallbackInfo<v8::Value> const& args)
+	{
+			const auto isolate = args.GetIsolate();
+			const auto This = v8pp::from_v8<b2Fixture>(isolate, args.This());
+			const auto res = This.GetNext();
+			if (res == nullptr)
+			{
+				return v8::Undefined(isolate).As<v8::Object>();
+			}
+			return v8pp::to_v8(isolate, res);
+	});
 	// TODO: cast void ptr b2FixtureClass.function("GetUserData", &b2Fixture::GetUserData);
 	// TODO: cast void ptr b2FixtureClass.function("SetUserData", &b2Fixture::SetUserData);
 	b2FixtureClass.function("TestPoint", &b2Fixture::TestPoint);
@@ -1103,7 +1123,6 @@ inline v8pp::module getB2Mod(v8::Isolate* isolate)
 	b2ContactClass.function("GetRestitution",&b2Contact::GetRestitution);
 	b2ContactClass.function("ResetRestitution",&b2Contact::ResetRestitution);
 	b2ContactClass.function("SetTangentSpeed",&b2Contact::SetTangentSpeed);
-	b2ContactClass.function("GetTangentSpeed",&b2Contact::GetTangentSpeed);
 	b2ContactClass.function("GetTangentSpeed",&b2Contact::GetTangentSpeed);
 	b2mod.class_("Contact", b2ContactClass);
 
