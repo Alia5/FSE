@@ -75,7 +75,7 @@ declare namespace lf {
         public GetCenter(): Vector2;
         public GetExtents(): Vector2;
         public GetPerimiter(): number;
-        public Combine(aabb0: AABB, aabb1?: AABB): void;
+        public Combine(aabb0: AABB, aabb1?: AABB): AABB;
         public Contains(aabb: AABB): boolean;
         public RayCast(output: any, input: any): any; // TODO:
         public lowerBound: Vector2;
@@ -96,7 +96,7 @@ declare namespace lf {
         public TestPoint(xf: Transform, p: Vector2): boolean;
         public ComputeDistance(xf: Transform, p: Vector2, distance: number, normal: Vector2, childIndex: number): void;
         public RayCast(TODO: any): any; // TODO:
-        public ComputeAABB(TODO: any): any; // TODO:
+        public ComputeAABB(aabb: AABB, transform: Transform, childIndex: number): AABB;
         public ComputeMass(massData: MassData, density: number): void;
         public m_type: Shape.Type;
         public m_radius: number;
@@ -232,6 +232,7 @@ declare namespace lf {
         public IsActive(): boolean;
         public SetFixedRotation(fixed: boolean): void;
         public IsFixedRotation(): boolean;
+        public GetFixtureList(): Fixture;
         public GetNext(): Body;
         public GetUserData(): any; //TODO: 
         public SetUserData(data: any): any; //TODO: 
@@ -339,6 +340,26 @@ declare namespace lf {
         public GetVersion(): object; //TODO
         public GetVersionString(): string;
 
+    }
+
+    class Contact {
+        public GetManifold(): any; //TODO;
+        public GetWorldManifold(): any; //TODO;
+        public IsTouching(): boolean;
+        public SetEnabled(enabled: boolean): void;
+        public IsEnabled(): boolean;
+        public GetNext(): Contact;
+        public GetFixtureA(): Fixture;
+        public GetFixtureB(): Fixture;
+        public GetChildIndexB(): number;
+        public SetFriction(friction: number): void;
+        public GetFriction(): number;
+        public ResetFriction(): void;
+        public SetRestitution(restitution: number): void;
+        public GetRestitution(): number;
+        public ResetRestitution(): void;
+        public SetTangentSpeed(speed: number): void;
+        public GetTangentSpeed(): number;
     }
 
     // TODO: more contact stuffs.

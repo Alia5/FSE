@@ -1,23 +1,23 @@
-// interface dictionary {
-//     [key: string]: any|undefined
-// }
-// interface Process {
-//     argc: number;
-//     argv: string[];
-//     env: dictionary;
-//     [key: string]: any|undefined
-// }
+interface dictionary {
+    [key: string]: any|undefined
+}
+interface Process {
+    argc: number;
+    argv: string[];
+    env: dictionary;
+    [key: string]: any|undefined
+}
 
-// declare function require(path: string): any;
+declare function require(path: string): any;
 
-// declare namespace console {
-//     function log(...args: any): void;
-// }
-// declare const __filename: string;
-// declare const __dirname: string;
-// declare let process: Process;
+declare namespace console {
+    function log(...args: any): void;
+}
+declare const __filename: string;
+declare const __dirname: string;
+declare let process: Process;
 
-// declare var global: object;
+declare var global: object;
 
 /// <reference path="sf.d.ts" />
 /// <reference path="lf.d.ts" />
@@ -41,10 +41,10 @@
 		public attachToObject(object: FSEObject): void;
 		public isAttached(): boolean;
 		public detach(): void;
-		public BeginContact(otherObject: FSEObject, contact: any): void;
-		public EndContact(otherObject: FSEObject, contact: any): void;
-		public PreSolve(otherObject: FSEObject, contact: any, oldManifold: any): void;
-		public PostSolve(otherObject: FSEObject, contact: any, impulse: any): void;
+		public BeginContact(otherObject: FSEObject, contact: lf.Contact): void;
+		public EndContact(otherObject: FSEObject, contact: lf.Contact): void;
+		public PreSolve(otherObject: FSEObject, contact: lf.Contact, oldManifold: any): void;
+		public PostSolve(otherObject: FSEObject, contact: lf.Contact, impulse: any): void;
     }
 
     class Scene {
@@ -85,13 +85,13 @@
         public getPosition(): {x: number, y:number};
         public setPosition(position: {x: number, y:number}): void;
         public GetAABBs(): any;
-        public BeginContact(args: any): any;
-        public EndContact(args: any): any;
+        public BeginContact(otherObject: FSEObject, contact: lf.Contact): void;
+        public EndContact(otherObject: FSEObject, contact: lf.Contact): void;
         public PreSolve(args: any): any;
         public PostSolve(args: any): any;
         public destroy(): boolean;
-        public BeginContactComponents(args: any): void;
-        public EndContactComponents(args: any): void;
+        public BeginContactComponents(otherObject: FSEObject, contact: lf.Contact): void;
+        public EndContactComponents(otherObject: FSEObject, contact: lf.Contact): void;
         public PreSolveComponents(args: any): void;
         public PostSolveComponents(args: any): void;
     }
