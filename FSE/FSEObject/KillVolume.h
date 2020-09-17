@@ -25,7 +25,7 @@ namespace fse
 		void onDespawn() override;
 
 
-		void BeginContact(FSEObject* otherObject, b2Contact* contact) override;
+		void BeginContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact) override;
 
 		sf::FloatRect GetAABBs() const override;
 

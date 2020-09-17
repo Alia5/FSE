@@ -309,11 +309,11 @@
     <ClInclude Include="extv8bind\sfmlconvert.h">
       <Filter>Header Files\extv8bind</Filter>
     </ClInclude>
-    <ClInclude Include="FSEObject\ScriptObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Component\ScriptComponent.h">
       <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="FSEObject\ScriptObject.h">
+      <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -470,11 +470,11 @@
     <ClCompile Include="V8Debug\v8InspectorClient.cpp">
       <Filter>Source Files\V8Debug</Filter>
     </ClCompile>
-    <ClCompile Include="FSEObject\ScriptObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Component\ScriptComponent.cpp">
       <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEObject\ScriptObject.cpp">
+      <Filter>Source Files\FSEObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -144,7 +144,7 @@ namespace fse
 		}
 	}
 
-	void ScriptObject::BeginContact(FSEObject* otherObject, b2Contact* contact)
+	void ScriptObject::BeginContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -161,7 +161,7 @@ namespace fse
 		}
 	}
 
-	void ScriptObject::EndContact(FSEObject* otherObject, b2Contact* contact)
+	void ScriptObject::EndContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -178,7 +178,7 @@ namespace fse
 		}
 	}
 
-	void ScriptObject::PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold)
+	void ScriptObject::PreSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2Manifold* oldManifold)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -195,7 +195,7 @@ namespace fse
 		}
 	}
 
-	void ScriptObject::PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
+	void ScriptObject::PostSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -230,7 +230,7 @@ namespace fse
 		}
 	}
 
-	void ScriptObject::BeginContactComponents(FSEObject* otherObject, b2Contact* contact)
+	void ScriptObject::BeginContactComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -247,7 +247,7 @@ namespace fse
 		}
 	}
 
-	void ScriptObject::EndContactComponents(FSEObject* otherObject, b2Contact* contact)
+	void ScriptObject::EndContactComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -264,7 +264,7 @@ namespace fse
 		}
 	}
 
-	void ScriptObject::PreSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold)
+	void ScriptObject::PreSolveComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2Manifold* oldManifold)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -281,7 +281,7 @@ namespace fse
 		}
 	}
 
-	void ScriptObject::PostSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
+	void ScriptObject::PostSolveComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -353,7 +353,7 @@ namespace fse
 						auto ctx = iso->GetCurrentContext();
 						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
 						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
-						This->FSEObject::BeginContact(otherObject.get(), contact);
+						This->FSEObject::BeginContact(otherObject, contact);
 					});
 				supermod.function("EndContact", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
 					{
@@ -361,7 +361,7 @@ namespace fse
 						auto ctx = iso->GetCurrentContext();
 						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
 						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
-						This->FSEObject::EndContact(otherObject.get(), contact);
+						This->FSEObject::EndContact(otherObject, contact);
 					});
 				supermod.function("PreSolve", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
 					{
@@ -370,7 +370,7 @@ namespace fse
 						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
 						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
 						auto oldManifold = v8pp::from_v8<b2Manifold*>(iso, args[2]);
-						This->FSEObject::PreSolve(otherObject.get(), contact, oldManifold);
+						This->FSEObject::PreSolve(otherObject, contact, oldManifold);
 					});
 				supermod.function("PostSolve", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
 					{
@@ -379,7 +379,7 @@ namespace fse
 						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
 						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
 						auto impulse = v8pp::from_v8<b2ContactImpulse*>(iso, args[2]);
-						This->FSEObject::PostSolve(otherObject.get(), contact, impulse);
+						This->FSEObject::PostSolve(otherObject, contact, impulse);
 					});
 				supermod.function("destroy", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
 					{
@@ -393,7 +393,7 @@ namespace fse
 						auto ctx = iso->GetCurrentContext();
 						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
 						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
-						This->FSEObject::BeginContactComponents(otherObject.get(), contact);
+						This->FSEObject::BeginContactComponents(otherObject, contact);
 					});
 				supermod.function("EndContactComponents", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
 					{
@@ -401,7 +401,7 @@ namespace fse
 						auto ctx = iso->GetCurrentContext();
 						auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
 						auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
-						This->FSEObject::EndContactComponents(otherObject.get(), contact);
+						This->FSEObject::EndContactComponents(otherObject, contact);
 					});
 				supermod.function("PreSolveComponents", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
 					{
@@ -410,7 +410,7 @@ namespace fse
 						const auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
 						const auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
 						const auto oldManifold = v8pp::from_v8<b2Manifold*>(iso, args[2]);
-						This->FSEObject::PreSolveComponents(otherObject.get(), contact, oldManifold);
+						This->FSEObject::PreSolveComponents(otherObject, contact, oldManifold);
 					});
 				supermod.function("PostSolveComponents", [This](v8::FunctionCallbackInfo<v8::Value> const& args)
 					{
@@ -419,7 +419,7 @@ namespace fse
 						const auto otherObject = v8pp::from_v8<std::shared_ptr<FSEObject>>(iso, args[0]);
 						const auto contact = v8pp::from_v8<b2Contact*>(iso, args[1]);
 						const auto impulse = v8pp::from_v8<b2ContactImpulse*>(iso, args[2]);
-						This->FSEObject::PostSolveComponents(otherObject.get(), contact, impulse);
+						This->FSEObject::PostSolveComponents(otherObject, contact, impulse);
 					});
 				auto object = args[0].As<v8::Object>();
 				object->Set(ctx, v8pp::to_v8(iso, "super"), supermod.new_instance());

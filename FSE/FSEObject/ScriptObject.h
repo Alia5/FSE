@@ -23,17 +23,17 @@ namespace fse
 		sf::Vector2f getPosition() override;
 		sf::FloatRect GetAABBs() const override;
 
-		void BeginContact(FSEObject* otherObject, b2Contact* contact) override;
-		void EndContact(FSEObject* otherObject, b2Contact* contact) override;
-		void PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold) override;
-		void PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse) override;
+		void BeginContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact) override;
+		void EndContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact) override;
+		void PreSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2Manifold* oldManifold) override;
+		void PostSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2ContactImpulse* impulse) override;
 
 		bool destroy() override;
 	protected:
-		void BeginContactComponents(FSEObject* otherObject, b2Contact* contact) override;
-		void EndContactComponents(FSEObject* otherObject, b2Contact* contact) override;
-		void PreSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold) override;
-		void PostSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse) override;
+		void BeginContactComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact) override;
+		void EndContactComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact) override;
+		void PreSolveComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2Manifold* oldManifold) override;
+		void PostSolveComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2ContactImpulse* impulse) override;
 
 	private:
 		v8::Persistent < v8::Object, v8::CopyablePersistentTraits<v8::Object>> child_;

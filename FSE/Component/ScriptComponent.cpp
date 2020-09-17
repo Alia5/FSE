@@ -46,7 +46,7 @@ namespace fse
 		}
 	}
 
-	void ScriptComponent::BeginContact(FSEObject* otherObject, b2Contact* contact)
+	void ScriptComponent::BeginContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -59,7 +59,7 @@ namespace fse
 		}
 	}
 
-	void ScriptComponent::EndContact(FSEObject* otherObject, b2Contact* contact)
+	void ScriptComponent::EndContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -72,7 +72,7 @@ namespace fse
 		}
 	}
 
-	void ScriptComponent::PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold)
+	void ScriptComponent::PreSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2Manifold* oldManifold)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());
@@ -85,7 +85,7 @@ namespace fse
 		}
 	}
 
-	void ScriptComponent::PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
+	void ScriptComponent::PostSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
 	{
 		auto iso = v8::Isolate::GetCurrent();
 		auto hscope = v8::HandleScope(v8::Isolate::GetCurrent());

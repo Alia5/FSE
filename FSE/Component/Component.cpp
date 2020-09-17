@@ -43,19 +43,19 @@ namespace fse
 		object_ = std::shared_ptr<FSEObject>(nullptr);
 	}
 
-	void Component::BeginContact(FSEObject* otherObject, b2Contact* contact)
+	void Component::BeginContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 	}
 
-	void Component::EndContact(FSEObject* otherObject, b2Contact* contact)
+	void Component::EndContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 	}
 
-	void Component::PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold)
+	void Component::PreSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2Manifold* oldManifold)
 	{
 	}
 
-	void Component::PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
+	void Component::PostSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
 	{
 	}
 

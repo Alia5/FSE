@@ -106,14 +106,14 @@ namespace fse
 		 * \param otherObject Ptr to other object
 		 * \param contact Ptr to b2Contact class
 		 */
-		virtual void BeginContact(FSEObject* otherObject, b2Contact* contact);
+		virtual void BeginContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact);
 		/*!
 		* \brief Called on Contact end
 		* Refer to Box2D doc
 		* \param otherObject Ptr to other object
 		* \param contact Ptr to b2Contact class
 		*/
-		virtual void EndContact(FSEObject* otherObject, b2Contact* contact);
+		virtual void EndContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact);
 		/*!
 		* \brief Called before solving collision
 		* Refer to Box2D doc
@@ -122,7 +122,7 @@ namespace fse
 		* \param contact Ptr to b2Contact class
 		* \param oldManifold Ptr to old contact manifold
 		*/
-		virtual void PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold);
+		virtual void PreSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2Manifold* oldManifold);
 		/*!
 		* \brief Called after solving collision
 		* Refer to Box2D doc
@@ -131,7 +131,7 @@ namespace fse
 		* \param contact Ptr to b2Contact class
 		* \param impulse Ptr to contact impulse
 		*/
-		virtual void PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
+		virtual void PostSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
 
 		/*!
 		 * Returns Ptr to scene the object lives in
@@ -228,14 +228,14 @@ namespace fse
 		* \param otherObject Ptr to other object
 		* \param contact Ptr to b2Contact class
 		*/
-		virtual void BeginContactComponents(FSEObject* otherObject, b2Contact* contact);
+		virtual void BeginContactComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact);
 		/*!
 		* \brief Calls callback for all components - Called on Contact end
 		* Refer to Box2D doc
 		* \param otherObject Ptr to other object
 		* \param contact Ptr to b2Contact class
 		*/
-		virtual void EndContactComponents(FSEObject* otherObject, b2Contact* contact);
+		virtual void EndContactComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact);
 		/*!
 		* \brief Calls callback for all components - Called before solving collision
 		* Refer to Box2D doc
@@ -244,7 +244,7 @@ namespace fse
 		* \param contact Ptr to b2Contact class
 		* \param oldManifold Ptr to old contact manifold
 		*/
-		virtual void PreSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold);
+		virtual void PreSolveComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2Manifold* oldManifold);
 		/*!
 		* \brief Calls callback for all components -  Called after solving collision
 		* Refer to Box2D doc
@@ -253,7 +253,7 @@ namespace fse
 		* \param contact Ptr to b2Contact class
 		* \param impulse Ptr to contact impulse
 		*/
-		virtual void PostSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
+		virtual void PostSolveComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2ContactImpulse* impulse);
 
 		//chaiscript::ChaiScript* getChai() const;
 

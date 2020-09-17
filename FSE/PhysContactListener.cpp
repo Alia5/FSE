@@ -12,52 +12,65 @@ namespace fse
 
 	void PhysContactListener::BeginContact(b2Contact* contact)
 	{
-		FSEObject * objectA = static_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		FSEObject * objectB = static_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
-
-		if (objectA != nullptr && objectB != nullptr)
+		auto rawObjectA = reinterpret_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		auto rawObjectB = reinterpret_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		if (rawObjectA != nullptr && rawObjectB != nullptr)
 		{
-			objectA->BeginContact(objectB, contact);
-			objectB->BeginContact(objectA, contact);
+			const auto objectA = rawObjectA->weak_from_this();
+			const auto objectB = rawObjectB->weak_from_this();
+			if (!objectA.expired() && !objectB.expired())
+			{
+				objectA.lock()->BeginContact(objectB, contact);
+				objectB.lock()->BeginContact(objectA, contact);
+			}
 		}
-
 	}
 
 	void PhysContactListener::EndContact(b2Contact* contact)
 	{
-		FSEObject * objectA = static_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		FSEObject * objectB = static_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
-
-		if (objectA != nullptr && objectB != nullptr)
+		auto rawObjectA = reinterpret_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		auto rawObjectB = reinterpret_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		if (rawObjectA != nullptr && rawObjectB != nullptr)
 		{
-			objectA->EndContact(objectB, contact);
-			objectB->EndContact(objectA, contact);
+			const auto objectA = rawObjectA->weak_from_this();
+			const auto objectB = rawObjectB->weak_from_this();
+			if (!objectA.expired() && !objectB.expired())
+			{
+				objectA.lock()->EndContact(objectB, contact);
+				objectB.lock()->EndContact(objectA, contact);
+			}
 		}
-
 	}
 
 	void PhysContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 	{
-		FSEObject * objectA = static_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		FSEObject * objectB = static_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
-		
-		if (objectA != nullptr && objectB != nullptr)
+		auto rawObjectA = reinterpret_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		auto rawObjectB = reinterpret_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		if (rawObjectA != nullptr && rawObjectB != nullptr)
 		{
-			objectA->PreSolve(objectB, contact, oldManifold);
-			objectB->PreSolve(objectA, contact, oldManifold);
+			const auto objectA = rawObjectA->weak_from_this();
+			const auto objectB = rawObjectB->weak_from_this();
+			if (!objectA.expired() && !objectB.expired())
+			{
+				objectA.lock()->PreSolve(objectB, contact, oldManifold);
+				objectB.lock()->PreSolve(objectA, contact, oldManifold);
+			}
 		}
-
 	}
 
 	void PhysContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
 	{
-		FSEObject * objectA = static_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		FSEObject * objectB = static_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
-		
-		if (objectA != nullptr && objectB != nullptr)
+		auto rawObjectA = reinterpret_cast<FSEObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		auto rawObjectB = reinterpret_cast<FSEObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		if (rawObjectA != nullptr && rawObjectB != nullptr)
 		{
-			objectA->PostSolve(objectB, contact, impulse);
-			objectB->PostSolve(objectA, contact, impulse);
+			const auto objectA = rawObjectA->weak_from_this();
+			const auto objectB = rawObjectB->weak_from_this();
+			if (!objectA.expired() && !objectB.expired())
+			{
+				objectA.lock()->PostSolve(objectB, contact, impulse);
+				objectB.lock()->PostSolve(objectA, contact, impulse);
+			}
 		}
 
 	}

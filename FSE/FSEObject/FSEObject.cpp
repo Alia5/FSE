@@ -54,22 +54,22 @@ namespace fse
 		return sf::FloatRect(std::trunc(v.getCenter().x), std::trunc(v.getCenter().y), 1, 1);
 	}
 
-	void FSEObject::BeginContact(FSEObject* otherObject, b2Contact* contact)
+	void FSEObject::BeginContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 		BeginContactComponents(otherObject, contact);
 	}
 
-	void FSEObject::EndContact(FSEObject* otherObject, b2Contact* contact)
+	void FSEObject::EndContact(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 		EndContactComponents(otherObject, contact);
 	}
 
-	void FSEObject::PreSolve(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold)
+	void FSEObject::PreSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2Manifold* oldManifold)
 	{
 		PreSolveComponents(otherObject, contact, oldManifold);
 	}
 
-	void FSEObject::PostSolve(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
+	void FSEObject::PostSolve(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
 	{
 		PostSolveComponents(otherObject, contact, impulse);
 	}
@@ -157,25 +157,25 @@ namespace fse
 			component->update(deltaTime);
 	}
 
-	void FSEObject::BeginContactComponents(FSEObject* otherObject, b2Contact* contact)
+	void FSEObject::BeginContactComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 		for (auto& component : components_)
 			component->BeginContact(otherObject, contact);
 	}
 
-	void FSEObject::EndContactComponents(FSEObject* otherObject, b2Contact* contact)
+	void FSEObject::EndContactComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact)
 	{
 		for (auto& component : components_)
 			component->EndContact(otherObject, contact);
 	}
 
-	void FSEObject::PreSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2Manifold* oldManifold)
+	void FSEObject::PreSolveComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2Manifold* oldManifold)
 	{
 		for (auto& component : components_)
 			component->PreSolve(otherObject, contact, oldManifold);
 	}
 
-	void FSEObject::PostSolveComponents(FSEObject* otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
+	void FSEObject::PostSolveComponents(std::weak_ptr<FSEObject> otherObject, b2Contact* contact, const b2ContactImpulse* impulse)
 	{
 		for (auto& component : components_)
 			component->PostSolve(otherObject, contact, impulse);
@@ -228,7 +228,7 @@ namespace fse
 		FSEObject_class.function("isPendingKill", static_cast<bool(FSEObject::*)() const>(&FSEObject::isPendingKill));
 		FSEObject_class.function("setTimedKill", static_cast<void(FSEObject::*)()>(&FSEObject::setTimedKill));
 		FSEObject_class.function("getPosition", static_cast<sf::Vector2f(FSEObject::*)()>(&FSEObject::getPosition));
-		FSEObject_class.function("setPosition", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](FSEObject* object, float x, float y)
+		FSEObject_class.function("setPosition", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](std::weak_ptr<FSEObject> object, float x, float y)
 			{
 				v8::Isolate* isolate = args.GetIsolate();
 				auto object = v8pp::from_v8<std::shared_ptr<FSEObject>>(isolate, args.This());
@@ -243,14 +243,14 @@ namespace fse
 		FSEObject_class.function("destroy", static_cast<bool(FSEObject::*)()>(&FSEObject::destroy));
 		FSEObject_class.function("getScene", static_cast<Scene * (FSEObject::*)() const>(&FSEObject::getScene));
 		FSEObject_class.function("attachComponent", static_cast<std::weak_ptr<Component>(FSEObject::*)(std::shared_ptr<Component>)>(&FSEObject::attachComponent));
-		FSEObject_class.function("detachComponent", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](FSEObject* object, float x, float y)
+		FSEObject_class.function("detachComponent", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](std::weak_ptr<FSEObject> object, float x, float y)
 			{
 				v8::Isolate* isolate = args.GetIsolate();
 				auto object = v8pp::from_v8<std::shared_ptr<FSEObject>>(isolate, args.This());
 				const auto component = v8pp::from_v8<std::shared_ptr<Component>>(isolate, args[0]);
 				object->detachComponent(component.get());
 			});
-		FSEObject_class.function("getComponents", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](const FSEObject* object)
+		FSEObject_class.function("getComponents", [](v8::FunctionCallbackInfo<v8::Value> const& args) //[](const std::weak_ptr<FSEObject> object)
 			{
 				v8::Isolate* isolate = args.GetIsolate();
 				const auto object = v8pp::from_v8<std::shared_ptr<FSEObject>>(isolate, args.This());

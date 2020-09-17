@@ -11,40 +11,40 @@
 template <typename... Args>
 class ConnectionItem
 {
-	using Slot = std::function<void(Args...)>;
+    using Slot = std::function<void(Args...)>;
 public:
-	ConnectionItem(Slot slot) : slot_(slot)
-	{
-		connected_ = true;
-	}
+    ConnectionItem(Slot slot) : slot_(slot)
+    {
+        connected_ = true;
+    }
 
-	~ConnectionItem()
-	{
-		connected_ = false;
-	}
+    ~ConnectionItem()
+    {
+        connected_ = false;
+    }
 
-	void operator()(Args... args)
-	{
-		if (connected_ && slot_)
-			slot_(args...);
-	}
+    void operator()(Args... args)
+    {
+        if (connected_ && slot_)
+            slot_(args...);
+    }
 
-	bool isConnected() const
-	{
-		return connected_;
-	}
+    bool isConnected() const
+    {
+        return connected_;
+    }
 
-	void disconnect()
-	{
-		connected_ = false;
-	}
+    void disconnect()
+    {
+        connected_ = false;
+    }
 
 private:
 
-	bool connected_ = false;
+    bool connected_ = false;
 
-	Slot slot_;
-	
+    Slot slot_;
+    
 
 };
 
@@ -57,78 +57,78 @@ class SConnection;
 template<typename... Args>
 class Connection
 {
-	using Item = std::shared_ptr<ConnectionItem<Args...>>;
+    using Item = std::shared_ptr<ConnectionItem<Args...>>;
 public:
 
-	Connection() : item_(nullptr)
-	{
+    Connection() : item_(nullptr)
+    {
 
-	}
+    }
 
-	Connection(Item item) : item_(item)
-	{
+    Connection(Item item) : item_(item)
+    {
 
-	}
+    }
 
-	~Connection()
-	{
+    ~Connection()
+    {
 
-	}
+    }
 
-	bool isConnected() const
-	{
-		if (item_ == nullptr)
-			return false;
-		return item_->isConnected();
-	}
+    bool isConnected() const
+    {
+        if (item_ == nullptr)
+            return false;
+        return item_->isConnected();
+    }
 
 private:
-	Item item_;
+    Item item_;
 
-	void disconnect()
-	{
-		item_->disconnect();
-	}
+    void disconnect()
+    {
+        item_->disconnect();
+    }
 
-	bool operator==(const Item &item)
-	{
-		return item == item_;
-	}
+    bool operator==(const Item &item)
+    {
+        return item == item_;
+    }
 
-	friend class Signal<Args...>;
-	friend class SConnection<Args...>;
+    friend class Signal<Args...>;
+    friend class SConnection<Args...>;
 
 };
 
 template<typename... Args>
 class SConnection
 {
-	using Connection = Connection<Args...>;
+    using Connection = Connection<Args...>;
 
 public:
 
-	SConnection() : signal_(nullptr)
-	{
+    SConnection() : signal_(nullptr)
+    {
 
-	}
+    }
 
-	SConnection(Signal<Args...>& signal, Connection connection) : connection_(connection), signal_(&signal)
-	{
-		has_connection_ = true;
-	}
+    SConnection(Signal<Args...>& signal, Connection connection) : connection_(connection), signal_(&signal)
+    {
+        has_connection_ = true;
+    }
 
-	~SConnection()
-	{
-		if (has_connection_ && signal_)
-		{
-			signal_->disconnect(connection_);
-		}
-	}
+    ~SConnection()
+    {
+        if (has_connection_ && signal_)
+        {
+            signal_->disconnect(connection_);
+        }
+    }
 
 private:
-	bool has_connection_ = false;
-	Connection connection_;
-	Signal<Args...> *signal_;
+    bool has_connection_ = false;
+    Connection connection_;
+    Signal<Args...> *signal_;
 };
 
 /*!
@@ -180,85 +180,85 @@ private:
 template <typename... Args>
 class Signal
 {
-	using Item = std::shared_ptr<ConnectionItem<Args...>>;
+    using Item = std::shared_ptr<ConnectionItem<Args...>>;
 
 public:
 
-	using Slot = std::function<void(Args...)>;
-	using Connection = Connection<Args...>;
-	using ScopedConnection = SConnection<Args...>;
+    using Slot = std::function<void(Args...)>;
+    using Connection = Connection<Args...>;
+    using ScopedConnection = SConnection<Args...>;
 
-	Signal()
-	{
+    Signal()
+    {
 
-	}
+    }
 
-	~Signal()
-	{
-		disconnectAll();
-	}
+    ~Signal()
+    {
+        disconnectAll();
+    }
 
-	template <typename SlotF>
-	Connection connect(SlotF&& slot)
-	{
-		Item item = std::make_shared<ConnectionItem<Args...>>(std::forward<SlotF>(slot));
-		items_.push_back(item);
-		return Connection(item);
-	}
+    template <typename SlotF>
+    Connection connect(SlotF&& slot)
+    {
+        Item item = std::make_shared<ConnectionItem<Args...>>(std::forward<SlotF>(slot));
+        items_.push_back(item);
+        return Connection(item);
+    }
 
-	//Binding with placeholders is tedious :poop:... 
-	//Don't want i.e. this: sig.Connect(std::bind(&DummyObject::test, this, std::placeholders::_1, std::placeholders::_2));
-	template<class O, typename R, typename ... A>
-	Connection connect(O* o, R(O::*f)(A...))
-	{
-		Item item = std::make_shared<ConnectionItem<Args...>>(std::forward<Slot>([=](A... args) { return (o->*f)(args...); }));
-		items_.push_back(item);
-		return Connection(item);
-	}
+    //Binding with placeholders is tedious :poop:... 
+    //Don't want i.e. this: sig.Connect(std::bind(&DummyObject::test, this, std::placeholders::_1, std::placeholders::_2));
+    template<class O, typename R, typename ... A>
+    Connection connect(O* o, R(O::*f)(A...))
+    {
+        Item item = std::make_shared<ConnectionItem<Args...>>(std::forward<Slot>([=](A... args) { return (o->*f)(args...); }));
+        items_.push_back(item);
+        return Connection(item);
+    }
 
-	void operator()(Args... args)
-	{
-		for (const auto & item : items_)
-		{
-			(*item)(args...);
-		}
-	}
+    void operator()(Args... args)
+    {
+        for (const auto & item : items_)
+        {
+            (*item)(args...);
+        }
+    }
 
-	bool disconnect(Connection &connection)
-	{
+    bool disconnect(Connection &connection)
+    {
 
-		for (const auto & item : items_)
-		{
-			if (connection == item)
-			{
-				connection.disconnect();
-				removeDisconnected();
-				return true;
-			}
+        for (const auto & item : items_)
+        {
+            if (connection == item)
+            {
+                connection.disconnect();
+                removeDisconnected();
+                return true;
+            }
 
-		}
-		return false;
-	}
+        }
+        return false;
+    }
 
 
-	void disconnectAll()
-	{
-		for (const auto & item : items_)
-		{
-			item->disconnect();
-		}
-		items_.clear();
-	}
+    void disconnectAll()
+    {
+        for (const auto & item : items_)
+        {
+            item->disconnect();
+        }
+        items_.clear();
+    }
 
 private:
-	std::list<Item> items_;
+    std::list<Item> items_;
 
-	void removeDisconnected()
-	{
-		items_.erase(std::remove_if(items_.begin(), items_.end(), [](Item &item) {
-			return !item->isConnected();
-		}), items_.end());
-	}
+    void removeDisconnected()
+    {
+        items_.erase(std::remove_if(items_.begin(), items_.end(), [](Item &item) {
+            return !item->isConnected();
+        }), items_.end());
+    }
 };
 
 #endif // !SIGNALS_H
