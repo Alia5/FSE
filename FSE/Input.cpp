@@ -203,7 +203,7 @@ namespace fse
 		{
 			if (key_map_.count(key) && !text_input_enabled_ && !ImGui::IsAnyItemActive())
 				return sf::Keyboard::isKeyPressed(key_map_[key]);
-			if (mouse_button_map_.count(key) && !ImGui::IsMouseHoveringAnyWindow())
+			if (mouse_button_map_.count(key) && !ImGui::IsAnyWindowHovered())
 				return sf::Mouse::isButtonPressed(mouse_button_map_[key]);
 			if (joy_stick_button_map_.count(key))
 			{
@@ -229,7 +229,7 @@ namespace fse
 					return true;
 				}
 			}
-			if (mouse_button_map_.count(key) && !ImGui::IsMouseHoveringAnyWindow())
+			if (mouse_button_map_.count(key) && !ImGui::IsAnyWindowHovered())
 			{
 				bool isPressed = sf::Mouse::isButtonPressed(mouse_button_map_[key]);
 				bool wasPressed = was_mouse_pressed_map_[mouse_button_map_[key]];
