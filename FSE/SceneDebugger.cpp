@@ -112,7 +112,7 @@ namespace fse
 			for (auto it = objects->rbegin(); it != objects->rend(); ++it)
 			{
 				auto aabbs = it->get()->GetAABBs();
-				sf::RenderWindow* window = scene_->getApplication()->getWindow();
+				sf::RenderWindow* window = Application::get()->getWindow();
 				sf::RenderTarget* target = scene_->getRenderTarget();
 				if (aabbs.contains(
 					target->mapPixelToCoords(sf::Mouse::getPosition(*window))))
@@ -216,7 +216,7 @@ namespace fse
 								{
 									mouse_spawn_mode_ = true;
 									mouse_spawn_timeout_ = false;
-									sf::RenderWindow* window = scene_->getApplication()->getWindow();
+									sf::RenderWindow* window = Application::get()->getWindow();
 									sf::Mouse::setPosition(sf::Vector2i(window->getSize().x / 2, window->getSize().y / 2), *window);
 								}
 								ImGui::SameLine();
@@ -225,7 +225,7 @@ namespace fse
 									mouse_spawn_mode_ = true;
 									mouse_spawn_timeout_ = false;
 									mouse_spawn_until_right = true;
-									sf::RenderWindow* window = scene_->getApplication()->getWindow();
+									sf::RenderWindow* window = Application::get()->getWindow();
 									sf::Mouse::setPosition(sf::Vector2i(window->getSize().x / 2, window->getSize().y / 2), *window);
 								}
 
@@ -245,7 +245,7 @@ namespace fse
 									}
 
 									sf::RenderTarget* target = scene_->getRenderTarget();
-									sf::RenderWindow* window = scene_->getApplication()->getWindow();
+									sf::RenderWindow* window = Application::get()->getWindow();
 									auto mousePos = target->mapPixelToCoords(sf::Mouse::getPosition(*window)) * scene_->getMetersPerPixel();
 
 									ImGui::Text(std::string("SPAWNPOS: X=" + std::to_string(mousePos.x) + ", Y=" + std::to_string(mousePos.y)).data());
@@ -636,7 +636,7 @@ namespace fse
 			if (ImGui::Button(std::string("To Mouse position##" + propname).data()))
 			{
 				vector_to_mouse_[propname] = true;
-				sf::RenderWindow* window = scene_->getApplication()->getWindow();
+				sf::RenderWindow* window = Application::get()->getWindow();
 				sf::Mouse::setPosition(sf::Vector2i(window->getSize().x / 2, window->getSize().y / 2), *window);
 			}
 
@@ -650,7 +650,7 @@ namespace fse
 				ImGui::Text("Leftclick to end");
 
 				sf::RenderTarget* target = scene_->getRenderTarget();
-				sf::RenderWindow* window = scene_->getApplication()->getWindow();
+				sf::RenderWindow* window = Application::get()->getWindow();
 				val = target->mapPixelToCoords(sf::Mouse::getPosition(*window)) * scene_->getMetersPerPixel();
 				variant = rttr::variant(val);
 			}

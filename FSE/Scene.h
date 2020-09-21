@@ -19,7 +19,6 @@ constexpr auto FSE_DEGTORAD = 0.01745329f;
 
 namespace fse
 {
-	class Application;
 	class FSEObject;
 	class FSELightWorld;
 
@@ -29,8 +28,8 @@ namespace fse
 	class Scene 
 	{
 	public:
-		explicit Scene(Application *application);
-		explicit Scene(Application *application, float pixel_meter_ratio);
+		explicit Scene();
+		explicit Scene(float pixel_meter_ratio);
 		~Scene();
 
 		/*!
@@ -185,14 +184,9 @@ namespace fse
 		void notifyResize();
 
 		/*!
-		 * \return Ptr to Application
-		 */
-		Application* getApplication() const;
-
-		/*!
 		 * \return Ptr to FSELightWorld
 		 */
-		FSELightWorld* getLightWorld() const;
+		std::shared_ptr<FSELightWorld> getLightWorld() const;
 
 		/*!
 		 * Refer to Box2D docu
@@ -239,12 +233,11 @@ namespace fse
 
 		float elapsed_time_ = 0;
 
-		Application *application_;
-		Signal<>::Connection win_resize_signal_connection_;
+		Signal<>::ScopedConnection win_resize_signal_connection_;
 
 		NetworkHandler* network_handler_ = nullptr;
 		
-		FSELightWorld* light_world_ = nullptr;
+		std::shared_ptr<FSELightWorld> light_world_ = nullptr;
 
 		const int32 phys_velocy_iters_ = 16;
 		const int32 phys_pos_iters_ = 6;

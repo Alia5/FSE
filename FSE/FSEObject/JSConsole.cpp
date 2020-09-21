@@ -26,22 +26,27 @@ namespace fse
 	{
 		input_data_[0] = 0;
 
-		win_size_ = scene_->getApplication()->getWindow()->getSize();
-		on_resize_connection_ = scene_->getApplication()->on_window_resized_.connect([this]()
-		{
-			win_size_ = scene_->getApplication()->getWindow()->getSize();
-		});
+		auto app = Application::get();
+
+		win_size_ = app->getWindow()->getSize();
+		on_resize_connection_ = Signal<>::ScopedConnection(
+			app->on_window_resized_, 
+			    app->on_window_resized_.connect([this]()
+		    {
+			    win_size_ = Application::get()->getWindow()->getSize();
+		    })
+		);
 		addDefaultFuns();
 		old_ = std::cerr.rdbuf(output_data_.rdbuf());
-		on_v8_ctx_init_connection_ =
-			scene_->getApplication()->on_v8_ctx_init_.connect(this, &JSConsole::addDefaultFuns);
+		on_v8_ctx_init_connection_ = Signal<>::ScopedConnection(
+			app->on_v8_ctx_init_,
+			app->on_v8_ctx_init_.connect(this, &JSConsole::addDefaultFuns)
+		);
 	}
 
 	void JSConsole::onDespawn()
 	{
 		std::cerr.rdbuf(old_);
-		scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
-		scene_->getApplication()->on_v8_ctx_init_.disconnect(on_v8_ctx_init_connection_);
 	}
 
 	void JSConsole::update(float deltaTime)
@@ -79,7 +84,9 @@ namespace fse
 					ImGuiInputTextFlags_ReadOnly);
 				if (output_to_bottom_)
 				{
-					ImGui::BeginChild(ImGui::GetID("##ScriptOutput"));
+					ImGui::BeginChild("##ScriptOutput",
+						ImVec2(ImGui::GetCurrentWindow()->Size.x - 15, ImGui::GetCurrentWindow()->Size.y - (13 * newlines + 75))
+					);
 					ImGui::SetScrollY(ImGui::GetScrollMaxY());
 					ImGui::EndChild();
 				}

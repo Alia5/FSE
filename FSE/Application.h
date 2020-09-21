@@ -46,6 +46,9 @@ namespace fse
 	 */
 	class Application
 	{
+	private:
+		static Application* instance_;
+
 	PUBLIC_SIGNALS:
 		Signal<> on_window_resized_;
 		Signal<> on_v8_ctx_init_;
@@ -107,11 +110,13 @@ namespace fse
 		fse::Scene& getRootScene();
 		
 		virtual void initV8Ctx();
+
+		static Application* get();
 		
 
 	protected:
 		Input input_;
-		Scene root_scene_;
+		std::unique_ptr<Scene> root_scene_;
 		NetworkHandler network_handler_;
 		fse::AssetLoader asset_loader_;
 
@@ -138,6 +143,8 @@ namespace fse
 		std::unique_ptr<v8::Platform> platform_;
 		std::unique_ptr<FSEInspector> fse_inspector_;
 
+		FSE_V8_ENABLE(Application);
+		FSE_V8_REGISTRATION_FRIEND
 
 	};
 }

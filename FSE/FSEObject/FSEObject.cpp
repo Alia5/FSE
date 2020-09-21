@@ -14,7 +14,7 @@ namespace fse
 	}
 
 
-	FSEObject::FSEObject(const sf::Vector2f spawnPos): scene_(nullptr), input_(nullptr)
+	FSEObject::FSEObject(const sf::Vector2f spawnPos): scene_(nullptr), input_(Application::get()->getInput())
 	{
 		position_ = spawnPos;
 	}
@@ -107,7 +107,6 @@ namespace fse
 	void FSEObject::spawn(int id, Scene* scene)
 	{
 		scene_ = scene;
-		input_ = scene->getApplication()->getInput();
 		id_ = id;
 		spawned();
 		spawned_signal_(this);

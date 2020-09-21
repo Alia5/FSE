@@ -712,4 +712,28 @@ namespace fse
 			return socket.receive(packet);
 		return sf::Socket::NotReady;
 	}
+
+	FSE_V8_REGISTER(NetworkHandler)
+	{
+		v8::HandleScope handle_scope(isolate);
+		v8pp::class_<NetworkHandler> NetworkHandler_class(isolate);
+		NetworkHandler_class.function("setServer", &NetworkHandler::setServer);
+		NetworkHandler_class.function("setMaxConnections", &NetworkHandler::setMaxConnections);
+		NetworkHandler_class.function("setServerIP", &NetworkHandler::setServerIP);
+		NetworkHandler_class.function("getPing", &NetworkHandler::getPing);
+		NetworkHandler_class.function("awaitConnections", &NetworkHandler::awaitConnections);
+		NetworkHandler_class.function("stopAwaitingConnections", &NetworkHandler::stopAwaitingConnections);
+		NetworkHandler_class.function("disconnectAll", &NetworkHandler::disconnectAll);
+		NetworkHandler_class.function("isConnected", &NetworkHandler::isConnected);
+		NetworkHandler_class.function("connect", &NetworkHandler::connect);
+		NetworkHandler_class.function("disconnect", &NetworkHandler::disconnect);
+		NetworkHandler_class.function("getConnectedClients", &NetworkHandler::getConnectedClients);
+		// NetworkHandler_class.function("updateSignals", &NetworkHandler::updateSignals);
+		NetworkHandler_class.function("sendPacket", &NetworkHandler::sendPacket);
+		NetworkHandler_class.function("getUdpPackets", &NetworkHandler::getUdpPackets);
+		NetworkHandler_class.function("getTcpPackets", &NetworkHandler::getTcpPackets);
+
+		module.class_("NetworkHandler", NetworkHandler_class);
+	}
+
 }

@@ -187,7 +187,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\extlibs\SFML-2.5.1-x64\include;..\extlibs\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-x64\include;..\imgui-sfml-config\;..\chaiscript\include\;..\ChaiScript_Extras\include\;..\ChaiScript_Extras_Liquidfun\include\;..\ChaiScript_Extras_SFML\include\;..\imgui\;..\imgui-SFML\;..\rapidjson\include;..\poly2tri\poly2tri;..\v8pp;..\extlibs\v8_monolith\include;..\websocketpp;..\extlibs\asio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\extlibs\SFML-2.5.1-x64\include;..\extlibs\liquidfun\liquidfun\Box2D;..\extlibs\rttr-0.9.6-x64\include;..\imgui-sfml-config\;..\imgui\;..\imgui-SFML\;..\rapidjson\include;..\poly2tri\poly2tri;..\v8pp;..\extlibs\v8_monolith\include;..\websocketpp;..\extlibs\asio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -263,6 +263,7 @@
     <ClInclude Include="extv8bind\sfmlconvert.h" />
     <ClInclude Include="Signals.h" />
     <ClInclude Include="FSEObject\TileMap.h" />
+    <ClInclude Include="UUID.h" />
     <ClInclude Include="V8Debug\v8DebugUtils.h" />
     <ClInclude Include="V8Debug\v8Inspector.h" />
     <ClInclude Include="V8Debug\v8InspectorChannel.h" />

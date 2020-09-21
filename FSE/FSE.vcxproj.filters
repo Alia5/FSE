@@ -315,6 +315,9 @@
     <ClInclude Include="FSEObject\ScriptObject.h">
       <Filter>Header Files\FSEObject</Filter>
     </ClInclude>
+    <ClInclude Include="UUID.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">

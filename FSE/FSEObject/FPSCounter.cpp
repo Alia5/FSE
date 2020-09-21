@@ -83,18 +83,22 @@ namespace fse
 
 	void FPSCounter::spawned()
 	{
-		counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(scene_->getApplication()->getWindow()->getSize().x),
-			static_cast<float>(scene_->getApplication()->getWindow()->getSize().y)));
-		on_resize_connection_ = scene_->getApplication()->on_window_resized_.connect([this]()
-		{
-			counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(scene_->getApplication()->getWindow()->getSize().x),
-				static_cast<float>(scene_->getApplication()->getWindow()->getSize().y)));
-		});
+		auto app = Application::get();
+		auto window = app->getWindow();
+		counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(window->getSize().x),
+			static_cast<float>(window->getSize().y)));
+		on_resize_connection_ = Signal<>::ScopedConnection(
+			app->on_window_resized_,
+			    app->on_window_resized_.connect([this, window]()
+		    {
+			    counter_view_ = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(window->getSize().x),
+				    static_cast<float>(window->getSize().y)));
+		    })
+		);
 	}
 
 	void FPSCounter::onDespawn()
 	{
-		scene_->getApplication()->on_window_resized_.disconnect(on_resize_connection_);
 	}
 
 	void FPSCounter::setShowDetailed(bool detailed)

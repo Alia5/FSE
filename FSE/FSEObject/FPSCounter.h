@@ -41,7 +41,7 @@ namespace fse
 		float smoothing_ = 0.58f;
 		sf::Clock updclock_;
 
-		Signal<>::Connection on_resize_connection_;
+		Signal<>::ScopedConnection on_resize_connection_;
 
 		RTTR_ENABLE(fse::FSEObject)
 		RTTR_REGISTRATION_FRIEND

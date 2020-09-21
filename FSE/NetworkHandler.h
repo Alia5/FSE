@@ -6,6 +6,7 @@
 #include <mutex>
 #include "Signals.h"
 #include <atomic>
+#include "FSEV8Lib.h"
 
 namespace fse
 {
@@ -139,7 +140,9 @@ namespace fse
 		//which clients are disconnected - as a client this vector is always size of 1 with value 1
 		OnDisconnectedSignal onDisconnected;
 
+	private:
 
+		FSE_V8_ENABLE(NetworkHandler);
 
 	};
 }

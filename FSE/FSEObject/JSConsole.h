@@ -42,12 +42,12 @@ namespace fse
 		std::vector<std::string> input_history_;
 		int history_pos_;
 
-		Signal<>::Connection on_resize_connection_;
+		Signal<>::ScopedConnection on_resize_connection_;
 		sf::Vector2u win_size_;
 
 		std::streambuf* old_;
 
-		Signal<>::Connection on_v8_ctx_init_connection_;
+		Signal<>::ScopedConnection on_v8_ctx_init_connection_;
 
 	};
 }

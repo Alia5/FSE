@@ -5,28 +5,71 @@
 #include <list>
 #include <memory>
 
+#include "FSEV8Lib.h"
 
 #define PUBLIC_SIGNALS public
+
 
 template <typename... Args>
 class ConnectionItem
 {
     using Slot = std::function<void(Args...)>;
 public:
-    ConnectionItem(Slot slot) : slot_(slot)
+    explicit ConnectionItem(Slot slot) : slot_(slot)
     {
+        connected_ = true;
+    }
+
+    explicit ConnectionItem(
+       v8::Local<v8::Function>& js_cb
+    ) : slot_(nullptr)
+    {
+        js_cb_.Reset(v8::Isolate::GetCurrent(),js_cb);
         connected_ = true;
     }
 
     ~ConnectionItem()
     {
-        connected_ = false;
+        disconnect();
     }
 
     void operator()(Args... args)
     {
         if (connected_ && slot_)
+        {
             slot_(args...);
+            return;
+        }
+        if (connected_ && !js_cb_.IsEmpty())
+        {
+            const auto iso = v8::Isolate::GetCurrent();
+            v8::HandleScope handle_scope(iso);
+            if (sizeof...(args) == 0)
+            {
+                js_cb_.Get(iso)->Call(
+                    iso->GetCurrentContext(),
+                    v8::Undefined(iso),
+                    0,
+                    nullptr
+                );
+                return;
+            }
+            std::vector<v8::Local<v8::Value>> argv;
+            argv.reserve(sizeof...(args));
+            (argv.push_back(v8pp::to_v8(iso, args)), ...);
+
+            js_cb_.Get(iso)->Call(
+                iso->GetCurrentContext(),
+                v8::Undefined(iso),
+                sizeof...(args),
+                argv.data()
+            );
+        }
+    }
+
+    bool isJs() const
+    {
+        return !js_cb_.IsEmpty();
     }
 
     bool isConnected() const
@@ -37,15 +80,14 @@ public:
     void disconnect()
     {
         connected_ = false;
+        js_cb_.Reset();
     }
 
 private:
 
     bool connected_ = false;
-
     Slot slot_;
-    
-
+    v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> js_cb_;
 };
 
 template<typename... Args>
@@ -98,7 +140,18 @@ private:
     friend class Signal<Args...>;
     friend class SConnection<Args...>;
 
+    static void v8_init_func(fse::Application* app, v8::Isolate* isolate, v8pp::module& module)
+    {
+        v8::HandleScope handle_scope(isolate);
+        v8pp::class_<Connection<Args...>> ConnectionClass(isolate);
+        ConnectionClass.auto_wrap_objects();
+        ConnectionClass.function("isConnected", &Connection<Args...>::isConnected);
+        module.class_(typeid(Connection<Args...>).name(), ConnectionClass);
+    }
+    inline static v8_init_helper init_helper = v8_init_helper(&Connection<Args...>::v8_init_func);
+
 };
+
 
 template<typename... Args>
 class SConnection
@@ -117,12 +170,31 @@ public:
         has_connection_ = true;
     }
 
+    SConnection(SConnection&& other) noexcept
+        : has_connection_(std::exchange(other.has_connection_, nullptr)),
+        signal_(std::exchange(other.signal_, nullptr)),
+        connection_(std::exchange(other.connection_, nullptr))
+    {}
+
+
     ~SConnection()
     {
         if (has_connection_ && signal_)
         {
             signal_->disconnect(connection_);
         }
+    }
+
+    SConnection& operator=(SConnection&& other)
+    {
+        if (this != &other)
+        {
+            std::swap(has_connection_, other.has_connection_);
+            std::swap(signal_, other.signal_);
+            std::swap(connection_, other.connection_);
+            return *this;
+        }
+        return *this;
     }
 
 private:
@@ -250,6 +322,16 @@ public:
         items_.clear();
     }
 
+    void disconnectAllJs()
+    {
+        for (const auto& item : items_)
+        {
+            if (item->isJs())
+                item->disconnect();
+        }
+        removeDisconnected();
+    }
+
 private:
     std::list<Item> items_;
 
@@ -259,6 +341,34 @@ private:
             return !item->isConnected();
         }), items_.end());
     }
+
+
+    Connection connectJs(v8::Local<v8::Function>& slot)
+    {
+        Item item = std::make_shared<ConnectionItem<Args...>>(slot);
+        items_.push_back(item);
+        return Connection(item);
+    }
+
+    FSE_V8_REGISTRATION_FRIEND;
+    static void v8_init_func(fse::Application* app, v8::Isolate* isolate, v8pp::module& module)
+    {
+        v8::HandleScope handle_scope(isolate);
+        v8pp::class_<Signal<Args...>> SignalClass(isolate);
+        SignalClass.auto_wrap_objects();
+        SignalClass.function("connect", [](v8::FunctionCallbackInfo<v8::Value> const& v8_args)
+        {
+            const auto iso = v8_args.GetIsolate();
+            auto This = v8pp::from_v8<Signal<Args...>*>(iso, v8_args.This());
+            v8::EscapableHandleScope scope(iso);
+            auto js_func = v8_args[0].As<v8::Function>();
+            auto connection = This->connectJs(js_func);
+            return scope.Escape(v8pp::to_v8(iso, connection));
+        });
+        SignalClass.function("disconnect", &Signal<Args...>::disconnect);
+        module.class_(typeid(Signal<Args...>).name(), SignalClass);
+    }
+    inline static v8_init_helper init_helper = v8_init_helper(&Signal<Args...>::v8_init_func);
 };
 
 #endif // !SIGNALS_H

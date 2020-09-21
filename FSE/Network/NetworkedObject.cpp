@@ -4,10 +4,9 @@
 
 namespace fse
 {
-	NetworkedObject::NetworkedObject(Scene* scene)
+	NetworkedObject::NetworkedObject() : network_handler_(Application::get()->getNetworkHandler())
 	{
 
-		network_handler_ = scene->getApplication()->getNetworkHandler();
 	}
 
 	void NetworkedObject::netUpdate(float deltaTime)
@@ -49,6 +48,7 @@ namespace fse
 	{
 		network_id_ = net_id;
 	}
+
 
 	bool NetworkedObject::sendUdpPacket(sf::Packet& packet, bool important) const
 	{

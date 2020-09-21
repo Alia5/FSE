@@ -23,7 +23,7 @@ namespace fse
 	{
 		setZOrder(32);
 
-		ground_sheet_texture_ = scene_->getApplication()->getAssetLoader().getTexture(texture_path_);
+		ground_sheet_texture_ = Application::get()->getAssetLoader().getTexture(texture_path_);
 		ground_sheet_texture_->setSmooth(true);
 
 		sprite_ = ltbl::Sprite(scene_->getLightWorld()->getLightSystem());

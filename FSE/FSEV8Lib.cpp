@@ -1,11 +1,5 @@
 #include "FSEV8Lib.h"
-#include "FSEObject/KillVolume.h"
-#include "Lights/FSELightWorld.h"
-#include "FSEObject/FPSCounter.h"
 #include "FSEObject/Timer.h"
-#include "Lights/Light.h"
-#include "Lights/PointLight.h"
-#include "Lights/SpotLight.h"
 #include "Random.h"
 #include "Scene.h"
 #include <functional>

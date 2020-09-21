@@ -14,7 +14,7 @@ namespace fse
 	class NetworkedObject
 	{
 	public:
-		NetworkedObject(Scene* scene);
+		NetworkedObject();
 		virtual ~NetworkedObject() = default;
 		/*!
 		 * Called on host systems \n 
@@ -53,6 +53,7 @@ namespace fse
 		 * \param net_id unique network id for object syncing
 		 */
 		void setNetworkId(uint32_t net_id);
+
 
 		/*!
 		 * \brief Send UDP packet

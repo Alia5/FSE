@@ -19,10 +19,13 @@ declare let process: Process;
 
 declare var global: object;
 
+declare function setTimeout(callback: () => void, millis: number): void;
+
 /// <reference path="sf.d.ts" />
 /// <reference path="lf.d.ts" />
 
  declare namespace fse {
+
     abstract class FSEObject {
         public getID(): number;
         public getPosition(): {x: number, y:number};
@@ -112,6 +115,21 @@ declare var global: object;
         function angle(vec: Vector2): number;
         function angleDegree(vec: Vector2): number;
     }
+
+    class Application {
+        public getWindow(): sf.Window;
+        public getInput(): Input;
+        public getNetworkHandler(): any; // TODO
+        public getAssetLoader(): any; // TODO
+        public getRootScene(): Scene;
+        public setServerClientType(type: number): void;
+        public isServer(): boolean;
+    }
+
+    namespace App {
+        function get(): Application;
+    }
+
 
 }
 

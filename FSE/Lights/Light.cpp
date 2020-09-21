@@ -19,7 +19,7 @@ namespace fse
 
 	Light::Light(Scene* scene, const sf::Vector2f& spawnPos, const std::string& path, bool smooth) : scene_(scene)
 	{
-		light_texture_ = scene->getApplication()->getAssetLoader().getTexture(path);
+		light_texture_ = Application::get()->getAssetLoader().getTexture(path);
 		light_texture_->setSmooth(smooth);
 
 		light_ = scene->getLightWorld()->getLightSystem()->createLightPointEmission();

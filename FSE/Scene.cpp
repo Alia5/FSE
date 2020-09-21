@@ -8,16 +8,19 @@
 namespace fse
 {
 
-	Scene::Scene(Application* application) : render_target_(nullptr), application_(application), phys_world_(phys_gravity_)
+	Scene::Scene() : render_target_(nullptr), phys_world_(phys_gravity_)
 	{
 		phys_world_.SetContactListener(&phys_contact_listener_);
-		win_resize_signal_connection_ = application_->on_window_resized_.connect(this, &Scene::notifyResize);
+		win_resize_signal_connection_ = Signal<>::ScopedConnection(
+			Application::get()->on_window_resized_,
+			Application::get()->on_window_resized_.connect(this, &Scene::notifyResize)
+	    );
 
-		light_world_ = createFSEObject<FSELightWorld>().lock().get();
+		light_world_ = createFSEObject<FSELightWorld>().lock();
 		processPendingSpawns();
 	}
 
-	Scene::Scene(Application* application, float pixel_meter_ratio) : Scene(application)
+	Scene::Scene(float pixel_meter_ratio) : Scene()
 	{
 		pixels_per_meter_ = pixel_meter_ratio;
 		meters_per_pixel_ = 1.f / pixel_meter_ratio;
@@ -25,7 +28,7 @@ namespace fse
 
 	Scene::~Scene()
 	{
-		application_->on_window_resized_.disconnect(win_resize_signal_connection_);
+		// Application::get()->on_window_resized_.disconnect(win_resize_signal_connection_);
 		fse_objects_.clear();
 		pending_object_removals_.clear();
 		pending_object_spawns_.clear();
@@ -163,12 +166,8 @@ namespace fse
 		render_target_->setView(view);
 	}
 
-	Application* Scene::getApplication() const
-	{
-		return application_;
-	}
 
-	FSELightWorld* Scene::getLightWorld() const
+	std::shared_ptr<FSELightWorld> Scene::getLightWorld() const
 	{
 		return light_world_;
 	}
@@ -250,17 +249,7 @@ namespace fse
 		Scene_class.function("getPhysDrawDebug", &Scene::getPhysDrawDebug);
 		Scene_class.function("setPhysDrawDebug", &Scene::setPhysDrawDebug);
 		Scene_class.property("physDrawDebug", &Scene::getPhysDrawDebug, &Scene::setPhysDrawDebug);
-		Scene_class.function("getLightWorld", [](v8::FunctionCallbackInfo<v8::Value> const& args)
-			{
-				v8::Isolate* isolate = args.GetIsolate();
-				const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
-				for (auto& object : *scene->getFSEObjects())
-				{
-					if (auto lw = std::dynamic_pointer_cast<FSELightWorld>(object))
-						return lw;
-				}
-				return std::shared_ptr<FSELightWorld>();
-			});
+		Scene_class.function("getLightWorld", &Scene::getLightWorld);
 		Scene_class.function("getPhysWorld", &Scene::getPhysWorld);
 		Scene_class.function("getPixelsPerMeter", &Scene::getPixelsPerMeter);
 		Scene_class.function("getMetersPerPixel", &Scene::getMetersPerPixel);
@@ -301,12 +290,6 @@ namespace fse
 			}
 			return std::weak_ptr<FSEObject>();
 		});
-		Scene_class.function("getWindow", [](v8::FunctionCallbackInfo<v8::Value> const& args)
-			{
-				v8::Isolate* isolate = args.GetIsolate();
-				const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
-				return  scene->getApplication()->getWindow();
-			});
 		module.class_("Scene", Scene_class);
 	}
 
