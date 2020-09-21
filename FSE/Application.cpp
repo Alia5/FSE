@@ -263,7 +263,6 @@ namespace fse
             {
                 return &app.on_window_resized_;
             });
-
         module.class_("Application", Application_class);
 
         v8pp::module ApplicationModule(isolate);

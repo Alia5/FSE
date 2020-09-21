@@ -11,7 +11,6 @@
 #include "../Scene.h"
 #include "../Input.h"
 #include "../Component/Component.h"
-#include <chaiscript/chaiscript.hpp>
 
 namespace fse
 {

@@ -1,5 +1,6 @@
 #pragma once
 #include "FSEObject.h"
+#include <sstream>
 
 namespace v8 {
 	class TryCatch;

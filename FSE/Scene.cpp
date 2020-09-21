@@ -260,11 +260,14 @@ namespace fse
 				v8::Isolate* isolate = args.GetIsolate();
 				const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
 				const auto object = v8pp::from_v8<std::shared_ptr<fse::FSEObject>>(isolate, args[0]);
+				auto callback = args[1].As<v8::Function>();
 				if (object == nullptr)
 				{
 					throw std::exception("Expected FSEObjectNative");
 				}
-				return static_cast<std::weak_ptr<FSEObject>>(scene->spawnFSEObject(object));
+				if (!callback.IsEmpty())
+					object->spawned_signal_.connectJs(callback);
+				auto weak_obj = static_cast<std::weak_ptr<FSEObject>>(scene->spawnFSEObject(object));
 			});
 		Scene_class.function("getObjects", [](v8::FunctionCallbackInfo<v8::Value> const& args)
 			{

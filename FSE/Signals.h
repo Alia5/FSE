@@ -332,6 +332,13 @@ public:
         removeDisconnected();
     }
 
+    Connection connectJs(v8::Local<v8::Function>& slot)
+    {
+        Item item = std::make_shared<ConnectionItem<Args...>>(slot);
+        items_.push_back(item);
+        return Connection(item);
+    }
+
 private:
     std::list<Item> items_;
 
@@ -340,14 +347,6 @@ private:
         items_.erase(std::remove_if(items_.begin(), items_.end(), [](Item &item) {
             return !item->isConnected();
         }), items_.end());
-    }
-
-
-    Connection connectJs(v8::Local<v8::Function>& slot)
-    {
-        Item item = std::make_shared<ConnectionItem<Args...>>(slot);
-        items_.push_back(item);
-        return Connection(item);
     }
 
     FSE_V8_REGISTRATION_FRIEND;
