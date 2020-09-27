@@ -365,6 +365,7 @@ private:
             return scope.Escape(v8pp::to_v8(iso, connection));
         });
         SignalClass.function("disconnect", &Signal<Args...>::disconnect);
+        SignalClass.function("disconnectAll", &Signal<Args...>::disconnect);
         module.class_(typeid(Signal<Args...>).name(), SignalClass);
     }
     inline static v8_init_helper init_helper = v8_init_helper(&Signal<Args...>::v8_init_func);

@@ -50,5 +50,7 @@ namespace fse
 
 		Signal<>::ScopedConnection on_v8_ctx_init_connection_;
 
+		Input* input_;
+
 	};
 }

@@ -68,7 +68,7 @@ struct v8pp::convert<std::shared_ptr<fse::Scene>>
     {
         if (!is_valid(isolate, value))
         {
-            throw std::invalid_argument("expected FSEObject");
+            throw std::invalid_argument("expected fse.Scene");
         }
 
         return std::shared_ptr<fse::Scene>(my_class_wrapper::unwrap_object(isolate, value));
@@ -94,6 +94,7 @@ struct v8pp::convert<std::shared_ptr<fse::Scene>>
         return val;
     }
 };
+
 //
 //template<>
 //struct v8pp::is_wrapped_class<std::shared_ptr<fse::Scene>> : std::false_type {};

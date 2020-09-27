@@ -4,9 +4,9 @@
 #include <thread>
 #include <list>
 #include <mutex>
-#include "Signals.h"
+#include "../Signals.h"
 #include <atomic>
-#include "FSEV8Lib.h"
+#include "../FSEV8Lib.h"
 
 namespace fse
 {
@@ -36,8 +36,8 @@ namespace fse
 
 		void sendPacket(sf::Packet& packet, bool tcp, bool unaltered = false);
 
-		std::vector<sf::Packet> getUdpPackets(uint32_t objectID);
-		std::vector<sf::Packet> getTcpPackets(uint32_t objectID);
+		std::vector<sf::Packet> getUdpPackets(const std::string_view& objectID);
+		std::vector<sf::Packet> getTcpPackets(const std::string_view& objectID);
 
 	private:
 

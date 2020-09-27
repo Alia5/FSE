@@ -17,7 +17,7 @@ namespace fse
 	/*!
 	 * \brief Base Class for every Object that can live in a Scene
 	 */
-	class FSEObject : public std::enable_shared_from_this<FSEObject>
+	class FSEObject : public PacketHandler, public std::enable_shared_from_this<FSEObject>
 	{
 	public:
 
@@ -31,7 +31,7 @@ namespace fse
 		* It is NOT reccommended to store across multiple frames pointers to objects if you can't guarantee they will outlive you or live as long as you do.
 		* Args: Ptr to spawned FSEObject (this)
 		*/
-		using SpawnedSignal = Signal<FSEObject*>;
+		using SpawnedSignal = Signal<std::weak_ptr<FSEObject>>;
 
 		FSEObject();
 		explicit FSEObject(const sf::Vector2f spawnPos);
@@ -270,11 +270,6 @@ namespace fse
 		 * position in meters.
 		 */
 		sf::Vector2f position_;
-
-		/*!
-		 * Ptr to input handling class.
-		 */
-		fse::Input* input_;
 
 	private:
 		int id_ = -1;

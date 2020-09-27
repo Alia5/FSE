@@ -10,8 +10,8 @@ declare namespace sf {
     }
 
     class FloatRect {
-        constructor(rectLeft: number, rectTop: number, rectWidth: number, rectHeight: number);
-        constructor(pos: Vector2, size: Vector2);
+        public constructor(rectLeft: number, rectTop: number, rectWidth: number, rectHeight: number);
+        public constructor(pos: Vector2, size: Vector2);
         public contains(x: number, y: number): boolean;
         public contains(point: Vector2): boolean;
         public intersects(rect: FloatRect, intersection: FloatRect): boolean;
@@ -22,8 +22,8 @@ declare namespace sf {
     }
 
     class IntRect {
-        constructor(rectLeft: number, rectTop: number, rectWidth: number, rectHeight: number);
-        constructor(pos: Vector2, size: Vector2);
+        public constructor(rectLeft: number, rectTop: number, rectWidth: number, rectHeight: number);
+        public constructor(pos: Vector2, size: Vector2);
         public contains(x: number, y: number): boolean;
         public contains(point: Vector2): boolean;
         public intersects(rect: IntRect, intersection: IntRect): boolean;

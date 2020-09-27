@@ -1,6 +1,5 @@
 #pragma once
 #include <random>
-#include <chaiscript/chaiscript.hpp>
 
 namespace fse
 {
@@ -29,25 +28,6 @@ namespace fse
 		static void InitRandom()
 		{
 			rng.seed(std::random_device()());
-		}
-
-		static chaiscript::ModulePtr bootstrap(
-			chaiscript::ModulePtr m = std::make_shared<chaiscript::Module>())
-		{
-			m->add(chaiscript::fun([](int from, int to)
-			{
-				return random(from, to);
-			}), "random");
-			m->add(chaiscript::fun([](float from, float to)
-			{
-				return random(from, to);
-			}), "random");
-			m->add(chaiscript::fun([](double from, double to)
-			{
-				return random(from, to);
-			}), "random");
-
-			return m;
 		}
 
 	private:

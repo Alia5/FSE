@@ -8,8 +8,9 @@
 #include "Signals.h"
 #include "PhysContactListener.h"
 #include "PhysDebugDraw.h"
-#include "NetworkHandler.h"
+#include "Network/NetworkHandler.h"
 #include "FSEV8Lib.h"
+#include "Network/PacketHandler.h"
 
 constexpr auto FSE_RADTODEG = 57.2957795f;
 constexpr auto FSE_DEGTORAD = 0.01745329f;
@@ -19,13 +20,14 @@ constexpr auto FSE_DEGTORAD = 0.01745329f;
 
 namespace fse
 {
-	class FSEObject;
+    class NetworkHandler;
+    class FSEObject;
 	class FSELightWorld;
 
 	/*!
 	 * \brief Scene where objects live in, get updated and rendered
 	 */
-	class Scene 
+	class Scene
 	{
 	public:
 		explicit Scene();
@@ -44,6 +46,7 @@ namespace fse
 		 * \param deltaTime elapsed time in seconds
 		 */
 		void update(float deltaTime);
+
 		/*!
 		 * Issue draw calls
 		 */
@@ -77,7 +80,12 @@ namespace fse
 		 * 
 		 * \param object shared_ptr to object
 		 */
-		std::weak_ptr<FSEObject> spawnFSEObject(std::shared_ptr<FSEObject> object);
+		template<typename T>
+		std::weak_ptr<T> spawnFSEObject(std::shared_ptr<T> object)
+		{
+			pending_object_spawns_.push_back(object);
+			return object;
+		}
 
 		/*!
 		 * \brief Spawn FSEObject into the scene \n
@@ -91,8 +99,12 @@ namespace fse
 		 * \param object shared_ptr to object
 		 * \param slot callback when object is spawned
 		 */
-		template<typename SpawnedSlot>
-		void spawnFSEObject(std::shared_ptr<FSEObject> object, SpawnedSlot&& slot);
+		template<typename T, typename SpawnedSlot>
+		std::weak_ptr<T> spawnFSEObject(std::shared_ptr<T> object, SpawnedSlot&& slot)
+		{
+			object->spawned_signal_.connect(slot);
+			return spawnFSEObject(object);
+		}
 
 		/*!
 		 * \brief Create and spawn FSEObject
@@ -105,8 +117,7 @@ namespace fse
 		std::weak_ptr<T> createFSEObject()
 		{
 			std::shared_ptr<T> object = std::make_shared<T>();
-			pending_object_spawns_.push_back(object);
-			return  object;
+			return spawnFSEObject(object);
 		}
 
 		/*!
@@ -126,8 +137,7 @@ namespace fse
 		{
 			std::shared_ptr<T> object = std::make_shared<T>();
 			object->spawned_signal_.connect(slot);
-			pending_object_spawns_.push_back(object);
-			return  object;
+			return spawnFSEObject(object);
 		}
 
 		/*!
@@ -143,8 +153,7 @@ namespace fse
 		std::weak_ptr<T> createFSEObject(const sf::Vector2f spawnPos)
 		{
 			std::shared_ptr<T> object = std::make_shared<T>(spawnPos);
-			pending_object_spawns_.push_back(object);
-			return  object;
+			return spawnFSEObject(object);
 		}
 
 		/*!
@@ -164,9 +173,7 @@ namespace fse
 		std::weak_ptr<T> createFSEObject(const sf::Vector2f spawnPos, SpawnedSlot&& slot)
 		{
 			std::shared_ptr<T> object = std::make_shared<T>(spawnPos);
-			object->spawned_signal_.connect(slot);
-			pending_object_spawns_.push_back(object);
-			return  object;
+			return spawnFSEObject(object, slot);
 		}
 
 		void destroyFSEObject(FSEObject* FSEObject);
@@ -205,7 +212,6 @@ namespace fse
 		void processPendingRemovals();
 		void processPendingSpawns();
 
-
 		sf::RenderTarget* render_target_;
 
 		std::vector<std::shared_ptr<FSEObject> > fse_objects_; 
@@ -234,8 +240,6 @@ namespace fse
 		float elapsed_time_ = 0;
 
 		Signal<>::ScopedConnection win_resize_signal_connection_;
-
-		NetworkHandler* network_handler_ = nullptr;
 		
 		std::shared_ptr<FSELightWorld> light_world_ = nullptr;
 

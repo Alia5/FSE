@@ -14,7 +14,7 @@ namespace fse
 	}
 
 
-	FSEObject::FSEObject(const sf::Vector2f spawnPos): scene_(nullptr), input_(Application::get()->getInput())
+	FSEObject::FSEObject(const sf::Vector2f spawnPos): scene_(nullptr), PacketHandler()
 	{
 		position_ = spawnPos;
 	}
@@ -109,7 +109,7 @@ namespace fse
 		scene_ = scene;
 		id_ = id;
 		spawned();
-		spawned_signal_(this);
+		spawned_signal_(weak_from_this());
 		spawned_signal_.disconnectAll();
 	}
 
@@ -117,7 +117,6 @@ namespace fse
 	{
 		components_.clear();
 		scene_ = nullptr;
-		input_ = nullptr;
 		id_ = -1;
 	}
 
@@ -221,6 +220,7 @@ namespace fse
 		v8::HandleScope handle_scope(isolate);
 		v8pp::class_<FSEObject, v8pp::shared_ptr_traits> FSEObject_class(isolate);
 		FSEObject_class.auto_wrap_objects(true);
+		FSEObject_class.inherit<PacketHandler>();
 		FSEObject_class.function("getID", static_cast<int (FSEObject::*)() const>(&FSEObject::getID));
 		FSEObject_class.function("getZOrder", static_cast<int (FSEObject::*)() const>(&FSEObject::getZOrder));
 		FSEObject_class.function("setZOrder", static_cast<void(FSEObject::*)(int)>(&FSEObject::setZOrder));
@@ -261,6 +261,7 @@ namespace fse
 				}
 				return result;
 			});
+
 		module.class_("FSEObject", FSEObject_class);
 	}
 

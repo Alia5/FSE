@@ -123,9 +123,6 @@
     <ClInclude Include="Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NetworkHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PhysContactListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -194,9 +191,6 @@
     </ClInclude>
     <ClInclude Include="FMath.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Network\NetworkedObject.h">
-      <Filter>Header Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="FSE-ImGui\imgui-plotvar.h">
       <Filter>Header Files\FSE-ImGui</Filter>
@@ -318,6 +312,12 @@
     <ClInclude Include="UUID.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Network\PacketHandler.h">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\NetworkHandler.h">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetLoader.cpp">
@@ -330,9 +330,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NetworkHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PhysContactListener.cpp">
@@ -391,9 +388,6 @@
     </ClCompile>
     <ClCompile Include="Lights\Light.cpp">
       <Filter>Source Files\Lights</Filter>
-    </ClCompile>
-    <ClCompile Include="Network\NetworkedObject.cpp">
-      <Filter>Source Files\Network</Filter>
     </ClCompile>
     <ClCompile Include="FSE-ImGui\imgui-plotvar.cpp">
       <Filter>Source Files\FSE-ImGui</Filter>
@@ -478,6 +472,12 @@
     </ClCompile>
     <ClCompile Include="FSEObject\ScriptObject.cpp">
       <Filter>Source Files\FSEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\PacketHandler.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\NetworkHandler.cpp">
+      <Filter>Source Files\Network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@ namespace fse
 	{
 	}
 
-	JSConsole::JSConsole(const sf::Vector2f& spawnPos) : fse::FSEObject(spawnPos)
+	JSConsole::JSConsole(const sf::Vector2f& spawnPos) : fse::FSEObject(spawnPos), input_(Application::get()->getInput())
 	{
 		input_history_.emplace_back("");
 	}

@@ -115,19 +115,6 @@ namespace fse
 		z_order_changed_ = true;
 	}
 
-	std::weak_ptr<FSEObject> Scene::spawnFSEObject(std::shared_ptr<FSEObject> object)
-	{
-		pending_object_spawns_.push_back(object);
-		return object;
-	}
-
-	template<typename SpawnedSlot>
-	void Scene::spawnFSEObject(std::shared_ptr<FSEObject> object, SpawnedSlot&& slot)
-	{
-		object->spawned_signal_.connect(slot);
-		pending_object_spawns_.push_back(object);
-	}
-
 	void Scene::destroyFSEObject(FSEObject* object)
 	{
 		pending_object_removals_.push_back(object);
@@ -193,6 +180,8 @@ namespace fse
 		auto it = std::find(fse_objects_.begin(), fse_objects_.end(), object);
 		if (it != fse_objects_.end())
 		{
+			it->get()->onDespawn();
+			it->get()->despawn();
 			fse_objects_.erase(it);
 		}
 	}
@@ -237,11 +226,12 @@ namespace fse
 		}
 	}
 
-	FSE_V8_REGISTER(Scene)
+    FSE_V8_REGISTER(Scene)
 	{
 		v8::HandleScope handle_scope(isolate);
 
 		v8pp::class_<Scene> Scene_class(isolate);
+		// Scene_class.inherit<PacketHandler>();
 		Scene_class.function("isPaused", &Scene::isPaused);
 		Scene_class.function("setPaused", &Scene::setPaused);
 		//Scene_class.property("paused", &Scene::isPaused, &Scene::setPaused);
@@ -259,14 +249,31 @@ namespace fse
 			{
 				v8::Isolate* isolate = args.GetIsolate();
 				const auto scene = v8pp::from_v8<Scene*>(isolate, args.This());
-				const auto object = v8pp::from_v8<std::shared_ptr<fse::FSEObject>>(isolate, args[0]);
-				auto callback = args[1].As<v8::Function>();
+				auto object = v8pp::from_v8<std::shared_ptr<fse::FSEObject>>(isolate, args[0]);
+
 				if (object == nullptr)
 				{
-					throw std::exception("Expected FSEObjectNative");
+					auto jsObject = args[0].As<v8::Object>();
+					if (jsObject->Has(isolate->GetCurrentContext(), v8pp::to_v8(isolate, "native")).FromMaybe(false))
+					{
+						auto maybeNative = jsObject->Get(
+							isolate->GetCurrentContext(),
+							v8pp::to_v8(isolate, "native")
+						);
+						if (!maybeNative.IsEmpty())
+						    object = v8pp::from_v8<std::shared_ptr<fse::FSEObject>>(isolate, maybeNative.ToLocalChecked());
+					}
+					if (object == nullptr)
+					{
+						throw std::exception("Expected FSEObjectNative");
+					}
 				}
-				if (!callback.IsEmpty())
-					object->spawned_signal_.connectJs(callback);
+				if (args.Length() >= 2 && args[1]->IsFunction())
+				{
+					auto callback = args[1].As<v8::Function>();
+					if (!callback.IsEmpty())
+						object->spawned_signal_.connectJs(callback);
+				}
 				auto weak_obj = static_cast<std::weak_ptr<FSEObject>>(scene->spawnFSEObject(object));
 			});
 		Scene_class.function("getObjects", [](v8::FunctionCallbackInfo<v8::Value> const& args)

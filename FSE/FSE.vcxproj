@@ -125,7 +125,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;SFML_STATIC;IMGUI_USER_CONFIG=&lt;imconfig.h&gt;;IMGUI_DISABLE_INCLUDE_IMCONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\extlibs\SFML-2.5.1-x64\include;$(ProjectDir)..\extlibs\liquidfun\liquidfun\Box2D;$(ProjectDir)..\extlibs\rttr-0.9.6-x64\include;$(ProjectDir)..\imgui-sfml-config\;$(ProjectDir)..\chaiscript\include\;$(ProjectDir)..\ChaiScript_Extras\include\;$(ProjectDir)..\ChaiScript_Extras_Liquidfun\include\;$(ProjectDir)..\ChaiScript_Extras_SFML\include\;$(ProjectDir)..\imgui\;$(ProjectDir)..\imgui-SFML\;$(ProjectDir)..\rapidjson\include\;$(ProjectDir)..\poly2tri\poly2tri\;$(ProjectDir)..\v8pp;$(ProjectDir)..\extlibs\v8_monolith\include;$(ProjectDir)..\websocketpp;$(ProjectDir)..\extlibs\asio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\extlibs\SFML-2.5.1-x64\include;$(ProjectDir)..\extlibs\liquidfun\liquidfun\Box2D;$(ProjectDir)..\extlibs\rttr-0.9.6-x64\include;$(ProjectDir)..\imgui-sfml-config\;$(ProjectDir)..\imgui\;$(ProjectDir)..\imgui-SFML\;$(ProjectDir)..\rapidjson\include\;$(ProjectDir)..\poly2tri\poly2tri\;$(ProjectDir)..\v8pp;$(ProjectDir)..\extlibs\v8_monolith\include;$(ProjectDir)..\websocketpp;$(ProjectDir)..\extlibs\asio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <OmitFramePointers>false</OmitFramePointers>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -135,6 +135,8 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <RemoveUnreferencedCodeData>false</RemoveUnreferencedCodeData>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <MinimalRebuild>
+      </MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -241,7 +243,7 @@
     <ClInclude Include="ImageOutlineFinder.h" />
     <ClInclude Include="imgui-colorText.h" />
     <ClInclude Include="extv8bind\liquidfunconvert.h" />
-    <ClInclude Include="Network\NetworkedObject.h" />
+    <ClInclude Include="Network\PacketHandler.h" />
     <ClInclude Include="Lights\Light.h" />
     <ClInclude Include="Lights\FSELightWorld.h" />
     <ClInclude Include="FSEObject\FSEObject.h" />
@@ -250,7 +252,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Lights\PointLight.h" />
     <ClInclude Include="Lights\SpotLight.h" />
-    <ClInclude Include="NetworkHandler.h" />
+    <ClInclude Include="Network\NetworkHandler.h" />
     <ClInclude Include="PhysContactListener.h" />
     <ClInclude Include="PhysDebugDraw.h" />
     <ClInclude Include="Random.h" />
@@ -302,7 +304,7 @@
     <ClCompile Include="FSEObject\FPSCounter.cpp" />
     <ClCompile Include="FSEObject\KillVolume.cpp" />
     <ClCompile Include="ImageOutlineFinder.cpp" />
-    <ClCompile Include="Network\NetworkedObject.cpp" />
+    <ClCompile Include="Network\PacketHandler.cpp" />
     <ClCompile Include="Lights\Light.cpp" />
     <ClCompile Include="Lights\FSELightWorld.cpp" />
     <ClCompile Include="FSEObject\FSEObject.cpp" />
@@ -311,7 +313,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Lights\PointLight.cpp" />
     <ClCompile Include="Lights\SpotLight.cpp" />
-    <ClCompile Include="NetworkHandler.cpp" />
+    <ClCompile Include="Network\NetworkHandler.cpp" />
     <ClCompile Include="PhysContactListener.cpp" />
     <ClCompile Include="PhysDebugDraw.cpp" />
     <ClCompile Include="Random.cpp" />

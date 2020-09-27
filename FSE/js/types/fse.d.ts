@@ -21,10 +21,12 @@ declare var global: object;
 
 declare function setTimeout(callback: () => void, millis: number): void;
 
-public sf.d.ts(): void;
-public lf.d.ts(): void;
+declare type hexDigit = '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'|'a'|'b'|'c'|'d'|'e'|'f';
+// ah fuck typescript.
+// declare type uuidv4 = `${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}-${hexDigit}${hexDigit}${hexDigit}${hexDigit}-4${hexDigit}${hexDigit}${hexDigit}-${hexDigit}${hexDigit}${hexDigit}-${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}${hexDigit}`
 
- declare namespace fse {
+declare type uuidv4 = string;
+declare namespace fse {
 
     class Connection {
         public isConnected(): boolean;
@@ -33,7 +35,24 @@ public lf.d.ts(): void;
         public connect(slot: T extends undefined ? () => void : (...args: [...T]) => void): Connection;
         public disconnect(conn: Connection): boolean;
     }
-    abstract class FSEObject {
+
+    class PacketHandler {
+        public netUpdate(deltaTime: number): void;
+        public setNetworked(net: boolean): void;
+        public setRunsOnHost(host: boolean): void;
+        public setNetworkId(id: number): void;
+        public sendUdpPacket(packet: any): void; // TODO;
+        public sendTcpPacket(packet: any): void; // TODO;
+        protected networked: boolean; 
+        protected runs_on_host: boolean; 
+        protected net_time: number; 
+        protected network_id: uuidv4; 
+        protected udp_packets: any; // TODO 
+        protected tcp_packets: any; // TODO 
+        protected all_packets: any; // TODO 
+    }
+
+    abstract class FSEObject extends PacketHandler {
         public getID(): number;
         public getPosition(): {x: number, y:number};
         public setPosition(position: {x: number, y:number}): void;
@@ -57,7 +76,7 @@ public lf.d.ts(): void;
 		public PostSolve(otherObject: FSEObject, contact: lf.Contact, impulse: any): void;
     }
 
-    class Scene {
+    class Scene extends PacketHandler {
         public isPaused(): boolean;
         public setPaused(paused: boolean): void;
 		public getPhysDrawDebug(): boolean;
@@ -67,7 +86,7 @@ public lf.d.ts(): void;
         public getPhysWorld(): lf.World;
         public getPixelsPerMeter(): number;
         public getMetersPerPixel(): number;
-        public spawnObject(object: FSEObject, onSpawn?: () => void): FSEObject;
+        public spawnObject(object: FSEObject, onSpawn?: (object: FSEObject) => void): FSEObject;
         public getRenderTarget(): sf.RenderTarget;
     }
 
@@ -145,7 +164,7 @@ public lf.d.ts(): void;
     class Application {
         public getWindow(): sf.Window;
         public getInput(): Input;
-        public getNetworkHandler(): NetworkHandler; // TODO
+        public getNetworkHandler(): NetworkHandler;
         public getAssetLoader(): any; // TODO
         public getRootScene(): Scene;
         public setServerClientType(type: number): void;

@@ -122,11 +122,11 @@ public:
 		return inst;
 	}
 
-	void add_init_func(init_func_type f, bool base = false)
+	void add_init_func(init_func_type f, bool base = false, bool first = false)
 	{
 		if (base)
 		{
-			base_funcs_.push_back(f);
+			funcs_.insert(funcs_.begin(), f);
 			return;
 		}
 		funcs_.push_back(f);
@@ -135,7 +135,7 @@ public:
 	static void execute(fse::Application* app, v8::Isolate* isolate, v8pp::module& module)
 	{
 		auto& inst = instance();
-		for (auto b : inst.base_funcs_) b(app, isolate, module);
+		// for (auto b : inst.base_funcs_) b(app, isolate, module);
 		for (auto c : inst.funcs_) c(app, isolate, module);
 	}
 
@@ -144,7 +144,7 @@ private:
 	v8_init() {}
 
 	std::vector<init_func_type> funcs_;
-	std::vector<init_func_type> base_funcs_;
+	// std::vector<init_func_type> base_funcs_;
 };
 
 class v8_init_helper
