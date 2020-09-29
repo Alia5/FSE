@@ -27,6 +27,10 @@
 	v8_init_helper ClassName::ClassName##_v8_init_helper(&ClassName::v8_init_func, true); \
 	void ClassName::v8_init_func(fse::Application* app, v8::Isolate* isolate, v8pp::module& module)
 
+#define FSE_V8_REGISTER_BASE_FIRST(ClassName) \
+	v8_init_helper ClassName::ClassName##_v8_init_helper(&ClassName::v8_init_func, true, true); \
+	void ClassName::v8_init_func(fse::Application* app, v8::Isolate* isolate, v8pp::module& module)
+
 
 namespace std {
 	namespace filesystem {
@@ -126,7 +130,12 @@ public:
 	{
 		if (base)
 		{
-			funcs_.insert(funcs_.begin(), f);
+			if (first && !base_funcs_.empty())
+			{
+				base_funcs_.insert(base_funcs_.begin(), f);
+			} else {
+				base_funcs_.push_back(f);
+			}
 			return;
 		}
 		funcs_.push_back(f);
@@ -135,7 +144,7 @@ public:
 	static void execute(fse::Application* app, v8::Isolate* isolate, v8pp::module& module)
 	{
 		auto& inst = instance();
-		// for (auto b : inst.base_funcs_) b(app, isolate, module);
+		for (auto b : inst.base_funcs_) b(app, isolate, module);
 		for (auto c : inst.funcs_) c(app, isolate, module);
 	}
 
@@ -144,15 +153,15 @@ private:
 	v8_init() {}
 
 	std::vector<init_func_type> funcs_;
-	// std::vector<init_func_type> base_funcs_;
+	std::vector<init_func_type> base_funcs_;
 };
 
 class v8_init_helper
 {
 public:
-	v8_init_helper(init_func_type f, bool base = false)
+	v8_init_helper(init_func_type f, bool base = false, bool first = false)
 	{
-		v8_init::instance().add_init_func(f, base);
+		v8_init::instance().add_init_func(f, base, first);
 	}
 	
 };

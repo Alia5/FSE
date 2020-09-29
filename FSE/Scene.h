@@ -27,9 +27,18 @@ namespace fse
 	/*!
 	 * \brief Scene where objects live in, get updated and rendered
 	 */
-	class Scene
+	class Scene : public PacketHandler
 	{
 	public:
+
+		enum class PacketType : uint8_t
+		{
+			UNKNOWN = 0,
+		    SpawnedOnHost,
+			DestroyedOnHost,
+			SpawnedOnClient
+		};
+
 		explicit Scene();
 		explicit Scene(float pixel_meter_ratio);
 		~Scene();
@@ -46,6 +55,8 @@ namespace fse
 		 * \param deltaTime elapsed time in seconds
 		 */
 		void update(float deltaTime);
+
+		virtual void netUpdate(float deltaTime) override;
 
 		/*!
 		 * Issue draw calls
@@ -83,6 +94,7 @@ namespace fse
 		template<typename T>
 		std::weak_ptr<T> spawnFSEObject(std::shared_ptr<T> object)
 		{
+			handleNetworkSpawn(object);
 			pending_object_spawns_.push_back(object);
 			return object;
 		}
@@ -211,6 +223,8 @@ namespace fse
 
 		void processPendingRemovals();
 		void processPendingSpawns();
+
+		void handleNetworkSpawn(std::shared_ptr<FSEObject>const& object) const;
 
 		sf::RenderTarget* render_target_;
 

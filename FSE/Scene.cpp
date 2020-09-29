@@ -4,17 +4,45 @@
 #include "Lights/FSELightWorld.h"
 #include <v8pp/module.hpp>
 #include <v8pp/class.hpp>
+#include "FSEObject/ScriptObject.h"
+
+#include "UUID.h"
+
+namespace fse
+{
+	struct SceneObjectNotifyPacket
+	{
+		fse::Scene::PacketType type;
+		std::string networkId;
+		std::string className;
+		std::string scriptClassName;
+		uint32_t timestamp;
+	};
+}
+
+
+sf::Packet& operator >>(sf::Packet& packet, fse::SceneObjectNotifyPacket& data)
+{
+	uint8_t temp_type;
+	packet >> temp_type >> data.networkId >> data.className >> data.timestamp;
+	data.type = static_cast<fse::Scene::PacketType>(temp_type);
+	return packet;
+}
 
 namespace fse
 {
 
-	Scene::Scene() : render_target_(nullptr), phys_world_(phys_gravity_)
+	Scene::Scene()
+        :
+            PacketHandler(),
+            render_target_(nullptr),
+            win_resize_signal_connection_(
+				Application::get()->on_window_resized_,
+				Application::get()->on_window_resized_.connect(this, &Scene::notifyResize)
+			),
+            phys_world_(phys_gravity_)
 	{
 		phys_world_.SetContactListener(&phys_contact_listener_);
-		win_resize_signal_connection_ = Signal<>::ScopedConnection(
-			Application::get()->on_window_resized_,
-			Application::get()->on_window_resized_.connect(this, &Scene::notifyResize)
-	    );
 
 		light_world_ = createFSEObject<FSELightWorld>().lock();
 		processPendingSpawns();
@@ -60,6 +88,7 @@ namespace fse
 
 	void Scene::update(float deltaTime)
 	{
+		netUpdate(deltaTime);
 		processPendingSpawns();
 
 		if (is_paused_)
@@ -81,7 +110,63 @@ namespace fse
 		processPendingRemovals();
 	}
 
-	void Scene::draw()
+    void Scene::netUpdate(float deltaTime)
+    {
+		PacketHandler::netUpdate(deltaTime);
+		for (auto& packet : all_packets_)
+		{
+			if (!packet.endOfPacket()) // TODO: refactor receive packet API
+			{
+				SceneObjectNotifyPacket packetData;
+				packet >> packetData;
+
+				if (packetData.type == PacketType::SpawnedOnHost && !Application::get()->isServer())
+				{
+					if (packetData.className == "fse::ScriptObject")
+					{
+						auto isolate = v8::Isolate::GetCurrent();
+						v8::HandleScope handle_scope(isolate);
+						auto ctx = isolate->GetCurrentContext();
+						auto ctorFun = ctx->Global()->Get(ctx, v8pp::to_v8(isolate, "fse")).ToLocalChecked().As<v8::Object>()
+							->Get(ctx, v8pp::to_v8(isolate, "Scene")).ToLocalChecked().As<v8::Object>()
+							->Get(ctx, v8pp::to_v8(isolate, "constructScriptObject")).ToLocalChecked().As<v8::Function>();
+						v8::Local<v8::Value> args[] = { v8pp::to_v8(isolate, packetData.scriptClassName) };
+						auto maybeObject = (
+							ctorFun->Call(ctx, v8::Undefined(isolate), 1, args)
+						);
+						if (maybeObject.IsEmpty())
+						{
+							std::cout << "object " << packetData.className << " was not constructable!\n";
+						} else
+						{
+							auto nativeObject = (
+								v8pp::from_v8<std::shared_ptr<ScriptObject>>(isolate, maybeObject.ToLocalChecked())
+							);
+							nativeObject->setNetworkId(packetData.networkId);
+							pending_object_spawns_.push_back(nativeObject);
+						}
+
+					}
+				    else
+					{
+						rttr::type type = rttr::type::get_by_name(packetData.className);
+						auto ctor = type.get_constructor({});
+						if (ctor.is_valid())
+						{
+							auto object = ctor.invoke().get_value<std::shared_ptr<fse::FSEObject>>();
+							object->setNetworkId(packetData.networkId);
+							pending_object_spawns_.push_back(object);
+						}
+						else {
+							std::cout << "object " << packetData.className << " was not constructable!\n";
+						}
+					}					
+				}
+			}
+		}
+    }
+
+    void Scene::draw()
 	{
 		if (z_order_changed_)
 		{
@@ -225,6 +310,45 @@ namespace fse
 			pending_object_spawns_.clear();
 		}
 	}
+
+    void Scene::handleNetworkSpawn(std::shared_ptr<FSEObject> const& object) const
+    {
+		rttr::type type = rttr::type::get(*object.get());
+		if (type.get_name() == "fse::ScriptObject")
+		{
+			std::cout << "Object is ScriptObject; Sending ScriptPacket!\n";
+			if (object->getNetworkId().empty())
+				object->setNetworkId(uuid::v4());
+			sf::Packet packet;
+			packet
+				<< getNetworkId().data()
+				<< static_cast<uint8_t>((Application::get()->isServer() ? PacketType::SpawnedOnHost : PacketType::SpawnedOnClient))
+				<< object->getNetworkId().data()
+				<< type.get_name().data()
+				<< std::dynamic_pointer_cast<ScriptObject>(object)->scriptClassName;
+				;
+			// TODO: refactor sendPacketApi
+			sendTcpPacket(packet);
+			return;
+		}
+		if (!type.get_constructor({}).is_valid())
+		{
+			std::cout << "Object is not constructable\n";
+			return;
+		}
+		if (object->getNetworkId().empty())
+			object->setNetworkId(uuid::v4());
+		sf::Packet packet;
+		packet
+			<< getNetworkId().data()
+		    << static_cast<uint8_t>((Application::get()->isServer() ? PacketType::SpawnedOnHost : PacketType::SpawnedOnClient))
+		    << object->getNetworkId().data()
+		    << type.get_name().data()
+		    << "" // empty script class name
+	        ;
+		// TODO: refactor sendPacketApi
+		sendTcpPacket(packet);
+    }
 
     FSE_V8_REGISTER(Scene)
 	{

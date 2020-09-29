@@ -86,7 +86,7 @@ declare namespace fse {
         public getPhysWorld(): lf.World;
         public getPixelsPerMeter(): number;
         public getMetersPerPixel(): number;
-        public spawnObject(object: FSEObject, onSpawn?: (object: FSEObject) => void): FSEObject;
+        public spawnObject(object: FSEObject|ScriptObject, onSpawn?: (object: FSEObject) => void): FSEObject;
         public getRenderTarget(): sf.RenderTarget;
     }
 

@@ -719,7 +719,6 @@ namespace fse
         v8::HandleScope handle_scope(isolate);
         v8pp::class_<NetworkHandler> NetworkHandler_class(isolate);
         NetworkHandler_class.auto_wrap_objects();
-        NetworkHandler_class.function("setServer", &NetworkHandler::setServer);
         NetworkHandler_class.function("setMaxConnections", &NetworkHandler::setMaxConnections);
         NetworkHandler_class.function("setServerIP", &NetworkHandler::setServerIP);
         NetworkHandler_class.function("getPing", &NetworkHandler::getPing);

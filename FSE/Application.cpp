@@ -205,6 +205,9 @@ namespace fse
             is_server_ = true;
         else
             is_server_ = false;
+
+        network_handler_.setServer(is_server_);
+
     }
 
     void Application::init()

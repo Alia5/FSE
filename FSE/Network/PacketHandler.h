@@ -21,7 +21,7 @@ namespace fse
          * Call on begin of your objects update method
          * \param deltaTime elapsed time in seconds
          */
-        void netUpdate(float deltaTime);
+        virtual void netUpdate(float deltaTime);
 
 
         /*!

@@ -61,7 +61,7 @@ namespace fse
         network_handler_->sendPacket(packet, true);
     }
 
-    FSE_V8_REGISTER_BASE(PacketHandler)
+    FSE_V8_REGISTER_BASE_FIRST(PacketHandler)
     {
         v8::HandleScope handle_scope(isolate);
         v8pp::class_<PacketHandler, v8pp::shared_ptr_traits> PacketHandlerClass(isolate);

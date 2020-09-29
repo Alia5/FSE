@@ -39,7 +39,9 @@ namespace fse
 		v8::Persistent < v8::Object, v8::CopyablePersistentTraits<v8::Object>> child_;
 
 		std::string scriptClassName;
-		
+
+		friend class Scene;
+
 		FSE_V8_ENABLE(ScriptObject);
 		FSE_V8_REGISTRATION_FRIEND
 
