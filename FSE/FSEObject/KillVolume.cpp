@@ -135,6 +135,10 @@ RTTR_REGISTRATION
     using namespace rttr;
 
     registration::class_<fse::KillVolume>("fse::KillVolume")
+    .constructor<>()
+    (
+        policy::ctor::as_std_shared_ptr
+    )
     .constructor<const sf::Vector2f&>()
     (
         policy::ctor::as_std_shared_ptr,
