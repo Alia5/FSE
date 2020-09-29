@@ -29,6 +29,7 @@ namespace fse
 
 		void consoleEval(const std::string& js);
 		void v8EvalCatch(v8::TryCatch& try_catch);
+		bool v8CheckSyntax();
 
 		bool shown_ = false;
 		bool input_should_gain_focus_ = true;
@@ -36,6 +37,9 @@ namespace fse
 		bool output_to_bottom_ = true;
 		bool copy_mode_ = false;
 		bool copy_mode_from_ctrl_ = false;
+
+		unsigned int lastInputSize = 0;
+		bool inputHasErrors = false;
 
 		std::array<char, 4096> input_data_;
 		std::stringstream output_data_;

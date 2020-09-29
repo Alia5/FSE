@@ -106,6 +106,20 @@ namespace fse
 			int winHeight = 13 * newlines + 25;
 			if (winHeight >= ImGui::GetCurrentWindow()->Size.y - 110)
 				winHeight = ImGui::GetCurrentWindow()->Size.y - 110;
+
+			if (std::string(input_data_.data()).size() != lastInputSize)
+			{
+				lastInputSize = std::string(input_data_.data()).size();
+				inputHasErrors = !v8CheckSyntax();
+			}
+
+			if (inputHasErrors)
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, sf::Color::Red);
+			} else {
+				ImGui::PushStyleColor(ImGuiCol_Text, sf::Color::White);
+			}
+
 			if (ImGui::InputTextMultiline("##ScriptInput", input_data_.data(), input_data_.size(),
 				ImVec2(ImGui::GetCurrentWindow()->Size.x - 15, winHeight),
 				ImGuiInputTextFlags_CtrlEnterForNewLine | ImGuiInputTextFlags_AllowTabInput
@@ -124,6 +138,8 @@ namespace fse
 				input_should_gain_focus_ = true;
 				output_to_bottom_ = true;
 			}
+			ImGui::PopStyleColor();
+
 
 			if (input_should_gain_focus_)
 			{
@@ -208,6 +224,7 @@ namespace fse
 		ctx->Global()->Set(ctx, v8::String::NewFromUtf8(iso, "print").ToLocalChecked(),
 			object->Get(ctx, v8::String::NewFromUtf8(iso, "log").ToLocalChecked()).ToLocalChecked());		
 	}
+
 	void JSConsole::consoleEval(const std::string& js)
 	{
 		v8::Isolate* iso = v8::Isolate::GetCurrent();
@@ -276,4 +293,33 @@ namespace fse
 		}
 		try_catch.Reset();
 	}
+
+    bool JSConsole::v8CheckSyntax()
+    {
+		v8::Isolate* iso = v8::Isolate::GetCurrent();
+		v8::HandleScope handle_scope(iso);
+		const v8::Local<v8::Context> ctx = iso->GetEnteredContext();
+		v8::TryCatch try_catch(iso);
+		try_catch.SetCaptureMessage(true);
+		try_catch.SetVerbose(true);
+
+        v8::MaybeLocal<v8::String> maybe_source =
+			v8::String::NewFromUtf8(iso, input_data_.data(),
+				v8::NewStringType::kNormal);
+		if (maybe_source.IsEmpty())
+			return true;
+		const v8::Local<v8::String> source = maybe_source.ToLocalChecked();
+
+		v8::ScriptOrigin origin(v8pp::to_v8(iso, "JSConsole"),      // specifier
+			v8::Integer::New(iso, 0),             // line offset
+			v8::Integer::New(iso, 0),             // column offset
+			v8::False(iso),                       // is cross origin
+			v8::Local<v8::Integer>(),                     // script id
+			v8::Local<v8::Value>(),                       // source map URL
+			v8::False(iso),                       // is opaque
+			v8::False(iso),                       // is WASM
+			v8::False(iso));                       // is ES6 module
+		v8::MaybeLocal<v8::Script> maybe_script = v8::Script::Compile(ctx, source, &origin);
+		return !maybe_script.IsEmpty();
+    }
 }
