@@ -7,7 +7,9 @@ FSE is mainly created as a side project out of personal interest.
 I only have limited knowledge about game- / engine-programming and thus, this is probably not the most well though out code there is. 
 I wouldn't recommend using it. If you'd really like to however, it's licensed under MIT, so feel free.
 
-FSE supports networking which in testing performed pretty well under pretty bad network conditions (~200ms Ping with some packet loss) with a few 100 objects
+FSE has integrated scripting in chaiscript, but is reworked to support javascript / typescript using Google v8 ([MuscleCar-branch](https://github.com/Alia5/FSE/tree/MuscleCar))
+
+It also supports networking which in testing performed pretty well under pretty bad network conditions (~200ms Ping with some packet loss) with a few 100 objects
 
 I'm quite happy with with the results so far, considering this essentially being a little "Sunday project"
 
